@@ -5,17 +5,17 @@ import ThemeButton from "@/components/theme-button";
 
 export default function Home() {
   return (
-    <div className={`grid grid-cols-3 gap-3 bg-white dark:bg-black`}>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-red-500"></div>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-orange-500"></div>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-yellow-500"></div>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-green-500"></div>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-teal-500"></div>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-blue-500"></div>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-purple-500"></div>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-pink-500"></div>
-      <div className="min-h-[50px] rounded-lg shadow-lg dark:bg-gray-500 bg-slate-500"></div>
-      <ThemeButton />
-    </div>
+    <>
+      <header className="min-h-[50px] bg-red-300 dark:bg-purple-300 overflow-hidden grid grid-cols-2">
+        <div className="bg-white dark:bg-black">1231</div>
+        <div className="bg-white dark:bg-black ml-auto">
+          <ThemeButton />
+        </div>
+      </header>
+
+      <main className="min-h-[calc(100svh-50px-50px)] bg-orange-300 dark:bg-pink-300 overflow-hidden"></main>
+
+      <footer className="min-h-[50px] bg-yellow-300 dark:bg-teal-300 overflow-hidden"></footer>
+    </>
   );
 }

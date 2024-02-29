@@ -2,7 +2,8 @@
 
 export default function ThemeButton() {
     return (
-        <button className="rounded-full bg-blue-300 py-8" onClick={changeTheme}>切換背景色</button>
+        <button className="rounded-lg bg-blue-300 dark:bg-yellow-300 hover:scale-125 hover:bg-red-800 hover:ring" onClick={changeTheme}>切換背景色</button>
+        // <input type="checkbox" />
     );
 }
 
