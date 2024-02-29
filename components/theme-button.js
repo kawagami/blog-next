@@ -7,9 +7,10 @@ export default function ThemeButton() {
 }
 
 function changeTheme() {
-    if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark')
+    const htmlClass = document.documentElement.classList;
+    if (htmlClass.contains('dark')) {
+        htmlClass.remove('dark')
     } else {
-        document.documentElement.classList.add('dark')
+        htmlClass.add('dark')
     }
 }
