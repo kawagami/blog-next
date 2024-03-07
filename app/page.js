@@ -6,9 +6,13 @@ import ThemeButton from "@/components/theme-button";
 export default function Home() {
   return (
     <>
-      <header className="min-h-[50px] bg-red-300 dark:bg-purple-300 overflow-hidden grid grid-cols-2">
+      <header className="min-h-[50px] bg-red-300 dark:bg-purple-300 overflow-hidden hidden sm:grid sm:grid-cols-2 grid-cols-1 gap-2">
         <div className="bg-white dark:bg-black">1231</div>
-        <div className="bg-white dark:bg-black ml-auto">
+        <div className="bg-white dark:bg-black grid grid-cols-5 place-content-center">
+          <Link href="/" className="grid place-content-center">link 1</Link>
+          <Link href="/" className="grid place-content-center">link 2</Link>
+          <Link href="/" className="grid place-content-center">link 3</Link>
+          <Link href="/" className="grid place-content-center">link 4</Link>
           <ThemeButton />
         </div>
       </header>
