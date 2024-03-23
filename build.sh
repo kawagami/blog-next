@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t my-next-blog:latest .
+docker build -t kawagami77/my-next-blog:latest .

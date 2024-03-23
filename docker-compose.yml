@@ -1,6 +1,6 @@
 services:
   next:
-    image: my-next-blog
+    image: kawagami77/my-next-blog:latest
     working_dir: /app
     container_name: my-next
     # command: ["php", "artisan", "queue:work"]
