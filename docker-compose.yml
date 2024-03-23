@@ -1,9 +1,8 @@
 services:
-  next:
+  next-blog:
     image: kawagami77/my-next-blog:latest
     working_dir: /app
-    container_name: my-next
-    # command: ["php", "artisan", "queue:work"]
+    container_name: next-blog
     stop_grace_period: 1s
     ports:
       - 80:3000
