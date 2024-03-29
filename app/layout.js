@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="min-h-[50px] bg-red-300 dark:bg-purple-300 overflow-hidden hidden sm:grid sm:grid-cols-2 grid-cols-1 grid-rows-1 gap-2">
+        <header className="min-h-[50px] bg-red-300 dark:bg-purple-300 dark:text-white overflow-hidden hidden sm:grid sm:grid-cols-2 grid-cols-1 grid-rows-1 gap-2">
           <div className="bg-white dark:bg-gray-600">
             {/* <Link href="/">KAWAGAMI</Link> */}
             <Link href="/">
@@ -37,11 +37,13 @@ export default function RootLayout({ children }) {
           </div>
         </header>
 
-        <main className="min-h-[calc(100svh-50px-50px)] bg-orange-300 dark:bg-pink-300 overflow-hidden">
+        <main className="min-h-[calc(100svh-50px-50px)] bg-orange-300 dark:bg-pink-300 dark:text-white overflow-hidden">
           {children}
         </main>
 
-        <footer className="min-h-[50px] bg-yellow-300 dark:bg-teal-300 overflow-hidden"></footer>
+        <footer className="min-h-[50px] bg-yellow-300 dark:bg-teal-300 dark:text-white overflow-hidden">
+          footer 文字測試
+        </footer>
       </body>
     </html>
   );
