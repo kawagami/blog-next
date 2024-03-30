@@ -69,7 +69,6 @@ export default function ThemeButton() {
         <label className="inline-flex items-center cursor-pointer">
             <input type="checkbox" checked={isDarkMode} className="sr-only peer" onChange={changeTheme} />
             <div className={styles}></div>
-            {/* <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span> */}
         </label>
 
     );

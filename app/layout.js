@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <header className="min-h-[50px] bg-red-300 dark:bg-purple-300 dark:text-white overflow-hidden hidden sm:grid sm:grid-cols-2 grid-cols-1 grid-rows-1 gap-2">
-          <div className="bg-white dark:bg-gray-600 flex">
+          <div className="bg-white dark:bg-gray-600 flex items-center">
             <Link href="/">
               <Image
                 src={loglImg}
