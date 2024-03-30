@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from "react";
+import sun from "@/assets/Sun.svg";
+import moon from "@/assets/Moon.svg";
+import Image from "next/image";
 
 export default function ThemeButton() {
     const [isDarkMode, setIsDarkMode] = useState(false);
@@ -59,17 +62,11 @@ export default function ThemeButton() {
     ].join(' ');
 
     return (
-        // <button className="rounded-lg bg-blue-300 dark:bg-yellow-300 hover:scale-125 hover:bg-red-800 hover:ring" onClick={changeTheme}>切換背景色</button>
-
-        // <label className={classes.switch}>
-        //     <input type="checkbox" onChange={showStatus} />
-        //     <span className={`${classes.slider} ${classes.round}`}></span>
-        // </label>
-
-        <label className="inline-flex items-center cursor-pointer">
-            <input type="checkbox" checked={isDarkMode} className="sr-only peer" onChange={changeTheme} />
-            <div className={styles}></div>
-        </label>
-
+        <div className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full flex justify-center items-center" onClick={changeTheme}>
+            {isDarkMode
+                ? <Image src={sun} />
+                : <Image src={moon} />
+            }
+        </div>
     );
 }

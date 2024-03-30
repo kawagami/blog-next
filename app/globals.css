@@ -3,8 +3,5 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --darkmode-switch-shine-color:#faa;
-  --darkmode-switch-dark-color:"gray-600";
-  --background-end-rgb: 255, 255, 255;
+  --darkmode-switch-shine-color:#ddd;
 }
