@@ -1,9 +1,12 @@
-export default function Link1() {
+export const metadata = {
+    title: "link 2",
+    description: "link 2",
+};
+
+export default function Link2() {
     return (
-        <>
-            <h1>
-                this is link 2
-            </h1>
-        </>
+        <h1>
+            this is link 2
+        </h1>
     )
 }
