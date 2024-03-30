@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="min-h-[50px] bg-red-300 dark:bg-purple-300 dark:text-white overflow-hidden hidden sm:grid sm:grid-cols-2 grid-cols-1 grid-rows-1 gap-2">
+        <header className="min-h-[50px] bg-red-300 dark:bg-purple-300 dark:text-white overflow-hidden hidden sm:grid sm:grid-cols-2 grid-cols-1 grid-rows-1 gap-2 transition-all duration-300">
           <div className="bg-white dark:bg-gray-600 flex items-center">
             <Link href="/">
               <Image
@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
           </div>
         </header>
 
-        <main className="min-h-[calc(100svh-50px-50px)] bg-orange-300 dark:bg-pink-300 dark:text-white overflow-hidden flex justify-center items-center">
+        <main className="min-h-[calc(100svh-50px-50px)] bg-orange-300 dark:bg-pink-300 dark:text-white overflow-hidden flex justify-center items-center transition-all duration-300">
           {children}
         </main>
 
