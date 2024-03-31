@@ -3,5 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --darkmode-switch-shine-color:#ddd;
+  --darkmode-switch-shine-color: #ddd;
+}
+
+* {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }

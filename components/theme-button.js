@@ -19,7 +19,7 @@ export default function ThemeButton() {
     }
 
     return (
-        <div className="w-full grid place-content-center hover:scale-150 transition-all">
+        <div className="w-full grid place-content-center hover:scale-150">
             <div
                 className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full grid place-content-center"
                 onClick={changeTheme}

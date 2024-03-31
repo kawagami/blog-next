@@ -18,10 +18,10 @@ export default function Header() {
                 </Link>
             </div>
             <div className="bg-white dark:bg-gray-600 grid grid-cols-5 place-content-center">
-                <Link href="/blogs" className="grid place-content-center hover:scale-150 hover:text-blue-400 transition-all">Blogs</Link>
-                <Link href="/link2" className="grid place-content-center hover:scale-150 hover:text-blue-400 transition-all">link 2</Link>
-                <Link href="/link3" className="grid place-content-center hover:scale-150 hover:text-blue-400 transition-all">link 3</Link>
-                <Link href="/link4" className="grid place-content-center hover:scale-150 hover:text-blue-400 transition-all">link 4</Link>
+                <Link href="/blogs" className="grid place-content-center hover:scale-150 hover:text-blue-400">Blogs</Link>
+                <Link href="/link2" className="grid place-content-center hover:scale-150 hover:text-blue-400">link 2</Link>
+                <Link href="/link3" className="grid place-content-center hover:scale-150 hover:text-blue-400">link 3</Link>
+                <Link href="/link4" className="grid place-content-center hover:scale-150 hover:text-blue-400">link 4</Link>
                 <ThemeButton />
             </div>
         </header>
