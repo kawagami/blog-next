@@ -27,7 +27,7 @@ export default async function Page({ params }) {
 }
 
 async function getBlog(id) {
-    const res = await fetch(`https://axum.kawa.homes/blogs/${id}`);
+    const res = await fetch(`${process.env.API_URL}/blogs/${id}`);
 
     return res.json();
 }
