@@ -19,16 +19,18 @@ export default function ThemeButton() {
     }
 
     return (
-        <div
-            className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full flex justify-center items-center"
-            onClick={changeTheme}
-        >
-            {isDarkMode
-                ?
-                <Image src={sun} alt="sun" />
-                :
-                <Image src={moon} alt="moon" />
-            }
+        <div className="w-full grid place-content-center hover:scale-150 transition-all">
+            <div
+                className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full grid place-content-center"
+                onClick={changeTheme}
+            >
+                {isDarkMode
+                    ?
+                    <Image src={sun} alt="sun" />
+                    :
+                    <Image src={moon} alt="moon" />
+                }
+            </div>
         </div>
     );
 }
