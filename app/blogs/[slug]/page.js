@@ -17,7 +17,16 @@ export default async function Page({ params }) {
                     ?
                     <div key={index} className="rounded-lg">
                         {component.content ? <div key={index} className="rounded-lg">{component.content}</div> : null}
-                        <Image key={index} src={component.url} width={300} height={300} className="rounded-lg" />
+                        <Image
+                            key={index}
+                            src={component.url}
+                            width={300}
+                            height={300}
+                            className="rounded-lg"
+                            alt="image"
+                            placeholder="blur"
+                            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mPsrwcAAaMBEBqiKX0AAAAASUVORK5CYII="
+                        />
                     </div>
                     :
                     <div key={index} className="rounded-lg">{component.content}</div>
