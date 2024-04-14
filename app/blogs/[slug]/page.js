@@ -1,4 +1,5 @@
 import Image from "next/image";
+import getBlog from "@/api/get-blog";
 
 export const metadata = {
     title: "Blogs",
@@ -35,10 +36,4 @@ export default async function Page({ params }) {
             </div>
         </div>
     )
-}
-
-async function getBlog(id) {
-    const res = await fetch(`${process.env.API_URL}/blogs/${id}`);
-
-    return res.json();
 }
