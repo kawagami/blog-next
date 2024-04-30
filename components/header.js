@@ -19,7 +19,7 @@ export default function Header() {
             </div>
             <div className="bg-white dark:bg-gray-600 grid grid-cols-5 place-content-center">
                 <Link href="/blogs" className="grid place-content-center hover:scale-150 hover:text-blue-400">Blogs</Link>
-                <Link href="/link2" className="grid place-content-center hover:scale-150 hover:text-blue-400">link 2</Link>
+                <Link href="/hackmd-notes" className="grid place-content-center hover:scale-150 hover:text-blue-400">HackMD Notes</Link>
                 <Link href="/link3" className="grid place-content-center hover:scale-150 hover:text-blue-400">link 3</Link>
                 <Link href="/link4" className="grid place-content-center hover:scale-150 hover:text-blue-400">link 4</Link>
                 <ThemeButton />
