@@ -34,6 +34,7 @@ export default async function HackMDNotes() {
                                     className="border-4 rounded-xl border-cyan-400 p-2 hover:scale-110 hover:font-bold hover:text-lg hover:text-blue-400"
                                     target="_blank"
                                     href={note.publish_link}
+                                    key={note.id}
                                 >
                                     {/* <div>{note.id}</div> */}
                                     <div>{note.title}</div>
