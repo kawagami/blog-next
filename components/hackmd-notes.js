@@ -43,7 +43,7 @@ export default function HackMDNotesComponent(props) {
                                 <div>{formattedDate}</div>
                                 <div>{formattedTime}</div>
                                 <div className="flex gap-4 justify-center">
-                                    {note.categories.map(category => <span className="bg-gray-200 dark:bg-gray-800 text-sm p-2 rounded-full">{category}</span>)}
+                                    {note.categories.map(category => <span key={category} className="bg-gray-200 dark:bg-gray-800 text-sm p-2 rounded-full">{category}</span>)}
                                 </div>
                             </Link>
                         )
