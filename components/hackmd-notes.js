@@ -3,13 +3,21 @@
 import Link from "next/link";
 import { useNoteContext } from "@/provider/note-provider";
 
+let defaultCount = 0;
+
 export default function HackMDNotesComponent(props) {
     const { openArray, setOpenArray } = useNoteContext();
 
     // 預設筆記全選
-    if (openArray.length === 0) {
-        setOpenArray(props.defaultOpenArray);
-    }
+    const checkDefault = () => {
+        if (openArray.length === 0 && defaultCount === 0) {
+            defaultCount++;
+            setOpenArray(props.defaultOpenArray);
+
+        }
+    };
+
+    checkDefault();
 
     // 過濾
     const filterData = props.notes
