@@ -3,7 +3,9 @@ import "./globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Suspense } from "react";
-import Loading from "./loading";
+// import Loading from "./loading";
+import NoteProvider from "@/provider/note-provider";
+import Loading from "@/components/loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,15 +18,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
+        <NoteProvider>
+          <Header />
 
-        <main className="min-h-[calc(100svh-50px-50px)] bg-white dark:bg-gray-600 dark:text-white overflow-hidden flex flex-col justify-center items-center">
-          <Suspense fallback={<Loading />}>
-            {children}
-          </Suspense>
-        </main>
+          <main className="min-h-[calc(100svh-50px-50px)] bg-white dark:bg-gray-600 dark:text-white overflow-hidden flex flex-col items-center justify-start pt-4">
+            <Suspense fallback={<Loading />}>
+              {children}
+            </Suspense>
+          </main>
 
-        <Footer />
+          <Footer />
+        </NoteProvider>
       </body>
     </html>
   );
