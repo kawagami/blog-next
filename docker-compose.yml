@@ -6,3 +6,9 @@ services:
     stop_grace_period: 1s
     ports:
       - 80:3000
+  garnet:
+    image: 'ghcr.io/microsoft/garnet'
+    ulimits:
+      memlock: -1
+    ports:
+      - "6379:6379"
