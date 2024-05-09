@@ -1,21 +1,21 @@
 'use client'
 
-import { useState } from "react";
 import sun from "@/assets/Sun.svg";
 import moon from "@/assets/Moon.svg";
 import Image from "next/image";
+import { useDarkContext } from "@/provider/dark-provider";
 
 export default function ThemeButton() {
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const { isDark, setIsDark } = useDarkContext();
 
     function changeTheme() {
         const htmlClass = document.documentElement.classList;
-        if (isDarkMode) {
+        if (isDark) {
             htmlClass.remove('dark')
         } else {
             htmlClass.add('dark')
         }
-        setIsDarkMode(preValue => !preValue)
+        setIsDark(preValue => !preValue)
     }
 
     return (
@@ -24,7 +24,7 @@ export default function ThemeButton() {
                 className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full grid place-content-center"
                 onClick={changeTheme}
             >
-                {isDarkMode
+                {isDark
                     ?
                     <Image src={sun} alt="sun" />
                     :
