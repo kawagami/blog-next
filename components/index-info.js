@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function IndexInfo(props) {
     return (
-        <div className="p-4 border-4 rounded-2xl border-double border-gray-800">
+        <div className="p-4 border-4 rounded-2xl border-double border-gray-800 dark:border-gray-200">
             <div className="text-4xl p-4">
                 <Link
                     href={props.href}
