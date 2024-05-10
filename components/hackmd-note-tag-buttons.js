@@ -20,7 +20,7 @@ export default function HackmdNoteTagButtons(props) {
         "bg-gray-200",
         "dark:bg-gray-800",
         "dark:text-white",
-        "hover:scale-110",
+        "hover:scale-150",
         "hover:invert"
     ].join(' ');
 
@@ -53,10 +53,10 @@ export default function HackmdNoteTagButtons(props) {
                             <span className={commonStyle} onClick={() => clickAll()}>全選</span>
                             <span className={commonStyle} onClick={() => clickNothing()}>全不選</span>
                         </div>
-                        <div className="grid grid-cols-12 gap-1 text-center">
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-12 gap-1 text-center">
                             {props.tags.map(tag => {
-                                let tailwindStyle = ["border-2", "rounded-lg", "bg-gray-300", "dark:bg-gray-800", "dark:text-white", "hover:scale-110", "hover:invert"];
-                                tailwindStyle = openArray.includes(tag.name) ? ["invert", ...tailwindStyle] : [...tailwindStyle];
+                                let tailwindStyle = ["border-2", "rounded-lg", "bg-gray-300", "dark:bg-gray-800", "dark:text-white", "hover:scale-150"];
+                                tailwindStyle = openArray.includes(tag.name) ? ["invert", "hover:invert-0", "hover:z-10", ...tailwindStyle] : ["hover:invert", ...tailwindStyle];
 
                                 tailwindStyle = tailwindStyle.join(' ');
                                 return (
