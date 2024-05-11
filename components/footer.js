@@ -15,7 +15,7 @@ export default function Footer() {
             </div>
 
             <div className="flex justify-center items-center">
-                <Link target="_blank" href="https://github.com/kawagami">
+                <Link className="hover:scale-150" target="_blank" href="https://github.com/kawagami">
                     {
                         isDark
                             ?
