@@ -42,7 +42,7 @@ export default function HackMDNotesComponent(props) {
 
                         return (
                             <Link
-                                className="border-4 rounded-xl border-cyan-400 p-2 hover:scale-110 hover:font-bold hover:text-lg hover:text-blue-400 text-center"
+                                className="border-4 rounded-xl border-cyan-400 p-2 hover:scale-150 hover:bg-gray-600 hover:dark:bg-gray-200 hover:text-blue-400 text-center"
                                 target="_blank"
                                 href={note.publish_link}
                                 key={note.id}
