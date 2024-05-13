@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function IndexInfo(props) {
     return (
-        <div className="p-4 border-4 rounded-2xl border-double border-gray-800 dark:border-gray-200">
+        <div className={`p-4 border-4 rounded-2xl border-double border-gray-800 dark:border-gray-200${props.href === '/' ? ' col-span-2' : ''}`}>
             <div className="text-4xl p-4 hover:scale-150">
                 <Link
                     href={props.href}
