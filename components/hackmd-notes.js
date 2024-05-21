@@ -38,7 +38,7 @@ export default function HackMDNotesComponent(props) {
                         const date = new Date(note.last_changed_at);
                         const middleData = date.toISOString().split('T');
                         const formattedDate = middleData[0].replace(/-/g, '/');
-                        const formattedTime = middleData[1];
+                        const formattedTime = middleData[1].split('.')[0];
 
                         return (
                             <Link

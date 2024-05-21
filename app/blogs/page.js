@@ -1,6 +1,5 @@
 import BlogCard from "@/components/blog-card";
-import Image from "next/image";
-import Link from "next/link";
+import getBlogs from "@/api/get-blogs";
 
 export const metadata = {
     title: "Blogs",
@@ -24,10 +23,4 @@ export default async function Blogs() {
             </div>
         </>
     )
-}
-
-async function getBlogs() {
-    const res = await fetch(`${process.env.API_URL}/blogs`);
-
-    return res.json();
 }
