@@ -5,7 +5,6 @@ import { useState } from "react";
 
 export default function HackmdNoteTagButtons(props) {
     const [showFilter, setShowFilter] = useState(false);
-
     const { openArray, setOpenArray } = useNoteContext();
 
     const checkExist = (name) => {
@@ -20,8 +19,10 @@ export default function HackmdNoteTagButtons(props) {
         "bg-gray-200",
         "dark:bg-gray-800",
         "dark:text-white",
-        "hover:scale-150",
-        "hover:invert"
+        "hover:scale-105", // 使用較小的縮放
+        "transition-transform", // 添加過渡效果
+        "duration-200", // 變化持續時間
+        "ease-in-out", // 變化效果
     ].join(' ');
 
     const clickAll = () => {
@@ -35,45 +36,49 @@ export default function HackmdNoteTagButtons(props) {
 
     return (
         <>
-            <div className="grid grid-cols-1 gap-1 text-center p-1">
-                {
-                    showFilter
-                        ?
-                        <span className={commonStyle} onClick={() => setShowFilter(!showFilter)}>隱藏分類</span>
-                        :
-                        <span className={commonStyle} onClick={() => setShowFilter(!showFilter)}>顯示分類</span>
-                }
+            <div className="grid grid-cols-1 gap-1 text-center p-2 mb-2"> {/* 增加下方邊距 */}
+                <span className={commonStyle} onClick={() => setShowFilter(!showFilter)}>
+                    {showFilter ? "隱藏分類" : "顯示分類"}
+                </span>
             </div>
 
-            {
-                showFilter
-                    ?
-                    <>
-                        <div className="grid grid-cols-2 gap-1 text-center p-1">
-                            <span className={commonStyle} onClick={() => clickAll()}>全選</span>
-                            <span className={commonStyle} onClick={() => clickNothing()}>全不選</span>
-                        </div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-12 gap-1 text-center">
-                            {props.tags.map(tag => {
-                                let tailwindStyle = ["border-2", "rounded-lg", "bg-gray-300", "dark:bg-gray-800", "dark:text-white", "hover:scale-150"];
-                                tailwindStyle = openArray.includes(tag.name) ? ["invert", "hover:invert-0", "hover:z-10", ...tailwindStyle] : ["hover:invert", ...tailwindStyle];
+            {showFilter && (
+                <>
+                    <div className="grid grid-cols-2 gap-2 text-center p-1"> {/* 增加間距 */}
+                        <span className={commonStyle} onClick={() => clickAll()}>全選</span>
+                        <span className={commonStyle} onClick={() => clickNothing()}>全不選</span>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-12 gap-2 text-center">
+                        {props.tags.map(tag => {
+                            let tailwindStyle = [
+                                "border-2",
+                                "rounded-lg",
+                                "bg-gray-300",
+                                "dark:bg-gray-800",
+                                "dark:text-white",
+                                "hover:scale-105", // 使用較小的縮放
+                                "transition-transform",
+                                "duration-200",
+                                "ease-in-out",
+                            ];
 
-                                tailwindStyle = tailwindStyle.join(' ');
-                                return (
-                                    <span
-                                        className={tailwindStyle}
-                                        key={tag.id}
-                                        onClick={() => { checkExist(tag.name) }}
-                                    >
-                                        {tag.name}
-                                    </span>
-                                );
-                            })}
-                        </div>
-                    </>
-                    :
-                    <></>
-            }
+                            tailwindStyle = openArray.includes(tag.name)
+                                ? ["invert", "hover:invert-0", "hover:z-10", ...tailwindStyle]
+                                : ["hover:invert", ...tailwindStyle];
+
+                            return (
+                                <span
+                                    className={tailwindStyle.join(' ')}
+                                    key={tag.id}
+                                    onClick={() => { checkExist(tag.name) }}
+                                >
+                                    {tag.name}
+                                </span>
+                            );
+                        })}
+                    </div>
+                </>
+            )}
         </>
     );
 }
