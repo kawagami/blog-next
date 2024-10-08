@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import { useEffect } from "react"; // 引入 useEffect
 import { useNoteContext } from "@/provider/note-provider";
 
 let defaultCount = 0;
@@ -8,15 +9,13 @@ let defaultCount = 0;
 export default function HackMDNotesComponent(props) {
     const { openArray, setOpenArray } = useNoteContext();
 
-    // 預設筆記全選
-    const checkDefault = () => {
+    // 使用 useEffect 來處理狀態更新
+    useEffect(() => {
         if (openArray.length === 0 && defaultCount === 0) {
             defaultCount++;
             setOpenArray(props.defaultOpenArray);
         }
-    };
-
-    checkDefault();
+    }, [openArray, props.defaultOpenArray, setOpenArray]); // 依賴項
 
     // 過濾
     const filterData = props.notes
@@ -33,7 +32,6 @@ export default function HackMDNotesComponent(props) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-4">
                 {
                     filterData.map(note => {
-
                         const date = new Date(note.last_changed_at);
                         const middleData = date.toISOString().split('T');
                         const formattedDate = middleData[0].replace(/-/g, '/');
