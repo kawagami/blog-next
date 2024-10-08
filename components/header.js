@@ -20,8 +20,9 @@ export default function Header() {
             <div className="grid grid-cols-5 place-content-center">
                 <Link href="/blogs" className="grid place-content-center hover:scale-150 hover:text-blue-400">Blogs</Link>
                 <Link href="/hackmd-notes" className="grid place-content-center hover:scale-150 hover:text-blue-400">HackMD Notes</Link>
-                <Link href="/link3" className="grid place-content-center hover:scale-150 hover:text-blue-400">link 3</Link>
-                <Link href="/link4" className="grid place-content-center hover:scale-150 hover:text-blue-400">link 4</Link>
+                {/* <Link href="/images" className="grid place-content-center hover:scale-150 hover:text-blue-400">Images</Link> */}
+                <Link href="/sites" className="grid place-content-center hover:scale-150 hover:text-blue-400">My Sites</Link>
+                <Link href="/ws" className="grid place-content-center hover:scale-150 hover:text-blue-400">WS</Link>
                 <ThemeButton />
             </div>
         </header>
