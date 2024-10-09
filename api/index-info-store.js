@@ -8,8 +8,8 @@ const IndexInfoStore = [
             "前端頁面是使用 next.js 框架",
             "目前頁面有基本的黑暗模式切換",
             "HackMD note 頁面完成初步的分類按鈕功能",
-            "link 3 & link 4 頁面還在思考要放甚麼",
-            "頁面的內容還有挺多想做的",
+            "My Sites 頁面是稍微介紹一下目前使用的 domain",
+            "WS 頁面是簡易聊天室",
             "慢慢建構中",
         ]
     },
