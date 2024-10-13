@@ -1,5 +1,5 @@
 'use client'
-import getWsMessages from '@/api/get-ws-messages';
+
 import { useState, useEffect, useRef } from 'react';
 
 export default function ChatMessages(props) {
@@ -10,9 +10,8 @@ export default function ChatMessages(props) {
     const messageBoxRef = useRef(null); // 用來自動捲動的參考
 
     useEffect(() => {
-        // 先取得歷史訊息
-        // let historyMessages = await getWsMessages();
-        props.messages.map(historyMessage => setMessages(prevMessages => [...prevMessages, { content: historyMessage.message, from: historyMessage.from }]));
+        // 先 render 歷史訊息
+        props.messages.map(historyMessage => setMessages(prevMessages => [...prevMessages, { message_type: historyMessage.message_type, content: historyMessage.content, from: historyMessage.from, to: historyMessage.to }]));
 
         const webSocket = new WebSocket(`wss://axum.kawa.homes/ws?token=${username}`);
         setWs(webSocket);
@@ -46,6 +45,7 @@ export default function ChatMessages(props) {
     const sendMessage = () => {
         if (inputMessage.trim() === '') return; // 避免發送空訊息
         let msg = {
+            message_type: "Message",
             from: username, // 記得在發送訊息時帶上發送者
             content: inputMessage,
             to: "All"
@@ -73,25 +73,57 @@ export default function ChatMessages(props) {
 
                     <div className="bg-gray-200 rounded-lg p-4 h-96 overflow-y-auto" ref={messageBoxRef}>
                         <ul className="space-y-2">
-                            {messages.map((msg, index) => (
-                                <li
-                                    key={index}
-                                    className={`p-2 shadow-sm rounded-lg ${msg.from === username ? 'bg-green-100 text-right ml-auto' : 'bg-white text-left'}`}
-                                >
-                                    {msg.from !== username ? (
-                                        <div className="text-left">
-                                            <span className="font-bold">{msg.from}:</span>
-                                            <div>{msg.content}</div>
-                                        </div>
-                                    ) : (
-                                        <div className="text-right">
-                                            <span className="font-bold">{msg.from}:</span>
-                                            <div>{msg.content}</div>
-                                        </div>
-                                    )}
-                                </li>
+                            {
+                                messages.map((msg, index) => {
+                                    let content;
 
-                            ))}
+                                    // 根據 message_type 渲染不同內容
+                                    switch (msg.message_type) {
+                                        case "Message":
+                                            content = (
+                                                <li
+                                                    key={index}
+                                                    className={`p-2 shadow-sm rounded-lg ${msg.from === username ? 'bg-green-100 text-right ml-auto' : 'bg-white text-left'}`}
+                                                >
+                                                    {msg.from !== username ? (
+                                                        <div className="text-left">
+                                                            <span className="font-bold">{msg.from}:</span>
+                                                            <div>{msg.content}</div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-right">
+                                                            <span className="font-bold">{msg.from}:</span>
+                                                            <div>{msg.content}</div>
+                                                        </div>
+                                                    )}
+                                                </li>
+                                            );
+                                            break;
+
+                                        case "Join":
+                                            content = (
+                                                <li key={index} className="p-2 shadow-sm rounded-lg bg-blue-100 text-center">
+                                                    <div>{`${msg.from} has joined the chat.`}</div>
+                                                </li>
+                                            );
+                                            break;
+
+                                        case "Leave":
+                                            content = (
+                                                <li key={index} className="p-2 shadow-sm rounded-lg bg-red-100 text-center">
+                                                    <div>{`${msg.from} has left the chat.`}</div>
+                                                </li>
+                                            );
+                                            break;
+
+                                        default:
+                                            content = null;
+                                    }
+
+                                    return content;
+                                })
+                            }
+
                         </ul>
                     </div>
 
