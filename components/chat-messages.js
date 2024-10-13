@@ -6,6 +6,7 @@ export default function ChatMessages(props) {
     const [ws, setWs] = useState(null);
     const [username] = useState(Math.random().toString(36).slice(-6)); // 固定 username 避免重渲染
     const [messages, setMessages] = useState([]); // 儲存收到的訊息
+    const [onlineUsers, setOnlineUsers] = useState([]); // 儲存目前線上的用戶
     const [inputMessage, setInputMessage] = useState(''); // 儲存輸入框的訊息
     const messageBoxRef = useRef(null); // 用來自動捲動的參考
 
@@ -22,7 +23,12 @@ export default function ChatMessages(props) {
 
         webSocket.onmessage = (event) => {
             const message = JSON.parse(event.data); // 假設接收到的是 JSON 格式
-            setMessages(prevMessages => [...prevMessages, message]); // 將新訊息加到列表中
+            setMessages(prevMessages => [...prevMessages, message]);
+
+            // 如果是 Join 或 Leave 訊息，更新在線用戶
+            if (message.message_type === "Join" || message.message_type === "Leave") {
+                setOnlineUsers(message.content.split(','));
+            }
         };
 
         webSocket.onclose = () => {
@@ -68,10 +74,19 @@ export default function ChatMessages(props) {
     return (
         <>
             <div className="flex flex-col h-full w-[800px] justify-center items-center bg-gray-100 p-6">
-                <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
-                    <h1 className="text-2xl font-bold text-center mb-4">簡易聊天室</h1>
+                <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 flex">
+                    {/* 左側：目前在線用戶 */}
+                    <div className="w-1/4 bg-blue-100 rounded-lg p-4">
+                        <h2 className="text-lg font-bold mb-2">目前在線用戶</h2>
+                        <ul>
+                            {onlineUsers.map((user, index) => (
+                                <li key={index} className="text-sm">{user}</li>
+                            ))}
+                        </ul>
+                    </div>
 
-                    <div className="bg-gray-200 rounded-lg p-4 h-96 overflow-y-auto" ref={messageBoxRef}>
+                    {/* 右側：訊息列表 */}
+                    <div className="w-3/4 bg-gray-200 rounded-lg p-4 ml-4 h-96 overflow-y-auto" ref={messageBoxRef}>
                         <ul className="space-y-2">
                             {
                                 messages.map((msg, index) => {
@@ -129,7 +144,8 @@ export default function ChatMessages(props) {
 
                 </div>
 
-                <div className="mt-4 w-full max-w-lg flex items-center space-x-4">
+                {/* 訊息輸入區域 */}
+                <div className="mt-4 w-full max-w-4xl flex items-center space-x-4">
                     <input
                         type="text"
                         className="flex-1 bg-white shadow-sm rounded-lg p-2 border border-gray-300 focus:outline-none"
@@ -145,7 +161,6 @@ export default function ChatMessages(props) {
                         發送訊息
                     </button>
                 </div>
-
             </div>
         </>
     );
