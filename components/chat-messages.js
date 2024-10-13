@@ -6,7 +6,7 @@ export default function ChatMessages(props) {
     const [ws, setWs] = useState(null);
     const [username] = useState(Math.random().toString(36).slice(-6)); // 固定 username 避免重渲染
     const [messages, setMessages] = useState([]); // 儲存收到的訊息
-    const [onlineUsers, setOnlineUsers] = useState([]); // 儲存目前線上的用戶
+    const [onlineUsers, setOnlineUsers] = useState([]); // 儲存目前線上的使用者
     const [inputMessage, setInputMessage] = useState(''); // 儲存輸入框的訊息
     const messageBoxRef = useRef(null); // 用來自動捲動的參考
 
@@ -25,7 +25,7 @@ export default function ChatMessages(props) {
             const message = JSON.parse(event.data); // 假設接收到的是 JSON 格式
             setMessages(prevMessages => [...prevMessages, message]);
 
-            // 如果是 Join 或 Leave 訊息，更新在線用戶
+            // 如果是 Join 或 Leave 訊息，更新在線使用者
             if (message.message_type === "Join" || message.message_type === "Leave") {
                 setOnlineUsers(message.content.split(','));
             }
@@ -75,9 +75,9 @@ export default function ChatMessages(props) {
         <>
             <div className="flex flex-col h-full w-[800px] justify-center items-center bg-gray-100 p-6">
                 <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 flex">
-                    {/* 左側：目前在線用戶 */}
-                    <div className="w-1/4 bg-blue-100 rounded-lg p-4">
-                        <h2 className="text-lg font-bold mb-2">目前在線用戶</h2>
+                    {/* 左側：目前在線使用者 */}
+                    <div className="w-1/4 bg-blue-100 rounded-lg p-4 h-96 overflow-y-auto">
+                        <h2 className="text-lg font-bold mb-2">目前在線使用者</h2>
                         <ul>
                             {onlineUsers.map((user, index) => (
                                 <li key={index} className="text-sm">{user}</li>
