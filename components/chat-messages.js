@@ -73,7 +73,7 @@ export default function ChatMessages(props) {
 
     return (
         <>
-            <div className="flex flex-col h-full w-[800px] justify-center items-center bg-gray-100 p-6">
+            <div className="flex flex-col h-full w-[850px] justify-center items-center bg-gray-100 p-6">
                 <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 flex">
                     {/* 左側：目前在線使用者 */}
                     <div className="w-1/4 bg-blue-100 rounded-lg p-4 h-96 overflow-y-auto">
