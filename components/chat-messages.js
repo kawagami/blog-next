@@ -156,9 +156,13 @@ export default function ChatMessages(props) {
                     />
                     <button
                         onClick={sendMessage}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        disabled={!ws || ws.readyState !== WebSocket.OPEN} // 如果尚未連線或連線中斷則禁用按鈕
+                        className={`${ws && ws.readyState === WebSocket.OPEN
+                            ? 'bg-green-500 hover:bg-green-700'
+                            : 'bg-gray-400 cursor-not-allowed'
+                            } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
                     >
-                        發送訊息
+                        {ws && ws.readyState === WebSocket.OPEN ? '發送訊息' : '正在連線...'}
                     </button>
                 </div>
             </div>
