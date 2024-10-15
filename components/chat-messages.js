@@ -4,12 +4,13 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function ChatMessages(props) {
     const [ws, setWs] = useState(null);
-    const [isConnected, setIsConnected] = useState(false); // 新增追蹤 WebSocket 連線狀態
+    const [isConnected, setIsConnected] = useState(false); // 追蹤 WebSocket 連線狀態
     const [username] = useState(Math.random().toString(36).slice(-6)); // 固定 username 避免重渲染
     const [messages, setMessages] = useState([]); // 儲存收到的訊息
     const [onlineUsers, setOnlineUsers] = useState([]); // 儲存目前線上的使用者
     const [inputMessage, setInputMessage] = useState(''); // 儲存輸入框的訊息
     const messageBoxRef = useRef(null); // 用來自動捲動的參考
+    const pingIntervalRef = useRef(null); // 用來儲存 setInterval 的參考
 
     useEffect(() => {
         // 先 render 歷史訊息
@@ -21,6 +22,20 @@ export default function ChatMessages(props) {
         webSocket.onopen = () => {
             console.log('WebSocket 已連接');
             setIsConnected(true); // 更新連線狀態
+
+            // 每 45 秒發送一次 PING 訊息
+            pingIntervalRef.current = setInterval(() => {
+                if (webSocket.readyState === WebSocket.OPEN) {
+                    let ping = {
+                        message_type: "PING",
+                        from: username,
+                        content: "PING",
+                        to: "Myself"
+                    };
+                    webSocket.send(JSON.stringify(ping));
+                    console.log('PING 發送');
+                }
+            }, 45000); // 45 秒
         };
 
         webSocket.onmessage = (event) => {
@@ -36,11 +51,21 @@ export default function ChatMessages(props) {
         webSocket.onclose = () => {
             console.log('WebSocket 已斷線');
             setIsConnected(false); // 更新連線狀態
+
+            // 清理 PING 的定時器
+            if (pingIntervalRef.current) {
+                clearInterval(pingIntervalRef.current);
+                pingIntervalRef.current = null;
+            }
         };
 
-        // 清理：元件卸載時關閉 WebSocket
+        // 清理：元件卸載時關閉 WebSocket 並清除定時器
         return () => {
             webSocket.close();
+            if (pingIntervalRef.current) {
+                clearInterval(pingIntervalRef.current);
+                pingIntervalRef.current = null;
+            }
         };
     }, [username]);
 
@@ -162,8 +187,8 @@ export default function ChatMessages(props) {
                         onClick={sendMessage}
                         disabled={!isConnected} // 當 WebSocket 斷線時禁用按鈕
                         className={`${isConnected
-                                ? 'bg-green-500 hover:bg-green-700'
-                                : 'bg-gray-400 cursor-not-allowed'
+                            ? 'bg-green-500 hover:bg-green-700'
+                            : 'bg-gray-400 cursor-not-allowed'
                             } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
                     >
                         {isConnected ? '發送訊息' : '正在連線...'}
