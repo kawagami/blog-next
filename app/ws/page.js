@@ -2,8 +2,8 @@ import getWsMessages from "@/api/get-ws-messages"
 import ChatMessages from "@/components/chat-messages";
 
 export const metadata = {
-    title: "simple ws chat",
-    description: "simple ws chat",
+    title: "Websocket chat",
+    description: "Websocket chat",
 };
 
 export default async function Ws() {
