@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function ChatMessages(props) {
     const [ws, setWs] = useState(null);
+    const [isConnected, setIsConnected] = useState(false); // 新增追蹤 WebSocket 連線狀態
     const [username] = useState(Math.random().toString(36).slice(-6)); // 固定 username 避免重渲染
     const [messages, setMessages] = useState([]); // 儲存收到的訊息
     const [onlineUsers, setOnlineUsers] = useState([]); // 儲存目前線上的使用者
@@ -19,6 +20,7 @@ export default function ChatMessages(props) {
 
         webSocket.onopen = () => {
             console.log('WebSocket 已連接');
+            setIsConnected(true); // 更新連線狀態
         };
 
         webSocket.onmessage = (event) => {
@@ -33,6 +35,7 @@ export default function ChatMessages(props) {
 
         webSocket.onclose = () => {
             console.log('WebSocket 已斷線');
+            setIsConnected(false); // 更新連線狀態
         };
 
         // 清理：元件卸載時關閉 WebSocket
@@ -153,16 +156,17 @@ export default function ChatMessages(props) {
                         value={inputMessage}
                         onChange={(e) => setInputMessage(e.target.value)}
                         onKeyDown={handleKeyDown}
+                        disabled={!isConnected} // 當 WebSocket 斷線時禁用輸入框
                     />
                     <button
                         onClick={sendMessage}
-                        disabled={!ws || ws.readyState !== WebSocket.OPEN} // 如果尚未連線或連線中斷則禁用按鈕
-                        className={`${ws && ws.readyState === WebSocket.OPEN
-                            ? 'bg-green-500 hover:bg-green-700'
-                            : 'bg-gray-400 cursor-not-allowed'
+                        disabled={!isConnected} // 當 WebSocket 斷線時禁用按鈕
+                        className={`${isConnected
+                                ? 'bg-green-500 hover:bg-green-700'
+                                : 'bg-gray-400 cursor-not-allowed'
                             } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
                     >
-                        {ws && ws.readyState === WebSocket.OPEN ? '發送訊息' : '正在連線...'}
+                        {isConnected ? '發送訊息' : '正在連線...'}
                     </button>
                 </div>
             </div>
