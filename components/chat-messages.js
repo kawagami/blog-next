@@ -101,42 +101,41 @@ export default function ChatMessages(props) {
 
     return (
         <>
-            <div className="flex flex-col h-full w-[850px] justify-center items-center bg-gray-100 p-6">
-                <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 flex">
+            <div className="flex flex-col h-full w-[850px] justify-center items-center bg-gray-200 dark:bg-gray-800 p-6">
+                <div className="w-full max-w-4xl bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 flex">
                     {/* 左側：目前在線使用者 */}
-                    <div className="w-1/4 bg-blue-100 rounded-lg p-4 h-96 overflow-y-auto">
-                        <h2 className="text-lg font-bold mb-2">目前在線使用者</h2>
+                    <div className="w-1/4 bg-blue-100 dark:bg-gray-600 rounded-lg p-4 h-96 overflow-y-auto">
+                        <h2 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">目前在線使用者</h2>
                         <ul>
                             {onlineUsers.map((user, index) => (
-                                <li key={index} className="text-sm">{user}</li>
+                                <li key={index} className="text-sm text-gray-800 dark:text-gray-300">{user}</li>
                             ))}
                         </ul>
                     </div>
 
                     {/* 右側：訊息列表 */}
-                    <div className="w-3/4 bg-gray-200 rounded-lg p-4 ml-4 h-96 overflow-y-auto" ref={messageBoxRef}>
+                    <div className="w-3/4 bg-gray-200 dark:bg-gray-800 rounded-lg p-4 ml-4 h-96 overflow-y-auto" ref={messageBoxRef}>
                         <ul className="space-y-2">
                             {
                                 messages.map((msg, index) => {
                                     let content;
 
-                                    // 根據 message_type 渲染不同內容
                                     switch (msg.message_type) {
                                         case "Message":
                                             content = (
                                                 <li
                                                     key={index}
-                                                    className={`p-2 shadow-sm rounded-lg ${msg.from === username ? 'bg-green-100 text-right ml-auto' : 'bg-white text-left'}`}
+                                                    className={`p-2 shadow-sm rounded-lg ${msg.from === username ? 'bg-green-100 dark:bg-green-600 text-right ml-auto' : 'bg-white dark:bg-gray-700 text-left'}`}
                                                 >
                                                     {msg.from !== username ? (
                                                         <div className="text-left">
-                                                            <span className="font-bold">{msg.from}:</span>
-                                                            <div>{msg.content}</div>
+                                                            <span className="font-bold text-gray-900 dark:text-white">{msg.from}:</span>
+                                                            <div className="text-gray-800 dark:text-gray-300">{msg.content}</div>
                                                         </div>
                                                     ) : (
                                                         <div className="text-right">
-                                                            <span className="font-bold">{msg.from}:</span>
-                                                            <div>{msg.content}</div>
+                                                            <span className="font-bold text-gray-900 dark:text-white">{msg.from}:</span>
+                                                            <div className="text-gray-800 dark:text-gray-300">{msg.content}</div>
                                                         </div>
                                                     )}
                                                 </li>
@@ -145,16 +144,16 @@ export default function ChatMessages(props) {
 
                                         case "Join":
                                             content = (
-                                                <li key={index} className="p-2 shadow-sm rounded-lg bg-blue-100 text-center">
-                                                    <div>{`${msg.from} has joined the chat.`}</div>
+                                                <li key={index} className="p-2 shadow-sm rounded-lg bg-blue-100 dark:bg-gray-600 text-center">
+                                                    <div className="text-gray-800 dark:text-gray-300">{`${msg.from} has joined the chat.`}</div>
                                                 </li>
                                             );
                                             break;
 
                                         case "Leave":
                                             content = (
-                                                <li key={index} className="p-2 shadow-sm rounded-lg bg-red-100 text-center">
-                                                    <div>{`${msg.from} has left the chat.`}</div>
+                                                <li key={index} className="p-2 shadow-sm rounded-lg bg-red-100 dark:bg-gray-600 text-center">
+                                                    <div className="text-gray-800 dark:text-gray-300">{`${msg.from} has left the chat.`}</div>
                                                 </li>
                                             );
                                             break;
@@ -176,7 +175,7 @@ export default function ChatMessages(props) {
                 <div className="mt-4 w-full max-w-4xl flex items-center space-x-4">
                     <input
                         type="text"
-                        className="flex-1 bg-white shadow-sm rounded-lg p-2 border border-gray-300 focus:outline-none"
+                        className="flex-1 bg-white dark:bg-gray-700 shadow-sm rounded-lg p-2 border border-gray-300 dark:border-gray-600 focus:outline-none"
                         placeholder="輸入訊息..."
                         value={inputMessage}
                         onChange={(e) => setInputMessage(e.target.value)}
@@ -187,8 +186,8 @@ export default function ChatMessages(props) {
                         onClick={sendMessage}
                         disabled={!isConnected} // 當 WebSocket 斷線時禁用按鈕
                         className={`${isConnected
-                            ? 'bg-green-500 hover:bg-green-700'
-                            : 'bg-gray-400 cursor-not-allowed'
+                            ? 'bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-800'
+                            : 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed'
                             } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
                     >
                         {isConnected ? '發送訊息' : '正在連線...'}
