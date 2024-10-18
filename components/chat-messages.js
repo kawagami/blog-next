@@ -14,7 +14,7 @@ export default function ChatMessages(props) {
 
     useEffect(() => {
         // 先 render 歷史訊息
-        props.messages.map(historyMessage => setMessages(prevMessages => [...prevMessages, { message_type: historyMessage.message_type, content: historyMessage.content, from: historyMessage.from, to: historyMessage.to }]));
+        props.messages.reverse().map(historyMessage => setMessages(prevMessages => [...prevMessages, { message_type: historyMessage.message_type, content: historyMessage.content, from: historyMessage.from, to: historyMessage.to }]));
 
         const webSocket = new WebSocket(`wss://axum.kawa.homes/ws?token=${username}`);
         setWs(webSocket);
