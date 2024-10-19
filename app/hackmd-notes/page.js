@@ -16,8 +16,7 @@ export default async function HackMDNotes() {
     return (
         <>
             <HackmdNoteTagButtons tags={tags} />
-
             <HackMDNotesComponent notes={notes} defaultOpenArray={defaultOpenArray} />
         </>
-    )
+    );
 }
