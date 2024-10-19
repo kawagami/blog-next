@@ -38,7 +38,7 @@ export default function FirebaseFormComponent() {
                 setUploadedImages((prevImages) => [...prevImages, response.image_url]); // 將新的圖片 URL 添加到陣列中
             }
         } catch (error) {
-            console.error("上傳失敗：", error);
+            console.error("上傳失敗：", error.message);
         } finally {
             setIsUploading(false); // 上傳完成後設置為 false
         }
