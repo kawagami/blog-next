@@ -11,8 +11,6 @@ async function getEncodeJwt() {
         email: process.env.JWT_EMAIL
     };
 
-    console.log(process.env.JWT_EMAIL);
-
     const token = jwt.sign(payload, process.env.JWT_SECRET);
     return token;
 }
