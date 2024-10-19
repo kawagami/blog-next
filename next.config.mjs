@@ -16,7 +16,12 @@ const nextConfig = {
             },
         ]
     },
-    reactStrictMode: false
+    reactStrictMode: false,
+    experimental: {
+        serverActions: {
+            allowedOrigins: ["next-blog.kawa.homes", "next-blog:3000"]
+        }
+    }
 };
 
 export default nextConfig;
