@@ -36,6 +36,7 @@ export default function FirebaseFormComponent() {
             // 假設 response 裡面有 image_url
             if (response?.image_url) {
                 setUploadedImages((prevImages) => [...prevImages, response.image_url]); // 將新的圖片 URL 添加到陣列中
+                removeSelectedImage();
             }
         } catch (error) {
             console.error("上傳失敗：", error.message);
