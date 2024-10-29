@@ -14,8 +14,13 @@ export default function HackmdNoteTagButtons(props) {
     };
 
     const commonStyle = [
-        "p-2", "border-2", "rounded-lg", "bg-gray-200", "dark:bg-gray-800", "dark:text-white", "hover:scale-105",
-        "transition-transform", "duration-200", "ease-in-out"
+        "p-2",
+        "border-2",
+        "rounded-lg",
+        "bg-gray-200",
+        "dark:bg-gray-800",
+        "dark:text-white",
+        "hover:scale-105",
     ].join(' ');
 
     const clickAll = () => {
