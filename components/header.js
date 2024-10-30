@@ -44,11 +44,11 @@ export default function Header() {
 
             {/* Navigation Links - Hidden on small screens */}
             <nav className={`sm:flex sm:items-center sm:gap-4 ${isOpen ? 'block' : 'hidden'}`}>
-                {/* <Link href="/blogs" aria-label="前往 Blogs 頁面" className="block px-4 hover:scale-110 hover:text-blue-400 transition-transform duration-300">Blogs</Link> */}
-                <Link href="/hackmd-notes" aria-label="前往 HackMD Notes 頁面" className="block px-4 hover:scale-110 hover:text-blue-400 transition-transform duration-300">Notes</Link>
-                {/* <Link href="/images" aria-label="前往 Images 頁面" className="block px-4 hover:scale-110 hover:text-blue-400 transition-transform duration-300">Images</Link> */}
-                <Link href="/sites" aria-label="前往 Sites 頁面" className="block px-4 hover:scale-110 hover:text-blue-400 transition-transform duration-300">Sites</Link>
-                <Link href="/ws" aria-label="前往 WS 頁面" className="block px-4 hover:scale-110 hover:text-blue-400 transition-transform duration-300">WS</Link>
+                {/* <Link href="/blogs" aria-label="前往 Blogs 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Blogs</Link> */}
+                <Link href="/hackmd-notes" aria-label="前往 HackMD Notes 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Notes</Link>
+                {/* <Link href="/images" aria-label="前往 Images 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Images</Link> */}
+                <Link href="/sites" aria-label="前往 Sites 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Sites</Link>
+                <Link href="/ws" aria-label="前往 WS 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">WS</Link>
                 <ThemeButton />
             </nav>
         </header>
