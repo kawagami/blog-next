@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function IndexInfo(props) {
     return (
-        <div className={`p-6 border-4 rounded-2xl border-double border-gray-800 dark:border-gray-200 ${props.href === '/' ? 'col-span-2' : ''} bg-white dark:bg-gray-900 shadow-md transition-transform duration-300`}>
+        <div className={`p-6 border-4 rounded-2xl border-double border-gray-800 dark:border-gray-200 ${props.href === '/' ? 'col-span-2' : ''} bg-white dark:bg-gray-900 shadow-md`}>
             <div className="text-4xl font-bold text-blue-500 hover:scale-105 transition-transform">
                 <Link href={props.href} className="hover:text-blue-400">
                     {props.title}

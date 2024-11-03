@@ -44,7 +44,6 @@ export default function HackmdNoteTagButtons(props) {
                 <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
-                    transition={{ duration: 0.5 }}
                 >
                     <div className="flex flex-wrap justify-center gap-2 p-2 mb-2">
                         <span className={commonStyle} onClick={clickAll}>全選</span>

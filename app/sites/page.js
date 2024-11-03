@@ -12,7 +12,7 @@ export default function Sites() {
             <div className="flex flex-wrap gap-4 justify-center p-4 bg-gray-50 max-w-full h-auto">
 
                 {/* Site 1 */}
-                <Link target="_blank" href="https://kawa.homes" className="hover:scale-105 transition-transform w-full max-w-xs">
+                <Link target="_blank" href="https://kawa.homes" className="hover:scale-105 w-full max-w-xs">
                     <div className="relative flex flex-col overflow-hidden rounded-lg bg-white text-gray-700 shadow-lg hover:shadow-xl transition-shadow w-full max-w-xs">
                         <div className="relative m-0 overflow-hidden rounded-t-lg">
                             <Image
@@ -20,7 +20,7 @@ export default function Sites() {
                                 width={500}
                                 height={500}
                                 alt="kawa homes"
-                                className="hover:scale-110 transition-transform duration-300"
+                                className="hover:scale-110"
                             />
                         </div>
                         <div className="p-4">
@@ -35,7 +35,7 @@ export default function Sites() {
                 </Link>
 
                 {/* Site 2 */}
-                <Link target="_blank" href="https://sg-vite.kawa.homes" className="hover:scale-105 transition-transform w-full max-w-xs">
+                <Link target="_blank" href="https://sg-vite.kawa.homes" className="hover:scale-105 w-full max-w-xs">
                     <div className="relative flex flex-col overflow-hidden rounded-lg bg-white text-gray-700 shadow-lg hover:shadow-xl transition-shadow w-full max-w-xs">
                         <div className="relative m-0 overflow-hidden rounded-t-lg">
                             <Image
@@ -43,7 +43,7 @@ export default function Sites() {
                                 width={500}
                                 height={500}
                                 alt="kawa homes"
-                                className="hover:scale-110 transition-transform duration-300"
+                                className="hover:scale-110"
                             />
                         </div>
                         <div className="p-4">
@@ -58,7 +58,7 @@ export default function Sites() {
                 </Link>
 
                 {/* Site 3 */}
-                <Link target="_blank" href="https://axum.kawa.homes" className="hover:scale-105 transition-transform w-full max-w-xs">
+                <Link target="_blank" href="https://axum.kawa.homes" className="hover:scale-105 w-full max-w-xs">
                     <div className="relative flex flex-col overflow-hidden rounded-lg bg-white text-gray-700 shadow-lg hover:shadow-xl transition-shadow w-full max-w-xs">
                         <div className="relative m-0 overflow-hidden rounded-t-lg">
                             <Image
@@ -66,7 +66,7 @@ export default function Sites() {
                                 width={500}
                                 height={500}
                                 alt="kawa homes"
-                                className="hover:scale-110 transition-transform duration-300"
+                                className="hover:scale-110"
                             />
                         </div>
                         <div className="p-4">
