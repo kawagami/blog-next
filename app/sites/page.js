@@ -30,6 +30,12 @@ export default function Sites() {
                             <p className="text-base text-gray-600">
                                 最一開始練習 deploy 時的產物
                             </p>
+                            <p className="text-base text-gray-600">
+                                預計未來使用此 next 網站
+                            </p>
+                            <p className="text-base text-gray-600">
+                                取代二級域名 kawa.homes
+                            </p>
                         </div>
                     </div>
                 </Link>
