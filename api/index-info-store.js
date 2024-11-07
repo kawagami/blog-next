@@ -7,8 +7,8 @@ const IndexInfoStore = [
             "後端 API 是使用 rust 的 axum 框架",
             "前端頁面是使用 next.js 框架",
             "目前頁面有基本的黑暗模式切換",
-            "HackMD note 頁面完成初步的分類按鈕功能",
-            "My Sites 頁面是稍微介紹一下目前使用的 domain",
+            "Notes 頁面完成初步的分類按鈕功能",
+            "Sites 頁面是稍微介紹一下目前使用的 domain",
             "WS 頁面是簡易聊天室",
             "慢慢建構中",
         ]
