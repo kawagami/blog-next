@@ -2,21 +2,22 @@
 
 import getEncodeJwt from "@/api/get-encode-jwt";
 
-async function uploadFirebaseImage(formData) {
+async function getFirebaseImages() {
     const token = await getEncodeJwt();
 
     const response = await fetch(`${process.env.API_URL}/firebase`, {
         headers: {
             'Authorization': `Bearer ${token}`
         },
-        method: 'POST',
-        body: formData
+        method: 'GET'
     });
 
     // 檢查是否成功取得資料
     if (!response.ok) {
-        let temp = await response.json();
-        throw new Error(temp.error);
+        console.log(typeof response);
+
+        // let temp = await response.json();
+        throw response;
     }
 
     // 解析回傳的 JSON 資料
@@ -25,4 +26,4 @@ async function uploadFirebaseImage(formData) {
     return data;
 }
 
-export default uploadFirebaseImage;
+export default getFirebaseImages;
