@@ -2,10 +2,10 @@
 
 import getEncodeJwt from "./get-encode-jwt";
 
-async function createTodo(formData) {
+async function uploadFirebaseImage(formData) {
     const token = await getEncodeJwt();
 
-    const response = await fetch(`${process.env.API_URL}/firebase/upload`, {
+    const response = await fetch(`${process.env.API_URL}/firebase`, {
         headers: {
             'Authorization': `Bearer ${token}`
         },
@@ -25,4 +25,4 @@ async function createTodo(formData) {
     return data;
 }
 
-export default createTodo;
+export default uploadFirebaseImage;

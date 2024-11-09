@@ -1,6 +1,6 @@
 'use client';
 
-import createTodo from '@/api/create-todo';
+import uploadFirebaseImage from '@/api/upload-firebase-image';
 import { useState, useRef } from 'react';
 
 export default function FirebaseFormComponent() {
@@ -31,7 +31,7 @@ export default function FirebaseFormComponent() {
         bodyContent.append("file", selectedImage);
 
         try {
-            let response = await createTodo(bodyContent);
+            let response = await uploadFirebaseImage(bodyContent);
 
             // 假設 response 裡面有 image_url
             if (response?.image_url) {
