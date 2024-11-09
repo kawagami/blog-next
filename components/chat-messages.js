@@ -101,10 +101,10 @@ export default function ChatMessages(props) {
 
     return (
         <>
-            <div className="flex flex-col h-full w-[850px] justify-center items-center bg-gray-200 dark:bg-gray-800 p-6">
-                <div className="w-full max-w-4xl bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 flex">
+            <div className="flex flex-col w-[850px] justify-center items-center bg-gray-200 dark:bg-gray-800 p-6 rounded-3xl">
+                <div className="w-full max-w-4xl h-[calc(100svh-250px)] bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 flex">
                     {/* 左側：目前在線使用者 */}
-                    <div className="w-1/4 bg-blue-100 dark:bg-gray-600 rounded-lg p-4 h-96 overflow-y-auto">
+                    <div className="w-1/4 bg-blue-100 dark:bg-gray-600 rounded-lg p-4 h-full overflow-y-auto">
                         <h2 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">目前在線使用者</h2>
                         <ul>
                             {onlineUsers.map((user, index) => (
@@ -114,7 +114,7 @@ export default function ChatMessages(props) {
                     </div>
 
                     {/* 右側：訊息列表 */}
-                    <div className="w-3/4 bg-gray-200 dark:bg-gray-800 rounded-lg p-4 ml-4 h-96 overflow-y-auto" ref={messageBoxRef}>
+                    <div className="w-3/4 bg-gray-200 dark:bg-gray-800 rounded-lg p-4 ml-4 h-full overflow-y-auto" ref={messageBoxRef}>
                         <ul className="space-y-2">
                             {
                                 messages.map((msg, index) => {
