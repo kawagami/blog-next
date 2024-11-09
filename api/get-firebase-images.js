@@ -9,7 +9,8 @@ async function getFirebaseImages() {
         headers: {
             'Authorization': `Bearer ${token}`
         },
-        method: 'GET'
+        method: 'GET',
+        cache: 'no-store'
     });
 
     // 檢查是否成功取得資料
