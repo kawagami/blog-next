@@ -15,7 +15,7 @@ export default function Header() {
     };
 
     return (
-        <header className="min-h-[50px] overflow-hidden flex items-center justify-between px-4">
+        <header className="min-h-[50px] flex items-center justify-between px-4">
             {/* Logo Section */}
             <div className="flex items-center">
                 <Link href="/" className="block px-2" aria-label="返回首頁">
