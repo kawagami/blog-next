@@ -35,7 +35,7 @@ const data = [
         contents: [
             "rust axum 建立的 API 站點",
             "使用 docker multi-stage build 之後",
-            "於線上運行時大小僅 33.6 MB"
+            "於線上運行時大小僅 34.2 MB"
         ]
     }
 ];
