@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
+import OnlineUsers from '@/components/ws/OnlineUsers';
+import MessagesList from '@/components/ws/MessageList';
+import MessageInput from '@/components/ws/MessageInput';
 
 export default function ChatMessages(props) {
     const [ws, setWs] = useState(null);
@@ -78,7 +81,7 @@ export default function ChatMessages(props) {
 
     const sendMessage = () => {
         if (inputMessage.trim() === '') return; // 避免發送空訊息
-        let msg = {
+        const msg = {
             message_type: "Message",
             from: username, // 記得在發送訊息時帶上發送者
             content: inputMessage,
@@ -100,100 +103,23 @@ export default function ChatMessages(props) {
     };
 
     return (
-        <>
-            <div className="flex flex-col w-[850px] justify-center items-center bg-gray-200 dark:bg-gray-800 p-6 rounded-3xl">
-                <div className="w-full max-w-4xl h-[calc(100svh-250px)] bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 flex">
-                    {/* 左側：目前在線使用者 */}
-                    <div className="w-1/4 bg-blue-100 dark:bg-gray-600 rounded-lg p-4 h-full overflow-y-auto">
-                        <h2 className="text-lg font-bold mb-2 text-gray-900 dark:text-white">目前在線使用者</h2>
-                        <ul>
-                            {onlineUsers.map((user, index) => (
-                                <li key={index} className="text-sm text-gray-800 dark:text-gray-300">{user}</li>
-                            ))}
-                        </ul>
-                    </div>
+        <div className="flex flex-col w-[850px] justify-center items-center bg-gray-200 dark:bg-gray-800 p-6 rounded-3xl">
+            <div className="w-full max-w-4xl h-[calc(100svh-250px)] bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 flex">
+                {/* 左側：目前在線使用者 */}
+                <OnlineUsers users={onlineUsers} />
 
-                    {/* 右側：訊息列表 */}
-                    <div className="w-3/4 bg-gray-200 dark:bg-gray-800 rounded-lg p-4 ml-4 h-full overflow-y-auto" ref={messageBoxRef}>
-                        <ul className="space-y-2">
-                            {
-                                messages.map((msg, index) => {
-                                    let content;
-
-                                    switch (msg.message_type) {
-                                        case "Message":
-                                            content = (
-                                                <li
-                                                    key={index}
-                                                    className={`p-2 shadow-sm rounded-lg ${msg.from === username ? 'bg-green-100 dark:bg-green-600 text-right ml-auto' : 'bg-white dark:bg-gray-700 text-left'}`}
-                                                >
-                                                    {msg.from !== username ? (
-                                                        <div className="text-left">
-                                                            <span className="font-bold text-gray-900 dark:text-white">{msg.from}:</span>
-                                                            <div className="text-gray-800 dark:text-gray-300">{msg.content}</div>
-                                                        </div>
-                                                    ) : (
-                                                        <div className="text-right">
-                                                            <span className="font-bold text-gray-900 dark:text-white">{msg.from}:</span>
-                                                            <div className="text-gray-800 dark:text-gray-300">{msg.content}</div>
-                                                        </div>
-                                                    )}
-                                                </li>
-                                            );
-                                            break;
-
-                                        case "Join":
-                                            content = (
-                                                <li key={index} className="p-2 shadow-sm rounded-lg bg-blue-100 dark:bg-gray-600 text-center">
-                                                    <div className="text-gray-800 dark:text-gray-300">{`${msg.from} has joined the chat.`}</div>
-                                                </li>
-                                            );
-                                            break;
-
-                                        case "Leave":
-                                            content = (
-                                                <li key={index} className="p-2 shadow-sm rounded-lg bg-red-100 dark:bg-gray-600 text-center">
-                                                    <div className="text-gray-800 dark:text-gray-300">{`${msg.from} has left the chat.`}</div>
-                                                </li>
-                                            );
-                                            break;
-
-                                        default:
-                                            content = null;
-                                    }
-
-                                    return content;
-                                })
-                            }
-
-                        </ul>
-                    </div>
-
-                </div>
-
-                {/* 訊息輸入區域 */}
-                <div className="mt-4 w-full max-w-4xl flex items-center space-x-4">
-                    <input
-                        type="text"
-                        className="flex-1 bg-white dark:bg-gray-700 shadow-sm rounded-lg p-2 border border-gray-300 dark:border-gray-600 focus:outline-none"
-                        placeholder="輸入訊息..."
-                        value={inputMessage}
-                        onChange={(e) => setInputMessage(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        disabled={!isConnected} // 當 WebSocket 斷線時禁用輸入框
-                    />
-                    <button
-                        onClick={sendMessage}
-                        disabled={!isConnected} // 當 WebSocket 斷線時禁用按鈕
-                        className={`${isConnected
-                            ? 'bg-green-500 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-800'
-                            : 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed'
-                            } text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
-                    >
-                        {isConnected ? '發送訊息' : '正在連線...'}
-                    </button>
-                </div>
+                {/* 右側：訊息列表 */}
+                <MessagesList messages={messages} username={username} messageBoxRef={messageBoxRef} />
             </div>
-        </>
+
+            {/* 訊息輸入區域 */}
+            <MessageInput
+                inputMessage={inputMessage}
+                setInputMessage={setInputMessage}
+                sendMessage={sendMessage}
+                isConnected={isConnected}
+                handleKeyDown={handleKeyDown}
+            />
+        </div>
     );
 }
