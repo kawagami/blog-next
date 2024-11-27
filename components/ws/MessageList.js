@@ -10,19 +10,22 @@ function MessagesList({ messages, username, messageBoxRef }) {
                             content = (
                                 <li
                                     key={index}
-                                    className={`p-2 shadow-sm rounded-lg ${msg.from === username ? 'bg-green-100 dark:bg-green-600 text-right ml-auto' : 'bg-white dark:bg-gray-700 text-left'}`}
+                                    className={`p-3 shadow-sm rounded-lg max-w-xl ${msg.from === username
+                                            ? "bg-green-100 dark:bg-green-600 text-right ml-auto"
+                                            : "bg-white dark:bg-gray-700 text-left"
+                                        }`}
                                 >
-                                    {msg.from !== username ? (
-                                        <div className="text-left">
-                                            <span className="font-bold text-gray-900 dark:text-white">{msg.from}:</span>
-                                            <div className="text-gray-800 dark:text-gray-300">{msg.content}</div>
-                                        </div>
-                                    ) : (
-                                        <div className="text-right">
-                                            <span className="font-bold text-gray-900 dark:text-white">{msg.from}:</span>
-                                            <div className="text-gray-800 dark:text-gray-300">{msg.content}</div>
-                                        </div>
-                                    )}
+                                    <div className={msg.from === username ? "text-right" : "text-left"}>
+                                        <span className="block font-bold text-gray-900 dark:text-white mb-1">
+                                            {msg.from}:
+                                        </span>
+                                        <p className="text-gray-800 dark:text-gray-300 mb-1">
+                                            {msg.content}
+                                        </p>
+                                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                                            {msg.created_at}
+                                        </span>
+                                    </div>
                                 </li>
                             );
                             break;
