@@ -11,8 +11,8 @@ function MessagesList({ messages, username, messageBoxRef }) {
                                 <li
                                     key={index}
                                     className={`p-3 shadow-sm rounded-lg max-w-xl ${msg.from === username
-                                            ? "bg-green-100 dark:bg-green-600 text-right ml-auto"
-                                            : "bg-white dark:bg-gray-700 text-left"
+                                        ? "bg-green-100 dark:bg-green-600 text-right ml-auto"
+                                        : "bg-white dark:bg-gray-700 text-left"
                                         }`}
                                 >
                                     <div className={msg.from === username ? "text-right" : "text-left"}>
@@ -22,7 +22,7 @@ function MessagesList({ messages, username, messageBoxRef }) {
                                         <p className="text-gray-800 dark:text-gray-300 mb-1">
                                             {msg.content}
                                         </p>
-                                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                                        <span className="text-xs text-gray-400 dark:text-gray-500">
                                             {msg.created_at}
                                         </span>
                                     </div>

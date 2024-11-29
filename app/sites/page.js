@@ -34,8 +34,10 @@ const data = [
         title: "後端 API 站點",
         contents: [
             "rust axum 建立的 API 站點",
+            "包括圖片處理功能",
+            "將檔案上傳至 firebase",
             "使用 docker multi-stage build 之後",
-            "於線上運行時大小僅 34.2 MB"
+            "於線上運行時大小僅 39.7 MB"
         ]
     }
 ];
