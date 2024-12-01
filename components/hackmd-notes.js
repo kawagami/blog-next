@@ -19,13 +19,15 @@ export default function HackMDNotesComponent(props) {
         }
     }, [openArray, props.defaultOpenArray, setOpenArray]);
 
+    const data = props.notes.filter(note => note.tags.some(tag => openArray.includes(tag)));
+
     return (
         <>
             <div className="text-lg font-semibold mb-4">
-                總共 {props.notes.length} 個筆記
+                總共 {data.length} 個筆記
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-4">
-                {props.notes.map(note => {
+                {data.map(note => {
                     const formattedDate = isClient
                         ? new Intl.DateTimeFormat('zh-TW', {
                             year: 'numeric',
@@ -35,7 +37,7 @@ export default function HackMDNotesComponent(props) {
                             minute: '2-digit',
                             second: '2-digit',
                         }).format(new Date(note.last_changed_at))
-                        : '...'; // 在伺服器渲染階段顯示占位符
+                        : '...';
 
                     return (
                         <motion.div
