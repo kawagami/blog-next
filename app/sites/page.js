@@ -12,9 +12,10 @@ const data = [
         alt: "level 2 domain",
         title: "目前的二級域名 kawa.homes",
         contents: [
-            "最一開始練習 deploy 時的產物",
-            "預計未來使用此 next 網站",
-            "取代二級域名 kawa.homes"
+            "最一開始練習 deploy 時",
+            "用 laravel 建立的網站",
+            "目前使用 next-blog.kawa.homes",
+            "的 next.js 專案替換掉了"
         ]
     },
     {
