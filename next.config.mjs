@@ -19,7 +19,7 @@ const nextConfig = {
     reactStrictMode: false,
     experimental: {
         serverActions: {
-            allowedOrigins: ["next-blog.kawa.homes", "next-blog:3000"]
+            allowedOrigins: ["kawa.homes", "next-blog.kawa.homes", "next-blog:3000"]
         }
     }
 };
