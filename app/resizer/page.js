@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function Newthing() {
+export default function Resizer() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [resizedImage, setResizedImage] = useState(null);
@@ -131,7 +131,7 @@ export default function Newthing() {
                         src={resizedImage}
                         alt="Resized"
                         className="rounded-lg shadow-lg max-w-full h-auto"
-                        style={{ maxWidth: '300px', maxHeight: '300px' }}
+                        // style={{ maxWidth: '300px', maxHeight: '300px' }}
                     />
                 </div>
             )}
