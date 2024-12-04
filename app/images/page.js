@@ -17,16 +17,14 @@ export default async function Images() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 {images.map((image) => (
-                    <div key={image.id} className="bg-white p-4 rounded shadow-md flex flex-col items-center">
+                    <div key={image.name} className="bg-white p-4 rounded shadow-md flex flex-col items-center">
                         <Image
                             width={150}
                             height={150}
-                            src={image.image_url}
-                            alt={`Image ${image.id}`}
+                            src={image.url}
+                            alt={`Image ${image.name}`}
                             className="rounded-lg mb-4 object-cover"
                         />
-                        <p className="text-gray-600">Created At: {image.created_at}</p>
-                        <p className="text-gray-600">Updated At: {image.updated_at}</p>
                     </div>
                 ))}
             </div>
