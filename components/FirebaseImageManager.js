@@ -66,7 +66,7 @@ export default function FirebaseImageManager({ initialImages }) {
             <h1 className="text-2xl font-semibold mb-4">Firebase Image Manager</h1>
 
             {/* 圖片上傳區域 */}
-            <div className="flex flex-col justify-center items-center pt-4">
+            {/* <div className="flex flex-col justify-center items-center pt-4">
                 <input
                     ref={fileInputRef}
                     accept="image/*"
@@ -99,7 +99,7 @@ export default function FirebaseImageManager({ initialImages }) {
                 >
                     {isUploading ? '上傳中...' : '上傳圖片'}
                 </button>
-            </div>
+            </div> */}
 
             {/* 圖片展示與刪除區域 */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
