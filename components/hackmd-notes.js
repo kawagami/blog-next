@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useNoteContext } from "@/provider/note-provider";
-import { motion } from "framer-motion";
 
 export default function HackMDNotesComponent(props) {
     const { openArray, setOpenArray } = useNoteContext();
@@ -40,10 +39,8 @@ export default function HackMDNotesComponent(props) {
                         : '...';
 
                     return (
-                        <motion.div
+                        <div
                             key={note.id}
-                            whileHover={{ scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
                             className="border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg hover:shadow-xl transition-shadow bg-white dark:bg-gray-800"
                         >
                             <Link
@@ -68,7 +65,7 @@ export default function HackMDNotesComponent(props) {
                                     ))}
                                 </div>
                             </Link>
-                        </motion.div>
+                        </div>
                     );
                 })}
             </div>

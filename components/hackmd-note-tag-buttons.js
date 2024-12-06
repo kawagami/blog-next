@@ -2,7 +2,6 @@
 
 import { useNoteContext } from "@/provider/note-provider";
 import { useState } from "react";
-import { motion } from "framer-motion"; // 使用 framer-motion 來添加動畫效果
 
 export default function HackmdNoteTagButtons(props) {
     const [showFilter, setShowFilter] = useState(false);
@@ -41,10 +40,7 @@ export default function HackmdNoteTagButtons(props) {
             </div>
 
             {showFilter && (
-                <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                >
+                <div>
                     <div className="flex flex-wrap justify-center gap-2 p-2 mb-2">
                         <span className={commonStyle} onClick={clickAll}>全選</span>
                         <span className={commonStyle} onClick={clickNothing}>全不選</span>
@@ -65,7 +61,7 @@ export default function HackmdNoteTagButtons(props) {
                             );
                         })}
                     </div>
-                </motion.div>
+                </div>
             )}
         </>
     );
