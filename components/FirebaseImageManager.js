@@ -10,6 +10,7 @@ export default function FirebaseImageManager({ initialImages }) {
     const [deletingImage, setDeletingImage] = useState(null); // 追蹤正在刪除的圖片
     const [selectedImage, setSelectedImage] = useState(null); // 本地選擇的圖片
     const [isUploading, setIsUploading] = useState(false); // 是否正在上傳
+    const [copiedImage, setCopiedImage] = useState(null); // 追蹤已複製的圖片
     const fileInputRef = useRef(null);
 
     // 處理本地圖片選擇
@@ -58,6 +59,17 @@ export default function FirebaseImageManager({ initialImages }) {
             console.error('刪除失敗：', error.message);
         } finally {
             setDeletingImage(null);
+        }
+    };
+
+    // 複製圖片 URL
+    const handleCopy = async (url) => {
+        try {
+            await navigator.clipboard.writeText(url);
+            setCopiedImage(url);
+            setTimeout(() => setCopiedImage(null), 2000); // 2秒後清除提示
+        } catch (error) {
+            console.error('複製失敗：', error.message);
         }
     };
 
@@ -125,6 +137,17 @@ export default function FirebaseImageManager({ initialImages }) {
                         >
                             {deletingImage === image.name ? 'Deleting...' : 'Delete'}
                         </button>
+                        <button
+                            onClick={() => handleCopy(image.url)}
+                            className="mt-2 py-1 px-4 rounded bg-green-500 hover:bg-green-600 text-white"
+                        >
+                            Copy URL
+                        </button>
+                        {copiedImage === image.url && (
+                            <span className="mt-2 text-sm text-green-500">
+                                URL 已複製！
+                            </span>
+                        )}
                     </div>
                 ))}
             </div>
