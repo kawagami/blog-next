@@ -1,5 +1,5 @@
 import getFirebaseImages from "@/api/get-firebase-images";
-import FirebaseImageManager from "@/components/FirebaseImageManager";
+import FirebaseImageManager from "@/components/firebase/FirebaseImageManager";
 
 export const metadata = {
     title: "Images page",
