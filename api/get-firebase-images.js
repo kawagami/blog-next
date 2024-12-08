@@ -1,28 +1,15 @@
 "use server";
 
-import getEncodeJwt from "@/api/get-encode-jwt";
+import apiRequest from "@/libs/apiRequest";
 
 async function getFirebaseImages() {
-    const token = await getEncodeJwt();
-
-    const response = await fetch(`${process.env.API_URL}/firebase`, {
+    const data = await apiRequest({
+        url: `${process.env.API_URL}/firebase`,
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Content-Type': 'application/json',
         },
         method: 'GET',
-        cache: 'no-store'
     });
-
-    // 檢查是否成功取得資料
-    if (!response.ok) {
-        console.log(typeof response);
-
-        // let temp = await response.json();
-        throw response;
-    }
-
-    // 解析回傳的 JSON 資料
-    const data = await response.json();
 
     return data;
 }
