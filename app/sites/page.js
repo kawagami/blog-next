@@ -24,8 +24,9 @@ const data = [
         alt: "練習 vite vue 的後台頁面",
         title: "練習 vite vue 的後台頁面",
         contents: [
-            "後台頁面",
-            "使用 vite & vue 完成的 SPA 後台"
+            "舊的後台頁面",
+            "使用 vite & vue 完成的 SPA 後台",
+            "預計之後用 next 的頁面替換掉"
         ]
     },
     {
@@ -38,7 +39,7 @@ const data = [
             "包括圖片處理功能",
             "將檔案上傳至 firebase",
             "使用 docker multi-stage build 之後",
-            "於線上運行時大小僅 39.7 MB"
+            "於線上運行時大小僅 40.6 MB"
         ]
     }
 ];
