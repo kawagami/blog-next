@@ -1,11 +1,23 @@
 'use client';
 
+import { useState, useEffect } from "react";
 import { useNoteContext } from "@/provider/note-provider";
-import { useState } from "react";
+import getHackMDNoteTags from "@/api/get-hackmd-note-tags";
 
-export default function HackmdNoteTagButtons(props) {
+export default function HackmdNoteTagButtons() {
     const [showFilter, setShowFilter] = useState(false);
+    const [tags, setTags] = useState([]);
     const { openArray, setOpenArray } = useNoteContext();
+
+    useEffect(() => {
+        async function fetchTags() {
+            const fetchedTags = await getHackMDNoteTags();
+            setTags(fetchedTags);
+            const defaultOpenArray = fetchedTags.map(tag => tag.name);
+            setOpenArray(defaultOpenArray); // 預設全選
+        }
+        fetchTags();
+    }, [setOpenArray]);
 
     const checkExist = (name) => {
         const result = openArray.includes(name) ? openArray.filter(o => o !== name) : [name, ...openArray];
@@ -23,13 +35,15 @@ export default function HackmdNoteTagButtons(props) {
     ].join(' ');
 
     const clickAll = () => {
-        const all = props.tags.map(tag => tag.name);
+        const all = tags.map(tag => tag.name);
         setOpenArray(all);
     };
 
     const clickNothing = () => {
         setOpenArray([""]);
     };
+
+    if (!tags.length) return <div>Loading...</div>;
 
     return (
         <>
@@ -46,7 +60,7 @@ export default function HackmdNoteTagButtons(props) {
                         <span className={commonStyle} onClick={clickNothing}>全不選</span>
                     </div>
                     <div className="flex flex-wrap justify-center gap-2">
-                        {props.tags.map(tag => {
+                        {tags.map(tag => {
                             const tailwindStyle = openArray.includes(tag.name)
                                 ? "invert bg-blue-500 hover:bg-blue-400"
                                 : "hover:bg-blue-100 bg-gray-300";

@@ -3,30 +3,43 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useNoteContext } from "@/provider/note-provider";
+import getHackMDNotes from "@/api/get-hackmd-notes";
 
-export default function HackMDNotesComponent(props) {
+export default function HackMDNotesComponent() {
     const { openArray, setOpenArray } = useNoteContext();
+    const [notes, setNotes] = useState(null);
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-        setIsClient(true); // 確保只在客戶端處理渲染
+        setIsClient(true); // 確保日期格式化在客戶端處理
     }, []);
 
     useEffect(() => {
-        if (openArray.length === 0) {
-            setOpenArray(props.defaultOpenArray);
-        }
-    }, [openArray, props.defaultOpenArray, setOpenArray]);
+        async function fetchNotes() {
+            const fetchedNotes = await getHackMDNotes();
+            setNotes(fetchedNotes);
 
-    const data = props.notes.filter(note => note.tags.some(tag => openArray.includes(tag)));
+            // // 預設將所有標籤加入 openArray
+            // const allTags = fetchedNotes.flatMap(note => note.tags);
+            // setOpenArray([...new Set(allTags)]);
+        }
+
+        fetchNotes();
+    }, [setOpenArray]);
+
+    if (!notes) return <div>Loading...</div>;
+
+    const filteredNotes = notes.filter(note =>
+        note.tags.some(tag => openArray.includes(tag))
+    );
 
     return (
         <>
             <div className="text-lg font-semibold mb-4">
-                總共 {data.length} 個筆記
+                總共 {filteredNotes.length} 個筆記
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-4">
-                {data.map(note => {
+                {filteredNotes.map(note => {
                     const formattedDate = isClient
                         ? new Intl.DateTimeFormat('zh-TW', {
                             year: 'numeric',
