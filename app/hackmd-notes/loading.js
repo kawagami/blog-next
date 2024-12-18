@@ -1,6 +1,5 @@
-import loading from "@/assets/loading.svg"
-import Image from "next/image";
+import LoadingComponent from "@/components/loading-component";
 
 export default function Loading() {
-  return <Image src={loading} width={300} height={300} alt="loading" />;
+  return <LoadingComponent />;
 }

@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Suspense } from "react";
 import NoteProvider from "@/provider/note-provider";
-import Loading from "@/components/loading";
+import LoadingComponent from "@/components/loading-component";
 import DarkProvider from "@/provider/dark-provider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             <Header />
 
             <main className="min-h-[calc(100svh-50px-50px)] overflow-hidden flex flex-col items-center justify-start pt-4">
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<LoadingComponent />}>
                 {children}
               </Suspense>
             </main>
