@@ -23,7 +23,7 @@ export async function login(currentState, formData) {
     if (response.ok) {
         const token = await response.json();
         cookieStore.set("session", token, { maxAge: 60 * 60 });
-        redirect(`/admin/images`);
+        redirect(`/admin`);
     }
 
     return { error: '未通過驗證' };
