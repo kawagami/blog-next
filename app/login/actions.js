@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
@@ -27,8 +27,10 @@ export async function login(currentState, formData) {
     }
 
     return { error: '未通過驗證' };
-    // console.log(token);
+}
 
-    // Redirect to the new post
-
+// Function to clear the session cookie
+export async function clearSession() {
+    const cookieStore = cookies();
+    cookieStore.delete("session"); // Clear session cookie
 }

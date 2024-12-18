@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cherry-markdown": "^0.8.52",
     "jsonwebtoken": "^9.0.2",
     "next": "^15.0.4",
     "plaiceholder": "^3.0.0",

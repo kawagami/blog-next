@@ -1,12 +1,10 @@
 'use server'
 
-import getEncodeJwt from "@/api/get-encode-jwt";
 import { redirect } from 'next/navigation';
 import { cookies } from "next/headers";
 
 async function apiRequest({ url, method = 'GET', headers = {}, body = null }) {
     const cookieStore = await cookies();
-    // const token = await getEncodeJwt();
     const token = cookieStore.get("session")?.value;
 
     const data = {
