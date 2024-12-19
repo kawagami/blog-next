@@ -1,17 +1,13 @@
-'use client';
+'use server';
 
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export default function BlogListCard({ id, toc }) {
-    const router = useRouter();
+export default async function BlogListCard({ id, toc }) {
 
     return (
-        <div
-            onClick={() => router.push(`/blogs/${id}`)}
-            className="
-                cursor-pointer max-w-sm rounded-lg border border-gray-300 
-                shadow-lg hover:shadow-xl transition-shadow duration-200 bg-white 
-                m-4" /* 增加外邊距 */
+        <Link
+            href={`/blogs/${id}`}
+            className="block bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 m-4"
         >
             {/* 卡片內容區域 */}
             <div className="p-4">
@@ -25,6 +21,6 @@ export default function BlogListCard({ id, toc }) {
                     {`Click to read more about "${toc || `Blog Post #${id}`}."`}
                 </p>
             </div>
-        </div>
+        </Link>
     );
 }
