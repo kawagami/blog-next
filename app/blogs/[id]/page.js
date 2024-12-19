@@ -6,10 +6,5 @@ export default async function BlogPage({ params }) {
     const id = (await params).id
     const blog = await getBlog(id);
 
-    return (
-        <>
-            <div>blog page</div>
-            <div dangerouslySetInnerHTML={{ __html: blog.html }} />
-        </>
-    )
+    return <div dangerouslySetInnerHTML={{ __html: blog.html }} />
 }
