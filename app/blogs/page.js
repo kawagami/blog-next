@@ -8,7 +8,7 @@ export default async function BlogsPage() {
 
     return (
         <>
-            <div style={{ marginTop: '20px' }}>
+            <div className="w-full text-center">
                 {blogs.map((blog) => (
                     <BlogListCard
                         key={blog.id}

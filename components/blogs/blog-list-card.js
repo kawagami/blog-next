@@ -7,12 +7,12 @@ export default async function BlogListCard({ id, toc, created_at, updated_at }) 
     return (
         <Link
             href={`/blogs/${id}`}
-            className="block bg-white shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 m-4"
+            className="block bg-white w-[60%] mx-auto shadow-md rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 m-4"
         >
             {/* 卡片內容區域 */}
             <div className="p-4">
                 {/* 標題 */}
-                <h2 className="text-lg font-semibold text-gray-800 mb-2">
+                <h2 className="text-4xl font-semibold text-gray-800 mb-2">
                     {toc || `Blog Post #${id}`}
                 </h2>
 
@@ -22,7 +22,7 @@ export default async function BlogListCard({ id, toc, created_at, updated_at }) 
                 </p>
 
                 {/* Time Information */}
-                <div className="text-gray-500 text-xs">
+                <div className="text-gray-500 text-xs text-right">
                     <p>
                         <strong>Created:</strong>{" "}
                         <ShowClientTime datetimeString={created_at} />
