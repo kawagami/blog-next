@@ -1,9 +1,9 @@
 'use server';
 
 import Link from "next/link";
+import ShowClientTime from "./show-client-time";
 
-export default async function BlogListCard({ id, toc }) {
-
+export default async function BlogListCard({ id, toc, created_at, updated_at }) {
     return (
         <Link
             href={`/blogs/${id}`}
@@ -20,6 +20,18 @@ export default async function BlogListCard({ id, toc }) {
                 <p className="text-gray-600 text-sm">
                     {`Click to read more about "${toc || `Blog Post #${id}`}."`}
                 </p>
+
+                {/* Time Information */}
+                <div className="text-gray-500 text-xs">
+                    <p>
+                        <strong>Created:</strong>{" "}
+                        <ShowClientTime datetimeString={created_at} />
+                    </p>
+                    <p>
+                        <strong>Updated:</strong>{" "}
+                        <ShowClientTime datetimeString={updated_at} />
+                    </p>
+                </div>
             </div>
         </Link>
     );
