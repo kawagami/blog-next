@@ -7,7 +7,7 @@ export const metadata = {
 
 const data = [
     {
-        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/images/e63855a4-1381-45e3-a3f8-d9019cce1040.png",
+        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/fastapi-upload/5dceb788-cd1e-4555-81ac-7c7bae6dad64.png",
         href: "https://kawa.homes",
         alt: "level 2 domain",
         title: "目前的二級域名 kawa.homes",
@@ -19,18 +19,18 @@ const data = [
         ]
     },
     {
-        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/images/4aabf7d8-1cf9-47bd-a63d-73a333c41bb8.png",
-        href: "https://sg-vite.kawa.homes",
-        alt: "練習 vite vue 的後台頁面",
-        title: "練習 vite vue 的後台頁面",
+        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/fastapi-upload/dcf1c9c8-575c-4460-b1ed-7eb98673403f.png",
+        href: "#",
+        alt: "fastapi",
+        title: "python firebase service",
         contents: [
-            "舊的後台頁面",
-            "使用 vite & vue 完成的 SPA 後台",
-            "預計之後用 next 的頁面替換掉"
+            "python 的 firebase lib 很方便使用",
+            "就用 fastapi 建立一個 service",
+            "方便使用圖片上傳功能"
         ]
     },
     {
-        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/images/f5cf1161-a26e-4caf-9ec6-3595579d686f.png",
+        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/fastapi-upload/a57d4188-b58e-4be2-b43c-7aa45b334bce.png",
         href: "https://axum.kawa.homes",
         alt: "後端 API 站點",
         title: "後端 API 站點",
