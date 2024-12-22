@@ -136,7 +136,7 @@ export default function BlogComponent({ id, blog }) {
 
     return (
         <>
-            <div style={{ height: '800px', width: '100%' }}>
+            <div className="h-[600px] w-full">
                 {/* 點擊後使用 putBlog */}
                 <div className="flex justify-center m-4">
                     <button
