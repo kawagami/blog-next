@@ -25,8 +25,10 @@ const data = [
         title: "python firebase service",
         contents: [
             "python 的 firebase lib 很方便使用",
-            "就用 fastapi 建立一個 service",
-            "方便使用圖片上傳功能"
+            "一開始就用 flask 建立了 service",
+            "後來測試後發現 fastapi 速度快了一倍",
+            "就再用 fastapi 建立一個 ver2 service",
+            "用來簡化圖片上傳的流程"
         ]
     },
     {
