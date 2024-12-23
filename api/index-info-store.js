@@ -3,14 +3,14 @@ const IndexInfoStore = [
         href: "/",
         title: "關於本站",
         contents: [
-            "基於學習 rust & react 下的產物",
             "後端 API 是使用 rust 的 axum 框架",
-            "前端頁面是使用 next.js 框架",
-            "目前頁面有基本的黑暗模式切換",
-            "Notes 頁面完成初步的分類按鈕功能",
-            "Sites 頁面是稍微介紹一下目前使用的 domain",
-            "WS 頁面是簡易聊天室",
-            "慢慢建構中",
+            "前端頁面是使用 react + next.js 框架",
+            "Blogs 頁面是想自己完成 hackmd 的方式作筆記生出來的相關頁面 還處於初期可使用而已的版本",
+            "Notes 是在這網站中定時更新在 hackmd 的筆記到這邊列表的頁面",
+            "Resources 突然想要甚麼功能 做完後就會歸類到這邊",
+            "Sites 稍微介紹一下目前使用的 domain",
+            "WS 簡易聊天室",
+            "其餘的想到甚麼就會加進來",
         ]
     },
     {
