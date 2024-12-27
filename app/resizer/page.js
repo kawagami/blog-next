@@ -28,7 +28,7 @@ export default function Resizer() {
         formData.append('image', selectedFile);
 
         try {
-            const response = await fetch(`https://axum.kawa.homes/image/${width}/${height}/${format}/resize`, {
+            const response = await fetch(`https://axum.kawa.homes/tools/image/${width}/${height}/${format}/resize`, {
                 method: 'POST',
                 body: formData,
             });
