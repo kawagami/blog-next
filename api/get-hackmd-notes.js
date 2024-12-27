@@ -1,5 +1,5 @@
 async function getHackMDNotes() {
-    const res = await fetch(`${process.env.API_URL}/note_lists`, { cache: 'no-store' });
+    const res = await fetch(`${process.env.API_URL}/notes/lists`, { cache: 'no-store' });
 
     return res.json();
 }
