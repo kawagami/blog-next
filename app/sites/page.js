@@ -39,9 +39,10 @@ const data = [
         contents: [
             "rust axum 建立的 API 站點",
             "包括圖片處理功能",
-            "將檔案上傳至 firebase",
-            "使用 docker multi-stage build 之後",
-            "於線上運行時大小僅 40.6 MB"
+            "將檔案上傳至 google firebase",
+            "使用 docker multi-stage build",
+            "且換成 google 發布的 cc-debian12",
+            "於線上運行時 rust service 大小為 40.9 MB"
         ]
     }
 ];
