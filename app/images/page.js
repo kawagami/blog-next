@@ -11,7 +11,7 @@ export default async function Images() {
     const images = await getFirebaseImages();
 
     return (
-        <div className="container mx-auto p-6">
+        <div className="w-full h-[calc(100svh-120px)] overflow-auto">
             {/* 將初始圖片傳遞給客戶端組件 */}
             <FirebaseImageManager initialImages={images} />
         </div>
