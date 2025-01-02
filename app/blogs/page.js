@@ -8,7 +8,7 @@ export default async function BlogsPage() {
 
     return (
         <>
-            <div className="w-full text-center">
+            <div className="w-full h-[calc(100svh-120px)] text-center overflow-auto">
                 {blogs.map((blog) => (
                     <BlogListCard
                         key={blog.id}

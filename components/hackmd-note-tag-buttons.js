@@ -33,7 +33,7 @@ export default function HackmdNoteTagButtons(props) {
 
     return (
         <>
-            <div className="grid grid-cols-1 gap-1 text-center p-2 mb-2">
+            <div className="gap-1 text-center p-2 mb-2">
                 <span className={commonStyle} onClick={() => setShowFilter(!showFilter)}>
                     {showFilter ? "隱藏分類" : "顯示分類"}
                 </span>

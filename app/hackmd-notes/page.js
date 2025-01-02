@@ -14,9 +14,9 @@ export default async function HackMDNotes() {
     let defaultOpenArray = tags.map(tag => tag.name);
 
     return (
-        <>
+        <div className="w-full h-[calc(100svh-120px)] text-center overflow-auto">
             <HackmdNoteTagButtons tags={tags} />
             <HackMDNotesComponent notes={notes} defaultOpenArray={defaultOpenArray} />
-        </>
+        </div>
     );
 }
