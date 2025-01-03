@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { clearSession } from '@/app/login/actions'; // 確保此路徑正確
 import putBlog from '@/api/put-blog';
+import { useDarkContext } from "@/provider/dark-provider";
 
 // 動態載入樣式，避免 SSR 衝突
 const CherryEditor = dynamic(
@@ -19,6 +20,7 @@ export default function BlogComponent({ id, blog }) {
     const tokenRef = useRef(null);
     const router = useRouter();
     const [isSaving, setIsSaving] = useState(false); // 新增狀態
+    const { isDark } = useDarkContext();
 
     useEffect(() => {
         const checkSession = () => {
@@ -113,6 +115,13 @@ export default function BlogComponent({ id, blog }) {
         };
     }, []);
 
+    useEffect(() => {
+        if (cherryInstanceRef.current) {
+            // 根據 isDark 切換主題
+            cherryInstanceRef.current.setTheme(isDark ? 'dark' : 'light');
+        }
+    }, [isDark]); // 監聽 isDark 的變化
+
     const handleSave = async () => {
         setIsSaving(true); // 點擊後禁用按鈕
         const markdown = cherryInstanceRef.current?.getMarkdown();
@@ -136,7 +145,7 @@ export default function BlogComponent({ id, blog }) {
 
     return (
         <>
-            <div className="h-[calc(100svh-120px)] overflow-auto w-full">
+            <div className="h-[calc(100svh-200px)] overflow-auto w-full">
                 {/* 點擊後使用 putBlog */}
                 <div className="flex justify-center m-4">
                     <button
