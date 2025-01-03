@@ -48,7 +48,7 @@ export default function BlogPreviewComponent({ markdown }) {
 
     return (
         <>
-            <div className="h-[800px]">
+            <div className="h-[calc(100svh-120px)] overflow-auto">
                 <div id="show_markdown" ref={editorRef}></div>
             </div>
         </>

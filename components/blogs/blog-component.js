@@ -136,7 +136,7 @@ export default function BlogComponent({ id, blog }) {
 
     return (
         <>
-            <div className="h-[600px] w-full">
+            <div className="h-[calc(100svh-120px)] overflow-auto w-full">
                 {/* 點擊後使用 putBlog */}
                 <div className="flex justify-center m-4">
                     <button
