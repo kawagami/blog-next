@@ -1,17 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { clearSession } from '@/app/login/actions'; // 確保此路徑正確
+import { clearSession } from '@/app/login/actions';
 import putBlog from '@/api/put-blog';
 import { useDarkContext } from "@/provider/dark-provider";
-
-// 動態載入樣式，避免 SSR 衝突
-const CherryEditor = dynamic(
-    () => import('cherry-markdown').then((mod) => mod.default),
-    { ssr: false }
-);
 import 'cherry-markdown/dist/cherry-markdown.min.css';
 
 export default function BlogComponent({ id, blog }) {
@@ -19,26 +12,21 @@ export default function BlogComponent({ id, blog }) {
     const cherryInstanceRef = useRef(null);
     const tokenRef = useRef(null);
     const router = useRouter();
-    const [isSaving, setIsSaving] = useState(false); // 新增狀態
+    const [isSaving, setIsSaving] = useState(false);
+    const [showTagModal, setShowTagModal] = useState(false);
+    const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 }); // 新增模態框位置
+    const [newTag, setNewTag] = useState('');
+    const [tags, setTags] = useState(blog.tags || []);
     const { isDark } = useDarkContext();
 
     useEffect(() => {
         const checkSession = () => {
-            // 從 cookies 中讀取 session
             const cookies = document.cookie;
             const sessionMatch = cookies.match(/(?:^|;)\s*session=([^;]+)/);
             const session = sessionMatch ? decodeURIComponent(sessionMatch[1]) : null;
-
-            if (!session) {
-                // 若未找到 session，跳轉到 /login
-                router.push('/login');
-                return;
-            }
-
-            // 若有 session，可將其存儲到 ref 或進行其他操作
+            if (!session) router.push('/login');
             tokenRef.current = session;
         };
-
         checkSession();
     }, [router]);
 
@@ -48,109 +36,88 @@ export default function BlogComponent({ id, blog }) {
      * @param {Function} callback 回調函數，接收文件上傳後的 url 和額外信息
      */
     const myFileUpload = (file, callback) => {
-        const token = tokenRef.current; // 從 ref 獲取 token
-        if (!token) {
-            console.log('Session token is not available.');
-            return;
-        }
+        const token = tokenRef.current;
+        if (!token) return;
 
         const formData = new FormData();
         formData.append('file', file);
 
-        const headers = token ? {
-            'Authorization': `Bearer ${token}`,
-        } : {};
-
         fetch('https://axum.kawa.homes/firebase', {
             method: 'POST',
             body: formData,
-            headers: headers, // Include the headers in the request
+            headers: token ? { 'Authorization': `Bearer ${token}` } : {},
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Upload failed');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (data.url) {
-                    callback(data.url);
-                } else {
-                    throw new Error(data.error || 'Upload failed');
-                }
-            })
-            .catch(async (err) => {
-                console.error(err.message);
-                await clearSession(); // 清除 session
-                router.push('/login'); // 跳轉到 /login
+            .then(response => response.ok ? response.json() : Promise.reject('Upload failed'))
+            .then(data => callback(data.url))
+            .catch(async () => {
+                await clearSession();
+                router.push('/login');
             });
     };
 
     useEffect(() => {
         let isMounted = true;
-
         if (editorRef.current && editorRef.current.id) {
             import('cherry-markdown').then((Cherry) => {
                 if (isMounted) {
                     cherryInstanceRef.current = new Cherry.default({
                         id: editorRef.current.id,
-                        value: blog.markdown ?? "New Blog",
+                        value: blog.markdown || "New Blog",
                         fileUpload: myFileUpload,
                         config: {
-                            height: '100%', // 繼承父容器高度
+                            height: '100%',
                             placeholder: 'Start writing here...',
-                            editor: {
-                                autoHeight: false, // 防止編輯器自適應高度
-                            },
+                            editor: { autoHeight: false },
                         },
                     });
-
-                    // cherryInstanceRef.current.setTheme('dark');
                 }
             });
         }
-
-        return () => {
-            isMounted = false; // 防止卸載後繼續操作
-        };
-    }, []);
+        return () => { isMounted = false; };
+    }, [blog.markdown]);
 
     useEffect(() => {
         if (cherryInstanceRef.current) {
-            // 根據 isDark 切換主題
             cherryInstanceRef.current.setTheme(isDark ? 'dark' : 'light');
         }
-    }, [isDark]); // 監聽 isDark 的變化
+    }, [isDark]);
 
     const handleSave = async () => {
-        setIsSaving(true); // 點擊後禁用按鈕
+        setIsSaving(true);
         const markdown = cherryInstanceRef.current?.getMarkdown();
         const html = cherryInstanceRef.current?.getHtml();
         const tocs = cherryInstanceRef.current?.getToc();
-        if (!markdown || !html) {
-            console.error('No content to save.');
-            setIsSaving(false); // 若失敗則恢復按鈕
-            return;
-        }
+        if (!markdown || !html) return setIsSaving(false);
 
         try {
-            const response = await putBlog(id, { id: id, markdown: markdown, html: html, tags: [], tocs: tocs });
-            console.log('Blog saved:', response);
+            await putBlog(id, { id, markdown, html, tags, tocs });
             router.push('/admin/blogs');
         } catch (error) {
-            console.error('Failed to save blog:', error);
-            setIsSaving(false); // 若失敗則恢復按鈕
+            setIsSaving(false);
+        }
+    };
+
+    const handleShowTagModal = (event) => {
+        // 獲取點擊位置
+        const { clientX, clientY } = event;
+        setModalPosition({ x: clientX, y: clientY });
+        setShowTagModal(true);
+    };
+
+    const handleAddTag = () => {
+        if (newTag.trim() && !tags.includes(newTag.trim())) {
+            setTags([...tags, newTag.trim()]);
+            setNewTag('');
         }
     };
 
     return (
         <>
             <div className="h-[calc(100svh-180px)] overflow-auto w-full">
-                {/* 點擊後使用 putBlog */}
-                <div className="flex justify-center m-4">
+                <div className="flex justify-evenly m-4">
                     <button
                         onClick={handleSave}
-                        disabled={isSaving} // 根據狀態禁用按鈕
+                        disabled={isSaving}
                         className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${isSaving
                             ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
                             : 'bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
@@ -158,11 +125,70 @@ export default function BlogComponent({ id, blog }) {
                     >
                         {isSaving ? '存檔中...' : '存檔'}
                     </button>
+
+                    <button
+                        onClick={handleShowTagModal} // 修改為追蹤點擊位置
+                        className="px-6 py-2 font-semibold bg-green-600 text-white rounded-lg hover:bg-green-700"
+                    >
+                        編輯類型
+                    </button>
                 </div>
+
                 <div className="h-[calc(100svh-180px-72px)] overflow-auto w-full">
                     <div id="editor" ref={editorRef}></div>
                 </div>
             </div>
+
+            {showTagModal && (
+                <div
+                    className="fixed min-w-max z-10"
+                    style={{
+                        transform: `translate(${modalPosition.x}px, ${modalPosition.y}px)`, // 根據位置動態設置
+                        left: 0,
+                        top: 0,
+                    }}
+                >
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+                        <h2 className="text-lg font-semibold mb-4">編輯類型</h2>
+
+                        <input
+                            tag="text"
+                            value={newTag}
+                            onChange={(e) => setNewTag(e.target.value)}
+                            className="w-full p-2 mb-4 border rounded"
+                            placeholder="輸入新類型..."
+                        />
+
+                        <button
+                            onClick={handleAddTag}
+                            className="w-full mb-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                        >
+                            新增類型
+                        </button>
+
+                        <ul className="space-y-2">
+                            {tags.map((tag, index) => (
+                                <li key={index} className="flex justify-between items-center">
+                                    <span>{tag}</span>
+                                    <button
+                                        onClick={() => setTags(tags.filter((_, i) => i !== index))}
+                                        className="text-red-600 hover:underline"
+                                    >
+                                        移除
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+
+                        <button
+                            onClick={() => setShowTagModal(false)}
+                            className="mt-4 w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                        >
+                            關閉
+                        </button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
