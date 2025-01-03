@@ -14,6 +14,7 @@ export default async function BlogsPage() {
                         key={blog.id}
                         id={blog.id}
                         toc={blog.tocs[0] || '未命名 blog'}
+                        tags={blog.tags || []}
                         created_at={blog.created_at}
                         updated_at={blog.updated_at}
                     />

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import ShowClientTime from "./show-client-time";
 
-export default async function BlogListCard({ id, toc, created_at, updated_at }) {
+export default async function BlogListCard({ id, toc, tags, created_at, updated_at }) {
     return (
         <Link
             href={`/blogs/${id}`}
@@ -16,10 +16,17 @@ export default async function BlogListCard({ id, toc, created_at, updated_at }) 
                     {toc || `Blog Post #${id}`}
                 </h2>
 
-                {/* 描述 */}
-                <p className="text-gray-600 text-sm">
-                    {`Click to read more about "${toc || `Blog Post #${id}`}."`}
-                </p>
+                {/* Tags 區域 */}
+                <div className="flex flex-wrap justify-center gap-2 mb-4">
+                    {tags.map((tag, index) => (
+                        <span
+                            key={index}
+                            className="bg-blue-100 text-blue-600 text-xs font-semibold px-2.5 py-0.5 rounded"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
 
                 {/* Time Information */}
                 <div className="text-gray-500 text-xs text-right">
