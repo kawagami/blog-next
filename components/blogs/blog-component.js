@@ -145,21 +145,23 @@ export default function BlogComponent({ id, blog }) {
 
     return (
         <>
-            <div className="h-[calc(100svh-200px)] overflow-auto w-full">
+            <div className="h-[calc(100svh-180px)] overflow-auto w-full">
                 {/* 點擊後使用 putBlog */}
                 <div className="flex justify-center m-4">
                     <button
                         onClick={handleSave}
                         disabled={isSaving} // 根據狀態禁用按鈕
                         className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${isSaving
-                                ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                                : 'bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
+                            ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                            : 'bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'
                             }`}
                     >
                         {isSaving ? '存檔中...' : '存檔'}
                     </button>
                 </div>
-                <div id="editor" ref={editorRef}></div>
+                <div className="h-[calc(100svh-180px-72px)] overflow-auto w-full">
+                    <div id="editor" ref={editorRef}></div>
+                </div>
             </div>
         </>
     );
