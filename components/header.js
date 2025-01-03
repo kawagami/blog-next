@@ -44,7 +44,7 @@ export default function Header() {
 
             {/* Navigation Links - Hidden on small screens */}
             <nav className={`sm:flex sm:items-center sm:gap-4 ${isOpen ? 'block' : 'hidden'}`}>
-                <Link href="/blogs" aria-label="blogs" className="block px-4 hover:scale-110 hover:text-blue-400">Blogs</Link>
+                <Link href="/ws" aria-label="前往 WS 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">WS</Link>
                 <Link href="/hackmd-notes" aria-label="前往 HackMD Notes 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Notes</Link>
 
                 {/* Dropdown Menu */}
@@ -64,7 +64,7 @@ export default function Header() {
 
                 {/* <Link href="/images" aria-label="前往 Images 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Images</Link> */}
                 <Link href="/sites" aria-label="前往 Sites 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Sites</Link>
-                <Link href="/ws" aria-label="前往 WS 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">WS</Link>
+                <Link href="/about" aria-label="前往 About 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">About</Link>
                 <ThemeButton />
             </nav>
         </header>
