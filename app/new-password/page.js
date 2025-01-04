@@ -46,7 +46,7 @@ export default function NewPasswordPage() {
     };
 
     return (
-        <div className="w-full h-[calc(100svh-120px)] text-center overflow-auto p-4 relative">
+        <div className="w-full h-[calc(100svh-120px)] text-center overflow-auto p-4">
             {/* 通知訊息 */}
             {notification && (
                 <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white px-6 py-3 rounded shadow-lg">
