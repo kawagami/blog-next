@@ -2,7 +2,7 @@
 
 ## tools
 * linux 開發環境
-* next.js 14.1.0
+* next.js ^15.0.4
 * tailwindcss 3.3.0
 * Docker 20.10.23
 
