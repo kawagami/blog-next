@@ -9,7 +9,7 @@ export default async function BlogsPage() {
     const blogs = await getBlogs();
 
     return (
-        <div className="p-6 bg-gray-100">
+        <div className="w-full md:w-4/5 lg:w-3/5 xl:w-2/5 h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
             {/* Page Header */}
             <div className="mb-8 flex justify-center">
                 <CreateButton />
