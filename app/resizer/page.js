@@ -43,7 +43,7 @@ export default function Resizer() {
     };
 
     return (
-        <div className="bg-gray-100 flex flex-col items-center py-10">
+        <div className="w-full h-[calc(100svh-120px)] overflow-auto flex flex-col justify-start items-center py-10">
             <h1 className="text-3xl font-bold mb-6 text-gray-800">Image Resizer</h1>
             <div className="bg-white shadow-lg rounded-lg p-6 w-96">
                 {/* 選擇檔案 */}
