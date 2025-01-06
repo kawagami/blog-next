@@ -1,7 +1,7 @@
 'use server';
 
 import Link from "next/link";
-import ShowClientTime from "./show-client-time";
+import ShowClientTime from "@/components/blogs/show-client-time";
 
 export default async function BlogListCard({ id, toc, tags, created_at, updated_at }) {
     return (
