@@ -1,12 +1,16 @@
 "use client";
 
-import Form from 'next/form'
+import Form from 'next/form';
 import { login } from './actions';
 import LoginButton from './login-button';
 import { useActionState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export default function Login() {
     const [state, action] = useActionState(login, undefined);
+    const searchParams = useSearchParams();
+    const redirectUrl = searchParams.get('redirect') || '/admin'; // 獲取 redirect 參數，默認爲 /admin
+
     return (
         <div className="w-full h-[calc(100svh-120px)] overflow-auto flex justify-center items-start">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
@@ -42,13 +46,15 @@ export default function Login() {
                         />
                     </div>
 
+                    {/* Hidden Redirect Field */}
+                    <input type="hidden" name="redirect" value={redirectUrl} />
+
                     {state?.error && (
                         <p className="text-sm text-red-500">{state.error}</p>
                     )}
 
                     <LoginButton />
                 </Form>
-
             </div>
         </div>
     );
