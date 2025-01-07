@@ -1,11 +1,11 @@
 'use client';
 
-import { useNoteContext } from "@/provider/note-provider";
+import { useAppContext } from "@/provider/app-provider";
 import { useState } from "react";
 
 export default function HackmdNoteTagButtons(props) {
     const [showFilter, setShowFilter] = useState(false);
-    const { openArray, setOpenArray } = useNoteContext();
+    const { openArray, setOpenArray } = useAppContext();
 
     const checkExist = (name) => {
         const result = openArray.includes(name) ? openArray.filter(o => o !== name) : [name, ...openArray];

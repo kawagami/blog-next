@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { useNoteContext } from "@/provider/note-provider";
+import { useAppContext } from "@/provider/app-provider";
 
 export default function HackMDNotesComponent(props) {
-    const { openArray, setOpenArray } = useNoteContext();
+    const { openArray, setOpenArray } = useAppContext();
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {

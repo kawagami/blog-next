@@ -3,10 +3,10 @@
 import sun from "@/assets/Sun.svg";
 import moon from "@/assets/Moon.svg";
 import Image from "next/image";
-import { useDarkContext } from "@/provider/dark-provider";
+import { useAppContext } from "@/provider/app-provider";
 
 export default function ThemeButton() {
-    const { isDark, setIsDark } = useDarkContext();
+    const { isDark, setIsDark } = useAppContext();
 
     function changeTheme() {
         const htmlClass = document.documentElement.classList;

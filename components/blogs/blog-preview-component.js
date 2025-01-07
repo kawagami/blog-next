@@ -2,12 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import 'cherry-markdown/dist/cherry-markdown.min.css';
-import { useDarkContext } from "@/provider/dark-provider";
+import { useAppContext } from "@/provider/app-provider";
 
 export default function BlogPreviewComponent({ markdown }) {
     const editorRef = useRef(null);
     const cherryInstanceRef = useRef(null);
-    const { isDark } = useDarkContext();
+    const { isDark } = useAppContext();
 
     useEffect(() => {
         let isMounted = true;

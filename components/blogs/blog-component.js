@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { clearSession } from '@/app/login/actions';
 import putBlog from '@/api/put-blog';
-import { useDarkContext } from "@/provider/dark-provider";
+import { useAppContext } from "@/provider/app-provider";
 import 'cherry-markdown/dist/cherry-markdown.min.css';
 
 export default function BlogComponent({ id, blog }) {
@@ -17,7 +17,7 @@ export default function BlogComponent({ id, blog }) {
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 }); // 新增模態框位置
     const [newTag, setNewTag] = useState('');
     const [tags, setTags] = useState(blog.tags || []);
-    const { isDark } = useDarkContext();
+    const { isDark } = useAppContext();
 
     useEffect(() => {
         const checkSession = () => {

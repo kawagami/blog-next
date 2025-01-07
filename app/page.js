@@ -6,7 +6,7 @@ import Tags from '@/components/blogs/tags';
 
 export default async function BlogsPage() {
     const blogs = await getBlogs();
-    const flattenedTags = Array.from(new Set(blogs.flatMap(item => item.tags)));
+    const flattenedTags = Array.from(new Set(blogs.flatMap(item => item.tags))).sort((a, b) => a.localeCompare(b));
 
     return (
         <div className="w-full h-[calc(100svh-120px)] flex">

@@ -3,11 +3,11 @@
 import Image from "next/image";
 import GithubMark from "@/assets/github-mark.svg"
 import GithubMarkWhite from "@/assets/github-mark-white.svg"
-import { useDarkContext } from "@/provider/dark-provider";
+import { useAppContext } from "@/provider/app-provider";
 import Link from "next/link";
 
 export default function Footer() {
-    const { isDark } = useDarkContext();
+    const { isDark } = useAppContext();
     return (
         <footer className="min-h-[50px] flex justify-center gap-4 text-center">
 

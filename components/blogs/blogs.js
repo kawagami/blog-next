@@ -1,10 +1,10 @@
 'use client';
 
-import { useBlogContext } from "@/provider/blogs-provider";
+import { useAppContext } from "@/provider/app-provider";
 import BlogListCardClient from "@/components/blogs/blog-list-card-client";
 
 export default function Blogs({ blogs }) {
-    const { visibleBlogs } = useBlogContext();
+    const { visibleBlogs } = useAppContext();
 
     // 過濾 blogs，如果沒有選中標籤 (visibleBlogs === null)，顯示所有
     const filteredBlogs = visibleBlogs
