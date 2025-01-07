@@ -8,6 +8,7 @@ export default function AppProvider({ children }) {
     const [visibleBlogs, setVisibleBlogs] = useState(null);
     const [isDark, setIsDark] = useState(false);
     const [openArray, setOpenArray] = useState([]);
+    const [allTags, setAllTags] = useState([]);
 
     return (
         <AppContext.Provider
@@ -18,6 +19,8 @@ export default function AppProvider({ children }) {
                 setIsDark,
                 openArray,
                 setOpenArray,
+                allTags,
+                setAllTags,
             }}
         >
             {children}

@@ -7,6 +7,7 @@ import DeleteButton from '@/components/blogs/delete-button';
 
 export default async function BlogsPage() {
     const blogs = await getBlogs();
+    const tags = Array.from(new Set(blogs.flatMap(item => item.tags))).sort((a, b) => a.localeCompare(b));
 
     return (
         <div className="w-full md:w-4/5 lg:w-3/5 xl:w-2/5 h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
@@ -31,7 +32,7 @@ export default async function BlogsPage() {
 
                                 {/* Actions */}
                                 <div className="flex space-x-2">
-                                    <EditButton uuid={blog.id} />
+                                    <EditButton uuid={blog.id} tags={tags} />
                                     <DeleteButton uuid={blog.id} />
                                 </div>
                             </li>

@@ -17,7 +17,7 @@ export default function BlogComponent({ id, blog }) {
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 }); // 新增模態框位置
     const [newTag, setNewTag] = useState('');
     const [tags, setTags] = useState(blog.tags || []);
-    const { isDark } = useAppContext();
+    const { isDark, allTags } = useAppContext();
 
     useEffect(() => {
         const checkSession = () => {
@@ -179,6 +179,31 @@ export default function BlogComponent({ id, blog }) {
                                 </li>
                             ))}
                         </ul>
+
+                        {/* 顯示所有 allTags */}
+                        <div className="mt-4">
+                            <h3 className="text-md font-medium mb-2">所有類型</h3>
+                            <ul className="space-y-2 max-h-40 overflow-auto border-t pt-2">
+                                {allTags.map((tag, index) => (
+                                    <li
+                                        key={index}
+                                        className="flex justify-between items-center"
+                                    >
+                                        <span>{tag}</span>
+                                        <button
+                                            onClick={() => {
+                                                if (!tags.includes(tag)) {
+                                                    setTags([...tags, tag]);
+                                                }
+                                            }}
+                                            className="text-blue-600 hover:underline"
+                                        >
+                                            新增
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
 
                         <button
                             onClick={() => setShowTagModal(false)}
