@@ -4,6 +4,7 @@ import Link from "next/link";
 import ShowClientTime from "@/components/blogs/show-client-time";
 
 export default function BlogListCardClient({ id, toc, tags, created_at, updated_at }) {
+    const sortedTags = tags.sort((a, b) => a.localeCompare(b));
     return (
         <Link
             href={`/blogs/${id}`}
@@ -18,7 +19,7 @@ export default function BlogListCardClient({ id, toc, tags, created_at, updated_
 
                 {/* Tags 區域 */}
                 <div className="flex justify-center gap-2 mb-4">
-                    {tags.map((tag, index) => (
+                    {sortedTags.map((tag, index) => (
                         <span
                             key={index}
                             className="bg-blue-100 text-blue-600 text-xs font-semibold px-2.5 py-0.5 rounded"
