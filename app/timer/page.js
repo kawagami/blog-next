@@ -59,8 +59,8 @@ export default function Home() {
     const [resetCounter, setResetCounter] = useState(0);
     const [completedRounds, setCompletedRounds] = useState(0);
     const [roundDuration, setRoundDuration] = useState(35); // 每輪持續時間，預設為 35 分鐘
-    const [alertTimes, setAlertTimes] = useState("30,0"); // 提示音時間點，預設為 30 分鐘和 0 分鐘
-    const [alertTimesRaw, setAlertTimesRaw] = useState("30,0"); // 用於顯示原始用戶輸入
+    const [alertTimes, setAlertTimes] = useState("5,0"); // 提示音時間點，預設為剩餘 5 分鐘和 0 分鐘
+    const [alertTimesRaw, setAlertTimesRaw] = useState("5,0"); // 用於顯示原始用戶輸入
 
     // 播放提示音
     const playAlertSound = () => {
