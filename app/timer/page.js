@@ -7,29 +7,39 @@ const CountdownTimer = ({ durationInMinutes, alertTimes, isPaused, onAlert, onRe
     const [triggeredAlerts, setTriggeredAlerts] = useState(new Set()); // 已觸發提示音的時間點
 
     useEffect(() => {
-        if (isPaused) return; // 如果暫停，不執行計時邏輯
+        let startTime = Date.now();
+        let endTime = startTime + durationInMinutes * 60 * 1000;
 
-        const timer = setInterval(() => {
-            setTimeLeft((prev) => {
-                const newTimeLeft = prev - 1;
-                const minutesLeft = Math.ceil(newTimeLeft / 60);
+        const tick = () => {
+            if (isPaused) return; // 如果暫停，直接返回
+            const currentTime = Date.now();
+            const remainingTime = Math.max(Math.floor((endTime - currentTime) / 1000), 0);
 
-                // 如果時間點符合且尚未觸發，發出提示音
-                if (alertTimes.includes(minutesLeft) && !triggeredAlerts.has(minutesLeft)) {
-                    onAlert();
-                    setTriggeredAlerts((prevSet) => new Set(prevSet).add(minutesLeft)); // 標記為已觸發
-                }
+            setTimeLeft(remainingTime);
 
-                if (newTimeLeft === 0) {
-                    onComplete(); // 倒數完成
-                }
+            const minutesLeft = Math.ceil(remainingTime / 60);
 
-                return Math.max(newTimeLeft, 0); // 確保時間不會低於 0
-            });
-        }, 1000);
+            // 如果時間點符合且尚未觸發，發出提示音
+            if (alertTimes.includes(minutesLeft) && !triggeredAlerts.has(minutesLeft)) {
+                onAlert();
+                setTriggeredAlerts((prevSet) => new Set(prevSet).add(minutesLeft)); // 標記為已觸發
+            }
 
-        return () => clearInterval(timer); // 清除定時器
-    }, [isPaused, alertTimes, onAlert, onComplete, triggeredAlerts]);
+            if (remainingTime > 0) {
+                setTimeout(tick, 1000); // 下一次觸發倒數
+            } else {
+                onComplete(); // 倒數完成
+            }
+        };
+
+        tick();
+
+        return () => {
+            // 清除所有狀態，避免重複計時
+            setTimeLeft(durationInMinutes * 60);
+            setTriggeredAlerts(new Set());
+        };
+    }, [isPaused, alertTimes, onAlert, onComplete, durationInMinutes, onReset]);
 
     // 將秒數轉換為 分鐘:秒 格式
     const formatTime = (seconds) => {
@@ -37,11 +47,6 @@ const CountdownTimer = ({ durationInMinutes, alertTimes, isPaused, onAlert, onRe
         const secs = seconds % 60;
         return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
     };
-
-    useEffect(() => {
-        setTimeLeft(durationInMinutes * 60); // 重置倒數
-        setTriggeredAlerts(new Set()); // 重置已觸發的時間點
-    }, [durationInMinutes, onReset]);
 
     return (
         <div className="flex flex-col items-center gap-4">
