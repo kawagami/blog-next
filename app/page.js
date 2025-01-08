@@ -10,7 +10,7 @@ export default async function BlogsPage() {
 
     return (
         <div className="w-full h-[calc(100svh-120px)] flex">
-            <div className="w-1/5 p-4">
+            <div className="w-1/5 p-4 overflow-auto">
                 <Tags tags={flattenedTags || []} />
             </div>
             <div className="w-3/5 overflow-auto">
