@@ -61,8 +61,6 @@ export default function Header() {
                         <Link href="/resizer" className="block px-4 py-2 hover:bg-gray-100">Resizer</Link>
                         <Link href="/new-password" className="block px-4 py-2 hover:bg-gray-100">NewPassword</Link>
                         <Link href="/convert-text" className="block px-4 py-2 hover:bg-gray-100">ConvertText</Link>
-                        {/* 功能未完成 先隱藏 */}
-                        {/* <Link href="/timer" className="block px-4 py-2 hover:bg-gray-100">Timer</Link> */}
                     </div>
                 </div>
 
