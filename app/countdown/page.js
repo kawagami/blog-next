@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-export default function Home() {
+export default function CountDownPage() {
     const [minutes, setMinutes] = useState(30); // 預設 30 分鐘
     const [targetTime, setTargetTime] = useState(null); // 絕對時間
     const [timeLeft, setTimeLeft] = useState(0); // 剩餘秒數
