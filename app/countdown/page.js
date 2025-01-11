@@ -43,6 +43,20 @@ export default function CountDownPage() {
         return () => clearTimeout(beepTimer);
     }, [isBeeping]);
 
+    // 偵測頁面焦點變化
+    useEffect(() => {
+        const handleFocus = () => {
+            if (isBeeping) {
+                stopBeeping();
+            }
+        };
+
+        window.addEventListener('focus', handleFocus);
+        return () => {
+            window.removeEventListener('focus', handleFocus);
+        };
+    }, [isBeeping]);
+
     const formatTime = (seconds) => {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
@@ -105,5 +119,4 @@ export default function CountDownPage() {
             <audio ref={audioRef} src="/beep.mp3" loop />
         </div>
     );
-
 }
