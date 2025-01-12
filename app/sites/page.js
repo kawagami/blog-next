@@ -14,7 +14,8 @@ const data = [
         contents: [
             "最一開始練習 deploy 時",
             "用 laravel 建立的網站",
-            "目前使用 next-blog.kawa.homes",
+            "目前使用之前是",
+            "next-blog.kawa.homes",
             "的 next.js 專案替換掉了"
         ]
     },
