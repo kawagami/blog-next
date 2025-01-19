@@ -17,9 +17,6 @@ const nextConfig = {
             },
         ]
     },
-    env: {
-        NEXT_PUBLIC_WS_URL: process.env.NEXT_PUBLIC_WS_URL,
-    },
     reactStrictMode: false,
     experimental: {
         serverActions: {
