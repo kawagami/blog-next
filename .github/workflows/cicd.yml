@@ -36,5 +36,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull kawagami77/my-next-blog:latest
-            docker image prune --force
             sh up.sh
+            docker image prune --force
