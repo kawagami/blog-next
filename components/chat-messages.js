@@ -109,7 +109,12 @@ export default function ChatMessages(props) {
                 <OnlineUsers users={onlineUsers} />
 
                 {/* 右側：訊息列表 */}
-                <MessagesList messages={messages} username={username} messageBoxRef={messageBoxRef} />
+                <MessagesList
+                    messages={messages}
+                    setMessages={setMessages} // 傳遞 setMessages
+                    username={username}
+                    messageBoxRef={messageBoxRef}
+                />
             </div>
 
             {/* 訊息輸入區域 */}
