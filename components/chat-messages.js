@@ -19,7 +19,7 @@ export default function ChatMessages(props) {
         // 先 render 歷史訊息
         props.messages.reverse().map(historyMessage => setMessages(prevMessages => [...prevMessages, { message_type: historyMessage.message_type, content: historyMessage.content, from: historyMessage.from, to: historyMessage.to, created_at: historyMessage.created_at }]));
 
-        const webSocket = new WebSocket(`wss://axum.kawa.homes/ws?token=${username}`);
+        const webSocket = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/ws?token=${username}`);
         setWs(webSocket);
 
         webSocket.onopen = () => {
