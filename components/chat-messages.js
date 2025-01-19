@@ -22,6 +22,9 @@ export default function ChatMessages(props) {
         const webSocket = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/ws?token=${username}`);
         setWs(webSocket);
 
+        // 測試用
+        console.log('WebSocket URL:', process.env.NEXT_PUBLIC_WS_URL);
+
         webSocket.onopen = () => {
             console.log('WebSocket 已連接');
             setIsConnected(true); // 更新連線狀態
