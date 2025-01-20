@@ -16,7 +16,6 @@ export default function NewPasswordPage() {
             const passwords = await getNewPassword(count, length);
             setNewPasswords(passwords);
         } catch (error) {
-            console.error("Error fetching new passwords:", error);
             setNewPasswords(["Failed to fetch passwords"]);
         } finally {
             setIsLoading(false);

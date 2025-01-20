@@ -23,7 +23,6 @@ export default function ChatMessages(props) {
         setWs(webSocket);
 
         webSocket.onopen = () => {
-            console.log('WebSocket 已連接');
             setIsConnected(true); // 更新連線狀態
 
             // 每 45 秒發送一次 PING 訊息
@@ -36,7 +35,6 @@ export default function ChatMessages(props) {
                         to: "Myself"
                     };
                     webSocket.send(JSON.stringify(ping));
-                    console.log('PING 發送');
                 }
             }, 45000); // 45 秒
         };
@@ -52,7 +50,6 @@ export default function ChatMessages(props) {
         };
 
         webSocket.onclose = () => {
-            console.log('WebSocket 已斷線');
             setIsConnected(false); // 更新連線狀態
 
             // 清理 PING 的定時器

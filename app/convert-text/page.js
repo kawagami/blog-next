@@ -20,7 +20,6 @@ export default function ConvertText() {
             setOutputText(result.converted_text); // 更新轉換結果
             setNotification({ type: "success", message: "轉換成功！" });
         } catch (error) {
-            console.error("轉換失敗:", error);
             setNotification({ type: "error", message: "轉換失敗，請稍後再試" });
         } finally {
             setIsLoading(false); // 停止 loading

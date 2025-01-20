@@ -18,7 +18,6 @@ export default function DeleteButton({ uuid }) {
             await deleteBlog(uuid);
             router.refresh(); // 刷新頁面以更新 blog 列表
         } catch (error) {
-            console.error("刪除失敗：", error);
             alert("刪除失敗，請稍後再試。");
         } finally {
             setIsDeleting(false);
