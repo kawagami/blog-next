@@ -4,12 +4,6 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: 'http',
-                hostname: 'kawa.homes',
-                port: '',
-                pathname: '/storage/**'
-            },
-            {
                 protocol: 'https',
                 hostname: 'storage.googleapis.com',
                 port: '',
