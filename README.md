@@ -1,4 +1,4 @@
-# Blog 頁面 next.js 14 版本
+# Blog 頁面 next.js 15 版本
 
 ## tools
 * linux 開發環境
