@@ -5,11 +5,9 @@ const IndexInfoStore = [
         contents: [
             "後端 API 是使用 rust 的 axum 框架",
             "前端頁面是使用 react + next.js 框架",
-            "Blogs 頁面是想自己完成 hackmd 的方式作筆記生出來的相關頁面 還處於初期可使用而已的版本",
-            "Notes 是在這網站中定時更新在 hackmd 的筆記到這邊列表的頁面",
-            "Resources 突然想要甚麼功能 做完後就會歸類到這邊",
-            "Sites 稍微介紹一下目前使用的 domain",
-            "WS 簡易聊天室",
+            "頁面的 blogs 是想自己完成 hackmd 的方式作筆記生出來的相關內容",
+            "目前使用 cherry-markdown 完成初期可使用的版本",
+            "UI/UX 甚麼的還等待完善中",
             "其餘的想到甚麼就會加進來",
         ]
     },
