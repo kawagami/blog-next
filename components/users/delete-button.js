@@ -1,9 +1,17 @@
 'use client';
 
+import postUser from "@/api/post-user";
+
 export default function DeleteButton({ user }) {
 
     const handleDelete = async (user) => {
-        alert(`收到 ${user.id} 的資料`);
+        const fake_user = { name: "name", password: "password", email: "testemail" };
+        alert(`收到 ${user.name} 的資料`);
+
+        // todo
+        // const response = await postUser(fake_user);
+        // console.log(response);
+
     };
 
     return (
