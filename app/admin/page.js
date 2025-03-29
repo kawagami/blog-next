@@ -9,6 +9,12 @@ export default async function AdminPage() {
                 <h1 className="text-4xl font-bold text-gray-800 my-8">Admin Dashboard</h1>
                 <div className="w-full flex justify-center gap-4">
                     <Link
+                        href="/admin/stocks"
+                        className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
+                    >
+                        股票
+                    </Link>
+                    <Link
                         href="/admin/users"
                         className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
                     >
