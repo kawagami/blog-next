@@ -18,7 +18,7 @@ export default async function ListPending() {
                 </thead>
                 <tbody>
                     {info.map((stock) => (
-                        <tr key={stock.stock_no} className="text-center">
+                        <tr key={stock.stock_no + stock.start_date + stock.end_date} className="text-center">
                             <td className="border border-gray-300 px-4 py-2">{stock.stock_no}</td>
                             <td className="border border-gray-300 px-4 py-2">{stock.start_date}</td>
                             <td className="border border-gray-300 px-4 py-2">{stock.end_date}</td>
