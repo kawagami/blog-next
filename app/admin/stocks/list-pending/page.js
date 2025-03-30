@@ -7,7 +7,9 @@ export default async function ListPending() {
 
     return (
         <div className="w-full md:w-4/5 lg:w-3/5 xl:w-2/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
-            <h1 className="text-xl font-bold mb-4">股票變動列表</h1>
+            <h1 className="text-xl font-bold mb-4">
+                待處理股票變動列表 ({info.length} 筆)
+            </h1>
             <table className="w-full border-collapse border border-gray-300">
                 <thead>
                     <tr className="bg-gray-200">
