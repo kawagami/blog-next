@@ -9,15 +9,27 @@ export default async function Stocks() {
             <div className="w-full flex justify-center gap-4">
                 <Link
                     href="/admin/stocks/list"
-                    className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
+                    className="px-6 py-3 font-semibold text-white bg-green-600 border-2 border-green-700 rounded-lg shadow-md hover:bg-green-700 hover:scale-105 transition duration-300"
                 >
-                    List
+                    所有查詢後的資料
                 </Link>
                 <Link
                     href="/admin/stocks/search"
                     className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
                 >
-                    Search
+                    查詢特定股票
+                </Link>
+                <Link
+                    href="/admin/stocks/list-pending"
+                    className="px-6 py-3 font-semibold text-white bg-green-600 border-2 border-green-700 rounded-lg shadow-md hover:bg-green-700 hover:scale-105 transition duration-300"
+                >
+                    所有待查詢股票
+                </Link>
+                <Link
+                    href="/admin/stocks/new-pending"
+                    className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
+                >
+                    新增待查詢股票
                 </Link>
             </div>
         </div>
