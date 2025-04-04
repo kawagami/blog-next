@@ -1,16 +1,13 @@
 'use client';
 
+import patchOneStockChangePending from "@/api/patch-one-stock-change-pending";
+
 // import postUser from "@/api/post-stock";
 
 export default function PendingButton({ stock }) {
 
     const handlePending = async (stock) => {
-        alert(`收到 ${stock.id} 的資料`);
-
-        // todo
-        // const response = await postUser(fake_user);
-        // console.log(response);
-
+        await patchOneStockChangePending({ id: stock.id });
     };
 
     return (
