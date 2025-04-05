@@ -4,8 +4,11 @@ import getStockChanges from "@/api/get-stock-changes";
 import DeleteButton from "@/components/stocks/delete-button";
 import PendingButton from "@/components/stocks/pending-button";
 
-export default async function List() {
-    const info = await getStockChanges();
+export default async function List(props) {
+    const searchParams = await props.searchParams
+    const status = searchParams.status
+
+    const info = await getStockChanges(status);
 
     return (
         <div className="w-full lg:w-3/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
