@@ -3,7 +3,7 @@
 import getStockChanges from "@/api/get-stock-changes";
 import DeleteButton from "@/components/stocks/delete-button";
 import PendingButton from "@/components/stocks/pending-button";
-import Link from "next/link";
+import { StatusLink } from "@/components/stocks/status-link";
 
 export default async function List(props) {
     const searchParams = await props.searchParams
@@ -17,21 +17,11 @@ export default async function List(props) {
                 股票變動列表 ({info.length} 筆)
             </h1>
             <div className="flex gap-2 mb-4">
-                {
-                    ["", "completed", "failed", "pending"].map((s) => (
-                        <Link
-                            key={s || 'all'}
-                            href={{
-                                pathname: '/admin/stocks/list',
-                                query: s ? { status: s } : {},
-                            }}
-                            className={`px-4 py-2 rounded-lg border border-gray-300 transition ${status === s || (!status && s === '')
-                                ? 'bg-blue-500 text-white'
-                                : 'bg-white text-gray-700 hover:bg-gray-100 hover:text-black'}`}>
-                            {s || 'All'}
-                        </Link>
-                    ))
-                }
+                {["", "completed", "failed", "pending"].map((s) => (
+                    <StatusLink key={s || 'all'} status={s} currentStatus={status}>
+                        {s || 'All'}
+                    </StatusLink>
+                ))}
             </div>
             <table className="w-full border-collapse border border-gray-300">
                 <thead>
