@@ -17,41 +17,21 @@ export default async function List(props) {
                 股票變動列表 ({info.length} 筆)
             </h1>
             <div className="flex gap-2 mb-4">
-                <Link
-                    href={{
-                        pathname: '/admin/stocks/list',
-                    }}
-                    className={`px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 hover:text-black transition`}
-                >
-                    All
-                </Link>
-                <Link
-                    href={{
-                        pathname: '/admin/stocks/list',
-                        query: { status: 'completed' },
-                    }}
-                    className={`px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 hover:text-black transition`}
-                >
-                    completed
-                </Link>
-                <Link
-                    href={{
-                        pathname: '/admin/stocks/list',
-                        query: { status: 'failed' },
-                    }}
-                    className={`px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 hover:text-black transition`}
-                >
-                    failed
-                </Link>
-                <Link
-                    href={{
-                        pathname: '/admin/stocks/list',
-                        query: { status: 'pending' },
-                    }}
-                    className={`px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 hover:text-black transition`}
-                >
-                    pending
-                </Link>
+                {
+                    ["", "completed", "failed", "pending"].map((s) => (
+                        <Link
+                            key={s || 'all'}
+                            href={{
+                                pathname: '/admin/stocks/list',
+                                query: s ? { status: s } : {},
+                            }}
+                            className={`px-4 py-2 rounded-lg border border-gray-300 transition ${status === s || (!status && s === '')
+                                ? 'bg-blue-500 text-white'
+                                : 'bg-white text-gray-700 hover:bg-gray-100 hover:text-black'}`}>
+                            {s || 'All'}
+                        </Link>
+                    ))
+                }
             </div>
             <table className="w-full border-collapse border border-gray-300">
                 <thead>
