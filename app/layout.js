@@ -1,12 +1,9 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { Suspense } from "react";
 import LoadingComponent from "@/components/loading-component";
 import AppProvider from "@/provider/app-provider";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Kawa's Blog",
@@ -16,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gradient-to-br from-blue-100 via-green-100 to-red-100 dark:from-blue-900 dark:via-green-900 dark:to-red-900 dark:text-white`}>
+      <body className={`bg-gradient-to-br from-blue-100 via-green-100 to-red-100 dark:from-blue-900 dark:via-green-900 dark:to-red-900 dark:text-white`}>
         <AppProvider>
           <Header />
 
