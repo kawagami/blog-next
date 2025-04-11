@@ -1,8 +1,6 @@
 'use client';
 
-import patchOneStockChangePending from "@/api/patch-one-stock-change-pending";
-
-// import postUser from "@/api/post-stock";
+import { patchOneStockChangePending } from "./actions";
 
 export default function PendingButton({ stock }) {
 

@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import apiRequest from "@/libs/apiRequest";
 
-async function patchOneStockChangePending({ id }) {
+export async function patchOneStockChangePending({ id }) {
     const url = `${process.env.API_URL}/stocks/update_one_stock_change_pending`;
 
     try {
@@ -26,5 +26,3 @@ async function patchOneStockChangePending({ id }) {
         throw error;
     }
 }
-
-export default patchOneStockChangePending;
