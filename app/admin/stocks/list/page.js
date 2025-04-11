@@ -1,8 +1,8 @@
 "use server";
 
-import getStockChanges from "@/api/get-stock-changes";
 import StockTable from "@/components/stocks/stock-table";
 import { StatusLink } from "@/components/stocks/status-link";
+import { getStockChanges } from "@/components/stocks/actions";
 
 export default async function List(props) {
     const searchParams = await props.searchParams
