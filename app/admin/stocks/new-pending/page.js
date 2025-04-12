@@ -1,6 +1,6 @@
 "use client";
 
-import postNewPendingStockChange from "@/api/post-new-pending-stock-change";
+import { postNewPendingStockChange } from "@/components/stocks/actions";
 import { useState } from "react";
 
 export default function NewPending() {
