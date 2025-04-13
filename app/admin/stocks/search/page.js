@@ -1,6 +1,6 @@
 "use client";
 
-import postGetStockPrice from "@/api/post-get-stock-price";
+import { postGetStockPrice } from "@/components/stocks/actions";
 import { useActionState } from "react";
 
 async function fetchStockData(prevState, formData) {
