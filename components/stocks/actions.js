@@ -100,6 +100,11 @@ export async function postGetStockPrice({ stock_no, start_date, end_date }) {
 
 // 跟後端取 input date 的歷史價格
 export async function getStockHistoryPrice({ stock_no, date }) {
+    // 檢查日期格式是否為 YYYYMMDD
+    if (!isValidDateFormat(date)) {
+        throw new Error("日期格式錯誤，必須是 YYYYMMDD 格式");
+    }
+
     const url = new URL(`${process.env.API_URL}/stocks/get_stock_history_price`);
 
     // 加上必要的 query 參數
@@ -119,4 +124,30 @@ export async function getStockHistoryPrice({ stock_no, date }) {
         console.error("Error getting stock history price:", error);
         throw error;
     }
+}
+
+// 檢查日期是否為 YYYYMMDD 格式
+function isValidDateFormat(dateStr) {
+    // 使用正則表達式檢查是否為 8 位數字
+    if (!/^\d{8}$/.test(dateStr)) {
+        return false;
+    }
+
+    // 提取年、月、日
+    const year = parseInt(dateStr.substring(0, 4), 10);
+    const month = parseInt(dateStr.substring(4, 6), 10);
+    const day = parseInt(dateStr.substring(6, 8), 10);
+
+    // 檢查月份是否在 1-12 範圍內
+    if (month < 1 || month > 12) {
+        return false;
+    }
+
+    // 檢查日期是否在該月的有效範圍內
+    const daysInMonth = new Date(year, month, 0).getDate();
+    if (day < 1 || day > daysInMonth) {
+        return false;
+    }
+
+    return true;
 }
