@@ -97,3 +97,26 @@ export async function postGetStockPrice({ stock_no, start_date, end_date }) {
         throw error;
     }
 }
+
+// 跟後端取 input date 的歷史價格
+export async function getStockHistoryPrice({ stock_no, date }) {
+    const url = new URL(`${process.env.API_URL}/stocks/get_stock_history_price`);
+
+    // 加上必要的 query 參數
+    url.searchParams.append("stock_no", stock_no);
+    url.searchParams.append("date", date);
+
+    try {
+        // 發送 GET 請求
+        const response = await apiRequest({
+            url: url.toString(),
+            method: "GET"
+        });
+
+        // 返回解析後的 JSON 數據
+        return await response;
+    } catch (error) {
+        console.error("Error getting stock history price:", error);
+        throw error;
+    }
+}
