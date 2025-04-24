@@ -5,7 +5,7 @@ import Link from "next/link";
 export default async function Stocks() {
 
     return (
-        <div className="w-full md:w-4/5 lg:w-3/5 xl:w-2/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
+        <div className="w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
             <div className="w-full flex justify-center gap-4">
                 <Link
                     href="/admin/stocks/list"
