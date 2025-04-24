@@ -14,6 +14,13 @@ export default async function Stocks() {
                     所有查詢後的資料
                 </Link>
                 <Link
+                    href="/admin/stocks/get-stock-history-price"
+                    className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
+                >
+                    {/* get_stock_history_price */}
+                    查詢特定股票歷史價格
+                </Link>
+                <Link
                     href="/admin/stocks/search"
                     className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
                 >
