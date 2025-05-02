@@ -14,10 +14,17 @@ export default async function Stocks() {
                     所有查詢後的資料
                 </Link>
                 <Link
+                    href="/admin/stocks/fetch_stock_closing_price_pair"
+                    className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
+                >
+                    查詢特定區間特定股票歷史價格
+                </Link>
+
+                {/* 以下低使用度 先註解 */}
+                {/* <Link
                     href="/admin/stocks/get-stock-history-price"
                     className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
                 >
-                    {/* get_stock_history_price */}
                     查詢特定股票歷史價格
                 </Link>
                 <Link
@@ -31,7 +38,7 @@ export default async function Stocks() {
                     className="px-6 py-3 font-semibold text-white bg-indigo-600 border-2 border-indigo-700 rounded-lg shadow-md hover:bg-indigo-700 hover:scale-105 transition duration-300"
                 >
                     新增待查詢股票
-                </Link>
+                </Link> */}
             </div>
         </div>
     );

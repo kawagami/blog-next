@@ -151,3 +151,32 @@ function isValidDateFormat(dateStr) {
 
     return true;
 }
+
+// 跟後端取特定股票特定時間區間的歷史價格
+export async function fetchStockClosingPricePair({ stock_no, start_date, end_date }) {
+    // 檢查日期格式是否為 YYYYMMDD
+    if (!isValidDateFormat(start_date) || !isValidDateFormat(end_date)) {
+        throw new Error("日期格式錯誤，必須是 YYYYMMDD 格式");
+    }
+
+    const url = new URL(`${process.env.API_URL}/stocks/fetch_stock_closing_price_pair`);
+
+    // 加上必要的 query 參數
+    url.searchParams.append("stock_no", stock_no);
+    url.searchParams.append("start_date", start_date);
+    url.searchParams.append("end_date", end_date);
+
+    try {
+        // 發送 GET 請求
+        const response = await apiRequest({
+            url: url.toString(),
+            method: "GET"
+        });
+
+        // 返回解析後的 JSON 數據
+        return await response;
+    } catch (error) {
+        console.error("Error getting stock history price:", error);
+        throw error;
+    }
+}
