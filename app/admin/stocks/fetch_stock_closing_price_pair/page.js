@@ -77,28 +77,34 @@ export default function Search() {
     });
 
     const renderStats = (data) => {
-        if (data.length !== 2) return null; // 只有2筆資料時才計算
+        if (!data || !data.stats) return null;
 
-        const start = data[0];
-        const end = data[1];
-
-        const startPrice = start.close_price;
-        const endPrice = end.close_price;
-        const priceChange = endPrice - startPrice;
-        const percentChange = ((priceChange) / startPrice) * 100;
+        const { price_diff, percent_change, is_increase, day_span } = data.stats;
+        const priceChangeClass = is_increase ? "text-green-600" : "text-red-600";
 
         return (
             <div className="bg-blue-50 p-3 rounded mb-4">
-                <p><span className="font-medium">起始收盤價：</span> {startPrice}</p>
-                <p><span className="font-medium">結束收盤價：</span> {endPrice}</p>
-                <p><span className="font-medium">漲跌點數：</span> {priceChange.toFixed(2)}</p>
-                <p><span className="font-medium">漲跌幅 (%)：</span> {percentChange.toFixed(2)}%</p>
+                {data.prices.length >= 2 && (
+                    <>
+                        <p><span className="font-medium">起始收盤價：</span> {data.prices[0].close_price}</p>
+                        <p><span className="font-medium">結束收盤價：</span> {data.prices[data.prices.length - 1].close_price}</p>
+                    </>
+                )}
+                <p>
+                    <span className="font-medium">漲跌點數：</span>
+                    <span className={priceChangeClass}>{price_diff.toFixed(2)}</span>
+                </p>
+                <p>
+                    <span className="font-medium">漲跌幅 (%)：</span>
+                    <span className={priceChangeClass}>{percent_change.toFixed(2)}%</span>
+                </p>
+                <p><span className="font-medium">經過天數：</span> {day_span} 天</p>
             </div>
         );
     };
 
     return (
-        <div className="w-full lg:w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100 space-y-6">
+        <div className="w-full lg:w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
             {/* 查詢表單 */}
             <form action={formAction} className="space-y-4 bg-white p-4 rounded shadow">
                 <div className="flex flex-col space-y-2">
@@ -111,7 +117,14 @@ export default function Search() {
                 </div>
                 <div className="flex flex-col space-y-2">
                     <label htmlFor="end_date" className="font-medium">結束日期 (YYYYMMDD 或 民國)</label>
-                    <input type="text" name="end_date" id="end_date" className="border p-2 rounded w-full" placeholder="1130430 或 20240430" />
+                    <input
+                        type="text"
+                        name="end_date"
+                        id="end_date"
+                        className="border p-2 rounded w-full"
+                        placeholder="1130430 或 20240430"
+                        defaultValue={new Date().toISOString().slice(0, 10).replace(/-/g, "")}
+                    />
                 </div>
                 <button type="submit" disabled={isPending} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50">
                     {isPending ? "查詢中…" : "查詢"}
@@ -126,7 +139,7 @@ export default function Search() {
             )}
 
             {/* 結果顯示 */}
-            {state.stockData && Array.isArray(state.stockData) && (
+            {state.stockData && state.stockData.prices && (
                 <div className="bg-white p-4 rounded shadow">
                     <h2 className="text-lg font-semibold mb-3">查詢結果</h2>
 
@@ -142,7 +155,7 @@ export default function Search() {
                             </tr>
                         </thead>
                         <tbody>
-                            {state.stockData.map((item) => (
+                            {state.stockData.prices.map((item) => (
                                 <tr key={item.date}>
                                     <td className="border px-2 py-1 text-center">{item.stock_no}</td>
                                     <td className="border px-2 py-1 text-center">{item.date}</td>

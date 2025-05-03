@@ -159,7 +159,7 @@ export async function fetchStockClosingPricePair({ stock_no, start_date, end_dat
         throw new Error("日期格式錯誤，必須是 YYYYMMDD 格式");
     }
 
-    const url = new URL(`${process.env.API_URL}/stocks/fetch_stock_closing_price_pair`);
+    const url = new URL(`${process.env.API_URL}/stocks/fetch_stock_closing_price_pair_stats`);
 
     // 加上必要的 query 參數
     url.searchParams.append("stock_no", stock_no);
