@@ -180,3 +180,26 @@ export async function fetchStockClosingPricePair({ stock_no, start_date, end_dat
         throw error;
     }
 }
+
+// 依照 input 的 start_date & end_date 取該期間中執行庫藏股的資訊去 pending 等待執行
+export async function buybackStockRecord({ start_date, end_date }) {
+    const url = `${process.env.API_URL}/stocks/buyback_stock_record`;
+
+    try {
+        // 發送請求
+        const response = await apiRequest({
+            url: url,
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ start_date, end_date })
+        });
+
+        // 返回解析後的 JSON 數據
+        return await response;
+    } catch (error) {
+        console.error("Error posting to /stocks/get_stock_change_info:", error);
+        throw error;
+    }
+}
