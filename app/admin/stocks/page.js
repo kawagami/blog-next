@@ -19,6 +19,12 @@ export default async function Stocks() {
                 >
                     查詢特定區間特定股票歷史價格
                 </Link>
+                <Link
+                    href="/admin/stocks/get_unfinished_buyback_price_gap"
+                    className="px-6 py-3 font-semibold text-white bg-green-600 border-2 border-green-700 rounded-lg shadow-md hover:bg-green-700 hover:scale-105 transition duration-300"
+                >
+                    執行中的庫藏股
+                </Link>
 
                 {/* 以下低使用度 先註解 */}
                 {/* <Link

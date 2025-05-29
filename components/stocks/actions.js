@@ -203,3 +203,23 @@ export async function buybackStockRecord({ start_date, end_date }) {
         throw error;
     }
 }
+
+export async function getUnfinishedBuybackPriceGap() {
+    const url = `${process.env.API_URL}/stocks/get_unfinished_buyback_price_gap`;
+
+    try {
+        // 發送請求
+        const response = await apiRequest({
+            url,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        // 返回解析後的 JSON 數據
+        return await response;
+    } catch (error) {
+        console.error("Error fetching get_unfinished_buyback_price_gap:", error);
+        throw error;
+    }
+}
