@@ -5,18 +5,22 @@ import { getUnfinishedBuybackPriceGap } from "@/components/stocks/actions";
 export default async function Page() {
     const info = await getUnfinishedBuybackPriceGap();
 
-    // 計算總和
+    // 計算總和和平均
     const totalDiffPercent = info.reduce((sum, item) => {
         const percent = parseFloat(item.diff_percent);
         return sum + (isNaN(percent) ? 0 : percent);
     }, 0);
+    const avgDiffPercent = info.length > 0 ? totalDiffPercent / info.length : 0;
 
     return (
         <div className="w-full lg:w-3/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
             <h1 className="text-xl font-bold mb-4">執行中的庫藏股</h1>
 
+            {/* 顯示總和與平均 */}
             <div className="mb-4 text-right text-sm text-gray-600 space-y-1">
+                <div>資料數量：{info.length}</div>
                 <div>價差 (%) 總和：{totalDiffPercent.toFixed(2)}%</div>
+                <div>平均價差 (%)：{avgDiffPercent.toFixed(2)}%</div>
             </div>
 
             <div className="overflow-x-auto">
