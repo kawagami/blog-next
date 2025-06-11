@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:23-alpine3.21 AS builder
+FROM node:24-alpine AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -18,7 +18,7 @@ RUN npm run build && \
 		npm prune --production
 
 # Stage 2: Create the final image
-FROM node:23-alpine3.21
+FROM node:24-alpine
 
 # Create a non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
