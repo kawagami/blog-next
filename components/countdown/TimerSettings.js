@@ -33,7 +33,7 @@ export default function TimerSettings({ minutes, setMinutes, disabled, onEnterPr
                     value={minutes}
                     onChange={(e) => setMinutes(Number(e.target.value))}
                     min="1"
-                    max="120"
+                    max="999"
                     disabled={disabled}
                     className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
                     onMouseEnter={handleMouseEnter}

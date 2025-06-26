@@ -35,7 +35,7 @@ export default function Timer() {
         if (isBeeping) {
             beepTimer = setTimeout(() => {
                 stopBeeping();
-            }, 5 * 60 * 1000); // 5 分鐘後停止
+            }, 2 * 60 * 1000); // 2 分鐘後停止
         }
 
         return () => clearTimeout(beepTimer);
