@@ -13,7 +13,7 @@ export default async function Page() {
     const avgDiffPercent = info.length > 0 ? totalDiffPercent / info.length : 0;
 
     return (
-        <div className="w-full lg:w-3/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
+        <div className="w-full lg:w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
             <h1 className="text-xl font-bold mb-4">執行中的庫藏股</h1>
 
             {/* 顯示總和與平均 */}
@@ -28,6 +28,7 @@ export default async function Page() {
                     <thead className="bg-gray-200 sticky top-0 z-10">
                         <tr>
                             <th className="px-4 py-2 border">股票代號</th>
+                            <th className="px-4 py-2 border">股票名稱</th>
                             <th className="px-4 py-2 border">開始日</th>
                             <th className="px-4 py-2 border">結束日</th>
                             <th className="px-4 py-2 border">開始日價格</th>
@@ -40,6 +41,7 @@ export default async function Page() {
                         {info.map((item) => (
                             <tr key={item.stock_no} className="hover:bg-gray-100">
                                 <td className="px-4 py-2 border text-center">{item.stock_no}</td>
+                                <td className="px-4 py-2 border text-center">{item.stock_name}</td>
                                 <td className="px-4 py-2 border text-center">{item.start_date}</td>
                                 <td className="px-4 py-2 border text-center">{item.end_date}</td>
                                 <td className="px-4 py-2 border text-right">{item.price_on_start_date}</td>
