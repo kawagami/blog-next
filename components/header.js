@@ -57,7 +57,6 @@ export default function Header() {
                     {/* 使下拉選單保持顯示，當滑鼠移到下拉選單範圍內 */}
                     <div className="absolute left-0 bg-white shadow-lg rounded-md overflow-hidden hidden group-hover:block group-focus-within:block">
                         <Link href="/images" className="block px-4 py-2 hover:bg-gray-100">Images</Link>
-                        <Link href="/resizer" className="block px-4 py-2 hover:bg-gray-100">Resizer</Link>
                         <Link href="/new-password" className="block px-4 py-2 hover:bg-gray-100">NewPassword</Link>
                         <Link href="/convert-text" className="block px-4 py-2 hover:bg-gray-100">ConvertText</Link>
                         <Link href="/countdown" className="block px-4 py-2 hover:bg-gray-100">Countdown</Link>
