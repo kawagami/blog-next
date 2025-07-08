@@ -24,7 +24,8 @@ const IndexInfoStore = [
         title: "WS chat 頁面",
         contents: [
             "使用 rust 建立的 ws server",
-            "進行即時的交流"
+            "進行即時的交流",
+            "目前正在重構 暫時關閉中"
         ]
     },
 ];
