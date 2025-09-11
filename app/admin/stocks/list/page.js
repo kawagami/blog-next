@@ -24,7 +24,7 @@ export default async function List(props) {
                 股票變動列表 {info.length} 筆
             </h1>
             <h1 className="text-xl font-bold mb-4">
-                總變動 % 數 {totalChange} %
+                總變動 % 數 {totalChange.toFixed(2)} %
             </h1>
             <h1 className="text-xl font-bold mb-4">
                 有資料的個數 {totalCount}
