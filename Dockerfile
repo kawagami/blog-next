@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json files to the working directory
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# 安裝所有依賴項，包括可選依賴項 (sharp)
+RUN npm install --include=optional
 
 # Copy the rest of the application code to the working directory
 COPY . .
