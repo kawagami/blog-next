@@ -64,6 +64,7 @@ export default function Header() {
                     </div>
                 </div>
 
+                <Link href="/roster" aria-label="前往 Roster 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Roster</Link>
                 <Link href="/about" aria-label="前往 About 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">About</Link>
                 <ThemeButton />
             </nav>
