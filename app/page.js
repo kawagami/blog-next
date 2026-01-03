@@ -1,23 +1,7 @@
 'use server';
 
-import getBlogs from '@/api/get-blogs';
-import Blogs from '@/components/blogs/blogs';
-import Tags from '@/components/blogs/tags';
+import Sites from "@/app/sites/page";
 
-export default async function BlogsPage() {
-    const blogs = await getBlogs();
-    const flattenedTags = Array.from(new Set(blogs.flatMap(item => item.tags))).sort((a, b) => a.localeCompare(b));
-
-    return (
-        <div className="w-full h-[calc(100svh-120px)] flex">
-            <div className="w-1/5 p-4 overflow-auto">
-                <Tags tags={flattenedTags || []} />
-            </div>
-            <div className="w-3/5 overflow-auto">
-                <Blogs blogs={blogs || []} />
-            </div>
-            <div className="w-1/5"></div>
-
-        </div>
-    );
+export default async function Index() {
+    return <Sites />;
 }
