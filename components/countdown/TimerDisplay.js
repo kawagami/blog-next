@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 export default function TimerDisplay({ timeLeft }) {
     const formatTime = (seconds) => {

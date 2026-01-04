@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 async function getBlogs() {
     const res = await fetch(`${process.env.API_URL}/blogs`, { cache: 'no-store' });

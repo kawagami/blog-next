@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 /**
  * Calculates completion time using the Sango API

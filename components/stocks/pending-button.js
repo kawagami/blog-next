@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { patchOneStockChangePending } from "./actions";
 

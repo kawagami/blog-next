@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import sun from "@/assets/Sun.svg";
 import moon from "@/assets/Moon.svg";

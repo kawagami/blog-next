@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import getBlog from '@/api/get-blog'
 import { useParams } from 'next/navigation'

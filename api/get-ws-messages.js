@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 async function getWsMessages({ limit, before_id } = {}) {
     // 建立查詢參數物件

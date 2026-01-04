@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import getBlogs from "@/api/get-blogs";
 import NewCreateButton from "@/components/blogs/new-create-button";

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import deleteBlog from "@/api/delete-blog";
 import { useRouter } from "next/navigation";

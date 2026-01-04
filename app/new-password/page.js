@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import getNewPassword from "@/api/get-new-password";

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useAppContext } from "@/provider/app-provider";
 import { useRouter } from "next/navigation";

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useAppContext } from "@/provider/app-provider";
 import BlogListCardClient from "@/components/blogs/blog-list-card-client";

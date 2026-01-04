@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import getBlog from "@/api/get-blog";
 import BlogComponent from "@/components/blogs/blog-component";

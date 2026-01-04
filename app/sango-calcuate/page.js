@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import getSangoCalculate from '@/api/get-sango-calculate';

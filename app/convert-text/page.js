@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect, useActionState } from "react";
 import { convertTextAction } from "@/app/actions/convert";

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useEffect, useRef } from 'react';
 import 'cherry-markdown/dist/cherry-markdown.min.css';

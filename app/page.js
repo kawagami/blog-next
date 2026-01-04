@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import Sites from "@/app/sites/page";
 
