@@ -5,11 +5,11 @@
 import { useState } from "react";
 import { CalendarDays, Send, Loader2, UserPlus, Trash2 } from "lucide-react";
 import ShiftBadge from "@/components/roster/ShiftBadge";
-import postRoster from "@/api/post-roster"; // 引入你封裝好的 Server Action
+import postRoster from "@/api/post-roster";
 
 export default function RosterPage() {
     // --- 狀態管理 ---
-    const [names, setNames] = useState(["Kawa", "Alice"]);
+    const [names, setNames] = useState(["人員1", "人員2"]);
     const [newName, setNewName] = useState("");
     const [days, setDays] = useState(31);
     const [rule, setRule] = useState("fairness");
