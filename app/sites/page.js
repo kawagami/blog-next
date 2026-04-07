@@ -7,7 +7,7 @@ export const metadata = {
 
 const data = [
     {
-        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/website/5b1ab20d-fa21-48ba-beb6-673056fa9b3b.png",
+        src: "https://axum.kawa.homes/uploads/41dc5f9b-717f-4893-ba65-57ec866888c5.png",
         href: "https://kawa.homes",
         alt: "level 2 domain",
         title: "目前的二級域名 kawa.homes",
@@ -20,7 +20,7 @@ const data = [
         ]
     },
     {
-        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/website/94536f30-8f7d-4d2a-891f-b2bf52d78a8d.png",
+        src: "https://axum.kawa.homes/uploads/cf02b27e-a5f8-4b33-8f7f-9e8776367869.png",
         href: "#",
         alt: "fastapi",
         title: "python firebase service",
@@ -33,7 +33,7 @@ const data = [
         ]
     },
     {
-        src: "https://storage.googleapis.com/fir-test-a67eb.appspot.com/website/578586a8-db2a-484a-b839-fcb78a794603.png",
+        src: "https://axum.kawa.homes/uploads/c783ea99-60af-4b27-a1e6-a786b6a61249.png",
         href: "https://axum.kawa.homes",
         alt: "後端 API 站點",
         title: "後端 API 站點",

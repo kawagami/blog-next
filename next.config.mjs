@@ -9,6 +9,12 @@ const nextConfig = {
                 port: '',
                 pathname: '/**'
             },
+            {
+                protocol: 'https',
+                hostname: 'axum.kawa.homes',
+                port: '',
+                pathname: '/uploads/**'
+            },
         ]
     },
     reactStrictMode: false,
