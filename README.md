@@ -1,66 +1,90 @@
-# Blog Next.js Project
+# blog-next
 
-## Overview
-
-This project is a **Next.js** application designed to be lightweight, efficient, and containerized using Docker. It serves as a customizable blog platform, leveraging modern front-end tools such as **React**, **Tailwind CSS**, and **Markdown** for content rendering. The project is optimized for production using a multi-stage Docker build process.
+個人部落格與工具整合平台，Next.js 15 + React 19，後端對接 Rust Axum API (`axum.kawa.homes`)。
 
 ---
 
-## Features
+## 功能模組
 
-- **Markdown Rendering**: Uses `cherry-markdown` for seamless content formatting.
-- **Image Optimization**: Powered by `plaiceholder` for handling image placeholders efficiently.
-- **Authentication**: Implements token-based authentication using `jsonwebtoken`.
-- **Next.js Turbopack**: Utilized for faster development builds.
-- **Tailwind CSS**: Integrated for responsive and modern styling.
-- **ESLint**: Ensures code quality and adherence to best practices.
-
----
-
-## Setup & Deployment
-
-### Local Development
-
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
-
-3. The development server will be available at [http://localhost:3000](http://localhost:3000).
+| 路由 | 說明 |
+|------|------|
+| `/` | 首頁，顯示網站資訊 |
+| `/blogs` / `/blogs/[id]` | 文章列表與內容（Markdown 渲染） |
+| `/hackmd-notes` | HackMD 筆記整合，支援標籤篩選 |
+| `/images` | Firebase 圖片管理 |
+| `/countdown` | 倒數計時工具 |
+| `/convert-text` | 文字轉換工具 |
+| `/sango-calculate` | 三國志計算工具 |
+| `/roster` | 排班功能 |
+| `/sites` | 外部站點導覽 |
+| `/ws` | WebSocket 即時訊息 |
+| `/about` | 關於頁面 |
+| `/login` | JWT 登入 |
+| `/admin/*` | 後台管理（需登入）：文章、圖片、股票、使用者 |
 
 ---
 
-### Building & Running with Docker
+## 技術棧
 
-1. **Build the Docker image**:
-   ```bash
-   docker build -t blog-next .
-   ```
-
-2. **Run the Docker container**:
-   ```bash
-   docker run -p 3000:3000 blog-next
-   ```
-
-3. Access the app at [http://localhost:3000](http://localhost:3000).
+- **框架**：Next.js 15 (App Router, Turbopack)
+- **UI**：React 19 + Tailwind CSS + lucide-react
+- **Markdown**：cherry-markdown、react-markdown
+- **圖片**：plaiceholder + sharp（模糊佔位圖）、Firebase Storage
+- **認證**：JWT (`jsonwebtoken`)，middleware 保護 `/admin/*`
+- **後端 API**：`https://axum.kawa.homes`（Rust Axum）
+- **WebSocket**：`wss://axum.kawa.homes`
+- **部署**：Docker multi-stage build，standalone output
 
 ---
 
-## Docker Workflow
+## 專案結構
 
-### Multi-Stage Build Process
+```
+app/          # Next.js App Router 頁面
+components/   # 共用 UI 元件
+api/          # 前端 API 請求函式（fetch 封裝）
+hooks/        # React custom hooks
+libs/         # 工具函式庫
+provider/     # Context providers（zustand store、app-level）
+public/       # 靜態資源
+```
 
-1. **Stage 1 (Builder)**: 
-   - Installs dependencies.
-   - Builds the Next.js app.
-   - Prunes dev dependencies.
+---
 
-2. **Stage 2 (Final Image)**:
-   - Uses a minimal Node.js Alpine base image.
-   - Copies production files.
-   - Runs the app as a non-root user for security.
+## 本地開發
+
+```bash
+npm install
+npm run dev       # http://localhost:3000
+```
+
+需設定 `.env.local`：
+
+```env
+API_URL=https://axum.kawa.homes
+NEXT_PUBLIC_WS_URL=wss://axum.kawa.homes
+JWT_SECRET=...
+JWT_EMAIL=...
+```
+
+---
+
+## Docker 部署
+
+```bash
+# 建置
+docker build -t blog-next .
+
+# 或用 docker-compose
+docker-compose up -d
+```
+
+```bash
+# 快速腳本
+bash app.sh   # 啟動
+bash up.sh    # 更新並重啟
+```
+
+multi-stage build：
+1. **Builder**：安裝依賴、`next build`、裁剪 devDependencies
+2. **Final**：Node Alpine 最小映像，non-root user 執行
