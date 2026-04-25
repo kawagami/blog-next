@@ -1,5 +1,5 @@
 import IndexInfo from "@/components/index-info";
-import IndexInfoStore from "@/api/index-info-store";
+import IndexInfoStore from "@/data/index-info-store";
 
 export default function About() {
   return (
