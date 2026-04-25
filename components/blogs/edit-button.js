@@ -1,17 +1,9 @@
 "use client";
 
-import { useAppContext } from "@/provider/app-provider";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
-export default function EditButton({ uuid, tags }) {
+export default function EditButton({ uuid }) {
     const router = useRouter();
-    const { setAllTags } = useAppContext();
-
-    // 使用 useEffect 来设置 tags
-    useEffect(() => {
-        setAllTags(tags);
-    }, [tags, setAllTags]);
 
     return (
         <button
