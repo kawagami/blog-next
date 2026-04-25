@@ -7,7 +7,11 @@ import putBlog from '@/api/put-blog';
 import uploadFirebaseImage from '@/api/upload-firebase-image';
 
 function extractTocs(markdown) {
-    return markdown.match(/^#{1,6}\s+(.+)$/gm)?.map(h => h.replace(/^#{1,6}\s+/, '')) || ['未命名 blog'];
+    return markdown.match(/^#{1,6}\s+(.+)$/gm)?.map((h, index) => ({
+        id: String(index),
+        level: h.match(/^#+/)[0].length,
+        text: h.replace(/^#{1,6}\s+/, ''),
+    })) || [];
 }
 
 export default function BlogComponent({ id, blog, allTags }) {
@@ -26,7 +30,7 @@ export default function BlogComponent({ id, blog, allTags }) {
         setIsSaving(true);
         const tocs = extractTocs(markdown);
         try {
-            await putBlog(id, { id, markdown, html: markdown, tags, tocs });
+            await putBlog(id, { markdown, tags, tocs });
             router.push('/admin/blogs');
         } catch {
             setIsSaving(false);
