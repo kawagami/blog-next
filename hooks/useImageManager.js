@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import uploadFirebaseImage from '@/api/upload-firebase-image';
-import deleteFirebaseImage from '@/api/delete-firebase-image';
+import uploadFirebaseImage from '@/api/upload-image';
+import deleteFirebaseImage from '@/api/delete-image';
 
 export const useImageManager = (initialImages) => {
     const [images, setImages] = useState(initialImages);

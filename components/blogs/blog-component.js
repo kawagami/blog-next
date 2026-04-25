@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import putBlog from '@/api/put-blog';
-import uploadFirebaseImage from '@/api/upload-firebase-image';
+import uploadFirebaseImage from '@/api/upload-image';
 
 function extractTocs(markdown) {
     return markdown.match(/^#{1,6}\s+(.+)$/gm)?.map((h, index) => ({

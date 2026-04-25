@@ -2,10 +2,10 @@
 
 import { usePathname } from 'next/navigation';
 import { useImageManager } from '@/hooks/useImageManager';
-import UploadSection from '@/components/firebase/UploadSection';
-import ImageGrid from '@/components/firebase/ImageGrid';
+import UploadSection from '@/components/images/UploadSection';
+import ImageGrid from '@/components/images/ImageGrid';
 
-export default function FirebaseImageManager({ initialImages }) {
+export default function ImageManager({ initialImages }) {
     const pathname = usePathname();
     const {
         images,

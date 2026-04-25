@@ -1,5 +1,5 @@
-import getFirebaseImages from "@/api/get-firebase-images";
-import FirebaseImageManager from "@/components/firebase/FirebaseImageManager";
+import getImages from "@/api/get-images";
+import ImageManager from "@/components/images/ImageManager";
 
 export const metadata = {
     title: "Images page",
@@ -7,13 +7,11 @@ export const metadata = {
 };
 
 export default async function Images() {
-    // 從伺服器獲取初始圖片
-    const images = await getFirebaseImages();
+    const images = await getImages();
 
     return (
         <div className="w-full h-[calc(100svh-120px)] overflow-auto">
-            {/* 將初始圖片傳遞給客戶端組件 */}
-            <FirebaseImageManager initialImages={images} />
+            <ImageManager initialImages={images} />
         </div>
     );
 }

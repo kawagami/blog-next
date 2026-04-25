@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useActionState } from "react";
-import { convertTextAction } from "@/app/actions/convert";
+import { convertTextAction } from "@/app/convert-text/actions";
 
 export default function ConvertText() {
     // 初始狀態
