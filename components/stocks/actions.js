@@ -204,6 +204,31 @@ export async function buybackStockRecord({ start_date, end_date }) {
     }
 }
 
+export async function getStockDayAll({ trade_date = "", limit = 50, offset = 0 } = {}) {
+    const url = new URL(`${process.env.API_URL}/stocks/get_stock_day_all`);
+    if (trade_date) url.searchParams.append("trade_date", trade_date);
+    url.searchParams.append("limit", limit);
+    url.searchParams.append("offset", offset);
+
+    try {
+        return await apiRequest({ url: url.toString() });
+    } catch (error) {
+        console.error("Error fetching get_stock_day_all:", error);
+        throw error;
+    }
+}
+
+export async function getStockBuybackPeriods() {
+    const url = `${process.env.API_URL}/stocks/get_stock_buyback_periods_v2`;
+
+    try {
+        return await apiRequest({ url });
+    } catch (error) {
+        console.error("Error fetching get_stock_buyback_periods_v2:", error);
+        throw error;
+    }
+}
+
 export async function getUnfinishedBuybackPriceGap() {
     const url = `${process.env.API_URL}/stocks/get_unfinished_buyback_price_gap`;
 

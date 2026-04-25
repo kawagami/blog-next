@@ -25,6 +25,18 @@ export default async function Stocks() {
                 >
                     執行中的庫藏股
                 </Link>
+                <Link
+                    href="/admin/stocks/stock_day_all"
+                    className="px-6 py-3 font-semibold text-white bg-blue-600 border-2 border-blue-700 rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition duration-300"
+                >
+                    全市場行情
+                </Link>
+                <Link
+                    href="/admin/stocks/get_buyback_plans"
+                    className="px-6 py-3 font-semibold text-white bg-blue-600 border-2 border-blue-700 rounded-lg shadow-md hover:bg-blue-700 hover:scale-105 transition duration-300"
+                >
+                    庫藏股計畫
+                </Link>
 
                 {/* 以下低使用度 先註解 */}
                 {/* <Link
