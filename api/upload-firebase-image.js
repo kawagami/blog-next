@@ -4,7 +4,7 @@ import apiRequest from "@/libs/apiRequest";
 
 async function uploadFirebaseImage(formData) {
     const data = await apiRequest({
-        url: `${process.env.API_URL}/firebase`,
+        url: `${process.env.API_URL}/images/upload`,
         method: 'POST',
         body: formData,
     });

@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import putBlog from '@/api/put-blog';
+import uploadFirebaseImage from '@/api/upload-firebase-image';
 
 function extractTocs(markdown) {
     return markdown.match(/^#{1,6}\s+(.+)$/gm)?.map(h => h.replace(/^#{1,6}\s+/, '')) || ['未命名 blog'];
@@ -47,19 +48,10 @@ export default function BlogComponent({ id, blog, allTags }) {
     const handleImageUpload = async (file) => {
         if (!file) return;
         setIsUploading(true);
-        const sessionMatch = document.cookie.match(/(?:^|;)\s*session=([^;]+)/);
-        const token = sessionMatch ? decodeURIComponent(sessionMatch[1]) : null;
-        if (!token) { setIsUploading(false); return; }
-
         const formData = new FormData();
         formData.append('file', file);
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_WS_URL?.replace('wss://', 'https://')?.replace('ws://', 'http://')}/firebase`, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
-            const data = await res.json();
+            const data = await uploadFirebaseImage(formData);
             insertAtCursor(`![image](${data.url})`);
         } catch {
             alert('圖片上傳失敗');
