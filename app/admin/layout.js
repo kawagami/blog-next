@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/breadcrumb";
+import StockToast from "@/components/stocks/StockToast";
 
 export default function AdminLayout({ children }) {
     return (
@@ -12,6 +13,7 @@ export default function AdminLayout({ children }) {
                 capitalizeLinks
             />
             {children}
+            <StockToast />
         </>
     )
 }
