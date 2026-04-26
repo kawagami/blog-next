@@ -1,6 +1,6 @@
 "use client";
 
-import { postGetStockPrice } from "@/components/stocks/actions";
+import { postGetStockPrice } from "@/app/admin/stocks/actions";
 import { useActionState } from "react";
 import type { StockChange } from "@/types";
 

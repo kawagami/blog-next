@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import OnlineUsers from '@/components/ws/OnlineUsers';
-import MessagesList from '@/components/ws/MessageList';
-import MessageInput from '@/components/ws/MessageInput';
+import OnlineUsers from '@/components/ws/online-users';
+import MessagesList from '@/components/ws/message-list';
+import MessageInput from '@/components/ws/message-input';
 import type { ChatMessage } from '@/types';
 
 interface Props {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CalendarDays, Send, Loader2, UserPlus, Trash2 } from "lucide-react";
-import ShiftBadge from "@/components/roster/ShiftBadge";
+import ShiftBadge from "@/components/roster/shift-badge";
 import postRoster from "@/api/post-roster";
 
 interface RosterEntry {

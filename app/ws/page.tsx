@@ -1,5 +1,5 @@
 import getWsMessages from "@/api/get-ws-messages";
-import ChatMessages from "@/components/chat-messages";
+import ChatMessages from "@/components/chat/chat-messages";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

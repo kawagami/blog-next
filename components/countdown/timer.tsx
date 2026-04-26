@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from 'react';
-import TimerDisplay from './TimerDisplay';
-import TimerControls from './TimerControls';
-import TimerSettings from './TimerSettings';
+import TimerDisplay from './timer-display';
+import TimerControls from './timer-controls';
+import TimerSettings from './timer-settings';
 import useTimer from '@/hooks/useTimer';
 
 export default function Timer() {

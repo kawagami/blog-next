@@ -1,6 +1,6 @@
 "use client";
 
-import { patchOneStockChangePending } from "./actions";
+import { patchOneStockChangePending } from "@/app/admin/stocks/actions";
 import type { StockChange } from "@/types";
 
 export default function PendingButton({ stock }: { stock: StockChange }) {

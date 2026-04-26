@@ -1,5 +1,5 @@
 import getImages from "@/api/get-images";
-import ImageManager from "@/components/images/ImageManager";
+import ImageManager from "@/components/images/image-manager";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

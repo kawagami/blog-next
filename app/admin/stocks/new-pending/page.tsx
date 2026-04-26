@@ -1,6 +1,6 @@
 "use client";
 
-import { postNewPendingStockChange } from "@/components/stocks/actions";
+import { postNewPendingStockChange } from "@/app/admin/stocks/actions";
 import { useState } from "react";
 import type { StockChange } from "@/types";
 

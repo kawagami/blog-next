@@ -2,8 +2,8 @@
 
 import { usePathname } from 'next/navigation';
 import { useImageManager, type ManagedImage } from '@/hooks/useImageManager';
-import UploadSection from '@/components/images/UploadSection';
-import ImageGrid from '@/components/images/ImageGrid';
+import UploadSection from '@/components/images/upload-section';
+import ImageGrid from '@/components/images/image-grid';
 
 export default function ImageManager({ initialImages }: { initialImages: ManagedImage[] }) {
     const pathname = usePathname();

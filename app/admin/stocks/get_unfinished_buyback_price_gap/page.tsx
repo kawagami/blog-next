@@ -1,6 +1,6 @@
 "use server";
 
-import { getUnfinishedBuybackPriceGap } from "@/components/stocks/actions";
+import { getUnfinishedBuybackPriceGap } from "@/app/admin/stocks/actions";
 
 interface BuybackPriceGapItem {
     stock_no: string;

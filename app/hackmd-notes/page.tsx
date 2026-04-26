@@ -1,7 +1,7 @@
 import getHackMDNoteTags from "@/api/get-hackmd-note-tags";
 import getHackMDNotes from "@/api/get-hackmd-notes";
-import HackMDNotesComponent from "@/components/hackmd-notes";
-import HackmdNoteTagButtons from "@/components/hackmd-note-tag-buttons";
+import HackMDNotesComponent from "@/components/hackmd/hackmd-notes";
+import HackmdNoteTagButtons from "@/components/hackmd/hackmd-note-tag-buttons";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

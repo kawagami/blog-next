@@ -1,6 +1,6 @@
 "use client";
 
-import { getStockHistoryPrice } from "@/components/stocks/actions";
+import { getStockHistoryPrice } from "@/app/admin/stocks/actions";
 import { useActionState } from "react";
 
 interface StockPriceRecord {
