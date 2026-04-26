@@ -1,7 +1,5 @@
-"use server";
+import { redirect } from 'next/navigation';
 
-import Sites from "@/app/sites/page";
-
-export default async function Index() {
-    return <Sites />;
+export default function Home() {
+    redirect('/sites');
 }
