@@ -3,11 +3,11 @@
 import apiRequest from "@/libs/apiRequest";
 import type { Image } from "@/types";
 
-async function getFirebaseImages(): Promise<Image[]> {
+async function getImages(): Promise<Image[]> {
     return apiRequest({
         url: `${process.env.API_URL}/images`,
         method: 'GET',
     });
 }
 
-export default getFirebaseImages;
+export default getImages;
