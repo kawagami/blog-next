@@ -2,7 +2,7 @@
 
 import Form from 'next/form';
 import { login } from './actions';
-import LoginButton from './login-button';
+import LoginButton from '@/components/login/login-button';
 import { useActionState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
