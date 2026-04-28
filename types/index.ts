@@ -9,7 +9,7 @@ export interface Blog {
   id: string;
   markdown: string;
   tags: string[];
-  tocs: Toc[];
+  tocs: string[];
   created_at?: string;
   updated_at?: string;
 }

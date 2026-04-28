@@ -13,7 +13,7 @@ export default async function BlogsPage() {
                 <BlogListCard
                     key={blog.id}
                     id={blog.id}
-                    toc={blog.tocs[0]?.text || '未命名 blog'}
+                    toc={blog.tocs[0] || '未命名 blog'}
                     tags={blog.tags || []}
                     created_at={blog.created_at ?? ''}
                     updated_at={blog.updated_at ?? ''}

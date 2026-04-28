@@ -19,7 +19,7 @@ export default async function BlogsPage() {
                         {blogs.map((blog) => (
                             <li key={blog.id} className="flex items-center justify-between p-4 hover:bg-gray-50 transition">
                                 <span className="text-gray-800 font-medium truncate max-w-xs">
-                                    {blog.tocs[0]?.text || '未命名 blog'}
+                                    {blog.tocs[0] || '未命名 blog'}
                                 </span>
                                 <div className="flex space-x-2">
                                     <EditButton uuid={blog.id} />
