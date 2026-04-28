@@ -2,21 +2,11 @@
 
 import apiRequest from "@/libs/apiRequest";
 
-interface DeleteImageInput {
-    file_name: string;
-}
-
-async function deleteFirebaseImage(input: DeleteImageInput): Promise<void> {
-    if (!input?.file_name) {
-        throw new Error("Invalid input: file_name is required");
-    }
-
+async function deleteImage(id: string): Promise<void> {
     await apiRequest({
-        url: `${process.env.API_URL}/firebase`,
+        url: `${process.env.API_URL}/images/${id}`,
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ file_name: input.file_name }),
     });
 }
 
-export default deleteFirebaseImage;
+export default deleteImage;

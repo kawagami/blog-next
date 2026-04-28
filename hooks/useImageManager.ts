@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import uploadFirebaseImage from '@/api/upload-image';
-import deleteFirebaseImage from '@/api/delete-image';
+import deleteImage from '@/api/delete-image';
 
 export interface ManagedImage {
     name: string;
@@ -49,7 +49,7 @@ export const useImageManager = (initialImages: ManagedImage[]) => {
     const handleDelete = async (fileName: string) => {
         setDeletingImage(fileName);
         try {
-            await deleteFirebaseImage({ file_name: fileName });
+            await deleteImage(fileName);
             setImages((prev) => prev.filter((img) => img.name !== fileName));
         } catch (err) {
             console.error('Delete error:', err);
