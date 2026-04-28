@@ -126,6 +126,12 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 flex-1 min-h-0">
+                    <div className="relative h-full">
+                        {isUploading && (
+                            <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 rounded">
+                                <span className="text-white font-semibold text-sm px-4 py-2 bg-black/60 rounded-lg">上傳中...</span>
+                            </div>
+                        )}
                     <textarea
                         ref={textareaRef}
                         value={markdown}
@@ -134,6 +140,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         className="w-full h-full p-4 rounded border border-gray-300 font-mono resize-none dark:bg-gray-800 dark:text-white dark:border-gray-600"
                         placeholder="輸入 Markdown 內容..."
                     />
+                    </div>
                     <div className="p-4 h-full overflow-auto border border-gray-300 bg-white dark:bg-gray-800 dark:text-white rounded prose max-w-none dark:prose-invert">
                         <ReactMarkdown>{markdown}</ReactMarkdown>
                     </div>
