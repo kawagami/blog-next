@@ -1,5 +1,3 @@
-"use server";
-
 import Link from "next/link";
 import ShowClientTime from "@/components/blogs/show-client-time";
 

@@ -1,5 +1,3 @@
-"use server";
-
 import getBlog from "@/api/get-blog";
 import BlogPreviewComponent from "@/components/blogs/blog-preview-component";
 
