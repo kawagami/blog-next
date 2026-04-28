@@ -71,6 +71,13 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }
     };
 
+    const handlePaste = (e: React.ClipboardEvent) => {
+        const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'));
+        if (!file) return;
+        e.preventDefault();
+        handleImageUpload(file);
+    };
+
     const handleShowTagModal = (event: React.MouseEvent) => {
         setModalPosition({ x: event.clientX, y: event.clientY });
         setShowTagModal(true);
@@ -123,6 +130,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         ref={textareaRef}
                         value={markdown}
                         onChange={(e) => setMarkdown(e.target.value)}
+                        onPaste={handlePaste}
                         className="w-full h-full p-4 rounded border border-gray-300 font-mono resize-none dark:bg-gray-800 dark:text-white dark:border-gray-600"
                         placeholder="輸入 Markdown 內容..."
                     />
