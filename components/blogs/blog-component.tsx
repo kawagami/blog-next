@@ -32,6 +32,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const [newTag, setNewTag] = useState('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const isUploadingRef = useRef(false);
 
     const handleSave = async () => {
         setIsSaving(true);
@@ -57,7 +58,8 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     };
 
     const handleImageUpload = async (file: File | undefined) => {
-        if (!file) return;
+        if (!file || isUploadingRef.current) return;
+        isUploadingRef.current = true;
         setIsUploading(true);
         const formData = new FormData();
         formData.append('file', file);
@@ -67,6 +69,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         } catch {
             alert('圖片上傳失敗');
         } finally {
+            isUploadingRef.current = false;
             setIsUploading(false);
         }
     };
