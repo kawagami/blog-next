@@ -7,11 +7,7 @@ export function useWsNotification() {
     const [notifications, setNotifications] = useState<WsNotification[]>([]);
 
     useEffect(() => {
-        const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/ws/`);
-
-        ws.onopen = () => console.log('[WS] connected');
-        ws.onclose = (e) => console.log('[WS] closed', e.code, e.reason);
-        ws.onerror = (e) => console.error('[WS] error', e);
+        const ws = new WebSocket('wss://axum.kawa.homes/ws/');
 
         ws.onmessage = (event: MessageEvent) => {
             try {
