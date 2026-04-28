@@ -15,23 +15,23 @@ export default async function BlogListCard({ id, toc, tags, created_at, updated_
     return (
         <Link
             href={`/blogs/${id}`}
-            className="block bg-white shadow-md rounded-xl hover:shadow-lg transition-shadow duration-300 m-4"
+            className="block bg-white dark:bg-gray-800 shadow-md rounded-xl hover:shadow-lg transition-shadow duration-300 m-4"
         >
             <div className="p-4">
-                <h2 className="text-center text-4xl font-semibold text-gray-800 mb-2">
+                <h2 className="text-center text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
                     {toc || `Blog Post #${id}`}
                 </h2>
-                <div className="flex justify-center gap-2 mb-4">
+                <div className="flex flex-wrap justify-center gap-2 mb-3">
                     {tags.map((tag, index) => (
                         <span
                             key={index}
-                            className="bg-blue-100 text-blue-600 text-xs font-semibold px-2.5 py-0.5 rounded"
+                            className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-xs font-semibold px-2.5 py-0.5 rounded"
                         >
                             {tag}
                         </span>
                     ))}
                 </div>
-                <div className="text-gray-500 text-xs text-right">
+                <div className="text-gray-400 dark:text-gray-500 text-xs text-right">
                     <p>
                         <strong>Created:</strong>{" "}
                         <ShowClientTime datetimeString={created_at} />

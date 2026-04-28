@@ -7,7 +7,8 @@ export default async function BlogsPage() {
     const blogs = await getBlogs();
 
     return (
-        <div className="w-full h-[calc(100svh-120px)] text-center overflow-auto">
+        <div className="w-full h-[calc(100svh-120px)] overflow-auto">
+            <div className="max-w-2xl mx-auto">
             {blogs.map((blog) => (
                 <BlogListCard
                     key={blog.id}
@@ -18,6 +19,7 @@ export default async function BlogsPage() {
                     updated_at={blog.updated_at ?? ''}
                 />
             ))}
+            </div>
         </div>
     );
 }
