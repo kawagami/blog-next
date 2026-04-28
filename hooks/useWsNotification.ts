@@ -9,6 +9,10 @@ export function useWsNotification() {
     useEffect(() => {
         const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/ws/`);
 
+        ws.onopen = () => console.log('[WS] connected');
+        ws.onclose = (e) => console.log('[WS] closed', e.code, e.reason);
+        ws.onerror = (e) => console.error('[WS] error', e);
+
         ws.onmessage = (event: MessageEvent) => {
             try {
                 const msg = JSON.parse(event.data as string);
