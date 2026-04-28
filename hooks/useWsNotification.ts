@@ -7,7 +7,7 @@ export function useWsNotification() {
     const [notifications, setNotifications] = useState<WsNotification[]>([]);
 
     useEffect(() => {
-        const ws = new WebSocket('wss://axum.kawa.homes/ws/');
+        const ws = new WebSocket('wss://axum.kawa.homes/ws');
 
         ws.onmessage = (event: MessageEvent) => {
             try {
