@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/breadcrumb";
+import StockToast from "@/components/stocks/stock-toast";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -12,6 +13,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 capitalizeLinks
             />
             {children}
+            <StockToast />
         </>
     );
 }
