@@ -20,7 +20,7 @@ const ImageGrid = ({ images, deletingImage, copiedImage, onDelete, onCopy }: Pro
                     <Image width={150} height={150} src={image.url} alt={`Image ${image.name}`} className="rounded-lg mb-4 object-cover" />
                     {pathname === '/admin/images' && (
                         <button
-                            onClick={() => onDelete(image.name)}
+                            onClick={() => { if (window.confirm('確定刪除此圖片？')) onDelete(image.name); }}
                             className={`mt-2 py-1 px-4 rounded transition ${deletingImage === image.name ? 'bg-gray-500 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600 text-white'}`}
                             disabled={deletingImage === image.name}
                         >

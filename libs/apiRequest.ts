@@ -28,18 +28,14 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
         redirect(`/login`);
     }
 
+    const text = await response.text();
+    const data = text ? (() => { try { return JSON.parse(text); } catch { return null; } })() : null;
+
     if (!response.ok) {
-        const errorData = await response.json().catch(() => null);
-        throw {
-            status: response.status,
-            statusText: response.statusText,
-            errorData,
-        };
+        throw { status: response.status, statusText: response.statusText, errorData: data };
     }
 
-    const text = await response.text();
-    if (!text) return undefined as T;
-    return JSON.parse(text);
+    return data as T;
 }
 
 export default apiRequest;
