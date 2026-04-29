@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import putBlog from '@/api/put-blog';
-import uploadImages from '@/api/upload-images';
+import uploadImage from '@/api/upload-image';
 import type { Blog, Toc } from '@/types';
 
 function extractTocs(markdown: string): Toc[] {
@@ -42,17 +42,19 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const handleSave = async () => {
         setIsSaving(true);
         try {
-            const matches = [...markdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
-            const blobUrls = matches.map(m => m[2]);
-            const files = blobUrls.map(url => pendingImagesRef.current.get(url)).filter((f): f is File => !!f);
-            const uploaded = files.length > 0 ? await uploadImages(files) : [];
             let updatedMarkdown = markdown;
-            blobUrls.forEach((blobUrl, i) => {
-                if (!uploaded[i]) return;
-                updatedMarkdown = updatedMarkdown.replace(blobUrl, uploaded[i].url);
+            const matches = [...updatedMarkdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
+            for (const match of matches) {
+                const blobUrl = match[2];
+                const file = pendingImagesRef.current.get(blobUrl);
+                if (!file) continue;
+                const formData = new FormData();
+                formData.append('file', file);
+                const data = await uploadImage(formData);
+                updatedMarkdown = updatedMarkdown.replace(blobUrl, data.url);
                 URL.revokeObjectURL(blobUrl);
                 pendingImagesRef.current.delete(blobUrl);
-            });
+            }
             const tocs = extractTocs(updatedMarkdown);
             await putBlog(id, { markdown: updatedMarkdown, tags, tocs });
             router.push('/admin/blogs');

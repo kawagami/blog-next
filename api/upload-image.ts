@@ -3,7 +3,7 @@
 import apiRequest from "@/libs/apiRequest";
 import type { Image } from "@/types";
 
-async function uploadFirebaseImage(formData: FormData): Promise<Image> {
+async function uploadImage(formData: FormData): Promise<Image> {
     return apiRequest({
         url: `${process.env.API_URL}/images/upload`,
         method: 'POST',
@@ -11,4 +11,4 @@ async function uploadFirebaseImage(formData: FormData): Promise<Image> {
     });
 }
 
-export default uploadFirebaseImage;
+export default uploadImage;

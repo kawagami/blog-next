@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import uploadFirebaseImage from '@/api/upload-image';
+import uploadImage from '@/api/upload-image';
 import deleteImage from '@/api/delete-image';
 
 export interface ManagedImage {
@@ -34,7 +34,7 @@ export const useImageManager = (initialImages: ManagedImage[]) => {
             const formData = new FormData();
             formData.append('file', selectedImage);
 
-            const response = await uploadFirebaseImage(formData);
+            const response = await uploadImage(formData);
             if (response?.url) {
                 setImages((prev) => [...prev, { name: (response as unknown as { name: string }).name, url: response.url }]);
                 removeSelectedImage();
