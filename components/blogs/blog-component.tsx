@@ -26,6 +26,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const [markdown, setMarkdown] = useState(blog.markdown || '');
     const [tags, setTags] = useState<string[]>(blog.tags || []);
     const [isSaving, setIsSaving] = useState(false);
+    const [isPasting, setIsPasting] = useState(false);
     const [showTagModal, setShowTagModal] = useState(false);
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [newTag, setNewTag] = useState('');
@@ -84,11 +85,21 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         insertAtCursor(`![image](${blobUrl})`);
     };
 
-    const handlePaste = (e: React.ClipboardEvent) => {
+    const handlePaste = async (e: React.ClipboardEvent) => {
         const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'));
         if (!file) return;
         e.preventDefault();
-        handleImageUpload(file);
+        setIsPasting(true);
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+            const data = await uploadImage(formData);
+            insertAtCursor(`![image](${data.url})`);
+        } catch {
+            alert('圖片上傳失敗');
+        } finally {
+            setIsPasting(false);
+        }
     };
 
     const handleShowTagModal = (event: React.MouseEvent) => {
@@ -140,14 +151,19 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 flex-1 min-h-0">
                     <div className="relative h-full">
-                    <textarea
-                        ref={textareaRef}
-                        value={markdown}
-                        onChange={(e) => setMarkdown(e.target.value)}
-                        onPaste={handlePaste}
-                        className="w-full h-full p-4 rounded border border-gray-300 font-mono resize-none dark:bg-gray-800 dark:text-white dark:border-gray-600"
-                        placeholder="輸入 Markdown 內容..."
-                    />
+                        {isPasting && (
+                            <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 rounded">
+                                <span className="text-white font-semibold text-sm px-4 py-2 bg-black/60 rounded-lg">上傳中...</span>
+                            </div>
+                        )}
+                        <textarea
+                            ref={textareaRef}
+                            value={markdown}
+                            onChange={(e) => setMarkdown(e.target.value)}
+                            onPaste={handlePaste}
+                            className="w-full h-full p-4 rounded border border-gray-300 font-mono resize-none dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                            placeholder="輸入 Markdown 內容..."
+                        />
                     </div>
                     <div className="p-4 h-full overflow-auto border border-gray-300 bg-white dark:bg-gray-800 dark:text-white rounded prose max-w-none dark:prose-invert">
                         <ReactMarkdown urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}>{markdown}</ReactMarkdown>
