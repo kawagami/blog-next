@@ -37,6 +37,10 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
         };
     }
 
+    if (response.status === 204 || response.headers.get('content-length') === '0') {
+        return undefined as T;
+    }
+
     return response.json();
 }
 
