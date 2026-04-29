@@ -26,6 +26,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const [markdown, setMarkdown] = useState(blog.markdown || '');
     const [tags, setTags] = useState<string[]>(blog.tags || []);
     const [isSaving, setIsSaving] = useState(false);
+    const [saveError, setSaveError] = useState<string | null>(null);
     const [showTagModal, setShowTagModal] = useState(false);
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [newTag, setNewTag] = useState('');
@@ -41,10 +42,17 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
 
     const handleSave = async () => {
         setIsSaving(true);
+        setSaveError(null);
         try {
             const matches = [...markdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
             const blobUrls = matches.map(m => m[2]);
-            const entries = blobUrls.map(url => ({ url, meta: pendingImagesRef.current.get(url) })).filter(e => e.meta);
+            const entries = blobUrls.map(url => ({ url, meta: pendingImagesRef.current.get(url) }));
+            const orphaned = entries.filter(e => !e.meta);
+            if (orphaned.length > 0) {
+                setSaveError('部分圖片遺失，請重新插入後再試');
+                setIsSaving(false);
+                return;
+            }
             const files = await Promise.all(
                 entries.map(async ({ url, meta }) => {
                     const blob = await fetch(url).then(r => r.blob());
@@ -63,6 +71,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
             await putBlog(id, { markdown: updatedMarkdown, tags, tocs });
             router.push('/admin/blogs');
         } catch {
+            setSaveError('存檔失敗，請再試一次');
             setIsSaving(false);
         }
     };
@@ -108,6 +117,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     return (
         <>
             <div className="h-[calc(100svh-180px)] w-full flex flex-col">
+                {saveError && <p className="text-red-500 text-sm text-center mt-2">{saveError}</p>}
                 <div className="flex justify-evenly m-4 gap-2">
                     <button
                         onClick={handleSave}
