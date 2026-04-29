@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import putBlog from '@/api/put-blog';
@@ -26,19 +26,37 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const [markdown, setMarkdown] = useState(blog.markdown || '');
     const [tags, setTags] = useState<string[]>(blog.tags || []);
     const [isSaving, setIsSaving] = useState(false);
-    const [isUploading, setIsUploading] = useState(false);
     const [showTagModal, setShowTagModal] = useState(false);
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [newTag, setNewTag] = useState('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const isUploadingRef = useRef(false);
+    const pendingImagesRef = useRef<Map<string, File>>(new Map());
+
+    useEffect(() => {
+        return () => {
+            pendingImagesRef.current.forEach((_, blobUrl) => URL.revokeObjectURL(blobUrl));
+        };
+    }, []);
 
     const handleSave = async () => {
         setIsSaving(true);
-        const tocs = extractTocs(markdown);
         try {
-            await putBlog(id, { markdown, tags, tocs });
+            let updatedMarkdown = markdown;
+            const matches = [...updatedMarkdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
+            for (const match of matches) {
+                const blobUrl = match[2];
+                const file = pendingImagesRef.current.get(blobUrl);
+                if (!file) continue;
+                const formData = new FormData();
+                formData.append('file', file);
+                const data = await uploadFirebaseImage(formData);
+                updatedMarkdown = updatedMarkdown.replace(blobUrl, data.url);
+                URL.revokeObjectURL(blobUrl);
+                pendingImagesRef.current.delete(blobUrl);
+            }
+            const tocs = extractTocs(updatedMarkdown);
+            await putBlog(id, { markdown: updatedMarkdown, tags, tocs });
             router.push('/admin/blogs');
         } catch {
             setIsSaving(false);
@@ -57,21 +75,11 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }, 0);
     };
 
-    const handleImageUpload = async (file: File | undefined) => {
-        if (!file || isUploadingRef.current) return;
-        isUploadingRef.current = true;
-        setIsUploading(true);
-        const formData = new FormData();
-        formData.append('file', file);
-        try {
-            const data = await uploadFirebaseImage(formData);
-            insertAtCursor(`![image](${data.url})`);
-        } catch {
-            alert('圖片上傳失敗');
-        } finally {
-            isUploadingRef.current = false;
-            setIsUploading(false);
-        }
+    const handleImageUpload = (file: File | undefined) => {
+        if (!file) return;
+        const blobUrl = URL.createObjectURL(file);
+        pendingImagesRef.current.set(blobUrl, file);
+        insertAtCursor(`![image](${blobUrl})`);
     };
 
     const handlePaste = (e: React.ClipboardEvent) => {
@@ -114,10 +122,10 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                     </button>
                     <button
                         onClick={() => fileInputRef.current?.click()}
-                        disabled={isUploading}
+                        disabled={isSaving}
                         className="px-6 py-2 font-semibold bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
                     >
-                        {isUploading ? '上傳中...' : '上傳圖片'}
+                        上傳圖片
                     </button>
                     <input
                         ref={fileInputRef}
@@ -130,11 +138,6 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 flex-1 min-h-0">
                     <div className="relative h-full">
-                        {isUploading && (
-                            <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 rounded">
-                                <span className="text-white font-semibold text-sm px-4 py-2 bg-black/60 rounded-lg">上傳中...</span>
-                            </div>
-                        )}
                     <textarea
                         ref={textareaRef}
                         value={markdown}
