@@ -17,7 +17,7 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
     const response = await fetch(url, {
         method,
         headers: {
-            'Authorization': `Bearer ${token}`,
+            ...(token && { 'Authorization': `Bearer ${token}` }),
             ...headers,
         },
         body,

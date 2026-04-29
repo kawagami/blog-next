@@ -1,7 +1,5 @@
 "use server";
 
-import apiRequest from "@/libs/apiRequest";
-
 interface RosterParams {
     names: string[];
     days: number | string;
@@ -14,8 +12,7 @@ interface RosterResponse {
 }
 
 async function postRoster(params: RosterParams): Promise<RosterResponse> {
-    return apiRequest({
-        url: `${process.env.API_URL}/roster`,
+    const res = await fetch(`${process.env.API_URL}/roster`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -23,7 +20,10 @@ async function postRoster(params: RosterParams): Promise<RosterResponse> {
             days: parseInt(String(params.days)),
             rule: params.rule,
         }),
+        cache: 'no-store',
     });
+    if (!res.ok) throw new Error(`Roster request failed: ${res.status}`);
+    return res.json();
 }
 
 export default postRoster;
