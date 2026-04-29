@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import type { ManagedImage } from '@/hooks/useImageManager';
 
@@ -17,7 +16,7 @@ const ImageGrid = ({ images, deletingImage, copiedImage, onDelete, onCopy }: Pro
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {images.map((image) => (
                 <div key={image.name} className="bg-white p-4 rounded shadow-md flex flex-col items-center">
-                    <Image width={150} height={150} src={image.url} alt={`Image ${image.name}`} className="rounded-lg mb-4 object-cover" />
+                    <img width={150} height={150} src={image.url} alt={`Image ${image.name}`} className="rounded-lg mb-4 object-cover" />
                     {pathname === '/admin/images' && (
                         <button
                             onClick={() => { if (window.confirm('確定刪除此圖片？')) onDelete(image.name); }}
