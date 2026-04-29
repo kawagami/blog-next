@@ -9,7 +9,7 @@ interface Props {
     updated_at: string;
 }
 
-export default async function BlogListCard({ id, toc, tags, created_at, updated_at }: Props) {
+export default function BlogListCard({ id, toc, tags, created_at, updated_at }: Props) {
     return (
         <Link
             href={`/blogs/${id}`}

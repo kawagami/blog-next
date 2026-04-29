@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import putBlog from '@/api/put-blog';
 import uploadImages from '@/api/upload-images';
 import type { Blog, Toc } from '@/types';
@@ -162,7 +163,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         />
                     </div>
                     <div className="p-4 h-full overflow-auto border border-gray-300 bg-white dark:bg-gray-800 dark:text-white rounded prose max-w-none dark:prose-invert">
-                        <ReactMarkdown urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}>{markdown}</ReactMarkdown>
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}>{markdown}</ReactMarkdown>
                     </div>
                 </div>
             </div>
