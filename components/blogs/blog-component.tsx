@@ -46,8 +46,10 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
             const matches = [...updatedMarkdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
             for (const match of matches) {
                 const blobUrl = match[2];
-                const file = pendingImagesRef.current.get(blobUrl);
-                if (!file) continue;
+                const originalFile = pendingImagesRef.current.get(blobUrl);
+                if (!originalFile) continue;
+                const blob = await fetch(blobUrl).then(r => r.blob());
+                const file = new File([blob], originalFile.name || 'image.png', { type: blob.type || originalFile.type });
                 const formData = new FormData();
                 formData.append('file', file);
                 const data = await uploadImage(formData);
