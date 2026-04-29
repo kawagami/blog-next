@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import putBlog from '@/api/put-blog';
-import uploadImage from '@/api/upload-image';
+import uploadImages from '@/api/upload-images';
 import type { Blog, Toc } from '@/types';
 
 function extractTocs(markdown: string): Toc[] {
@@ -26,7 +26,6 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const [markdown, setMarkdown] = useState(blog.markdown || '');
     const [tags, setTags] = useState<string[]>(blog.tags || []);
     const [isSaving, setIsSaving] = useState(false);
-    const [isPasting, setIsPasting] = useState(false);
     const [showTagModal, setShowTagModal] = useState(false);
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [newTag, setNewTag] = useState('');
@@ -43,21 +42,23 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const handleSave = async () => {
         setIsSaving(true);
         try {
+            const matches = [...markdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
+            const blobUrls = matches.map(m => m[2]);
+            const entries = blobUrls.map(url => ({ url, meta: pendingImagesRef.current.get(url) })).filter(e => e.meta);
+            const files = await Promise.all(
+                entries.map(async ({ url, meta }) => {
+                    const blob = await fetch(url).then(r => r.blob());
+                    return new File([blob], meta!.name || 'image.png', { type: blob.type || meta!.type });
+                })
+            );
+            const uploaded = files.length > 0 ? await uploadImages(files) : [];
             let updatedMarkdown = markdown;
-            const matches = [...updatedMarkdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
-            for (const match of matches) {
-                const blobUrl = match[2];
-                const originalFile = pendingImagesRef.current.get(blobUrl);
-                if (!originalFile) continue;
-                const blob = await fetch(blobUrl).then(r => r.blob());
-                const file = new File([blob], originalFile.name || 'image.png', { type: blob.type || originalFile.type });
-                const formData = new FormData();
-                formData.append('file', file);
-                const data = await uploadImage(formData);
-                updatedMarkdown = updatedMarkdown.replace(blobUrl, data.url);
-                URL.revokeObjectURL(blobUrl);
-                pendingImagesRef.current.delete(blobUrl);
-            }
+            entries.forEach(({ url }, i) => {
+                if (!uploaded[i]) return;
+                updatedMarkdown = updatedMarkdown.replace(url, uploaded[i].url);
+                URL.revokeObjectURL(url);
+                pendingImagesRef.current.delete(url);
+            });
             const tocs = extractTocs(updatedMarkdown);
             await putBlog(id, { markdown: updatedMarkdown, tags, tocs });
             router.push('/admin/blogs');
@@ -85,21 +86,11 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         insertAtCursor(`![image](${blobUrl})`);
     };
 
-    const handlePaste = async (e: React.ClipboardEvent) => {
+    const handlePaste = (e: React.ClipboardEvent) => {
         const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'));
         if (!file) return;
         e.preventDefault();
-        setIsPasting(true);
-        const formData = new FormData();
-        formData.append('file', file);
-        try {
-            const data = await uploadImage(formData);
-            insertAtCursor(`![image](${data.url})`);
-        } catch {
-            alert('圖片上傳失敗');
-        } finally {
-            setIsPasting(false);
-        }
+        handleImageUpload(file);
     };
 
     const handleShowTagModal = (event: React.MouseEvent) => {
@@ -151,11 +142,6 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 flex-1 min-h-0">
                     <div className="relative h-full">
-                        {isPasting && (
-                            <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/40 rounded">
-                                <span className="text-white font-semibold text-sm px-4 py-2 bg-black/60 rounded-lg">上傳中...</span>
-                            </div>
-                        )}
                         <textarea
                             ref={textareaRef}
                             value={markdown}
