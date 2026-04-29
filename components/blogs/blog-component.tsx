@@ -42,18 +42,24 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const handleSave = async () => {
         setIsSaving(true);
         try {
+            const matches = [...markdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
+            const replacements = await Promise.all(
+                matches.map(async (match) => {
+                    const blobUrl = match[2];
+                    const file = pendingImagesRef.current.get(blobUrl);
+                    if (!file) return null;
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    const data = await uploadFirebaseImage(formData);
+                    return { blobUrl, realUrl: data.url };
+                })
+            );
             let updatedMarkdown = markdown;
-            const matches = [...updatedMarkdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
-            for (const match of matches) {
-                const blobUrl = match[2];
-                const file = pendingImagesRef.current.get(blobUrl);
-                if (!file) continue;
-                const formData = new FormData();
-                formData.append('file', file);
-                const data = await uploadFirebaseImage(formData);
-                updatedMarkdown = updatedMarkdown.replace(blobUrl, data.url);
-                URL.revokeObjectURL(blobUrl);
-                pendingImagesRef.current.delete(blobUrl);
+            for (const r of replacements) {
+                if (!r) continue;
+                updatedMarkdown = updatedMarkdown.replace(r.blobUrl, r.realUrl);
+                URL.revokeObjectURL(r.blobUrl);
+                pendingImagesRef.current.delete(r.blobUrl);
             }
             const tocs = extractTocs(updatedMarkdown);
             await putBlog(id, { markdown: updatedMarkdown, tags, tocs });
