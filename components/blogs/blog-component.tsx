@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import putBlog from '@/api/put-blog';
-import uploadImages from '@/api/upload-images';
+import uploadImage from '@/api/upload-image';
 import type { Blog, Toc } from '@/types';
 
 function extractTocs(markdown: string): Toc[] {
@@ -27,49 +27,20 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const [markdown, setMarkdown] = useState(blog.markdown || '');
     const [tags, setTags] = useState<string[]>(blog.tags || []);
     const [isSaving, setIsSaving] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
     const [saveError, setSaveError] = useState<string | null>(null);
     const [showTagModal, setShowTagModal] = useState(false);
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [newTag, setNewTag] = useState('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const pendingImagesRef = useRef<Map<string, File>>(new Map());
-
-    useEffect(() => {
-        return () => {
-            pendingImagesRef.current.forEach((_, blobUrl) => URL.revokeObjectURL(blobUrl));
-        };
-    }, []);
 
     const handleSave = async () => {
         setIsSaving(true);
         setSaveError(null);
         try {
-            const matches = [...markdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
-            const blobUrls = matches.map(m => m[2]);
-            const entries = blobUrls.map(url => ({ url, meta: pendingImagesRef.current.get(url) }));
-            const orphaned = entries.filter(e => !e.meta);
-            if (orphaned.length > 0) {
-                setSaveError('部分圖片遺失，請重新插入後再試');
-                setIsSaving(false);
-                return;
-            }
-            const files = await Promise.all(
-                entries.map(async ({ url, meta }) => {
-                    const blob = await fetch(url).then(r => r.blob());
-                    return new File([blob], meta!.name || 'image.png', { type: blob.type || meta!.type });
-                })
-            );
-            const uploaded = files.length > 0 ? await uploadImages(files) : [];
-            let updatedMarkdown = markdown;
-            entries.forEach(({ url }, i) => {
-                if (!uploaded[i]) return;
-                updatedMarkdown = updatedMarkdown.replace(url, uploaded[i].url);
-                URL.revokeObjectURL(url);
-                pendingImagesRef.current.delete(url);
-            });
-            const tocs = extractTocs(updatedMarkdown);
-            await putBlog(id, { markdown: updatedMarkdown, tags, tocs });
+            const tocs = extractTocs(markdown);
+            await putBlog(id, { markdown, tags, tocs });
             router.push('/admin/blogs');
         } catch {
             setSaveError('存檔失敗，請再試一次');
@@ -89,11 +60,19 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }, 0);
     };
 
-    const handleImageUpload = (file: File | undefined) => {
-        if (!file) return;
-        const blobUrl = URL.createObjectURL(file);
-        pendingImagesRef.current.set(blobUrl, file);
-        insertAtCursor(`![image](${blobUrl})\n`);
+    const handleImageUpload = async (file: File | undefined) => {
+        if (!file || isUploading) return;
+        setIsUploading(true);
+        const formData = new FormData();
+        formData.append('file', file);
+        try {
+            const data = await uploadImage(formData);
+            insertAtCursor(`![image](${data.url})\n`);
+        } catch {
+            alert('圖片上傳失敗');
+        } finally {
+            setIsUploading(false);
+        }
     };
 
     const handlePaste = (e: React.ClipboardEvent) => {
