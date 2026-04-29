@@ -148,7 +148,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                     />
                     </div>
                     <div className="p-4 h-full overflow-auto border border-gray-300 bg-white dark:bg-gray-800 dark:text-white rounded prose max-w-none dark:prose-invert">
-                        <ReactMarkdown>{markdown}</ReactMarkdown>
+                        <ReactMarkdown urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}>{markdown}</ReactMarkdown>
                     </div>
                 </div>
             </div>
