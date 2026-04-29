@@ -5,6 +5,7 @@ import deleteImage from '@/api/delete-image';
 export interface ManagedImage {
     name: string;
     url: string;
+    status?: string;
 }
 
 export const useImageManager = (initialImages: ManagedImage[]) => {

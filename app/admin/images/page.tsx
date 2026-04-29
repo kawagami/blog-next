@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default async function Images() {
     const images = await getImages();
-    const managedImages = images.map(img => ({ name: img.id, url: img.url }));
+    const managedImages = images.map(img => ({ name: img.id, url: img.url, status: img.status }));
 
     return (
         <div className="w-full h-[calc(100svh-180px)] overflow-auto p-6">

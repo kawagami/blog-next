@@ -25,6 +25,7 @@ export interface Image {
   id: string;
   storage_key: string;
   url: string;
+  status?: string;
 }
 
 // User

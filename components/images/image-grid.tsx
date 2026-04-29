@@ -17,6 +17,11 @@ const ImageGrid = ({ images, deletingImage, copiedImage, onDelete, onCopy }: Pro
             {images.map((image) => (
                 <div key={image.name} className="bg-white p-4 rounded shadow-md flex flex-col items-center">
                     <img width={150} height={150} src={image.url} alt={`Image ${image.name}`} className="rounded-lg mb-4 object-cover" />
+                    {image.status && (
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded mb-2 ${image.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
+                            {image.status}
+                        </span>
+                    )}
                     {pathname === '/admin/images' && (
                         <button
                             onClick={() => { if (window.confirm('確定刪除此圖片？')) onDelete(image.name); }}
