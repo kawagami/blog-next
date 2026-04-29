@@ -83,7 +83,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         if (!file) return;
         const blobUrl = URL.createObjectURL(file);
         pendingImagesRef.current.set(blobUrl, file);
-        insertAtCursor(`![image](${blobUrl})`);
+        insertAtCursor(`![image](${blobUrl})\n`);
     };
 
     const handlePaste = (e: React.ClipboardEvent) => {
