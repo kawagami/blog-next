@@ -1,5 +1,3 @@
-"use server";
-
 import StockTable from "@/components/stocks/stock-table";
 import { StatusLink } from "@/components/stocks/status-link";
 import { getStockChanges } from "@/app/admin/stocks/actions";
@@ -16,7 +14,7 @@ export default async function List({ searchParams }: { searchParams: Promise<{ s
             <h1 className="text-xl font-bold mb-4">股票變動列表 {info.length} 筆</h1>
             <h1 className="text-xl font-bold mb-4">總變動 % 數 {totalChange.toFixed(2)} %</h1>
             <h1 className="text-xl font-bold mb-4">有資料的個數 {totalCount}</h1>
-            <h1 className="text-xl font-bold mb-4">平均變動 % 數 {(totalChange / totalCount).toFixed(2)} %</h1>
+            <h1 className="text-xl font-bold mb-4">平均變動 % 數 {totalCount > 0 ? (totalChange / totalCount).toFixed(2) : '—'} %</h1>
             <div className="flex gap-2 mb-4">
                 {["", "completed", "failed", "pending"].map((s) => (
                     <StatusLink key={s || 'all'} status={s} currentStatus={status ?? ''}>

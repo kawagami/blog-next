@@ -1,5 +1,3 @@
-"use server";
-
 import { getUnfinishedBuybackPriceGap } from "@/app/admin/stocks/actions";
 
 interface BuybackPriceGapItem {

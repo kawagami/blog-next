@@ -1,3 +1,4 @@
+import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -9,14 +10,18 @@ export default async function middleware(req) {
     const cookieStore = await cookies();
     const value = cookieStore.get("session")?.value;
 
+    const originalUrl = req.nextUrl.pathname + req.nextUrl.search;
+    const loginUrl = new URL("/login", req.nextUrl);
+    loginUrl.searchParams.set("redirect", originalUrl);
+
     if (!value) {
-        // 記錄原始 URL
-        const originalUrl = req.nextUrl.pathname + req.nextUrl.search;
-        const loginUrl = new URL("/login", req.nextUrl);
+        return NextResponse.redirect(loginUrl);
+    }
 
-        // 將原始 URL 作為參數附加到登錄頁面 URL
-        loginUrl.searchParams.set("redirect", originalUrl);
-
+    try {
+        const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+        await jwtVerify(value, secret);
+    } catch {
         return NextResponse.redirect(loginUrl);
     }
 

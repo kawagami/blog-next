@@ -23,15 +23,25 @@ export async function login(currentState: LoginState | undefined, formData: Form
 
     if (response.ok) {
         const token = await response.json();
-        cookieStore.set("session", token, { maxAge: 60 * 60 });
+        cookieStore.set("session", token, {
+            maxAge: 60 * 60,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+        });
         const redirectUrl = (formData.get('redirect') as string) || '/admin';
         redirect(redirectUrl);
     }
 
-    return { error: '未通過驗證' };
+    if (response.status === 401 || response.status === 403) {
+        return { error: '帳號或密碼錯誤' };
+    }
+
+    return { error: `伺服器錯誤 (${response.status})，請稍後再試` };
 }
 
 export async function clearSession() {
     const cookieStore = await cookies();
     cookieStore.delete("session");
+    redirect('/login');
 }

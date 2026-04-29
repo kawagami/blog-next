@@ -37,7 +37,7 @@ export const useImageManager = (initialImages: ManagedImage[]) => {
 
             const response = await uploadImage(formData);
             if (response?.url) {
-                setImages((prev) => [...prev, { name: (response as unknown as { name: string }).name, url: response.url }]);
+                setImages((prev) => [...prev, { name: response.id, url: response.url, status: response.status }]);
                 removeSelectedImage();
             }
         } catch (err) {

@@ -1,5 +1,3 @@
-"use server";
-
 import { getStockDayAll } from "@/app/admin/stocks/actions";
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ trade_date?: string; limit?: string; offset?: string }> }) {

@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from 'next/navigation';
-import { cookies } from "next/headers";
+import { cookies, headers as nextHeaders } from "next/headers";
 
 interface ApiRequestOptions {
     url: string;
@@ -25,7 +25,13 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
     });
 
     if (response.status === 401) {
-        redirect(`/login`);
+        const headersList = await nextHeaders();
+        const referer = headersList.get('referer') || '';
+        let redirectPath = '/admin';
+        try {
+            if (referer) redirectPath = new URL(referer).pathname;
+        } catch { /* ignore invalid referer */ }
+        redirect(`/login?redirect=${encodeURIComponent(redirectPath)}`);
     }
 
     const text = await response.text();

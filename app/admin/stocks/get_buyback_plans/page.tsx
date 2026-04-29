@@ -1,5 +1,3 @@
-"use server";
-
 import { getStockBuybackPeriods } from "@/app/admin/stocks/actions";
 
 export default async function Page() {
