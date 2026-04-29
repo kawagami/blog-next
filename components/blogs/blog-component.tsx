@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import putBlog from '@/api/put-blog';
-import uploadFirebaseImage from '@/api/upload-image';
+import uploadImages from '@/api/upload-images';
 import type { Blog, Toc } from '@/types';
 
 function extractTocs(markdown: string): Toc[] {
@@ -43,24 +43,16 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         setIsSaving(true);
         try {
             const matches = [...markdown.matchAll(/!\[([^\]]*)\]\((blob:[^)]+)\)/g)];
-            const replacements = await Promise.all(
-                matches.map(async (match) => {
-                    const blobUrl = match[2];
-                    const file = pendingImagesRef.current.get(blobUrl);
-                    if (!file) return null;
-                    const formData = new FormData();
-                    formData.append('file', file);
-                    const data = await uploadFirebaseImage(formData);
-                    return { blobUrl, realUrl: data.url };
-                })
-            );
+            const blobUrls = matches.map(m => m[2]);
+            const files = blobUrls.map(url => pendingImagesRef.current.get(url)).filter((f): f is File => !!f);
+            const uploaded = files.length > 0 ? await uploadImages(files) : [];
             let updatedMarkdown = markdown;
-            for (const r of replacements) {
-                if (!r) continue;
-                updatedMarkdown = updatedMarkdown.replace(r.blobUrl, r.realUrl);
-                URL.revokeObjectURL(r.blobUrl);
-                pendingImagesRef.current.delete(r.blobUrl);
-            }
+            blobUrls.forEach((blobUrl, i) => {
+                if (!uploaded[i]) return;
+                updatedMarkdown = updatedMarkdown.replace(blobUrl, uploaded[i].url);
+                URL.revokeObjectURL(blobUrl);
+                pendingImagesRef.current.delete(blobUrl);
+            });
             const tocs = extractTocs(updatedMarkdown);
             await putBlog(id, { markdown: updatedMarkdown, tags, tocs });
             router.push('/admin/blogs');
