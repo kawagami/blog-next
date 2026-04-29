@@ -87,15 +87,19 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
 
     const handlePaste = async (e: React.ClipboardEvent) => {
         const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'));
+        console.log('[paste] files:', e.clipboardData.files.length, 'found:', file?.name, file?.type, file?.size);
         if (!file) return;
         e.preventDefault();
         setIsPasting(true);
         const formData = new FormData();
         formData.append('file', file);
+        console.log('[paste] uploading...');
         try {
             const data = await uploadImage(formData);
+            console.log('[paste] upload success:', data);
             insertAtCursor(`![image](${data.url})`);
-        } catch {
+        } catch (err) {
+            console.error('[paste] upload error:', err);
             alert('圖片上傳失敗');
         } finally {
             setIsPasting(false);
