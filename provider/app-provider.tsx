@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import type { AuthUser } from '@/types';
 
 interface AppContextValue {
     visibleBlogs: string | null;
@@ -9,6 +10,8 @@ interface AppContextValue {
     setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
     openArray: string[];
     setOpenArray: React.Dispatch<React.SetStateAction<string[]>>;
+    user: AuthUser | null;
+    refreshUser: () => Promise<void>;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);
@@ -17,6 +20,32 @@ export default function AppProvider({ children }: { children: React.ReactNode })
     const [visibleBlogs, setVisibleBlogs] = useState<string | null>(null);
     const [isDark, setIsDark] = useState(false);
     const [openArray, setOpenArray] = useState<string[]>([]);
+    const [user, setUser] = useState<AuthUser | null>(null);
+
+    const refreshUser = useCallback(async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setUser(null);
+            return;
+        }
+        try {
+            const res = await fetch('/api/auth/me', {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setUser(data);
+            } else {
+                setUser(null);
+            }
+        } catch {
+            setUser(null);
+        }
+    }, []);
+
+    useEffect(() => {
+        refreshUser();
+    }, [refreshUser]);
 
     return (
         <AppContext.Provider
@@ -27,6 +56,8 @@ export default function AppProvider({ children }: { children: React.ReactNode })
                 setIsDark,
                 openArray,
                 setOpenArray,
+                user,
+                refreshUser,
             }}
         >
             {children}

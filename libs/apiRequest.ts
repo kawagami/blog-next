@@ -24,7 +24,7 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
         cache: 'no-store',
     });
 
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
         const headersList = await nextHeaders();
         const referer = headersList.get('referer') || '';
         let redirectPath = '/admin';

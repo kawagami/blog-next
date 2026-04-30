@@ -1,21 +1,52 @@
 "use client";
 
-import Form from 'next/form';
-import { login } from './actions';
-import LoginButton from '@/components/login/login-button';
-import { useActionState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, FormEvent } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function Login() {
-    const [state, action] = useActionState(login, undefined);
+    const router = useRouter();
     const searchParams = useSearchParams();
     const redirectUrl = searchParams.get('redirect') || '/admin';
+    const [error, setError] = useState<string | null>(null);
+    const [pending, setPending] = useState(false);
+
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setError(null);
+        setPending(true);
+
+        const form = e.currentTarget;
+        const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+        const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                setError(data.error || '登入失敗');
+                return;
+            }
+
+            const { token } = await res.json();
+            localStorage.setItem('token', token);
+            router.push(redirectUrl);
+        } catch {
+            setError('網路錯誤，請稍後再試');
+        } finally {
+            setPending(false);
+        }
+    }
 
     return (
         <div className="w-full h-[calc(100svh-120px)] overflow-auto flex justify-center items-start">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
-                <Form action={action} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                         <input type="email" id="email" name="email" className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your email" required />
@@ -24,10 +55,15 @@ export default function Login() {
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
                         <input type="password" id="password" name="password" className="w-full px-4 py-2 mt-1 text-gray-900 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your password" required />
                     </div>
-                    <input type="hidden" name="redirect" value={redirectUrl} />
-                    {state?.error && <p className="text-sm text-red-500">{state.error}</p>}
-                    <LoginButton />
-                </Form>
+                    {error && <p className="text-sm text-red-500">{error}</p>}
+                    <button
+                        type="submit"
+                        disabled={pending}
+                        className={`w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 ${pending ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                        {pending ? 'Logging in...' : 'Login'}
+                    </button>
+                </form>
             </div>
         </div>
     );
