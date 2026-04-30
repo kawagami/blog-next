@@ -12,10 +12,10 @@ interface Link {
 
 const LINKS: Link[] = [
     { href: "/admin/stocks/list", label: "所有查詢後的資料", color: "green" },
-    { href: "/admin/stocks/fetch_stock_closing_price_pair", label: "查詢特定區間特定股票歷史價格", color: "indigo" },
-    { href: "/admin/stocks/get_unfinished_buyback_price_gap", label: "執行中的庫藏股", color: "green" },
-    { href: "/admin/stocks/stock_day_all", label: "全市場行情", color: "blue" },
-    { href: "/admin/stocks/get_buyback_plans", label: "庫藏股計畫", color: "blue" },
+    { href: "/admin/stocks/fetch-stock-closing-price-pair", label: "查詢特定區間特定股票歷史價格", color: "indigo" },
+    { href: "/admin/stocks/get-unfinished-buyback-price-gap", label: "執行中的庫藏股", color: "green" },
+    { href: "/admin/stocks/stock-day-all", label: "全市場行情", color: "blue" },
+    { href: "/admin/stocks/get-buyback-plans", label: "庫藏股計畫", color: "blue" },
 ];
 
 const COLOR_MAP: Record<string, string> = {
