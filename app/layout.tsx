@@ -5,17 +5,21 @@ import { Suspense } from "react";
 import LoadingComponent from "@/components/loading-component";
 import AppProvider from "@/provider/app-provider";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
     title: "Kawa's Blog",
     description: "kawa blog ongoing",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+    const cookieStore = await cookies();
+    const isDark = cookieStore.get('theme')?.value === 'dark';
+
     return (
-        <html lang="zh-TW">
+        <html lang="zh-TW" className={isDark ? 'dark' : ''}>
             <body className="bg-gradient-to-br from-blue-100 via-green-100 to-red-100 dark:from-blue-900 dark:via-green-900 dark:to-red-900 dark:text-white">
-                <AppProvider>
+                <AppProvider initialIsDark={isDark}>
                     <Header />
                     <main className="min-h-[calc(100svh-50px-50px)] overflow-hidden flex flex-col items-center justify-start pt-4">
                         <Suspense fallback={<LoadingComponent />}>

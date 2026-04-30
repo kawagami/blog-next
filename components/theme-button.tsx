@@ -9,13 +9,10 @@ export default function ThemeButton() {
     const { isDark, setIsDark } = useAppContext();
 
     function changeTheme() {
-        const htmlClass = document.documentElement.classList;
-        if (isDark) {
-            htmlClass.remove('dark');
-        } else {
-            htmlClass.add('dark');
-        }
-        setIsDark(prev => !prev);
+        const next = !isDark;
+        document.documentElement.classList.toggle('dark', next);
+        document.cookie = `theme=${next ? 'dark' : 'light'}; path=/; max-age=31536000`;
+        setIsDark(next);
     }
 
     return (

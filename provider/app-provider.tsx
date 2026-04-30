@@ -16,9 +16,9 @@ interface AppContextValue {
 
 export const AppContext = createContext<AppContextValue | null>(null);
 
-export default function AppProvider({ children }: { children: React.ReactNode }) {
+export default function AppProvider({ children, initialIsDark = false }: { children: React.ReactNode; initialIsDark?: boolean }) {
     const [visibleBlogs, setVisibleBlogs] = useState<string | null>(null);
-    const [isDark, setIsDark] = useState(false);
+    const [isDark, setIsDark] = useState(initialIsDark);
     const [openArray, setOpenArray] = useState<string[]>([]);
     const [user, setUser] = useState<AuthUser | null>(null);
 
