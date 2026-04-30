@@ -1,7 +1,6 @@
 import getHackMDNoteTags from "@/api/get-hackmd-note-tags";
 import getHackMDNotes from "@/api/get-hackmd-notes";
-import HackMDNotesComponent from "@/components/hackmd/hackmd-notes";
-import HackmdNoteTagButtons from "@/components/hackmd/hackmd-note-tag-buttons";
+import HackMDNotesWrapper from "@/components/hackmd/hackmd-notes-wrapper";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,14 +9,11 @@ export const metadata: Metadata = {
 };
 
 export default async function HackMDNotes() {
-    const notes = await getHackMDNotes();
-    const tags = await getHackMDNoteTags();
-    const defaultOpenArray = tags.map(tag => tag.name);
+    const [notes, tags] = await Promise.all([getHackMDNotes(), getHackMDNoteTags()]);
 
     return (
         <div className="w-full h-[calc(100svh-120px)] text-center overflow-auto">
-            <HackmdNoteTagButtons tags={tags} />
-            <HackMDNotesComponent notes={notes} defaultOpenArray={defaultOpenArray} />
+            <HackMDNotesWrapper notes={notes} tags={tags} />
         </div>
     );
 }

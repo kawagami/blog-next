@@ -8,8 +8,6 @@ interface AppContextValue {
     setVisibleBlogs: React.Dispatch<React.SetStateAction<string | null>>;
     isDark: boolean;
     setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
-    openArray: string[];
-    setOpenArray: React.Dispatch<React.SetStateAction<string[]>>;
     user: AuthUser | null;
     refreshUser: () => Promise<void>;
 }
@@ -19,7 +17,6 @@ export const AppContext = createContext<AppContextValue | null>(null);
 export default function AppProvider({ children, initialIsDark = false }: { children: React.ReactNode; initialIsDark?: boolean }) {
     const [visibleBlogs, setVisibleBlogs] = useState<string | null>(null);
     const [isDark, setIsDark] = useState(initialIsDark);
-    const [openArray, setOpenArray] = useState<string[]>([]);
     const [user, setUser] = useState<AuthUser | null>(null);
 
     const refreshUser = useCallback(async () => {
@@ -54,8 +51,6 @@ export default function AppProvider({ children, initialIsDark = false }: { child
                 setVisibleBlogs,
                 isDark,
                 setIsDark,
-                openArray,
-                setOpenArray,
                 user,
                 refreshUser,
             }}
