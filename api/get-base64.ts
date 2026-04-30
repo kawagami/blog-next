@@ -13,6 +13,6 @@ export default async function getBase64(imageUrl: string): Promise<string | unde
 
         return base64;
     } catch (e) {
-        if (e instanceof Error) console.log(e.stack);
+        if (e instanceof Error) console.error(e.stack);
     }
 }

@@ -38,7 +38,9 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
     const data = text ? (() => { try { return JSON.parse(text); } catch { return null; } })() : null;
 
     if (!response.ok) {
-        throw { status: response.status, statusText: response.statusText, errorData: data };
+        const err = new Error(`API ${response.status}: ${response.statusText}`);
+        Object.assign(err, { status: response.status, errorData: data });
+        throw err;
     }
 
     return data as T;

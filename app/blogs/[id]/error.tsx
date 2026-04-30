@@ -2,11 +2,14 @@
 
 import Link from "next/link";
 
-export default function BlogError({ reset }: { error: Error; reset: () => void }) {
+export default function BlogError({ error, reset }: { error: Error; reset: () => void }) {
     return (
         <div className="flex flex-col items-center justify-center h-[calc(100svh-120px)] gap-4 text-center px-4">
             <h1 className="text-4xl font-bold text-gray-700 dark:text-gray-200">載入失敗</h1>
             <p className="text-gray-500 dark:text-gray-400">無法載入這篇文章。</p>
+            {process.env.NODE_ENV === 'development' && (
+                <pre className="text-xs text-red-400 max-w-sm overflow-auto">{error.message}</pre>
+            )}
             <div className="flex gap-3">
                 <button
                     onClick={reset}

@@ -69,7 +69,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
             const data = await uploadImage(formData);
             insertAtCursor(`![image](${data.url})\n`);
         } catch {
-            alert('圖片上傳失敗');
+            setSaveError('圖片上傳失敗，請再試一次');
         } finally {
             setIsUploading(false);
         }

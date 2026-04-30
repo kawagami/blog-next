@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
         const status = response.status;
-        if (status === 401 || status === 403) {
+        if (status === 401 || status === 403 || status === 404) {
             return NextResponse.json({ error: '帳號或密碼錯誤' }, { status: 401 });
         }
         return NextResponse.json({ error: `伺服器錯誤 (${status})` }, { status: 500 });
