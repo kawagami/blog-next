@@ -1,8 +1,6 @@
 import "./globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import { Suspense } from "react";
-import LoadingComponent from "@/components/loading-component";
 import AppProvider from "@/provider/app-provider";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
@@ -22,9 +20,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <AppProvider initialIsDark={isDark}>
                     <Header />
                     <main className="min-h-[calc(100svh-50px-50px)] overflow-hidden flex flex-col items-center justify-start pt-4">
-                        <Suspense fallback={<LoadingComponent />}>
-                            {children}
-                        </Suspense>
+                        {children}
                     </main>
                     <Footer />
                 </AppProvider>
