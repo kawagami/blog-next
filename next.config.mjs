@@ -1,6 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: 'standalone',
+    async redirects() {
+        return [
+            { source: '/convert-text', destination: '/tools/convert-text', permanent: true },
+            { source: '/countdown', destination: '/tools/countdown', permanent: true },
+            { source: '/new-password', destination: '/tools/new-password', permanent: true },
+            { source: '/roster', destination: '/tools/roster', permanent: true },
+        ];
+    },
     images: {
         remotePatterns: [
             {

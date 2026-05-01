@@ -36,13 +36,13 @@ export default function Header() {
                     >Resources</button>
                     {isResourcesOpen && (
                         <div className="absolute left-0 bg-white dark:bg-gray-800 shadow-lg rounded-md overflow-hidden z-10">
-                            <Link href="/new-password" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>NewPassword</Link>
-                            <Link href="/convert-text" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>ConvertText</Link>
-                            <Link href="/countdown" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Countdown</Link>
+                            <Link href="/tools/new-password" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>NewPassword</Link>
+                            <Link href="/tools/convert-text" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>ConvertText</Link>
+                            <Link href="/tools/countdown" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Countdown</Link>
                         </div>
                     )}
                 </div>
-                <Link href="/roster" aria-label="前往 Roster 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Roster</Link>
+                <Link href="/tools/roster" aria-label="前往 Roster 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Roster</Link>
                 <Link href="/about" aria-label="前往 About 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">About</Link>
                 <ThemeButton />
             </nav>
