@@ -39,7 +39,6 @@ export default function Header() {
                             <Link href="/new-password" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>NewPassword</Link>
                             <Link href="/convert-text" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>ConvertText</Link>
                             <Link href="/countdown" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Countdown</Link>
-                            <Link href="/sango-calculate" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>SangoCalculate</Link>
                         </div>
                     )}
                 </div>
