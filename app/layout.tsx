@@ -1,7 +1,6 @@
 import "./globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import AppProvider from "@/provider/app-provider";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
@@ -23,13 +22,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 )}
             </head>
             <body className="bg-gradient-to-br from-blue-100 via-green-100 to-red-100 dark:from-blue-900 dark:via-green-900 dark:to-red-900 dark:text-white">
-                <AppProvider>
-                    <Header />
-                    <main className="min-h-[calc(100svh-50px-50px)] overflow-hidden flex flex-col items-center justify-start pt-4">
-                        {children}
-                    </main>
-                    <Footer />
-                </AppProvider>
+                <Header />
+                <main className="min-h-[calc(100svh-50px-50px)] overflow-hidden flex flex-col items-center justify-start pt-4">
+                    {children}
+                </main>
+                <Footer />
             </body>
         </html>
     );
