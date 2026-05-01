@@ -11,22 +11,47 @@ interface WsContextValue {
 
 const WsContext = createContext<WsContextValue | null>(null);
 
+const RECONNECT_BASE_MS = 3000;
+const RECONNECT_MAX_MS = 30000;
+
 export function WsProvider({ children }: { children: React.ReactNode }) {
     const listenersRef = useRef<Map<string, Set<Listener>>>(new Map());
 
     useEffect(() => {
-        const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/ws`);
+        let destroyed = false;
+        let attempt = 0;
+        let timeoutId: ReturnType<typeof setTimeout>;
 
-        ws.onmessage = (event: MessageEvent) => {
-            try {
-                const msg = JSON.parse(event.data as string);
-                listenersRef.current.get(msg.type)?.forEach(fn => fn(msg.data));
-            } catch {
-                // ignore non-JSON frames
-            }
+        const connect = () => {
+            const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/ws`);
+
+            ws.onmessage = (event: MessageEvent) => {
+                try {
+                    const msg = JSON.parse(event.data as string);
+                    listenersRef.current.get(msg.type)?.forEach(fn => fn(msg.data));
+                } catch {
+                    // ignore non-JSON frames
+                }
+            };
+
+            ws.onopen = () => {
+                attempt = 0;
+            };
+
+            ws.onclose = () => {
+                if (destroyed) return;
+                const delay = Math.min(RECONNECT_BASE_MS * 2 ** attempt, RECONNECT_MAX_MS);
+                attempt++;
+                timeoutId = setTimeout(connect, delay);
+            };
         };
 
-        return () => ws.close();
+        connect();
+
+        return () => {
+            destroyed = true;
+            clearTimeout(timeoutId);
+        };
     }, []);
 
     const value = useMemo<WsContextValue>(() => ({
