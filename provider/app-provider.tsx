@@ -6,17 +6,14 @@ import type { AuthUser } from '@/types';
 interface AppContextValue {
     visibleBlogs: string | null;
     setVisibleBlogs: React.Dispatch<React.SetStateAction<string | null>>;
-    isDark: boolean;
-    setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
     user: AuthUser | null;
     refreshUser: () => Promise<void>;
 }
 
 export const AppContext = createContext<AppContextValue | null>(null);
 
-export default function AppProvider({ children, initialIsDark = false }: { children: React.ReactNode; initialIsDark?: boolean }) {
+export default function AppProvider({ children }: { children: React.ReactNode }) {
     const [visibleBlogs, setVisibleBlogs] = useState<string | null>(null);
-    const [isDark, setIsDark] = useState(initialIsDark);
     const [user, setUser] = useState<AuthUser | null>(null);
 
     const refreshUser = useCallback(async () => {
@@ -49,8 +46,6 @@ export default function AppProvider({ children, initialIsDark = false }: { child
             value={{
                 visibleBlogs,
                 setVisibleBlogs,
-                isDark,
-                setIsDark,
                 user,
                 refreshUser,
             }}
