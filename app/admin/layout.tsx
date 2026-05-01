@@ -1,6 +1,5 @@
 import Breadcrumb from "@/components/breadcrumb";
 import LogoutButton from "@/components/login/logout-button";
-import StockToast from "@/components/stocks/stock-toast";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -17,7 +16,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <LogoutButton />
             </div>
             {children}
-            <StockToast />
         </>
     );
 }

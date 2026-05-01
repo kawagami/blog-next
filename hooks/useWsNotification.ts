@@ -1,31 +1,23 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import type { WsNotification } from '@/types';
+import { useState } from 'react';
+import { useWsSubscribe } from '@/hooks/useWsSubscribe';
+import type { WsNotification, WsEventType } from '@/types';
 
 export function useWsNotification() {
     const [notifications, setNotifications] = useState<WsNotification[]>([]);
 
-    useEffect(() => {
-        const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/ws`);
+    const addNotification = (type: WsEventType) => (data: unknown) => {
+        const id = Date.now() + Math.random();
+        setNotifications(prev => [...prev, { id, type, data }]);
+        setTimeout(() => {
+            setNotifications(prev => prev.filter(n => n.id !== id));
+        }, 5000);
+    };
 
-        ws.onmessage = (event: MessageEvent) => {
-            try {
-                const msg = JSON.parse(event.data as string);
-                if (msg.type !== 'stock_completed' && msg.type !== 'stock_failed') return;
-
-                const id = Date.now() + Math.random();
-                setNotifications(prev => [...prev, { id, type: msg.type, data: msg.data }]);
-                setTimeout(() => {
-                    setNotifications(prev => prev.filter(n => n.id !== id));
-                }, 5000);
-            } catch {
-                // ignore non-JSON frames
-            }
-        };
-
-        return () => ws.close();
-    }, []);
+    useWsSubscribe('stock_completed', addNotification('stock_completed'));
+    useWsSubscribe('stock_failed', addNotification('stock_failed'));
+    useWsSubscribe('blog_created', addNotification('blog_created'));
 
     const dismiss = (id: number) =>
         setNotifications(prev => prev.filter(n => n.id !== id));

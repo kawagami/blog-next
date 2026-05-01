@@ -109,8 +109,8 @@ export interface ChatMessage {
   created_at?: string;
 }
 
-// Stock WS Notification
-export type WsEventType = 'stock_completed' | 'stock_failed';
+// WS Notification
+export type WsEventType = 'stock_completed' | 'stock_failed' | 'blog_created';
 
 export interface WsNotification {
   id: number;
