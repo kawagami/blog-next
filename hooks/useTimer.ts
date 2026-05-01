@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export default function useTimer() {
     const [minutes, setMinutes] = useState(30);
@@ -34,7 +34,11 @@ export default function useTimer() {
         }
     }, [minutes, isRunning, isPaused]);
 
-    const startCountdown = () => {
+    const stopBeeping = useCallback(() => {
+        setIsBeeping(false);
+    }, []);
+
+    const startCountdown = useCallback(() => {
         const now = new Date().getTime();
 
         if (!targetTime) {
@@ -42,28 +46,26 @@ export default function useTimer() {
             setTimeLeft(minutes * 60);
         } else if (isPaused) {
             setTargetTime(now + timeLeft * 1000);
+        } else {
+            return;
         }
 
         setIsRunning(true);
         setIsPaused(false);
-    };
+    }, [targetTime, isPaused, minutes, timeLeft]);
 
-    const pauseCountdown = () => {
+    const pauseCountdown = useCallback(() => {
         setIsPaused(true);
         setIsRunning(false);
-    };
+    }, []);
 
-    const resetCountdown = () => {
+    const resetCountdown = useCallback(() => {
         setIsRunning(false);
         setIsPaused(false);
         setIsBeeping(false);
         setTargetTime(null);
         setTimeLeft(minutes * 60);
-    };
-
-    const stopBeeping = () => {
-        setIsBeeping(false);
-    };
+    }, [minutes]);
 
     return {
         minutes,
