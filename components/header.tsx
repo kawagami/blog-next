@@ -30,19 +30,19 @@ export default function Header() {
                 <div className="relative">
                     <button
                         className="block px-4 hover:scale-110 hover:text-blue-400"
-                        aria-label="開啟 Resources 選單"
+                        aria-label="開啟 Tools 選單"
                         aria-expanded={isResourcesOpen}
                         onClick={() => setIsResourcesOpen(o => !o)}
-                    >Resources</button>
+                    >Tools</button>
                     {isResourcesOpen && (
                         <div className="absolute left-0 bg-white dark:bg-gray-800 shadow-lg rounded-md overflow-hidden z-10">
-                            <Link href="/tools/new-password" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>NewPassword</Link>
-                            <Link href="/tools/convert-text" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>ConvertText</Link>
+                            <Link href="/tools/new-password" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>New Password</Link>
+                            <Link href="/tools/convert-text" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Convert Text</Link>
                             <Link href="/tools/countdown" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Countdown</Link>
+                            <Link href="/tools/roster" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Roster</Link>
                         </div>
                     )}
                 </div>
-                <Link href="/tools/roster" aria-label="前往 Roster 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">Roster</Link>
                 <Link href="/about" aria-label="前往 About 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">About</Link>
                 <ThemeButton />
             </nav>
