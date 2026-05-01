@@ -8,7 +8,7 @@ export default function TimerDisplay({ timeLeft }: { timeLeft: number }) {
     };
 
     return (
-        <div className="text-6xl font-mono text-center text-blue-800 bg-gray-100 p-4 rounded-lg shadow-md mb-6">
+        <div className="text-6xl font-mono text-center text-blue-800 dark:text-blue-300 bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow-md mb-6">
             {formatTime(timeLeft)}
         </div>
     );
