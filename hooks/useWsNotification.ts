@@ -18,6 +18,8 @@ export function useWsNotification() {
     useWsSubscribe('stock_completed', addNotification('stock_completed'));
     useWsSubscribe('stock_failed', addNotification('stock_failed'));
     useWsSubscribe('blog_created', addNotification('blog_created'));
+    useWsSubscribe('user_joined', addNotification('user_joined'));
+    useWsSubscribe('user_left', addNotification('user_left'));
 
     const dismiss = (id: number) =>
         setNotifications(prev => prev.filter(n => n.id !== id));

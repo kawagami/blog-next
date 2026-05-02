@@ -2,6 +2,7 @@
 
 import { useWsNotification } from '@/hooks/useWsNotification';
 import { X } from 'lucide-react';
+import type { WsUserEventData } from '@/types';
 
 interface StockData {
     stock_name?: string;
@@ -21,6 +22,23 @@ export default function StockToast() {
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2">
             {notifications.map(({ id, type, data }) => {
+                if (type === 'user_joined' || type === 'user_left') {
+                    const user = data as WsUserEventData;
+                    const isJoin = type === 'user_joined';
+                    const label = user.user_email ?? '訪客';
+                    return (
+                        <div key={id} className="flex items-start gap-3 px-4 py-3 rounded-lg shadow-lg text-white min-w-[260px] max-w-sm bg-gray-600">
+                            <div className="flex-1 text-sm">
+                                <p className="font-semibold">{isJoin ? '使用者上線' : '使用者離線'}</p>
+                                <p>{label}</p>
+                            </div>
+                            <button onClick={() => dismiss(id)} className="mt-0.5 hover:opacity-75">
+                                <X size={16} />
+                            </button>
+                        </div>
+                    );
+                }
+
                 if (type === 'blog_created') {
                     const blog = data as BlogData;
                     return (

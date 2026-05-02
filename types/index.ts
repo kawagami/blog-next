@@ -110,12 +110,17 @@ export interface ChatMessage {
 }
 
 // WS Notification
-export type WsEventType = 'stock_completed' | 'stock_failed' | 'blog_created';
+export type WsEventType = 'stock_completed' | 'stock_failed' | 'blog_created' | 'user_joined' | 'user_left';
 
 export interface WsNotification {
   id: number;
   type: WsEventType;
   data: unknown;
+}
+
+export interface WsUserEventData {
+  addr: string;
+  user_email: string | null;
 }
 
 // Raw WS frame from stock notification server
