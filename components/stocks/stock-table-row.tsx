@@ -16,8 +16,8 @@ export default function StockTableRow({ stock }: { stock: StockChange }) {
                 {stock.change ? `${stock.change}%` : ``}
             </td>
             <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                <PendingButton stock={stock} />
-                <DeleteButton stock={stock} />
+                <PendingButton id={stock.id} />
+                <DeleteButton id={stock.id} />
             </td>
         </tr>
     );

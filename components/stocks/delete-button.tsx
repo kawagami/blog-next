@@ -1,14 +1,8 @@
 "use client";
 
-import type { StockChange } from "@/types";
-
-export default function DeleteButton({ stock }: { stock: StockChange }) {
-    const handleDelete = async (stock: StockChange) => {
-        alert(`DeleteButton 收到 ${stock.id} 的資料`);
-    };
-
+export default function DeleteButton({ id }: { id: string | number }) {
     return (
-        <button onClick={() => handleDelete(stock)} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+        <button onClick={() => alert(`DeleteButton 收到 ${id} 的資料`)} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
             DEL
         </button>
     );
