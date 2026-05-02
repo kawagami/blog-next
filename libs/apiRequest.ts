@@ -14,15 +14,24 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
     const cookieStore = await cookies();
     const token = cookieStore.get("session")?.value;
 
-    const response = await fetch(url, {
-        method,
-        headers: {
-            ...(token && { 'Authorization': `Bearer ${token}` }),
-            ...headers,
-        },
-        body,
-        cache: 'no-store',
-    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
+    let response: Response;
+    try {
+        response = await fetch(url, {
+            method,
+            headers: {
+                ...(token && { 'Authorization': `Bearer ${token}` }),
+                ...headers,
+            },
+            body,
+            cache: 'no-store',
+            signal: controller.signal,
+        });
+    } finally {
+        clearTimeout(timeout);
+    }
 
     if (response.status === 401 || response.status === 403) {
         const headersList = await nextHeaders();
