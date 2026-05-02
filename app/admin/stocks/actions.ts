@@ -4,6 +4,12 @@ import { revalidatePath } from "next/cache";
 import apiRequest from "@/libs/apiRequest";
 import type { StockDayAll, StockBuybackPeriod, StockChange } from "@/types";
 
+export async function patchStockPendingAction(formData: FormData): Promise<void> {
+    const id = formData.get('id') as string;
+    await patchOneStockChangePending({ id });
+}
+
+
 export async function patchOneStockChangePending({ id }: { id: string | number }): Promise<StockChange> {
     const response = await apiRequest<StockChange>({
         url: `${process.env.API_URL}/stocks/update_one_stock_change_pending`,

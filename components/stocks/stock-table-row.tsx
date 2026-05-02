@@ -1,5 +1,4 @@
 import PendingButton from "@/components/stocks/pending-button";
-import DeleteButton from "@/components/stocks/delete-button";
 import type { StockChange } from "@/types";
 
 export default function StockTableRow({ stock }: { stock: StockChange }) {
@@ -17,7 +16,6 @@ export default function StockTableRow({ stock }: { stock: StockChange }) {
             </td>
             <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
                 <PendingButton id={stock.id} />
-                <DeleteButton id={stock.id} />
             </td>
         </tr>
     );
