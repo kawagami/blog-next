@@ -34,7 +34,7 @@ export default function Stocks() {
     }
 
     return (
-        <div className="w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
+        <div className="w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100 dark:bg-gray-800">
             <div className="w-full flex flex-wrap justify-center gap-4">
                 {LINKS.map(({ href, label, color }) => {
                     const isLoading = loading === href;

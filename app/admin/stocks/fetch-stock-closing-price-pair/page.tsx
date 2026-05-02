@@ -74,7 +74,7 @@ export default function Search() {
         const { price_diff, percent_change, is_increase, day_span } = data.stats;
         const priceChangeClass = is_increase ? "text-green-600" : "text-red-600";
         return (
-            <div className="bg-blue-50 p-3 rounded mb-4">
+            <div className="bg-blue-50 dark:bg-blue-900/30 p-3 rounded mb-4 dark:text-gray-200">
                 {data.prices.length >= 2 && (
                     <>
                         <p><span className="font-medium">起始收盤價：</span> {data.prices[0].close_price}</p>
@@ -89,43 +89,43 @@ export default function Search() {
     };
 
     return (
-        <div className="w-full lg:w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100">
-            <form action={formAction} className="space-y-4 bg-white p-4 rounded shadow">
+        <div className="w-full lg:w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100 dark:bg-gray-800">
+            <form action={formAction} className="space-y-4 bg-white dark:bg-gray-900 p-4 rounded shadow">
                 <div className="flex flex-col space-y-2">
-                    <label htmlFor="stockNo" className="font-medium">股票代號</label>
-                    <input type="text" name="stockNo" id="stockNo" className="border p-2 rounded w-full" placeholder="例如: 3036" />
+                    <label htmlFor="stockNo" className="font-medium dark:text-gray-200">股票代號</label>
+                    <input type="text" name="stockNo" id="stockNo" className="border dark:border-gray-600 p-2 rounded w-full bg-white dark:bg-gray-700 dark:text-gray-200" placeholder="例如: 3036" />
                 </div>
                 <div className="flex flex-col space-y-2">
-                    <label htmlFor="start_date" className="font-medium">起始日期 (YYYYMMDD 或 民國)</label>
-                    <input type="text" name="start_date" id="start_date" className="border p-2 rounded w-full" placeholder="1130101 或 20240101" />
+                    <label htmlFor="start_date" className="font-medium dark:text-gray-200">起始日期 (YYYYMMDD 或 民國)</label>
+                    <input type="text" name="start_date" id="start_date" className="border dark:border-gray-600 p-2 rounded w-full bg-white dark:bg-gray-700 dark:text-gray-200" placeholder="1130101 或 20240101" />
                 </div>
                 <div className="flex flex-col space-y-2">
-                    <label htmlFor="end_date" className="font-medium">結束日期 (YYYYMMDD 或 民國)</label>
-                    <input type="text" name="end_date" id="end_date" className="border p-2 rounded w-full" placeholder="1130430 或 20240430" defaultValue={new Date().toISOString().slice(0, 10).replace(/-/g, "")} />
+                    <label htmlFor="end_date" className="font-medium dark:text-gray-200">結束日期 (YYYYMMDD 或 民國)</label>
+                    <input type="text" name="end_date" id="end_date" className="border dark:border-gray-600 p-2 rounded w-full bg-white dark:bg-gray-700 dark:text-gray-200" placeholder="1130430 或 20240430" defaultValue={new Date().toISOString().slice(0, 10).replace(/-/g, "")} />
                 </div>
                 <button type="submit" disabled={isPending} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50">
                     {isPending ? "查詢中…" : "查詢"}
                 </button>
             </form>
-            {state.error && <div className="bg-red-100 text-red-800 p-3 rounded">{state.error}</div>}
+            {state.error && <div className="bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 p-3 rounded">{state.error}</div>}
             {state.stockData?.prices && (
-                <div className="bg-white p-4 rounded shadow">
-                    <h2 className="text-lg font-semibold mb-3">查詢結果</h2>
+                <div className="bg-white dark:bg-gray-900 p-4 rounded shadow">
+                    <h2 className="text-lg font-semibold mb-3 dark:text-white">查詢結果</h2>
                     {renderStats(state.stockData)}
                     <table className="w-full table-auto border-collapse">
                         <thead>
                             <tr>
-                                <th className="border px-2 py-1">股票代號</th>
-                                <th className="border px-2 py-1">日期</th>
-                                <th className="border px-2 py-1">收盤價</th>
+                                <th className="border dark:border-gray-600 px-2 py-1 dark:text-gray-200">股票代號</th>
+                                <th className="border dark:border-gray-600 px-2 py-1 dark:text-gray-200">日期</th>
+                                <th className="border dark:border-gray-600 px-2 py-1 dark:text-gray-200">收盤價</th>
                             </tr>
                         </thead>
                         <tbody>
                             {state.stockData.prices.map((item) => (
-                                <tr key={item.date}>
-                                    <td className="border px-2 py-1 text-center">{item.stock_no}</td>
-                                    <td className="border px-2 py-1 text-center">{item.date}</td>
-                                    <td className="border px-2 py-1 text-center">{item.close_price}</td>
+                                <tr key={item.date} className="dark:text-gray-200">
+                                    <td className="border dark:border-gray-600 px-2 py-1 text-center">{item.stock_no}</td>
+                                    <td className="border dark:border-gray-600 px-2 py-1 text-center">{item.date}</td>
+                                    <td className="border dark:border-gray-600 px-2 py-1 text-center">{item.close_price}</td>
                                 </tr>
                             ))}
                         </tbody>

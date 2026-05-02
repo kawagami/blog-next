@@ -12,7 +12,7 @@ export const StatusLink = ({ status, currentStatus, children }: Props) => {
     return (
         <Link
             href={{ pathname: '/admin/stocks/list', query: status ? { status } : {} }}
-            className={`px-4 py-2 rounded-lg border border-gray-300 transition ${isActive ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100 hover:text-black'}`}
+            className={`px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 transition ${isActive ? 'bg-blue-500 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-black dark:hover:text-white'}`}
         >
             {children}
         </Link>
