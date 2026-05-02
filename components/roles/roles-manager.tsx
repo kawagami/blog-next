@@ -120,7 +120,7 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
                                                         : 'bg-gray-100 border-gray-300 text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400'
                                                 }`}
                                             >
-                                                {perm.name}
+                                                {perm.resource}:{perm.action}
                                             </button>
                                         );
                                     })}
