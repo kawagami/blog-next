@@ -31,7 +31,7 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
         try {
             if (referer) redirectPath = new URL(referer).pathname;
         } catch { /* ignore invalid referer */ }
-        redirect(`/login?redirect=${encodeURIComponent(redirectPath)}`);
+        redirect(`/admin/login?redirect=${encodeURIComponent(redirectPath)}`);
     }
 
     const text = await response.text();

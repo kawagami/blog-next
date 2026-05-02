@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export const config = {
-    matcher: ['/admin/:path*'],
+    matcher: ['/admin/((?!login).*)'],
 };
 
 export default async function middleware(req) {
@@ -11,7 +11,7 @@ export default async function middleware(req) {
     const value = cookieStore.get("session")?.value;
 
     const originalUrl = req.nextUrl.pathname + req.nextUrl.search;
-    const loginUrl = new URL("/login", req.nextUrl);
+    const loginUrl = new URL("/admin/login", req.nextUrl);
     loginUrl.searchParams.set("redirect", originalUrl);
 
     if (!value) {
