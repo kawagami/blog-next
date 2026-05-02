@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 
 interface Link {
@@ -26,19 +26,22 @@ const COLOR_MAP: Record<string, string> = {
 
 export default function Stocks() {
     const router = useRouter();
-    const [loading, setLoading] = useState<string | null>(null);
+    const [isPending, startTransition] = useTransition();
+    const [loadingHref, setLoadingHref] = useState<string | null>(null);
 
     function navigate(href: string) {
-        setLoading(href);
-        router.push(href);
+        setLoadingHref(href);
+        startTransition(() => {
+            router.push(href);
+        });
     }
 
     return (
         <div className="w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100 dark:bg-gray-800">
             <div className="w-full flex flex-wrap justify-center gap-4">
                 {LINKS.map(({ href, label, color }) => {
-                    const isLoading = loading === href;
-                    const isDisabled = loading !== null;
+                    const isLoading = isPending && loadingHref === href;
+                    const isDisabled = isPending;
                     return (
                         <button
                             key={href}
