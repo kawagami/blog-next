@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import putBlog from '@/api/put-blog';
-import uploadImage from '@/api/upload-image';
 import type { Blog, Toc } from '@/types';
 
 function extractTocs(markdown: string): Toc[] {
@@ -67,7 +66,9 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         const formData = new FormData();
         formData.append('file', file);
         try {
-            const data = await uploadImage(formData);
+            const res = await fetch('/api/images', { method: 'POST', body: formData });
+            if (!res.ok) throw new Error(`${res.status}`);
+            const data = await res.json();
             console.log('[upload] success:', data);
             insertAtCursor(`![image](${data.url})\n`);
         } catch (err) {
