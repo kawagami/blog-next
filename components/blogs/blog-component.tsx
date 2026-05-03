@@ -76,7 +76,9 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     };
 
     const handlePaste = (e: React.ClipboardEvent) => {
-        const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'));
+        const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'))
+            ?? Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'))?.getAsFile()
+            ?? undefined;
         if (!file) return;
         e.preventDefault();
         handleImageUpload(file);
