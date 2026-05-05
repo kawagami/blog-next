@@ -5,8 +5,13 @@ import Link from 'next/link';
 import ThemeButton from "@/components/theme-button";
 import Image from "next/image";
 import loglImg from "@/assets/kawagami.svg";
+import { logout } from '@/actions/auth';
 
-export default function Header() {
+interface HeaderProps {
+    member: { id: string } | null
+}
+
+export default function Header({ member }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isResourcesOpen, setIsResourcesOpen] = useState(false);
     const iconSize = 50;
@@ -45,6 +50,15 @@ export default function Header() {
                 </div>
                 <Link href="/about" aria-label="前往 About 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">About</Link>
                 <ThemeButton />
+                {member ? (
+                    <form action={logout}>
+                        <button type="submit" className="block px-4 hover:scale-110 hover:text-red-400">
+                            登出
+                        </button>
+                    </form>
+                ) : (
+                    <Link href="/login" className="block px-4 hover:scale-110 hover:text-blue-400">登入</Link>
+                )}
             </nav>
         </header>
     );
