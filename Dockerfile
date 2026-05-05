@@ -13,6 +13,7 @@ WORKDIR /app
 # 直接複製已經安裝好的 node_modules，不用重新安裝
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN cp .env.example .env
 
 # 如果你的專案很大，可以在這裡加入關閉檢查的參數 (若 CI 已有獨立檢查)
 # ENV NEXT_TELEMETRY_DISABLED 1
