@@ -34,16 +34,16 @@ function LoginContent() {
                     Google 登入
                 </button>
                 <button
-                    onClick={() => handleLogin('github')}
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 transition-colors"
+                    disabled
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500 dark:border-gray-700 cursor-not-allowed"
                 >
-                    GitHub 登入
+                    GitHub 登入 <span className="text-xs">（即將推出）</span>
                 </button>
                 <button
-                    onClick={() => handleLogin('line')}
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 transition-colors"
+                    disabled
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500 dark:border-gray-700 cursor-not-allowed"
                 >
-                    LINE 登入
+                    LINE 登入 <span className="text-xs">（即將推出）</span>
                 </button>
             </div>
         </div>
