@@ -50,7 +50,7 @@ export default function Header({ member }: HeaderProps) {
                 </div>
                 <Link href="/about" aria-label="前往 About 頁面" className="block px-4 hover:scale-110 hover:text-blue-400">About</Link>
                 <ThemeButton />
-                {/* {member ? (
+                {member ? (
                     <form action={logout}>
                         <button type="submit" className="block px-4 hover:scale-110 hover:text-red-400">
                             登出
@@ -58,7 +58,7 @@ export default function Header({ member }: HeaderProps) {
                     </form>
                 ) : (
                     <Link href="/login" className="block px-4 hover:scale-110 hover:text-blue-400">登入</Link>
-                )} */}
+                )}
             </nav>
         </header>
     );
