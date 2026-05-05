@@ -3,36 +3,6 @@
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
-export async function exchangeOAuthCode(provider: string, code: string, state: string) {
-    const res = await fetch(`${process.env.API_URL}/auth/${provider}/exchange`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code, state }),
-    })
-
-    if (!res.ok) {
-        redirect('/login?error=oauth_failed')
-    }
-
-    const { access_token, refresh_token } = await res.json()
-    const cookieStore = await cookies()
-
-    cookieStore.set('access_token', access_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        maxAge: 60 * 60,
-    })
-    cookieStore.set('refresh_token', refresh_token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 30,
-    })
-
-    redirect('/')
-}
-
 export async function refreshTokens(): Promise<boolean> {
     const cookieStore = await cookies()
     const refreshToken = cookieStore.get('refresh_token')?.value
