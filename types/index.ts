@@ -100,6 +100,24 @@ export interface Role {
   permissions?: Permission[];
 }
 
+// Member
+export interface Member {
+  id: number;
+  name: string;
+  email: string | null;
+  avatar_url: string | null;
+  created_at: string;
+}
+
+export interface MemberDetail {
+  id: number;
+  name: string;
+  email: string | null;
+  avatar_url: string | null;
+  created_at: string;
+  providers: string[];
+}
+
 // Chat WebSocket messages
 export interface ChatMessage {
   id?: number;
