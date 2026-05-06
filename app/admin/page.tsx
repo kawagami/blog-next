@@ -11,6 +11,7 @@ export default async function AdminPage() {
                 <Link href="/admin/blogs" className="px-6 py-3 font-semibold text-white bg-green-600 border-2 border-green-700 rounded-lg shadow-md hover:bg-green-700 hover:scale-105 transition duration-300">Manage Blogs</Link>
                 <Link href="/admin/roles" className="px-6 py-3 font-semibold text-white bg-purple-600 border-2 border-purple-700 rounded-lg shadow-md hover:bg-purple-700 hover:scale-105 transition duration-300">Roles</Link>
                 <Link href="/admin/members" className="px-6 py-3 font-semibold text-white bg-rose-600 border-2 border-rose-700 rounded-lg shadow-md hover:bg-rose-700 hover:scale-105 transition duration-300">Members</Link>
+                <Link href="/admin/ws" className="px-6 py-3 font-semibold text-white bg-teal-600 border-2 border-teal-700 rounded-lg shadow-md hover:bg-teal-700 hover:scale-105 transition duration-300">WS</Link>
             </div>
         </div>
     );

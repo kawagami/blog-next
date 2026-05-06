@@ -147,3 +147,9 @@ export interface WsMessage {
   type: string;
   data: unknown;
 }
+
+// WS online connection
+export interface WsConnection {
+  addr: string;
+  user_email: string | null;
+}
