@@ -118,16 +118,6 @@ export interface MemberDetail {
   providers: string[];
 }
 
-// Chat WebSocket messages
-export interface ChatMessage {
-  id?: number;
-  message_type: string;
-  content: string;
-  from: string;
-  to: string;
-  created_at?: string;
-}
-
 // WS Notification
 export type WsEventType = 'stock_completed' | 'stock_failed' | 'blog_created' | 'user_joined' | 'user_left';
 
