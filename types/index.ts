@@ -52,14 +52,18 @@ export interface HackmdTag {
 
 // Stock
 export interface StockDayAll {
-  stock_no: string;
+  id: number;
+  trade_date: string;
+  stock_code: string;
   stock_name: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-  transaction_count: number;
+  trade_volume: number | null;
+  trade_amount: number | null;
+  open_price: number | null;
+  high_price: number | null;
+  low_price: number | null;
+  close_price: number | null;
+  price_change: number | null;
+  transaction_count: number | null;
 }
 
 export interface StockBuybackPeriod {

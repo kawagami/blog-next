@@ -31,26 +31,32 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
                 <table className="min-w-full bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-sm">
                     <thead className="bg-gray-200 dark:bg-gray-700 sticky top-0 z-10">
                         <tr>
+                            <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">交易日期</th>
                             <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">股票代號</th>
                             <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">股票名稱</th>
                             <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">開盤</th>
                             <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">最高</th>
                             <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">最低</th>
                             <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">收盤</th>
+                            <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">漲跌</th>
                             <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">成交量</th>
+                            <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">成交金額</th>
                             <th className="px-3 py-2 border border-gray-300 dark:border-gray-600 dark:text-gray-200">成交筆數</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.map((item, i) => (
-                            <tr key={`${item.stock_no}-${i}`} className="hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200">
-                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-center">{item.stock_no}</td>
+                            <tr key={`${item.stock_code}-${i}`} className="hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-200">
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-center">{item.trade_date}</td>
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-center">{item.stock_code}</td>
                                 <td className="px-3 py-1 border border-gray-300 dark:border-gray-600">{item.stock_name}</td>
-                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.open}</td>
-                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.high}</td>
-                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.low}</td>
-                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.close}</td>
-                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.volume?.toLocaleString()}</td>
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.open_price}</td>
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.high_price}</td>
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.low_price}</td>
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.close_price}</td>
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.price_change}</td>
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.trade_volume?.toLocaleString()}</td>
+                                <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.trade_amount?.toLocaleString()}</td>
                                 <td className="px-3 py-1 border border-gray-300 dark:border-gray-600 text-right">{item.transaction_count?.toLocaleString()}</td>
                             </tr>
                         ))}
