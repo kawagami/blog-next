@@ -5,10 +5,10 @@ import { useState, useEffect, useCallback } from 'react';
 export default function useTimer() {
     const [minutes, setMinutes] = useState(30);
     const [targetTime, setTargetTime] = useState<number | null>(null);
-    const [timeLeft, setTimeLeft] = useState(30 * 60);
+    const [timeLeft, setTimeLeft] = useState(() => minutes * 60);
     const [isRunning, setIsRunning] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
     const [isBeeping, setIsBeeping] = useState(false);
+    const isPaused = !isRunning && targetTime !== null;
 
     useEffect(() => {
         let timer: ReturnType<typeof setInterval>;
@@ -29,10 +29,10 @@ export default function useTimer() {
     }, [isRunning, targetTime]);
 
     useEffect(() => {
-        if (!isRunning && !isPaused) {
+        if (!isRunning && targetTime === null) {
             setTimeLeft(minutes * 60);
         }
-    }, [minutes, isRunning, isPaused]);
+    }, [minutes, isRunning, targetTime]);
 
     const stopBeeping = useCallback(() => {
         setIsBeeping(false);
@@ -51,17 +51,14 @@ export default function useTimer() {
         }
 
         setIsRunning(true);
-        setIsPaused(false);
-    }, [targetTime, isPaused, minutes, timeLeft]);
+    }, [targetTime, minutes, timeLeft]);
 
     const pauseCountdown = useCallback(() => {
-        setIsPaused(true);
         setIsRunning(false);
     }, []);
 
     const resetCountdown = useCallback(() => {
         setIsRunning(false);
-        setIsPaused(false);
         setIsBeeping(false);
         setTargetTime(null);
         setTimeLeft(minutes * 60);
