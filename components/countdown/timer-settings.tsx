@@ -32,6 +32,7 @@ export default function TimerSettings({ minutes, setMinutes, disabled, onEnterPr
                     ref={inputRef}
                     type="number"
                     autoFocus
+                    onFocus={(e) => e.target.select()}
                     value={minutes}
                     onChange={(e) => setMinutes(Number(e.target.value))}
                     min="1"
