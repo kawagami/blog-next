@@ -136,7 +136,7 @@ export default function AdminSidebar() {
     return (
         <>
             {/* Desktop sidebar */}
-            <aside className="hidden sm:flex flex-col w-52 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-900/60 h-[calc(100svh-100px)] sticky top-0">
+            <aside className="hidden sm:flex flex-col w-52 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-900/60 h-[calc(100svh-120px)] sticky top-0">
                 <SidebarContent pathname={pathname} />
             </aside>
 
