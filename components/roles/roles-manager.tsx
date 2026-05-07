@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { Trash2, ChevronDown, ChevronRight, Plus } from 'lucide-react';
-import { createRole, deleteRole, setRolePermissions } from '@/app/admin/roles/actions';
+import { createRole, deleteRole, setRolePermissions } from '@/app/admin/(main)/roles/actions';
 import type { Role, Permission } from '@/types';
 
 interface Props {

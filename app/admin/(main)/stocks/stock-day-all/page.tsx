@@ -1,4 +1,4 @@
-import { getStockDayAll } from "@/app/admin/stocks/actions";
+import { getStockDayAll } from "@/app/admin/(main)/stocks/actions";
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ trade_date?: string; limit?: string; offset?: string }> }) {
     const params = await searchParams;

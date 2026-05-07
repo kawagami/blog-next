@@ -1,4 +1,4 @@
-import { patchStockPendingAction } from "@/app/admin/stocks/actions";
+import { patchStockPendingAction } from "@/app/admin/(main)/stocks/actions";
 
 export default function PendingButton({ id }: { id: string | number }) {
     return (

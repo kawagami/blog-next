@@ -1,6 +1,6 @@
 "use client";
 
-import { fetchStockClosingPricePair } from "@/app/admin/stocks/actions";
+import { fetchStockClosingPricePair } from "@/app/admin/(main)/stocks/actions";
 import { useActionState } from "react";
 
 interface StockPriceItem {

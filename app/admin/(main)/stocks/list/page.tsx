@@ -1,6 +1,6 @@
 import StockTable from "@/components/stocks/stock-table";
 import { StatusLink } from "@/components/stocks/status-link";
-import { getStockChanges } from "@/app/admin/stocks/actions";
+import { getStockChanges } from "@/app/admin/(main)/stocks/actions";
 
 export default async function List({ searchParams }: { searchParams: Promise<{ status?: string }> }) {
     const { status } = await searchParams;

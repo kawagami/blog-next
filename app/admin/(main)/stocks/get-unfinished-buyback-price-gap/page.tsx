@@ -1,4 +1,4 @@
-import { getUnfinishedBuybackPriceGap } from "@/app/admin/stocks/actions";
+import { getUnfinishedBuybackPriceGap } from "@/app/admin/(main)/stocks/actions";
 
 interface BuybackPriceGapItem {
     stock_no: string;

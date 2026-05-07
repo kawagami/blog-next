@@ -1,4 +1,4 @@
-import { getStockBuybackPeriods } from "@/app/admin/stocks/actions";
+import { getStockBuybackPeriods } from "@/app/admin/(main)/stocks/actions";
 
 export default async function Page() {
     const data = await getStockBuybackPeriods();

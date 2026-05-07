@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { setUserRoles } from '@/app/admin/roles/actions';
+import { setUserRoles } from '@/app/admin/(main)/roles/actions';
 import type { Role } from '@/types';
 
 interface Props {
