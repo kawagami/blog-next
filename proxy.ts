@@ -6,15 +6,16 @@ export const config = {
     matcher: ['/admin/((?!login).*)', '/dashboard/:path*', '/profile/:path*', '/settings/:path*'],
 };
 
-export default async function middleware(req) {
+export default async function proxy(req: Request & { nextUrl: URL }) {
     const cookieStore = await cookies();
-    const path = req.nextUrl.pathname;
+    const path = new URL(req.url).pathname;
 
     if (path.startsWith('/admin')) {
         const value = cookieStore.get("session")?.value;
 
-        const originalUrl = req.nextUrl.pathname + req.nextUrl.search;
-        const loginUrl = new URL("/admin/login", req.nextUrl);
+        const nextUrl = new URL(req.url);
+        const originalUrl = nextUrl.pathname + nextUrl.search;
+        const loginUrl = new URL("/admin/login", req.url);
         loginUrl.searchParams.set("redirect", originalUrl);
 
         if (!value) {
