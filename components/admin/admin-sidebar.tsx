@@ -136,13 +136,13 @@ export default function AdminSidebar() {
     return (
         <>
             {/* Desktop sidebar */}
-            <aside className="hidden sm:flex flex-col w-52 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-900/60 h-[calc(100svh-120px)] sticky top-0">
+            <aside className="hidden sm:flex flex-col w-52 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-900/60 h-screen sticky top-0">
                 <SidebarContent pathname={pathname} />
             </aside>
 
             {/* Mobile: hamburger button */}
             <button
-                className="sm:hidden fixed top-[58px] left-3 z-40 p-1.5 rounded-lg bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700"
+                className="sm:hidden fixed top-3 left-3 z-40 p-1.5 rounded-lg bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700"
                 onClick={() => setDrawerOpen(true)}
                 aria-label="開啟選單"
             >
