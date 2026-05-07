@@ -7,10 +7,9 @@ interface Props {
     startCountdown: () => void;
     pauseCountdown: () => void;
     resetCountdown: () => void;
-    stopBeeping: () => void;
 }
 
-export default function TimerControls({ isRunning, isPaused, isBeeping, startCountdown, pauseCountdown, resetCountdown, stopBeeping }: Props) {
+export default function TimerControls({ isRunning, isPaused, isBeeping, startCountdown, pauseCountdown, resetCountdown }: Props) {
     return (
         <>
             {!isRunning && !isPaused && !isBeeping && (
@@ -34,12 +33,7 @@ export default function TimerControls({ isRunning, isPaused, isBeeping, startCou
                 </button>
             )}
             {isBeeping && (
-                <div className="text-center mt-6">
-                    <p className="text-xl text-red-600 dark:text-red-400 font-medium mb-4">時間到！播放提醒中...</p>
-                    <button onClick={stopBeeping} className="w-full px-6 py-3 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition focus:outline-none focus:ring-2 focus:ring-red-400">
-                        停止播放
-                    </button>
-                </div>
+                <p className="text-xl text-red-600 dark:text-red-400 font-medium text-center mt-2">時間到！播放提醒中...</p>
             )}
         </>
     );

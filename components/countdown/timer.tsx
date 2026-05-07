@@ -38,6 +38,16 @@ export default function Timer() {
         return () => clearTimeout(beepTimer);
     }, [isBeeping, stopBeeping]);
 
+    useEffect(() => {
+        const handleVisibility = () => {
+            if (document.visibilityState === 'visible' && isBeeping) {
+                resetCountdown();
+            }
+        };
+        document.addEventListener('visibilitychange', handleVisibility);
+        return () => document.removeEventListener('visibilitychange', handleVisibility);
+    }, [isBeeping, resetCountdown]);
+
     const handleEnterPress = () => {
         if (!isRunning && !isPaused && !isBeeping) startCountdown();
     };
@@ -60,7 +70,6 @@ export default function Timer() {
                     startCountdown={startCountdown}
                     pauseCountdown={pauseCountdown}
                     resetCountdown={resetCountdown}
-                    stopBeeping={stopBeeping}
                 />
             </div>
             <audio ref={audioRef} src="/beep.mp3" loop />
