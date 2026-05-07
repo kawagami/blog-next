@@ -1,12 +1,13 @@
 import { getStockDayAll } from "@/app/admin/(main)/stocks/actions";
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ trade_date?: string; limit?: string; offset?: string }> }) {
+export default async function Page({ searchParams }: { searchParams: Promise<{ trade_date?: string; stock_code?: string; limit?: string; offset?: string }> }) {
     const params = await searchParams;
     const trade_date = params.trade_date ?? "";
+    const stock_code = params.stock_code ?? "";
     const limit = parseInt(params.limit ?? "50", 10);
     const offset = parseInt(params.offset ?? "0", 10);
 
-    const data = await getStockDayAll({ trade_date, limit, offset });
+    const data = await getStockDayAll({ trade_date, stock_code, limit, offset });
 
     return (
         <div className="w-full lg:w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100 dark:bg-gray-800">
@@ -15,6 +16,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
                 <div className="flex flex-col gap-1">
                     <label className="text-sm text-gray-600 dark:text-gray-400">交易日期</label>
                     <input type="text" name="trade_date" defaultValue={trade_date} placeholder="YYYYMMDD" className="border dark:border-gray-600 px-2 py-1 text-sm rounded bg-white dark:bg-gray-700 dark:text-gray-200" />
+                </div>
+                <div className="flex flex-col gap-1">
+                    <label className="text-sm text-gray-600 dark:text-gray-400">股票代號</label>
+                    <input type="text" name="stock_code" defaultValue={stock_code} placeholder="2330" className="border dark:border-gray-600 px-2 py-1 text-sm rounded bg-white dark:bg-gray-700 dark:text-gray-200" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <label className="text-sm text-gray-600 dark:text-gray-400">筆數</label>
@@ -65,10 +70,10 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
             </div>
             <div className="flex gap-2 mt-4">
                 {offset > 0 && (
-                    <a href={`?trade_date=${trade_date}&limit=${limit}&offset=${Math.max(0, offset - limit)}`} className="px-3 py-1 bg-gray-300 dark:bg-gray-600 dark:text-gray-200 rounded text-sm hover:bg-gray-400 dark:hover:bg-gray-500">上一頁</a>
+                    <a href={`?trade_date=${trade_date}&stock_code=${stock_code}&limit=${limit}&offset=${Math.max(0, offset - limit)}`} className="px-3 py-1 bg-gray-300 dark:bg-gray-600 dark:text-gray-200 rounded text-sm hover:bg-gray-400 dark:hover:bg-gray-500">上一頁</a>
                 )}
                 {data.length === limit && (
-                    <a href={`?trade_date=${trade_date}&limit=${limit}&offset=${offset + limit}`} className="px-3 py-1 bg-gray-300 dark:bg-gray-600 dark:text-gray-200 rounded text-sm hover:bg-gray-400 dark:hover:bg-gray-500">下一頁</a>
+                    <a href={`?trade_date=${trade_date}&stock_code=${stock_code}&limit=${limit}&offset=${offset + limit}`} className="px-3 py-1 bg-gray-300 dark:bg-gray-600 dark:text-gray-200 rounded text-sm hover:bg-gray-400 dark:hover:bg-gray-500">下一頁</a>
                 )}
             </div>
         </div>

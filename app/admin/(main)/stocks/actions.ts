@@ -51,9 +51,10 @@ export async function fetchStockClosingPricePair({ stock_no, start_date, end_dat
     return apiRequest({ url: url.toString(), method: "GET" });
 }
 
-export async function getStockDayAll({ trade_date = "", limit = 50, offset = 0 } = {}): Promise<StockDayAll[]> {
+export async function getStockDayAll({ trade_date = "", stock_code = "", limit = 50, offset = 0 } = {}): Promise<StockDayAll[]> {
     const url = new URL(`${process.env.API_URL}/stocks/get_stock_day_all`);
     if (trade_date) url.searchParams.append("trade_date", trade_date);
+    if (stock_code) url.searchParams.append("stock_code", stock_code);
     url.searchParams.append("limit", String(limit));
     url.searchParams.append("offset", String(offset));
     return apiRequest<StockDayAll[]>({ url: url.toString() });
