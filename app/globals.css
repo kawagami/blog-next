@@ -13,23 +13,33 @@
 }
 
 .loader {
-  display: inline-grid;
-  width: 80px;
+  height: 100px;
   aspect-ratio: 1;
-  animation: l6-0 .5s linear infinite;
-  background:
-    conic-gradient(from -34deg at 50% 99%, #0000, #4F46E5 2deg 65deg, #0000 68deg)
-    -6% 0%/20% 27% repeat-x,
-    conic-gradient(from 146deg at 50% 1%, #0000, #4F46E5 2deg 65deg, #0000 68deg)
-    -5% 100%/20% 27% repeat-x;
+  position: relative;
+  border: 3px solid #0000;
+  margin: auto;
 }
 .loader:before {
   content: "";
-  animation: inherit;
-  animation-name: l6-1;
-  margin: 12.5%;
-  clip-path: polygon(100% 50%,78.19% 60.26%,88.3% 82.14%,65% 75.98%,58.68% 99.24%,44.79% 79.54%,25% 93.3%,27.02% 69.28%,3.02% 67.1%,20% 50%,3.02% 32.9%,27.02% 30.72%,25% 6.7%,44.79% 20.46%,58.68% 0.76%,65% 24.02%,88.3% 17.86%,78.19% 39.74%);
+  position: absolute;
+  inset: auto 35% 0;
+  aspect-ratio: 1;
+  border-radius: 50%;
   background: #818CF8;
+  animation: l6-0 .5s cubic-bezier(0,800,1,800) infinite;
 }
-@keyframes l6-0 { to { background-position: -31% 0%, 20% 100% } }
-@keyframes l6-1 { to { rotate: -40deg } }
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  outline: 3px solid #4F46E5;
+  animation: l6-1 .5s linear infinite;
+}
+@keyframes l6-0 {
+  0%,2% { bottom: 0% }
+  98%,to { bottom: .1% }
+}
+@keyframes l6-1 {
+  0%,30% { rotate: 0deg }
+  70%,to  { rotate: 90deg }
+}
