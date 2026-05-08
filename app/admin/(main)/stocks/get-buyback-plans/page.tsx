@@ -4,7 +4,7 @@ export default async function Page() {
     const data = await getStockBuybackPeriods();
 
     return (
-        <div className="w-full lg:w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100 dark:bg-gray-800">
+        <div className="w-full p-6 bg-gray-100 dark:bg-gray-800">
             <h1 className="text-xl font-bold mb-4 dark:text-white">庫藏股計畫清單</h1>
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">共 {data.length} 筆</div>
             <div className="overflow-x-auto">

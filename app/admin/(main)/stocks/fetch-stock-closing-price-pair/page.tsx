@@ -89,7 +89,7 @@ export default function Search() {
     };
 
     return (
-        <div className="w-full lg:w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100 dark:bg-gray-800">
+        <div className="w-full p-6 bg-gray-100 dark:bg-gray-800">
             <form action={formAction} className="space-y-4 bg-white dark:bg-gray-900 p-4 rounded shadow">
                 <div className="flex flex-col space-y-2">
                     <label htmlFor="stockNo" className="font-medium dark:text-gray-200">股票代號</label>
