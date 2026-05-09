@@ -30,6 +30,7 @@ const groups = [
         icon: Shield,
         items: [
             { label: "WS", href: "/admin/ws" },
+            { label: "Logs", href: "/admin/logs" },
             { label: "Roles", href: "/admin/roles" },
             { label: "Users", href: "/admin/users" },
         ],
