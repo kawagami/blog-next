@@ -147,3 +147,16 @@ export interface WsConnection {
   addr: string;
   user_email: string | null;
 }
+
+// Log
+export type LogLevel = 'INFO' | 'WARN' | 'ERROR';
+
+export interface Log {
+  id: number;
+  level: LogLevel;
+  message: string;
+  target: string;
+  file: string;
+  line: number;
+  created_at: string;
+}
