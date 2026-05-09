@@ -5,7 +5,7 @@ import apiRequest from "@/libs/apiRequest";
 import type { StockDayAll, StockBuybackPeriod, StockChange } from "@/types";
 
 export async function patchStockPendingAction(formData: FormData): Promise<void> {
-    const id = formData.get('id') as string;
+    const id = Number(formData.get('id'));
     await patchOneStockChangePending({ id });
 }
 
@@ -29,7 +29,6 @@ export async function getStockChanges(status: string | null = null): Promise<Sto
 
     return apiRequest<StockChange[]>({
         url: finalUrl,
-        headers: { "Content-Type": "application/json" },
     });
 }
 
