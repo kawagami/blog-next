@@ -5,7 +5,7 @@ const IndexInfoStore = [
         contents: [
             "後端 API 是使用 rust 的 axum 框架",
             "前端頁面是使用 react + next.js 框架",
-            "blogs 頁面使用自製 markdown 編輯器（react-markdown）",
+            "blogs 頁面使用 react-markdown render",
             "UI/UX 持續完善中",
             "其餘的想到甚麼就會加進來",
         ]
@@ -19,11 +19,11 @@ const IndexInfoStore = [
         ]
     },
     {
-        href: "/ws",
-        title: "WS chat 頁面",
+        href: "/tools/countdown",
+        title: "倒數頁面",
         contents: [
-            "使用 rust 建立的 ws server 進行即時的交流",
-            "重構中"
+            "各種會用到的功能",
+            "實現後就會加進 tools 來",
         ]
     },
 ];
