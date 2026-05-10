@@ -84,6 +84,11 @@ export interface StockChange {
   change: number;
 }
 
+export interface StockChangePaginatedResponse {
+  data: StockChange[];
+  total: number;
+}
+
 // Auth
 export interface AuthUser {
   email: string;

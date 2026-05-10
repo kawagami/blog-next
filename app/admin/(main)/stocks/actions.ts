@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import apiRequest from "@/libs/apiRequest";
-import type { StockDayAll, StockBuybackPeriod, StockChange } from "@/types";
+import type { StockDayAll, StockBuybackPeriod, StockChange, StockChangePaginatedResponse } from "@/types";
 
 export async function patchStockPendingAction(formData: FormData): Promise<void> {
     const id = Number(formData.get('id'));
@@ -21,14 +21,19 @@ export async function patchOneStockChangePending({ id }: { id: string | number }
     return response;
 }
 
-export async function getStockChanges(status: string | null = null): Promise<StockChange[]> {
+export async function getStockChanges(
+    status: string | null = null,
+    limit = 50,
+    offset = 0,
+): Promise<StockChangePaginatedResponse> {
     const url = `${process.env.API_URL}/stocks/get_all_stock_changes`;
     const params = new URLSearchParams();
     if (status) params.append("status", status);
-    const finalUrl = params.toString() ? `${url}?${params}` : url;
+    params.append("limit", String(limit));
+    params.append("offset", String(offset));
 
-    return apiRequest<StockChange[]>({
-        url: finalUrl,
+    return apiRequest<StockChangePaginatedResponse>({
+        url: `${url}?${params}`,
     });
 }
 
