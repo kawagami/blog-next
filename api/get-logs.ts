@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import type { Log, LogLevel } from "@/types";
 
@@ -12,7 +11,7 @@ interface GetLogsParams {
 
 type GetLogsResult =
     | { ok: true; data: Log[] }
-    | { ok: false; status: 403 };
+    | { ok: false; status: 401 | 403 };
 
 async function getLogs({ level, limit = 100, offset = 0 }: GetLogsParams = {}): Promise<GetLogsResult> {
     const cookieStore = await cookies();
@@ -29,7 +28,7 @@ async function getLogs({ level, limit = 100, offset = 0 }: GetLogsParams = {}): 
     });
 
     if (response.status === 401) {
-        redirect(`/admin/login?redirect=${encodeURIComponent('/admin/logs')}`);
+        return { ok: false, status: 401 };
     }
 
     if (response.status === 403) {

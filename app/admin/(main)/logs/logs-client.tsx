@@ -37,6 +37,10 @@ export default function LogsClient({ initialLogs }: Props) {
         setError(null);
         startTransition(async () => {
             const result = await getLogs({ level: newLevel || undefined, limit: LIMIT, offset: 0 });
+            if (result.ok === false && result.status === 401) {
+                window.location.href = `/admin/login?redirect=${encodeURIComponent('/admin/logs')}`;
+                return;
+            }
             if (!result.ok) {
                 setError("無 log:read 權限");
                 return;
@@ -53,6 +57,10 @@ export default function LogsClient({ initialLogs }: Props) {
         setError(null);
         startTransition(async () => {
             const result = await getLogs({ level: level || undefined, limit: LIMIT, offset });
+            if (result.ok === false && result.status === 401) {
+                window.location.href = `/admin/login?redirect=${encodeURIComponent('/admin/logs')}`;
+                return;
+            }
             if (!result.ok) {
                 setError("無 log:read 權限");
                 return;
