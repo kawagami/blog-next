@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useEffect, useTransition } from "react";
 import getLogs from "@/api/get-logs";
 import type { Log, LogLevel } from "@/types";
 
@@ -20,17 +20,30 @@ const ROW_BG: Record<LogLevel, string> = {
 
 type LevelFilter = '' | LogLevel;
 
-interface Props {
-    initialLogs: Log[];
-}
-
-export default function LogsClient({ initialLogs }: Props) {
-    const [logs, setLogs] = useState<Log[]>(initialLogs);
+export default function LogsClient() {
+    const [logs, setLogs] = useState<Log[]>([]);
     const [level, setLevel] = useState<LevelFilter>('');
-    const [offset, setOffset] = useState(initialLogs.length);
-    const [hasMore, setHasMore] = useState(initialLogs.length >= LIMIT);
+    const [offset, setOffset] = useState(0);
+    const [hasMore, setHasMore] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
+
+    useEffect(() => {
+        startTransition(async () => {
+            const result = await getLogs({ limit: LIMIT, offset: 0 });
+            if (result.ok === false && result.status === 401) {
+                window.location.href = `/admin/login?redirect=${encodeURIComponent('/admin/logs')}`;
+                return;
+            }
+            if (!result.ok) {
+                setError("無 log:read 權限");
+                return;
+            }
+            setLogs(result.data);
+            setOffset(result.data.length);
+            setHasMore(result.data.length >= LIMIT);
+        });
+    }, []);
 
     function handleFilterChange(newLevel: LevelFilter) {
         if (newLevel === level || isPending) return;
