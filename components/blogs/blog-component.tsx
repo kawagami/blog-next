@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Loader2 } from 'lucide-react';
 import putBlog from '@/api/put-blog';
 import type { Blog, Toc } from '@/types';
 
@@ -117,7 +118,9 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                             ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
                             : 'bg-blue-600 text-white hover:bg-blue-700'}`}
                     >
-                        {isSaving ? '存檔中...' : '存檔'}
+                        {isSaving ? (
+                            <span className="flex items-center gap-1"><Loader2 className="w-4 h-4 animate-spin" />存檔中...</span>
+                        ) : '存檔'}
                     </button>
                     <button
                         onClick={handleShowTagModal}
@@ -130,12 +133,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         disabled={isSaving || isUploading}
                         className="px-6 py-2 font-semibold bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
                     >
-                        {isUploading && (
-                            <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                            </svg>
-                        )}
+                        {isUploading && <Loader2 className="w-4 h-4 animate-spin" />}
                         {isUploading ? '上傳中...' : '上傳圖片'}
                     </button>
                     <input

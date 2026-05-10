@@ -2,6 +2,7 @@
 
 import { fetchStockClosingPricePair } from "@/app/admin/(main)/stocks/actions";
 import { useActionState } from "react";
+import { Loader2 } from "lucide-react";
 
 interface StockPriceItem {
     stock_no: string;
@@ -103,7 +104,8 @@ export default function Search() {
                     <label htmlFor="end_date" className="font-medium dark:text-gray-200">結束日期 (YYYYMMDD 或 民國)</label>
                     <input type="text" name="end_date" id="end_date" className="border dark:border-gray-600 p-2 rounded w-full bg-white dark:bg-gray-700 dark:text-gray-200" placeholder="1130430 或 20240430" defaultValue={new Date().toISOString().slice(0, 10).replace(/-/g, "")} />
                 </div>
-                <button type="submit" disabled={isPending} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50">
+                <button type="submit" disabled={isPending} className="flex items-center gap-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50">
+                    {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                     {isPending ? "查詢中…" : "查詢"}
                 </button>
             </form>

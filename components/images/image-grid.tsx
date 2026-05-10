@@ -1,4 +1,5 @@
 import { usePathname } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
 import type { ManagedImage } from '@/hooks/useImageManager';
 
 interface Props {
@@ -28,7 +29,9 @@ const ImageGrid = ({ images, deletingImage, copiedImage, onDelete, onCopy }: Pro
                             className={`mt-2 py-1 px-4 rounded transition ${deletingImage === image.name ? 'bg-gray-500 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600 text-white'}`}
                             disabled={deletingImage === image.name}
                         >
-                            {deletingImage === image.name ? 'Deleting...' : 'Delete'}
+                            {deletingImage === image.name ? (
+                                <span className="flex items-center gap-1"><Loader2 className="w-4 h-4 animate-spin" />Deleting...</span>
+                            ) : 'Delete'}
                         </button>
                     )}
                     <button onClick={() => onCopy(image.url)} className="mt-2 py-1 px-4 rounded bg-green-500 hover:bg-green-600 text-white">

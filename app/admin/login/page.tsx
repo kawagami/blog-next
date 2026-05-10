@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { Loader2 } from 'lucide-react';
 
 export default function Login() {
     const router = useRouter();
@@ -61,7 +62,9 @@ export default function Login() {
                         disabled={pending}
                         className={`w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 ${pending ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                        {pending ? 'Logging in...' : 'Login'}
+                        {pending ? (
+                            <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />Logging in...</span>
+                        ) : 'Login'}
                     </button>
                 </form>
             </div>

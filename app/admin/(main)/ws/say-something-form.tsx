@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { Loader2 } from "lucide-react";
 import { saySomethingToSomeone, type SaySomethingResult } from "./actions";
 
 const initialState: SaySomethingResult = { ok: false };
@@ -35,7 +36,9 @@ export default function SaySomethingForm() {
                 disabled={isPending}
                 className="self-start px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-sm font-medium rounded"
             >
-                {isPending ? "Sending…" : "Send"}
+                {isPending ? (
+                    <span className="flex items-center gap-1"><Loader2 className="w-4 h-4 animate-spin" />Sending…</span>
+                ) : "Send"}
             </button>
             {state.message && (
                 <p className={`text-sm ${state.ok ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>

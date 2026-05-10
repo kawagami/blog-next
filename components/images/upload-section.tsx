@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
 
 interface Props {
     fileInputRef: React.RefObject<HTMLInputElement | null>;
@@ -36,10 +37,11 @@ const UploadSection = ({ fileInputRef, selectedImage, isUploading, onImageChange
                 </div>
             )}
             <button
-                className={`py-2 px-4 rounded mt-4 ${isUploading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
+                className={`flex items-center gap-1 py-2 px-4 rounded mt-4 ${isUploading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 text-white'}`}
                 onClick={onUpload}
                 disabled={isUploading}
             >
+                {isUploading && <Loader2 className="w-4 h-4 animate-spin" />}
                 {isUploading ? '上傳中...' : '上傳圖片'}
             </button>
         </div>

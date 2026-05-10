@@ -3,6 +3,7 @@
 import deleteBlog from "@/api/delete-blog";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function DeleteButton({ uuid }: { uuid: string }) {
     const router = useRouter();
@@ -33,7 +34,9 @@ export default function DeleteButton({ uuid }: { uuid: string }) {
                 : "bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
                 }`}
         >
-            {isDeleting ? "刪除中..." : "刪除"}
+            {isDeleting ? (
+                <span className="flex items-center gap-1"><Loader2 className="w-4 h-4 animate-spin" />刪除中...</span>
+            ) : "刪除"}
         </button>
     );
 }

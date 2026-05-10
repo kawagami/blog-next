@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from 'react';
-import { Trash2, ChevronDown, ChevronRight, Plus } from 'lucide-react';
+import { Trash2, ChevronDown, ChevronRight, Plus, Loader2 } from 'lucide-react';
 import { createRole, deleteRole, setRolePermissions } from '@/app/admin/(main)/roles/actions';
 import type { Role, Permission } from '@/types';
 
@@ -97,9 +97,9 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
                             <button
                                 onClick={() => handleDelete(role.id)}
                                 disabled={isPending}
-                                className="p-1 text-red-500 hover:text-red-700 dark:text-red-400"
+                                className="p-1 text-red-500 hover:text-red-700 dark:text-red-400 disabled:opacity-50"
                             >
-                                <Trash2 size={16} />
+                                {isPending ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
                             </button>
                         </div>
 
