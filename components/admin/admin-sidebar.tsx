@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -15,6 +15,7 @@ import {
     LogOut,
 } from "lucide-react";
 import { logout } from "@/actions/auth";
+import { restartTokenRefresh, stopTokenRefresh } from "@/libs/token-refresh";
 
 const groups = [
     {
@@ -116,15 +117,17 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
                 })}
             </div>
             <div className="border-t border-gray-200 dark:border-gray-700 p-4">
-                <form action={logout}>
-                    <button
-                        type="submit"
-                        className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
-                    >
-                        <LogOut size={16} />
-                        登出
-                    </button>
-                </form>
+                <button
+                    onClick={() => {
+                        stopTokenRefresh();
+                        localStorage.removeItem('token');
+                        logout();
+                    }}
+                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                >
+                    <LogOut size={16} />
+                    登出
+                </button>
             </div>
         </div>
     );
@@ -133,6 +136,10 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
 export default function AdminSidebar() {
     const pathname = usePathname();
     const [drawerOpen, setDrawerOpen] = useState(false);
+
+    useEffect(() => {
+        restartTokenRefresh();
+    }, []);
 
     return (
         <>

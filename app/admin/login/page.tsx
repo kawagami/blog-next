@@ -3,6 +3,7 @@
 import { useState, FormEvent } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import { startTokenRefresh } from '@/libs/token-refresh';
 
 export default function Login() {
     const router = useRouter();
@@ -35,6 +36,7 @@ export default function Login() {
 
             const { token } = await res.json();
             localStorage.setItem('token', token);
+            startTokenRefresh();
             router.push(redirectUrl);
         } catch {
             setError('網路錯誤，請稍後再試');
