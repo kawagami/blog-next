@@ -32,6 +32,7 @@ const groups = [
         items: [
             { label: "WS", href: "/admin/ws" },
             { label: "Logs", href: "/admin/logs" },
+            { label: "Audit Logs", href: "/admin/audit_logs" },
             { label: "Roles", href: "/admin/roles" },
             { label: "Users", href: "/admin/users" },
         ],

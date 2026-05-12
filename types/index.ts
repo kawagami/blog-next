@@ -153,6 +153,19 @@ export interface WsConnection {
   user_email: string | null;
 }
 
+// Audit Log
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+export interface AuditLog {
+  id: number;
+  user_email: string;
+  method: string;
+  path: string;
+  query: string | null;
+  status_code: number;
+  created_at: string;
+}
+
 // Log
 export type LogLevel = 'INFO' | 'WARN' | 'ERROR';
 
