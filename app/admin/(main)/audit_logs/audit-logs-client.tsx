@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
-import getAuditLogs from "@/api/get-audit-logs";
+import getAuditLogs, { AuditLogAuthError } from "@/api/get-audit-logs";
 import type { AuditLog, HttpMethod } from "@/types";
 
 const LIMIT = 100;
@@ -49,13 +49,20 @@ export default function AuditLogsClient() {
         }
     }
 
+    function handleAuthError(e: unknown) {
+        if (e instanceof AuditLogAuthError) {
+            handleRedirect(e.status);
+        }
+    }
+
     useEffect(() => {
         startTransition(async () => {
-            const result = await getAuditLogs({ limit: LIMIT, offset: 0 });
-            if (!result.ok) { handleRedirect(result.status); return; }
-            setLogs(result.data);
-            setOffset(result.data.length);
-            setHasMore(result.data.length >= LIMIT);
+            try {
+                const data = await getAuditLogs({ limit: LIMIT, offset: 0 });
+                setLogs(data);
+                setOffset(data.length);
+                setHasMore(data.length >= LIMIT);
+            } catch (e) { handleAuthError(e); }
         });
     }, []);
 
@@ -64,11 +71,12 @@ export default function AuditLogsClient() {
         setError(null);
         setAppliedFilters(filters);
         startTransition(async () => {
-            const result = await getAuditLogs({ ...filters, limit: LIMIT, offset: 0 });
-            if (!result.ok) { handleRedirect(result.status); return; }
-            setLogs(result.data);
-            setOffset(result.data.length);
-            setHasMore(result.data.length >= LIMIT);
+            try {
+                const data = await getAuditLogs({ ...filters, limit: LIMIT, offset: 0 });
+                setLogs(data);
+                setOffset(data.length);
+                setHasMore(data.length >= LIMIT);
+            } catch (e) { handleAuthError(e); }
         });
     }
 
@@ -77,22 +85,24 @@ export default function AuditLogsClient() {
         setAppliedFilters(defaultFilters);
         setError(null);
         startTransition(async () => {
-            const result = await getAuditLogs({ limit: LIMIT, offset: 0 });
-            if (!result.ok) { handleRedirect(result.status); return; }
-            setLogs(result.data);
-            setOffset(result.data.length);
-            setHasMore(result.data.length >= LIMIT);
+            try {
+                const data = await getAuditLogs({ limit: LIMIT, offset: 0 });
+                setLogs(data);
+                setOffset(data.length);
+                setHasMore(data.length >= LIMIT);
+            } catch (e) { handleAuthError(e); }
         });
     }
 
     function handleLoadMore() {
         if (isPending) return;
         startTransition(async () => {
-            const result = await getAuditLogs({ ...appliedFilters, limit: LIMIT, offset });
-            if (!result.ok) { handleRedirect(result.status); return; }
-            setLogs(prev => [...prev, ...result.data]);
-            setOffset(prev => prev + result.data.length);
-            setHasMore(result.data.length >= LIMIT);
+            try {
+                const data = await getAuditLogs({ ...appliedFilters, limit: LIMIT, offset });
+                setLogs(prev => [...prev, ...data]);
+                setOffset(prev => prev + data.length);
+                setHasMore(data.length >= LIMIT);
+            } catch (e) { handleAuthError(e); }
         });
     }
 
