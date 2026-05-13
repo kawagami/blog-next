@@ -8,21 +8,27 @@ interface Props {
     minute: number;
     setMinute: (n: number) => void;
     disabled: boolean;
+    onEnterPress: () => void;
 }
 
-export default function AlarmSettings({ hour, setHour, minute, setMinute, disabled }: Props) {
+export default function AlarmSettings({ hour, setHour, minute, setMinute, disabled, onEnterPress }: Props) {
     const hourRef = useRef<HTMLInputElement>(null);
     const minuteRef = useRef<HTMLInputElement>(null);
 
-    const selectOnEnter = (ref: React.RefObject<HTMLInputElement | null>) => {
+    const selectOnHover = (ref: React.RefObject<HTMLInputElement | null>) => {
         if (!disabled && ref.current) {
             ref.current.focus();
             ref.current.select();
         }
     };
 
+    const handleSubmit = (e: React.SyntheticEvent) => {
+        e.preventDefault();
+        if (!disabled) onEnterPress();
+    };
+
     return (
-        <div className="mb-6">
+        <form onSubmit={handleSubmit} className="mb-6">
             <label className="text-lg font-medium block mb-2 text-gray-700 dark:text-gray-300">設定鬧鐘時間：</label>
             <div className="flex items-center gap-2">
                 <input
@@ -31,7 +37,7 @@ export default function AlarmSettings({ hour, setHour, minute, setMinute, disabl
                     value={hour}
                     onChange={(e) => setHour(Math.min(23, Math.max(0, Number(e.target.value))))}
                     onFocus={(e) => e.target.select()}
-                    onMouseEnter={() => selectOnEnter(hourRef)}
+                    onMouseEnter={() => selectOnHover(hourRef)}
                     min="0"
                     max="23"
                     disabled={disabled}
@@ -44,7 +50,7 @@ export default function AlarmSettings({ hour, setHour, minute, setMinute, disabl
                     value={minute}
                     onChange={(e) => setMinute(Math.min(59, Math.max(0, Number(e.target.value))))}
                     onFocus={(e) => e.target.select()}
-                    onMouseEnter={() => selectOnEnter(minuteRef)}
+                    onMouseEnter={() => selectOnHover(minuteRef)}
                     min="0"
                     max="59"
                     disabled={disabled}
@@ -54,6 +60,6 @@ export default function AlarmSettings({ hour, setHour, minute, setMinute, disabl
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 鬧鐘設定：{String(hour).padStart(2, '0')}:{String(minute).padStart(2, '0')}
             </p>
-        </div>
+        </form>
     );
 }

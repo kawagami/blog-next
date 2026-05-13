@@ -58,6 +58,7 @@ export default function Alarm() {
                     minute={minute}
                     setMinute={setMinute}
                     disabled={isRunning || isBeeping}
+                    onEnterPress={startAlarm}
                 />
                 <AlarmDisplay timeLeft={timeLeft} isRunning={isRunning} />
                 <AlarmControls
