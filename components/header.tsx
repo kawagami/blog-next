@@ -47,6 +47,7 @@ export default function Header({ member }: HeaderProps) {
                             <Link href="/tools/convert-text" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Convert Text</Link>
                             <Link href="/tools/countdown" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Countdown</Link>
                             <Link href="/tools/roster" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Roster</Link>
+                            <Link href="/tools/alarm" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>Alarm</Link>
                         </div>
                     )}
                 </div>
