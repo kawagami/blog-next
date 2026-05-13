@@ -1,5 +1,7 @@
 "use client";
 
+import { useRef } from 'react';
+
 interface Props {
     hour: number;
     setHour: (n: number) => void;
@@ -9,14 +11,27 @@ interface Props {
 }
 
 export default function AlarmSettings({ hour, setHour, minute, setMinute, disabled }: Props) {
+    const hourRef = useRef<HTMLInputElement>(null);
+    const minuteRef = useRef<HTMLInputElement>(null);
+
+    const selectOnEnter = (ref: React.RefObject<HTMLInputElement | null>) => {
+        if (!disabled && ref.current) {
+            ref.current.focus();
+            ref.current.select();
+        }
+    };
+
     return (
         <div className="mb-6">
             <label className="text-lg font-medium block mb-2 text-gray-700 dark:text-gray-300">設定鬧鐘時間：</label>
             <div className="flex items-center gap-2">
                 <input
+                    ref={hourRef}
                     type="number"
                     value={hour}
                     onChange={(e) => setHour(Math.min(23, Math.max(0, Number(e.target.value))))}
+                    onFocus={(e) => e.target.select()}
+                    onMouseEnter={() => selectOnEnter(hourRef)}
                     min="0"
                     max="23"
                     disabled={disabled}
@@ -24,9 +39,12 @@ export default function AlarmSettings({ hour, setHour, minute, setMinute, disabl
                 />
                 <span className="text-2xl font-bold text-gray-700 dark:text-gray-300">:</span>
                 <input
+                    ref={minuteRef}
                     type="number"
                     value={minute}
                     onChange={(e) => setMinute(Math.min(59, Math.max(0, Number(e.target.value))))}
+                    onFocus={(e) => e.target.select()}
+                    onMouseEnter={() => selectOnEnter(minuteRef)}
                     min="0"
                     max="59"
                     disabled={disabled}
