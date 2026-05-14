@@ -1,9 +1,9 @@
 "use server";
 
-import apiRequest from "@/libs/apiRequest";
+import adminRequest from "@/libs/adminRequest";
 
 async function deleteBlog(id: string): Promise<void> {
-    await apiRequest({
+    await adminRequest({
         url: `${process.env.API_URL}/blogs/${id}`,
         method: 'DELETE',
     });

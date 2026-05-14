@@ -1,10 +1,10 @@
 "use server";
 
-import apiRequest from "@/libs/apiRequest";
+import adminRequest from "@/libs/adminRequest";
 import type { Member } from "@/types";
 
 async function getMembers(): Promise<Member[]> {
-    return apiRequest<Member[]>({
+    return adminRequest<Member[]>({
         url: `${process.env.API_URL}/members`,
     });
 }

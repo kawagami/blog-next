@@ -1,6 +1,6 @@
 "use server";
 
-import apiRequest from "@/libs/apiRequest";
+import adminRequest from "@/libs/adminRequest";
 
 export interface SaySomethingResult {
     ok: boolean;
@@ -21,7 +21,7 @@ export async function saySomethingToSomeone(
     const params = new URLSearchParams({ addr, message });
 
     try {
-        await apiRequest({
+        await adminRequest({
             url: `${process.env.API_URL}/ws/say_something_to_someone?${params}`,
         });
         return { ok: true, message: "Sent" };

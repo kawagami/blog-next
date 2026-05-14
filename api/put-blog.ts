@@ -1,10 +1,10 @@
 "use server";
 
-import apiRequest from "@/libs/apiRequest";
+import adminRequest from "@/libs/adminRequest";
 import type { BlogInput, Blog } from "@/types";
 
 async function putBlog(id: string, blog: BlogInput): Promise<Blog> {
-    return apiRequest({
+    return adminRequest({
         url: `${process.env.API_URL}/blogs/${id}`,
         headers: { 'Content-Type': 'application/json' },
         method: 'PUT',

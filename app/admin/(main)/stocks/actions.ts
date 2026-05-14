@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import apiRequest from "@/libs/apiRequest";
+import adminRequest from "@/libs/adminRequest";
 import type { StockDayAll, StockBuybackPeriod, StockChange, StockChangePaginatedResponse } from "@/types";
 
 export async function patchStockPendingAction(formData: FormData): Promise<void> {
@@ -11,7 +11,7 @@ export async function patchStockPendingAction(formData: FormData): Promise<void>
 
 
 export async function patchOneStockChangePending({ id }: { id: string | number }): Promise<StockChange> {
-    const response = await apiRequest<StockChange>({
+    const response = await adminRequest<StockChange>({
         url: `${process.env.API_URL}/stocks/update_one_stock_change_pending`,
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -32,7 +32,7 @@ export async function getStockChanges(
     params.append("limit", String(limit));
     params.append("offset", String(offset));
 
-    return apiRequest<StockChangePaginatedResponse>({
+    return adminRequest<StockChangePaginatedResponse>({
         url: `${url}?${params}`,
     });
 }
@@ -52,7 +52,7 @@ export async function fetchStockClosingPricePair({ stock_no, start_date, end_dat
     url.searchParams.append("stock_no", stock_no);
     url.searchParams.append("start_date", start_date);
     url.searchParams.append("end_date", end_date);
-    return apiRequest({ url: url.toString(), method: "GET" });
+    return adminRequest({ url: url.toString(), method: "GET" });
 }
 
 export async function getStockDayAll({ trade_date = "", stock_code = "", limit = 50, offset = 0 } = {}): Promise<StockDayAll[]> {
@@ -61,15 +61,15 @@ export async function getStockDayAll({ trade_date = "", stock_code = "", limit =
     if (stock_code) url.searchParams.append("stock_code", stock_code);
     url.searchParams.append("limit", String(limit));
     url.searchParams.append("offset", String(offset));
-    return apiRequest<StockDayAll[]>({ url: url.toString() });
+    return adminRequest<StockDayAll[]>({ url: url.toString() });
 }
 
 export async function getStockBuybackPeriods(): Promise<StockBuybackPeriod[]> {
-    return apiRequest<StockBuybackPeriod[]>({ url: `${process.env.API_URL}/stocks/get_stock_buyback_periods_v2` });
+    return adminRequest<StockBuybackPeriod[]>({ url: `${process.env.API_URL}/stocks/get_stock_buyback_periods_v2` });
 }
 
 export async function getUnfinishedBuybackPriceGap(): Promise<unknown> {
-    return apiRequest({
+    return adminRequest({
         url: `${process.env.API_URL}/stocks/get_unfinished_buyback_price_gap`,
         headers: { "Content-Type": "application/json" },
     });

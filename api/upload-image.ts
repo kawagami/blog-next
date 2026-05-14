@@ -1,10 +1,10 @@
 "use server";
 
-import apiRequest from "@/libs/apiRequest";
+import adminRequest from "@/libs/adminRequest";
 import type { Image } from "@/types";
 
 async function uploadImage(formData: FormData): Promise<Image> {
-    return apiRequest({
+    return adminRequest({
         url: `${process.env.API_URL}/images/upload`,
         method: 'POST',
         body: formData,

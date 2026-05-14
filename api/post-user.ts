@@ -1,6 +1,6 @@
 "use server";
 
-import apiRequest from "@/libs/apiRequest";
+import adminRequest from "@/libs/adminRequest";
 
 interface CreateUserInput {
     name: string;
@@ -9,7 +9,7 @@ interface CreateUserInput {
 }
 
 async function postUser(user: CreateUserInput): Promise<unknown> {
-    return apiRequest({
+    return adminRequest({
         url: `${process.env.API_URL}/admin/users`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

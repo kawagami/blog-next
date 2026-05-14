@@ -1,11 +1,11 @@
 "use server";
 
 import { revalidatePath } from 'next/cache';
-import apiRequest from "@/libs/apiRequest";
+import adminRequest from "@/libs/adminRequest";
 import type { Role } from "@/types";
 
 export async function createRole(formData: FormData): Promise<void> {
-    await apiRequest<Role>({
+    await adminRequest<Role>({
         url: `${process.env.API_URL}/admin/roles`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -18,7 +18,7 @@ export async function createRole(formData: FormData): Promise<void> {
 }
 
 export async function deleteRole(id: number): Promise<void> {
-    await apiRequest<void>({
+    await adminRequest<void>({
         url: `${process.env.API_URL}/admin/roles/${id}`,
         method: 'DELETE',
     });
@@ -26,7 +26,7 @@ export async function deleteRole(id: number): Promise<void> {
 }
 
 export async function setRolePermissions(roleId: number, permissionIds: number[]): Promise<void> {
-    await apiRequest<void>({
+    await adminRequest<void>({
         url: `${process.env.API_URL}/admin/roles/${roleId}/permissions`,
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -36,7 +36,7 @@ export async function setRolePermissions(roleId: number, permissionIds: number[]
 }
 
 export async function setUserRoles(userId: string, roleIds: number[]): Promise<void> {
-    await apiRequest<void>({
+    await adminRequest<void>({
         url: `${process.env.API_URL}/admin/users/${userId}/roles`,
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

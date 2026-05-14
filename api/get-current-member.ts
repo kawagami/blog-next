@@ -1,8 +1,8 @@
 "use server";
 
-import apiRequest from "@/libs/apiRequest";
+import memberRequest from "@/libs/memberRequest";
 import type { MemberDetail } from "@/types";
 
 export default async function getCurrentMember(): Promise<MemberDetail> {
-    return apiRequest<MemberDetail>({ url: `${process.env.API_URL}/members/me` });
+    return memberRequest<MemberDetail>({ url: `${process.env.API_URL}/members/me` });
 }

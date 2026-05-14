@@ -3,14 +3,14 @@
 import { redirect } from 'next/navigation';
 import { cookies, headers as nextHeaders } from "next/headers";
 
-interface ApiRequestOptions {
+interface AdminRequestOptions {
     url: string;
     method?: string;
     headers?: Record<string, string>;
     body?: BodyInit | null;
 }
 
-async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body = null }: ApiRequestOptions): Promise<T> {
+async function adminRequest<T = unknown>({ url, method = 'GET', headers = {}, body = null }: AdminRequestOptions): Promise<T> {
     const cookieStore = await cookies();
     const token = cookieStore.get("session")?.value;
 
@@ -55,4 +55,4 @@ async function apiRequest<T = unknown>({ url, method = 'GET', headers = {}, body
     return data as T;
 }
 
-export default apiRequest;
+export default adminRequest;
