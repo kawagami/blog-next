@@ -14,7 +14,7 @@ import {
     TrendingUp,
     LogOut,
 } from "lucide-react";
-import { logout } from "@/actions/auth";
+import { clearSession } from "@/app/admin/login/actions";
 import { restartTokenRefresh, stopTokenRefresh } from "@/libs/token-refresh";
 
 const groups = [
@@ -122,7 +122,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
                     onClick={() => {
                         stopTokenRefresh();
                         localStorage.removeItem('token');
-                        logout();
+                        clearSession();
                     }}
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                 >
