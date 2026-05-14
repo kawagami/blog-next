@@ -18,7 +18,8 @@ export default function DeleteButton({ uuid }: { uuid: string }) {
         try {
             await deleteBlog(uuid);
             router.refresh();
-        } catch {
+        } catch (err) {
+            if ((err as { digest?: string }).digest?.startsWith('NEXT_REDIRECT')) throw err;
             alert("刪除失敗，請稍後再試。");
         } finally {
             setIsDeleting(false);

@@ -42,7 +42,8 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
             const tocs = extractTocs(markdown);
             await putBlog(id, { markdown, tags, tocs });
             router.push('/admin/blogs');
-        } catch {
+        } catch (err) {
+            if ((err as { digest?: string }).digest?.startsWith('NEXT_REDIRECT')) throw err;
             setSaveError('存檔失敗，請再試一次');
             setIsSaving(false);
         }
@@ -68,6 +69,10 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         formData.append('file', file);
         try {
             const res = await fetch('/api/images', { method: 'POST', body: formData });
+            if (res.status === 401) {
+                window.location.href = `/admin/login?redirect=${encodeURIComponent(window.location.pathname)}`;
+                return;
+            }
             if (!res.ok) throw new Error(`${res.status}`);
             const data = await res.json();
             console.log('[upload] success:', data);
