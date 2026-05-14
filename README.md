@@ -1,6 +1,6 @@
 # blog-next
 
-個人部落格與工具整合平台，Next.js 15 + React 19，後端對接 Rust Axum API (`axum.kawa.homes`)。
+個人部落格與工具整合平台，Next.js 16 + React 19，後端對接 Rust Axum API (`axum.kawa.homes`)。
 
 ---
 
@@ -9,27 +9,29 @@
 | 路由 | 說明 |
 |------|------|
 | `/` | 首頁，顯示網站資訊 |
-| `/blogs` / `/blogs/[id]` | 文章列表與內容（Markdown 渲染） |
+| `/blogs/[id]` | 文章內容（Markdown 渲染） |
 | `/hackmd-notes` | HackMD 筆記整合，支援標籤篩選 |
-| `/images` | Firebase 圖片管理 |
-| `/countdown` | 倒數計時工具 |
-| `/convert-text` | 文字轉換工具 |
-| `/sango-calculate` | 三國志計算工具 |
-| `/roster` | 排班功能 |
-| `/sites` | 外部站點導覽 |
+| `/tools/alarm` | 鬧鐘工具 |
+| `/tools/convert-text` | 文字轉換工具 |
+| `/tools/countdown` | 倒數計時工具 |
+| `/tools/new-password` | 密碼產生工具 |
+| `/tools/roster` | 排班功能 |
 | `/ws` | WebSocket 即時訊息 |
+| `/dashboard` | 個人儀表板 |
+| `/dashboard/notifications` | 通知列表 |
+| `/profile` | 個人資料 |
 | `/about` | 關於頁面 |
-| `/login` | JWT 登入 |
-| `/admin/*` | 後台管理（需登入）：文章、圖片、股票、使用者 |
+| `/login` | OAuth 登入（Google） |
+| `/admin/*` | 後台管理（需登入）：文章、圖片、股票、會員、角色、使用者、WS、稽核日誌 |
 
 ---
 
 ## 技術棧
 
-- **框架**：Next.js 15 (App Router, Turbopack)
+- **框架**：Next.js 16 (App Router, Turbopack)
 - **UI**：React 19 + Tailwind CSS + lucide-react
-- **Markdown**：cherry-markdown、react-markdown
-- **圖片**：plaiceholder + sharp（模糊佔位圖）、Firebase Storage
+- **Markdown**：react-markdown
+- **圖片**：plaiceholder + sharp（模糊佔位圖），本地儲存（`/uploads/*`）
 - **認證**：JWT (`jsonwebtoken`)，middleware 保護 `/admin/*`
 - **後端 API**：`https://axum.kawa.homes`（Rust Axum）
 - **WebSocket**：`wss://axum.kawa.homes`

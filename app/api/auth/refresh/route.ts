@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
     const auth = req.headers.get('Authorization');
     if (!auth) return NextResponse.json({ error: 'Missing token' }, { status: 401 });
 
-    const response = await fetch(`${process.env.API_URL}/auth/refresh`, {
+    const response = await fetch(`${process.env.API_URL}/jwt/refresh`, {
         method: 'POST',
         headers: { Authorization: auth },
     });
