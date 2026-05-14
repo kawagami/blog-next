@@ -4,7 +4,7 @@ export async function GET(req: NextRequest) {
     const auth = req.headers.get('Authorization');
     if (!auth) return NextResponse.json(null, { status: 401 });
 
-    const response = await fetch(`${process.env.API_URL}/jwt/me`, {
+    const response = await fetch(`${process.env.API_URL}/admin/auth/me`, {
         headers: { Authorization: auth },
         cache: 'no-store',
     });

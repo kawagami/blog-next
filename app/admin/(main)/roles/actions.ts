@@ -6,7 +6,7 @@ import type { Role } from "@/types";
 
 export async function createRole(formData: FormData): Promise<void> {
     await apiRequest<Role>({
-        url: `${process.env.API_URL}/roles`,
+        url: `${process.env.API_URL}/admin/roles`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -19,7 +19,7 @@ export async function createRole(formData: FormData): Promise<void> {
 
 export async function deleteRole(id: number): Promise<void> {
     await apiRequest<void>({
-        url: `${process.env.API_URL}/roles/${id}`,
+        url: `${process.env.API_URL}/admin/roles/${id}`,
         method: 'DELETE',
     });
     revalidatePath('/admin/roles');
@@ -27,7 +27,7 @@ export async function deleteRole(id: number): Promise<void> {
 
 export async function setRolePermissions(roleId: number, permissionIds: number[]): Promise<void> {
     await apiRequest<void>({
-        url: `${process.env.API_URL}/roles/${roleId}/permissions`,
+        url: `${process.env.API_URL}/admin/roles/${roleId}/permissions`,
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ permission_ids: permissionIds }),
@@ -37,7 +37,7 @@ export async function setRolePermissions(roleId: number, permissionIds: number[]
 
 export async function setUserRoles(userId: string, roleIds: number[]): Promise<void> {
     await apiRequest<void>({
-        url: `${process.env.API_URL}/users/${userId}/roles`,
+        url: `${process.env.API_URL}/admin/users/${userId}/roles`,
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role_ids: roleIds }),

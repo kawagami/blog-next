@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
         if (val) params.set(key, val);
     }
 
-    const response = await fetch(`${process.env.API_URL}/audit_logs?${params}`, {
+    const response = await fetch(`${process.env.API_URL}/admin/audit_logs?${params}`, {
         headers: { Authorization: `Bearer ${token}` },
         cache: 'no-store',
     });

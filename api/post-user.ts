@@ -10,7 +10,7 @@ interface CreateUserInput {
 
 async function postUser(user: CreateUserInput): Promise<unknown> {
     return apiRequest({
-        url: `${process.env.API_URL}/users`,
+        url: `${process.env.API_URL}/admin/users`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: user.name, email: user.email, password: user.password }),

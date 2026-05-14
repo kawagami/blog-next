@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 export async function POST(req: NextRequest) {
     const body = await req.json();
 
-    const response = await fetch(`${process.env.API_URL}/jwt`, {
+    const response = await fetch(`${process.env.API_URL}/admin/auth`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

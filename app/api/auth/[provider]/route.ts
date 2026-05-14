@@ -5,7 +5,7 @@ export async function GET(
     { params }: { params: Promise<{ provider: string }> }
 ) {
     const { provider } = await params
-    const res = await fetch(`${process.env.API_URL}/auth/${provider}`)
+    const res = await fetch(`${process.env.API_URL}/oauth/${provider}`)
 
     if (!res.ok) {
         return NextResponse.json({ error: 'failed to get auth url' }, { status: res.status })
