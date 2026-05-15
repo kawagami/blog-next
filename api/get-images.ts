@@ -5,7 +5,7 @@ import type { Image } from "@/types";
 
 async function getImages(): Promise<Image[]> {
     return adminRequest({
-        url: `${process.env.API_URL}/images`,
+        url: `${process.env.API_URL}/admin/images`,
         method: 'GET',
     });
 }

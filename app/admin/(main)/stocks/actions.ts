@@ -12,7 +12,7 @@ export async function patchStockPendingAction(formData: FormData): Promise<void>
 
 export async function patchOneStockChangePending({ id }: { id: string | number }): Promise<StockChange> {
     const response = await adminRequest<StockChange>({
-        url: `${process.env.API_URL}/stocks/update_one_stock_change_pending`,
+        url: `${process.env.API_URL}/admin/stocks/update_one_stock_change_pending`,
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
@@ -26,7 +26,7 @@ export async function getStockChanges(
     limit = 50,
     offset = 0,
 ): Promise<StockChangePaginatedResponse> {
-    const url = `${process.env.API_URL}/stocks/get_all_stock_changes`;
+    const url = `${process.env.API_URL}/admin/stocks/get_all_stock_changes`;
     const params = new URLSearchParams();
     if (status) params.append("status", status);
     params.append("limit", String(limit));
@@ -48,7 +48,7 @@ function isValidDateFormat(dateStr: string): boolean {
 
 export async function fetchStockClosingPricePair({ stock_no, start_date, end_date }: { stock_no: string; start_date: string; end_date: string }): Promise<unknown> {
     if (!isValidDateFormat(start_date) || !isValidDateFormat(end_date)) throw new Error("日期格式錯誤，必須是 YYYYMMDD 格式");
-    const url = new URL(`${process.env.API_URL}/stocks/fetch_stock_closing_price_pair_stats`);
+    const url = new URL(`${process.env.API_URL}/admin/stocks/fetch_stock_closing_price_pair_stats`);
     url.searchParams.append("stock_no", stock_no);
     url.searchParams.append("start_date", start_date);
     url.searchParams.append("end_date", end_date);
@@ -56,7 +56,7 @@ export async function fetchStockClosingPricePair({ stock_no, start_date, end_dat
 }
 
 export async function getStockDayAll({ trade_date = "", stock_code = "", limit = 50, offset = 0 } = {}): Promise<StockDayAll[]> {
-    const url = new URL(`${process.env.API_URL}/stocks/get_stock_day_all`);
+    const url = new URL(`${process.env.API_URL}/admin/stocks/get_stock_day_all`);
     if (trade_date) url.searchParams.append("trade_date", trade_date);
     if (stock_code) url.searchParams.append("stock_code", stock_code);
     url.searchParams.append("limit", String(limit));
@@ -65,12 +65,12 @@ export async function getStockDayAll({ trade_date = "", stock_code = "", limit =
 }
 
 export async function getStockBuybackPeriods(): Promise<StockBuybackPeriod[]> {
-    return adminRequest<StockBuybackPeriod[]>({ url: `${process.env.API_URL}/stocks/get_stock_buyback_periods_v2` });
+    return adminRequest<StockBuybackPeriod[]>({ url: `${process.env.API_URL}/admin/stocks/get_stock_buyback_periods_v2` });
 }
 
 export async function getUnfinishedBuybackPriceGap(): Promise<unknown> {
     return adminRequest({
-        url: `${process.env.API_URL}/stocks/get_unfinished_buyback_price_gap`,
+        url: `${process.env.API_URL}/admin/stocks/get_unfinished_buyback_price_gap`,
         headers: { "Content-Type": "application/json" },
     });
 }

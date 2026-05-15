@@ -5,7 +5,7 @@ import type { Image } from "@/types";
 
 async function uploadImage(formData: FormData): Promise<Image> {
     return adminRequest({
-        url: `${process.env.API_URL}/images/upload`,
+        url: `${process.env.API_URL}/admin/images/upload`,
         method: 'POST',
         body: formData,
     });
