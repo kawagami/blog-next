@@ -62,7 +62,6 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     };
 
     const handleImageUpload = async (file: File | undefined) => {
-        console.log('[upload] file:', file?.name, file?.type, file?.size);
         if (!file || isUploading) return;
         setIsUploading(true);
         const formData = new FormData();
@@ -75,10 +74,8 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
             }
             if (!res.ok) throw new Error(`${res.status}`);
             const data = await res.json();
-            console.log('[upload] success:', data);
             insertAtCursor(`![image](${data.url})\n`);
         } catch (err) {
-            console.error('[upload] error:', err);
             setSaveError('圖片上傳失敗，請再試一次');
         } finally {
             setIsUploading(false);
@@ -86,14 +83,9 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     };
 
     const handlePaste = (e: React.ClipboardEvent) => {
-        console.log('[paste] files:', e.clipboardData.files.length, 'items:', e.clipboardData.items.length);
-        Array.from(e.clipboardData.items).forEach((item, i) => {
-            console.log(`[paste] item[${i}] kind=${item.kind} type=${item.type}`);
-        });
         const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'))
             ?? Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'))?.getAsFile()
             ?? undefined;
-        console.log('[paste] resolved file:', file?.name, file?.type, file?.size);
         if (!file) return;
         e.preventDefault();
         handleImageUpload(file);
