@@ -69,7 +69,7 @@ export default function AuditLogsClient() {
                     setOffset(prev => prev + newEntries.length);
                 }
             } catch { /* silent */ }
-        }, 30_000);
+        }, 600_000);
         return () => clearInterval(id);
     }, []);
 
