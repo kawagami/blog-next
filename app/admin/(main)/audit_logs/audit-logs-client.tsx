@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useRef, useTransition } from "react";
 import getAuditLogs, { AuditLogAuthError } from "@/api/get-audit-logs";
 import type { AuditLog, HttpMethod } from "@/types";
 
@@ -41,6 +41,12 @@ export default function AuditLogsClient() {
     const [error, setError] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
 
+    const logsRef = useRef<AuditLog[]>([]);
+    const appliedFiltersRef = useRef<Filters>(defaultFilters);
+
+    useEffect(() => { logsRef.current = logs; }, [logs]);
+    useEffect(() => { appliedFiltersRef.current = appliedFilters; }, [appliedFilters]);
+
     function handleRedirect(status: 401 | 403) {
         if (status === 401) {
             window.location.href = `/admin/login?redirect=${encodeURIComponent(REDIRECT)}`;
@@ -64,6 +70,21 @@ export default function AuditLogsClient() {
                 setHasMore(data.length >= LIMIT);
             } catch (e) { handleAuthError(e); }
         });
+    }, []);
+
+    useEffect(() => {
+        const id = setInterval(async () => {
+            try {
+                const fresh = await getAuditLogs({ ...appliedFiltersRef.current, limit: LIMIT, offset: 0 });
+                const existingIds = new Set(logsRef.current.map(l => l.id));
+                const newEntries = fresh.filter(l => !existingIds.has(l.id));
+                if (newEntries.length > 0) {
+                    setLogs(prev => [...newEntries, ...prev]);
+                    setOffset(prev => prev + newEntries.length);
+                }
+            } catch { /* silent */ }
+        }, 30_000);
+        return () => clearInterval(id);
     }, []);
 
     function handleSearch() {
