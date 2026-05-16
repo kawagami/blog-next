@@ -1,22 +1,11 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
-import getLogs from "@/api/get-logs";
+import getLogs, { LogAuthError } from "@/api/get-logs";
 import type { Log, LogLevel } from "@/types";
+import { LEVEL_BADGE, LEVEL_ROW_BG } from "@/libs/badge-styles";
 
 const LIMIT = 100;
-
-const LEVEL_BADGE: Record<LogLevel, string> = {
-    ERROR: "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400",
-    WARN: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400",
-    INFO: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400",
-};
-
-const ROW_BG: Record<LogLevel, string> = {
-    ERROR: "bg-red-50 dark:bg-red-900/10 hover:bg-red-100/70 dark:hover:bg-red-900/20",
-    WARN: "bg-yellow-50 dark:bg-yellow-900/10 hover:bg-yellow-100/70 dark:hover:bg-yellow-900/20",
-    INFO: "hover:bg-gray-50 dark:hover:bg-gray-800/50",
-};
 
 type LevelFilter = '' | LogLevel;
 
@@ -28,20 +17,24 @@ export default function LogsClient() {
     const [error, setError] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
 
+    function handleAuthError(e: unknown) {
+        if (e instanceof LogAuthError) {
+            if (e.status === 401) {
+                window.location.href = `/admin/login?redirect=${encodeURIComponent('/admin/logs')}`;
+            } else {
+                setError("無 log:read 權限");
+            }
+        }
+    }
+
     useEffect(() => {
         startTransition(async () => {
-            const result = await getLogs({ limit: LIMIT, offset: 0 });
-            if (result.ok === false && result.status === 401) {
-                window.location.href = `/admin/login?redirect=${encodeURIComponent('/admin/logs')}`;
-                return;
-            }
-            if (!result.ok) {
-                setError("無 log:read 權限");
-                return;
-            }
-            setLogs(result.data);
-            setOffset(result.data.length);
-            setHasMore(result.data.length >= LIMIT);
+            try {
+                const data = await getLogs({ limit: LIMIT, offset: 0 });
+                setLogs(data);
+                setOffset(data.length);
+                setHasMore(data.length >= LIMIT);
+            } catch (e) { handleAuthError(e); }
         });
     }, []);
 
@@ -49,19 +42,13 @@ export default function LogsClient() {
         if (newLevel === level || isPending) return;
         setError(null);
         startTransition(async () => {
-            const result = await getLogs({ level: newLevel || undefined, limit: LIMIT, offset: 0 });
-            if (result.ok === false && result.status === 401) {
-                window.location.href = `/admin/login?redirect=${encodeURIComponent('/admin/logs')}`;
-                return;
-            }
-            if (!result.ok) {
-                setError("無 log:read 權限");
-                return;
-            }
-            setLevel(newLevel);
-            setLogs(result.data);
-            setOffset(result.data.length);
-            setHasMore(result.data.length >= LIMIT);
+            try {
+                const data = await getLogs({ level: newLevel || undefined, limit: LIMIT, offset: 0 });
+                setLevel(newLevel);
+                setLogs(data);
+                setOffset(data.length);
+                setHasMore(data.length >= LIMIT);
+            } catch (e) { handleAuthError(e); }
         });
     }
 
@@ -69,18 +56,12 @@ export default function LogsClient() {
         if (isPending) return;
         setError(null);
         startTransition(async () => {
-            const result = await getLogs({ level: level || undefined, limit: LIMIT, offset });
-            if (result.ok === false && result.status === 401) {
-                window.location.href = `/admin/login?redirect=${encodeURIComponent('/admin/logs')}`;
-                return;
-            }
-            if (!result.ok) {
-                setError("無 log:read 權限");
-                return;
-            }
-            setLogs(prev => [...prev, ...result.data]);
-            setOffset(prev => prev + result.data.length);
-            setHasMore(result.data.length >= LIMIT);
+            try {
+                const data = await getLogs({ level: level || undefined, limit: LIMIT, offset });
+                setLogs(prev => [...prev, ...data]);
+                setOffset(prev => prev + data.length);
+                setHasMore(data.length >= LIMIT);
+            } catch (e) { handleAuthError(e); }
         });
     }
 
@@ -138,7 +119,7 @@ export default function LogsClient() {
                                 logs.map((log) => (
                                     <tr
                                         key={log.id}
-                                        className={`border-b border-gray-100 dark:border-gray-800 ${ROW_BG[log.level]}`}
+                                        className={`border-b border-gray-100 dark:border-gray-800 ${LEVEL_ROW_BG[log.level]}`}
                                     >
                                         <td className="px-4 py-2 text-gray-500 dark:text-gray-500 font-mono">{log.id}</td>
                                         <td className="px-4 py-2">

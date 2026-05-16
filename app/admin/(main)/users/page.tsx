@@ -4,6 +4,7 @@ import getRoles from "@/api/get-roles";
 import DeleteButton from "@/components/users/delete-button";
 import UserRolesPanel from "@/components/users/user-roles-panel";
 import type { Metadata } from "next";
+import AdminTableContainer from "@/components/admin/admin-table-container";
 
 export const metadata: Metadata = {
     title: "Users page",
@@ -21,9 +22,8 @@ export default async function Users() {
     );
 
     return (
-        <div className="w-full h-[calc(100svh-180px)] overflow-auto p-6">
-            <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 shadow-lg rounded-lg overflow-hidden">
-                <table className="w-full border-collapse border border-gray-200 dark:border-gray-700">
+        <AdminTableContainer>
+            <table className="w-full border-collapse border border-gray-200 dark:border-gray-700">
                     <thead>
                         <tr className="bg-gray-100 dark:bg-gray-800">
                             <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">ID</th>
@@ -53,8 +53,7 @@ export default async function Users() {
                             </tr>
                         ))}
                     </tbody>
-                </table>
-            </div>
-        </div>
+            </table>
+        </AdminTableContainer>
     );
 }

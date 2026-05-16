@@ -3,24 +3,10 @@
 import { useState, useEffect, useRef, useTransition } from "react";
 import getAuditLogs, { AuditLogAuthError } from "@/api/get-audit-logs";
 import type { AuditLog, HttpMethod } from "@/types";
+import { METHOD_BADGE, httpStatusBadgeClass } from "@/libs/badge-styles";
 
 const LIMIT = 100;
 const REDIRECT = '/admin/audit_logs';
-
-const METHOD_BADGE: Record<string, string> = {
-    GET: "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400",
-    POST: "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400",
-    PUT: "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400",
-    PATCH: "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400",
-    DELETE: "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400",
-};
-
-function statusBadgeClass(code: number): string {
-    if (code >= 500) return "bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400";
-    if (code >= 400) return "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400";
-    if (code >= 300) return "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400";
-    return "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400";
-}
 
 interface Filters {
     user_email: string;
@@ -257,7 +243,7 @@ export default function AuditLogsClient() {
                                                 {log.query ?? '—'}
                                             </td>
                                             <td className="px-4 py-2">
-                                                <span className={`px-2 py-0.5 rounded text-xs font-semibold ${statusBadgeClass(log.status_code)}`}>
+                                                <span className={`px-2 py-0.5 rounded text-xs font-semibold ${httpStatusBadgeClass(log.status_code)}`}>
                                                     {log.status_code}
                                                 </span>
                                             </td>

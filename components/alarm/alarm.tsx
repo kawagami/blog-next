@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
 import AlarmDisplay from './alarm-display';
 import AlarmControls from './alarm-controls';
 import AlarmSettings from './alarm-settings';
 import useAlarm from '@/hooks/useAlarm';
+import { useAudioBeeper } from '@/hooks/useAudioBeeper';
 
 export default function Alarm() {
     const {
@@ -20,33 +20,7 @@ export default function Alarm() {
         stopBeeping,
     } = useAlarm();
 
-    const audioRef = useRef<HTMLAudioElement>(null);
-
-    useEffect(() => {
-        if (isBeeping && audioRef.current) {
-            audioRef.current.play().catch(err => console.error("播放音效失敗:", err));
-        } else if (!isBeeping && audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-        }
-
-        let beepTimer: ReturnType<typeof setTimeout> | undefined;
-        if (isBeeping) {
-            beepTimer = setTimeout(() => stopBeeping(), 2 * 60 * 1000);
-        }
-
-        return () => clearTimeout(beepTimer);
-    }, [isBeeping, stopBeeping]);
-
-    useEffect(() => {
-        const handleVisibility = () => {
-            if (document.visibilityState === 'visible' && isBeeping) {
-                resetAlarm();
-            }
-        };
-        document.addEventListener('visibilitychange', handleVisibility);
-        return () => document.removeEventListener('visibilitychange', handleVisibility);
-    }, [isBeeping, resetAlarm]);
+    const audioRef = useAudioBeeper(isBeeping, stopBeeping, resetAlarm);
 
     return (
         <div className="h-[calc(100svh-120px)] overflow-auto flex flex-col items-center justify-center p-4">
