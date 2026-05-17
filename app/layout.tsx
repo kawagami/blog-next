@@ -1,5 +1,6 @@
 import "./globals.css";
 import { WsProvider } from "@/libs/ws-context";
+import BubbleBackground from "@/components/BubbleBackground";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
@@ -23,6 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </head>
             <body className="bg-gradient-to-br from-blue-100 via-green-100 to-red-100 dark:from-blue-900 dark:via-green-900 dark:to-red-900 dark:text-white">
                 <WsProvider jwt={jwt}>
+                    <BubbleBackground />
                     {children}
                 </WsProvider>
             </body>
