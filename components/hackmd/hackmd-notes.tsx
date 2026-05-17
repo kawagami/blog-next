@@ -11,7 +11,7 @@ export default function HackMDNotesComponent({ notes, openArray }: Props) {
 
     return (
         <>
-            <div className="text-lg font-semibold mb-4">總共 {data.length} 個筆記</div>
+            <div className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">總共 {data.length} 個筆記</div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-4">
                 {data.map(note => (
                     <div key={note.id} className="border border-gray-300 dark:border-gray-700 rounded-lg shadow-lg hover:shadow-xl transition-shadow bg-white dark:bg-gray-800">

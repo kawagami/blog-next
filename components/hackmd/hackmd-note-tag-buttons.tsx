@@ -38,7 +38,7 @@ export default function HackmdNoteTagButtons({ tags, openArray, setOpenArray }: 
                         {tags.map(tag => {
                             const tailwindStyle = openArray.includes(tag.name)
                                 ? "invert bg-blue-500 hover:bg-blue-400"
-                                : "hover:bg-blue-100 bg-gray-300";
+                                : "hover:bg-blue-100 dark:hover:bg-blue-900 bg-gray-300 dark:bg-gray-600";
                             return (
                                 <button
                                     type="button"
