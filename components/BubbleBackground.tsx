@@ -23,7 +23,7 @@ export default function BubbleBackground() {
         <>
             <style>{`
                 @keyframes bubble-fall {
-                    0%   { transform: translateY(-60px) scale(1); opacity: 0; }
+                    0%   { transform: translateY(-150px) scale(1); opacity: 0; }
                     10%  { opacity: 1; }
                     90%  { opacity: 0.6; }
                     100% { transform: translateY(100vh) scale(0.8); opacity: 0; }
@@ -33,6 +33,7 @@ export default function BubbleBackground() {
                     border-radius: 50%;
                     will-change: transform, opacity;
                     animation: bubble-fall linear infinite;
+                    animation-fill-mode: both;
                     pointer-events: none;
                     border: 2px solid rgba(147, 197, 253, 0.6);
                     background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), rgba(147, 197, 253, 0.08));
