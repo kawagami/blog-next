@@ -143,7 +143,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 px-4 flex-1 min-h-0">
-                    <div className="relative h-full">
+                    <div className="relative h-full min-h-[300px]">
                         <textarea
                             ref={textareaRef}
                             value={markdown}
@@ -153,7 +153,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                             placeholder="輸入 Markdown 內容..."
                         />
                     </div>
-                    <div className="p-4 h-full overflow-auto border border-gray-300 bg-white dark:bg-gray-800 dark:text-white rounded prose max-w-none dark:prose-invert">
+                    <div className="p-4 h-full min-h-[300px] overflow-auto border border-gray-300 bg-white dark:bg-gray-800 dark:text-white rounded prose max-w-none dark:prose-invert">
                         <ReactMarkdown remarkPlugins={[remarkGfm]} urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}>{markdown}</ReactMarkdown>
                     </div>
                 </div>

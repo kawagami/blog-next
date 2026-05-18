@@ -3,7 +3,7 @@ import IndexInfoStore from "@/data/index-info-store";
 
 export default function About() {
     return (
-        <div className="grid grid-cols-2 gap-4 text-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center w-full px-4">
             {IndexInfoStore.map((info, index) => (
                 <IndexInfo key={`index_info_${index}`} href={info.href} title={info.title} contents={info.contents} />
             ))}
