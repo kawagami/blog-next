@@ -60,6 +60,7 @@ export default function AlarmSettings({ hour, setHour, minute, setMinute, disabl
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center">
                 鬧鐘設定：{String(hour).padStart(2, '0')}:{String(minute).padStart(2, '0')}
             </p>
+            <button type="submit" className="hidden" />
         </form>
     );
 }
