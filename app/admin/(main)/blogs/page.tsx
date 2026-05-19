@@ -4,7 +4,7 @@ import EditButton from '@/components/blogs/edit-button';
 import DeleteButton from '@/components/blogs/delete-button';
 
 export default async function BlogsPage() {
-    const blogs = await getBlogs();
+    const { data: blogs } = await getBlogs({ per_page: 1000 });
 
     return (
         <div className="w-full p-6 bg-gray-100 dark:bg-gray-900">
