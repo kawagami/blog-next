@@ -1,12 +1,31 @@
 import getBlogs from '@/api/get-blogs';
+import { getBlogTags } from '@/api/get-blog-tags';
 import BlogListCard from '@/components/blogs/blog-list-card';
+import TagFilterBar from '@/components/blogs/tag-filter-bar';
+import Pagination from '@/components/blogs/pagination';
+import { Suspense } from 'react';
 
-export default async function BlogList() {
-    const blogs = await getBlogs();
+interface Props {
+    selectedTag?: string | null
+    page?: number
+}
+
+const PER_PAGE = 10;
+
+export default async function BlogList({ selectedTag = null, page = 1 }: Props) {
+    const [{ data: blogs, total }, tags] = await Promise.all([
+        getBlogs({ page, per_page: PER_PAGE, tag: selectedTag }),
+        getBlogTags(),
+    ]);
+
+    const totalPages = Math.ceil(total / PER_PAGE);
 
     return (
         <div className="w-full h-[calc(100svh-120px)] overflow-auto">
             <div className="max-w-2xl mx-auto">
+                <Suspense>
+                    <TagFilterBar tags={tags} selectedTag={selectedTag} />
+                </Suspense>
                 {blogs.map((blog) => (
                     <BlogListCard
                         key={blog.id}
@@ -17,6 +36,9 @@ export default async function BlogList() {
                         updated_at={blog.updated_at ?? ''}
                     />
                 ))}
+                <Suspense>
+                    <Pagination page={page} totalPages={totalPages} />
+                </Suspense>
             </div>
         </div>
     );

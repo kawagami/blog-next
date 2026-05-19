@@ -14,6 +14,13 @@ export interface Blog {
   updated_at?: string;
 }
 
+export interface BlogPaginatedResponse {
+  total: number;
+  page: number;
+  per_page: number;
+  data: Blog[];
+}
+
 export interface BlogInput {
   markdown: string;
   tags: string[];
