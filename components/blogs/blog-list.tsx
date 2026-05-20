@@ -22,23 +22,27 @@ export default async function BlogList({ selectedTag = null, page = 1 }: Props) 
 
     return (
         <div className="w-full h-[calc(100svh-120px)] overflow-auto">
-            <div className="max-w-2xl mx-auto">
-                <Suspense>
-                    <TagFilterBar tags={tags} selectedTag={selectedTag} />
-                </Suspense>
-                {blogs.map((blog) => (
-                    <BlogListCard
-                        key={blog.id}
-                        id={blog.id}
-                        toc={blog.tocs[0] || '未命名 blog'}
-                        tags={blog.tags || []}
-                        created_at={blog.created_at ?? ''}
-                        updated_at={blog.updated_at ?? ''}
-                    />
-                ))}
-                <Suspense>
-                    <Pagination page={page} totalPages={totalPages} />
-                </Suspense>
+            <div className="max-w-4xl mx-auto flex gap-6 px-4">
+                <div className="flex-1 min-w-0">
+                    {blogs.map((blog) => (
+                        <BlogListCard
+                            key={blog.id}
+                            id={blog.id}
+                            toc={blog.tocs[0] || '未命名 blog'}
+                            tags={blog.tags || []}
+                            created_at={blog.created_at ?? ''}
+                            updated_at={blog.updated_at ?? ''}
+                        />
+                    ))}
+                    <Suspense>
+                        <Pagination page={page} totalPages={totalPages} />
+                    </Suspense>
+                </div>
+                <aside className="w-40 shrink-0 pt-2 hidden sm:block">
+                    <Suspense>
+                        <TagFilterBar tags={tags} selectedTag={selectedTag} />
+                    </Suspense>
+                </aside>
             </div>
         </div>
     );

@@ -23,12 +23,12 @@ export default function TagFilterBar({ tags, selectedTag }: Props) {
     }
 
     return (
-        <div className="flex flex-wrap gap-2 px-4 py-3">
+        <div className="sticky top-2 flex flex-col gap-1.5">
             {tags.map((tag) => (
                 <button
                     key={tag}
                     onClick={() => selectTag(tag)}
-                    className={`text-xs font-semibold px-2.5 py-1 rounded transition-colors ${
+                    className={`text-xs font-semibold px-2.5 py-1 rounded transition-colors text-left ${
                         selectedTag === tag
                             ? 'bg-blue-600 text-white dark:bg-blue-500'
                             : 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800'
