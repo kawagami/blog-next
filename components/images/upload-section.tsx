@@ -5,34 +5,38 @@ import { Loader2 } from "lucide-react";
 
 interface Props {
     fileInputRef: React.RefObject<HTMLInputElement | null>;
-    selectedImage: File | null;
+    selectedFiles: File[];
     isUploading: boolean;
     onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onRemoveSelectedImage: () => void;
     onUpload: () => void;
 }
 
-const UploadSection = ({ fileInputRef, selectedImage, isUploading, onImageChange, onRemoveSelectedImage, onUpload }: Props) => {
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+const UploadSection = ({ fileInputRef, selectedFiles, isUploading, onImageChange, onRemoveSelectedImage, onUpload }: Props) => {
+    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
     useEffect(() => {
-        if (!selectedImage) {
-            setPreviewUrl(null);
+        if (!selectedFiles.length) {
+            setPreviewUrls([]);
             return;
         }
-        const url = URL.createObjectURL(selectedImage);
-        setPreviewUrl(url);
-        return () => URL.revokeObjectURL(url);
-    }, [selectedImage]);
+        const urls = selectedFiles.map(f => URL.createObjectURL(f));
+        setPreviewUrls(urls);
+        return () => urls.forEach(u => URL.revokeObjectURL(u));
+    }, [selectedFiles]);
 
     return (
         <div className="flex flex-col justify-center items-center pt-4">
-            <input ref={fileInputRef} accept="image/*" type="file" onChange={onImageChange} className="mt-4" />
-            {previewUrl && (
-                <div className="mt-4 flex flex-col items-center">
-                    <img src={previewUrl} className="max-w-full max-h-80 rounded-lg" alt="Selected Thumb" />
-                    <button onClick={onRemoveSelectedImage} className="cursor-pointer py-2 px-4 bg-red-500 text-white mt-4 rounded">
-                        Remove This Image
+            <input ref={fileInputRef} accept="image/*" type="file" multiple onChange={onImageChange} className="mt-4" />
+            {previewUrls.length > 0 && (
+                <div className="mt-4 flex flex-col items-center gap-4">
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {previewUrls.map((url, i) => (
+                            <img key={url} src={url} className="max-w-[200px] max-h-48 rounded-lg" alt={`Selected ${i + 1}`} />
+                        ))}
+                    </div>
+                    <button onClick={onRemoveSelectedImage} className="cursor-pointer py-2 px-4 bg-red-500 text-white rounded">
+                        Remove Selected ({selectedFiles.length})
                     </button>
                 </div>
             )}

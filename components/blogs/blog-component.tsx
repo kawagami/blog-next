@@ -6,6 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Loader2 } from 'lucide-react';
 import putBlog from '@/api/put-blog';
+import uploadImages from '@/api/upload-images';
 import type { Blog, Toc } from '@/types';
 
 function extractTocs(markdown: string): Toc[] {
@@ -82,6 +83,21 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }
     };
 
+    const handleMultipleImageUpload = async (files: FileList | null) => {
+        if (!files?.length || isUploading) return;
+        setIsUploading(true);
+        const formData = new FormData();
+        Array.from(files).forEach(f => formData.append('file', f));
+        try {
+            const data = await uploadImages(formData);
+            insertAtCursor(data.map(d => `![image](${d.url})`).join('\n') + '\n');
+        } catch (err) {
+            setSaveError('圖片上傳失敗，請再試一次');
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
     const handlePaste = (e: React.ClipboardEvent) => {
         const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'))
             ?? Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'))?.getAsFile()
@@ -137,8 +153,9 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         ref={fileInputRef}
                         type="file"
                         accept="image/*"
+                        multiple
                         className="hidden"
-                        onChange={(e) => handleImageUpload(e.target.files?.[0])}
+                        onChange={(e) => handleMultipleImageUpload(e.target.files)}
                     />
                 </div>
 

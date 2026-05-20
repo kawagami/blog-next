@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import uploadImage from '@/api/upload-image';
+import uploadImages from '@/api/upload-images';
 import deleteImage from '@/api/delete-image';
 
 export interface ManagedImage {
@@ -11,7 +11,7 @@ export interface ManagedImage {
 export const useImageManager = (initialImages: ManagedImage[]) => {
     const [images, setImages] = useState<ManagedImage[]>(initialImages);
     const [deletingImage, setDeletingImage] = useState<string | null>(null);
-    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [isUploading, setIsUploading] = useState(false);
     const [copiedImage, setCopiedImage] = useState<string | null>(null);
 
@@ -19,27 +19,26 @@ export const useImageManager = (initialImages: ManagedImage[]) => {
 
     const imageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
-            setSelectedImage(e.target.files[0]);
+            setSelectedFiles(Array.from(e.target.files));
         }
     };
 
     const removeSelectedImage = () => {
-        setSelectedImage(null);
+        setSelectedFiles([]);
         if (fileInputRef.current) fileInputRef.current.value = '';
     };
 
     const handleUpload = async () => {
-        if (!selectedImage) return;
+        if (!selectedFiles.length) return;
         setIsUploading(true);
         try {
             const formData = new FormData();
-            formData.append('file', selectedImage);
+            selectedFiles.forEach(f => formData.append('file', f));
 
-            const response = await uploadImage(formData);
-            if (response?.url) {
-                setImages((prev) => [...prev, { name: response.id, url: response.url, status: response.status }]);
-                removeSelectedImage();
-            }
+            const responses = await uploadImages(formData);
+            const newImages = responses.map(r => ({ name: r.id, url: r.url, status: r.status }));
+            setImages((prev) => [...prev, ...newImages]);
+            removeSelectedImage();
         } catch (err) {
             console.error('Upload error:', err);
         } finally {
@@ -72,7 +71,7 @@ export const useImageManager = (initialImages: ManagedImage[]) => {
     return {
         images,
         deletingImage,
-        selectedImage,
+        selectedFiles,
         isUploading,
         copiedImage,
         fileInputRef,

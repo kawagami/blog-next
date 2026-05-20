@@ -8,7 +8,7 @@ import ImageGrid from '@/components/images/image-grid';
 export default function ImageManager({ initialImages }: { initialImages: ManagedImage[] }) {
     const pathname = usePathname();
     const {
-        images, deletingImage, selectedImage, isUploading, copiedImage,
+        images, deletingImage, selectedFiles, isUploading, copiedImage,
         fileInputRef, imageChange, removeSelectedImage, handleUpload, handleDelete, handleCopy,
     } = useImageManager(initialImages);
 
@@ -17,7 +17,7 @@ export default function ImageManager({ initialImages }: { initialImages: Managed
             {pathname === '/admin/images' && (
                 <UploadSection
                     fileInputRef={fileInputRef}
-                    selectedImage={selectedImage}
+                    selectedFiles={selectedFiles}
                     isUploading={isUploading}
                     onImageChange={imageChange}
                     onRemoveSelectedImage={removeSelectedImage}
