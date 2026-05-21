@@ -62,32 +62,13 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }, 0);
     };
 
-    const handleImageUpload = async (file: File | undefined) => {
-        if (!file || isUploading) return;
+    const handleImageUpload = async (files: File | FileList | null) => {
+        if (!files || isUploading) return;
+        const fileArray = files instanceof File ? [files] : Array.from(files);
+        if (!fileArray.length) return;
         setIsUploading(true);
         const formData = new FormData();
-        formData.append('file', file);
-        try {
-            const res = await fetch('/api/images', { method: 'POST', body: formData });
-            if (res.status === 401) {
-                window.location.href = `/admin/login?redirect=${encodeURIComponent(window.location.pathname)}`;
-                return;
-            }
-            if (!res.ok) throw new Error(`${res.status}`);
-            const data = await res.json();
-            insertAtCursor(`![image](${data.url})\n`);
-        } catch (err) {
-            setSaveError('圖片上傳失敗，請再試一次');
-        } finally {
-            setIsUploading(false);
-        }
-    };
-
-    const handleMultipleImageUpload = async (files: FileList | null) => {
-        if (!files?.length || isUploading) return;
-        setIsUploading(true);
-        const formData = new FormData();
-        Array.from(files).forEach(f => formData.append('file', f));
+        fileArray.forEach(f => formData.append('file', f));
         try {
             const data = await uploadImages(formData);
             insertAtCursor(data.map(d => `![image](${d.url})`).join('\n') + '\n');
@@ -155,7 +136,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         accept="image/*"
                         multiple
                         className="hidden"
-                        onChange={(e) => handleMultipleImageUpload(e.target.files)}
+                        onChange={(e) => handleImageUpload(e.target.files)}
                     />
                 </div>
 
