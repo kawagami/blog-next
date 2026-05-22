@@ -79,6 +79,37 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key !== 'Enter') return;
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+        const { selectionStart, selectionEnd, value } = textarea;
+        const lineStart = value.lastIndexOf('\n', selectionStart - 1) + 1;
+        const currentLine = value.slice(lineStart, selectionStart);
+        const match = currentLine.match(/^(\s*[-*]\s)/);
+        if (!match) return;
+        e.preventDefault();
+        const prefix = match[1];
+        const lineContent = currentLine.slice(prefix.length);
+        if (!lineContent) {
+            // empty list item → exit list
+            const newValue = value.slice(0, lineStart) + '\n' + value.slice(selectionEnd);
+            setMarkdown(newValue);
+            setTimeout(() => {
+                textarea.selectionStart = textarea.selectionEnd = lineStart + 1;
+                textarea.focus();
+            }, 0);
+            return;
+        }
+        const insertion = '\n' + prefix;
+        const newValue = value.slice(0, selectionStart) + insertion + value.slice(selectionEnd);
+        setMarkdown(newValue);
+        setTimeout(() => {
+            textarea.selectionStart = textarea.selectionEnd = selectionStart + insertion.length;
+            textarea.focus();
+        }, 0);
+    };
+
     const handlePaste = (e: React.ClipboardEvent) => {
         const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'))
             ?? Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'))?.getAsFile()
@@ -146,6 +177,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                             ref={textareaRef}
                             value={markdown}
                             onChange={(e) => setMarkdown(e.target.value)}
+                            onKeyDown={handleKeyDown}
                             onPaste={handlePaste}
                             className="w-full h-full p-4 rounded border border-gray-300 font-mono resize-none dark:bg-gray-800 dark:text-white dark:border-gray-600"
                             placeholder="輸入 Markdown 內容..."
