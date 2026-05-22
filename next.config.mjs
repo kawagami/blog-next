@@ -28,7 +28,8 @@ const nextConfig = {
     reactStrictMode: false,
     experimental: {
         serverActions: {
-            allowedOrigins: ["kawa.homes", "next-blog:3000"]
+            allowedOrigins: ["kawa.homes", "next-blog:3000"],
+            bodySizeLimit: '10mb'
         }
     }
 };
