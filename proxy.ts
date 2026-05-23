@@ -6,7 +6,7 @@ import { routing } from './i18n/routing';
 const intlMiddleware = createMiddleware(routing);
 
 export const config = {
-    matcher: ['/((?!_next|.*\\..*).*)'],
+    matcher: ['/((?!_next|api|auth|.*\\..*).*)'],
 };
 
 export default async function proxy(req: NextRequest) {
