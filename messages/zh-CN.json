@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "notes": "Notes",
+    "tools": "工具",
+    "about": "关于",
+    "login": "登录",
+    "logout": "退出",
+    "dashboard": "仪表盘",
+    "profile": "个人资料",
+    "notifications": "通知",
+    "openMenu": "打开导航菜单",
+    "closeMenu": "关闭导航菜单",
+    "openToolsMenu": "打开工具菜单",
+    "openMemberMenu": "打开会员菜单",
+    "backToHome": "返回首页",
+    "toolNewPassword": "新密码",
+    "toolConvertText": "文字转换",
+    "toolCountdown": "倒计时",
+    "toolRoster": "排班",
+    "toolAlarm": "闹钟"
+  },
+  "Login": {
+    "title": "登录",
+    "googleLogin": "Google 登录",
+    "githubLogin": "GitHub 登录",
+    "lineLogin": "LINE 登录",
+    "comingSoon": "即将推出",
+    "errorDefault": "登录失败，请重试",
+    "errorOauthFailed": "登录失败，请重试",
+    "errorOauthDenied": "已取消授权"
+  },
+  "NotFound": {
+    "title": "404 - 页面不存在",
+    "backHome": "回首页"
+  }
+}

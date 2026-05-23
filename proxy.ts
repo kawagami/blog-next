@@ -1,42 +1,50 @@
 import { jwtVerify } from "jose";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
+import createMiddleware from 'next-intl/middleware';
+import { NextRequest, NextResponse } from "next/server";
+import { routing } from './i18n/routing';
+
+const intlMiddleware = createMiddleware(routing);
 
 export const config = {
-    matcher: ['/admin/((?!login).*)', '/dashboard/:path*', '/profile/:path*', '/settings/:path*'],
+    matcher: ['/((?!_next|.*\\..*).*)'],
 };
 
-export default async function proxy(req: Request & { nextUrl: URL }) {
-    const cookieStore = await cookies();
-    const path = new URL(req.url).pathname;
+export default async function proxy(req: NextRequest) {
+    const path = req.nextUrl.pathname;
 
+    // Admin routes — auth check, skip intl
     if (path.startsWith('/admin')) {
-        const value = cookieStore.get("session")?.value;
+        if (!path.startsWith('/admin/login')) {
+            const value = req.cookies.get('session')?.value;
+            const loginUrl = new URL('/admin/login', req.url);
+            loginUrl.searchParams.set('redirect', path + req.nextUrl.search);
 
-        const nextUrl = new URL(req.url);
-        const originalUrl = nextUrl.pathname + nextUrl.search;
-        const loginUrl = new URL("/admin/login", req.url);
-        loginUrl.searchParams.set("redirect", originalUrl);
+            if (!value) return NextResponse.redirect(loginUrl);
 
-        if (!value) {
-            return NextResponse.redirect(loginUrl);
+            try {
+                const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+                await jwtVerify(value, secret);
+            } catch {
+                return NextResponse.redirect(loginUrl);
+            }
         }
-
-        try {
-            const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-            await jwtVerify(value, secret);
-        } catch {
-            return NextResponse.redirect(loginUrl);
-        }
-
         return NextResponse.next();
     }
 
-    // member routes
-    const accessToken = cookieStore.get("access_token")?.value;
-    if (!accessToken) {
-        return NextResponse.redirect(new URL('/login', req.url));
+    // Member-only routes — check access_token
+    const memberPaths = ['/dashboard', '/profile', '/settings'];
+    const isMemberRoute = routing.locales.some(locale =>
+        memberPaths.some(p => path === `/${locale}${p}` || path.startsWith(`/${locale}${p}/`))
+    );
+
+    if (isMemberRoute) {
+        const accessToken = req.cookies.get('access_token')?.value;
+        if (!accessToken) {
+            const locale = routing.locales.find(l => path.startsWith(`/${l}/`) || path === `/${l}`) ?? routing.defaultLocale;
+            return NextResponse.redirect(new URL(`/${locale}/login`, req.url));
+        }
     }
 
-    return NextResponse.next();
+    // Apply intl routing for all public routes
+    return intlMiddleware(req);
 }

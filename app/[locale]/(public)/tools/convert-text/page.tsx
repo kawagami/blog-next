@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useActionState } from "react";
-import { convertTextAction } from "@/app/(public)/tools/convert-text/actions";
+import { convertTextAction } from "@/app/[locale]/(public)/tools/convert-text/actions";
 
 interface Notification {
     type: string;

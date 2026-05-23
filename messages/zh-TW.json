@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "notes": "Notes",
+    "tools": "工具",
+    "about": "關於",
+    "login": "登入",
+    "logout": "登出",
+    "dashboard": "儀表板",
+    "profile": "個人資料",
+    "notifications": "通知",
+    "openMenu": "開啟導航菜單",
+    "closeMenu": "關閉導航菜單",
+    "openToolsMenu": "開啟工具選單",
+    "openMemberMenu": "開啟會員選單",
+    "backToHome": "返回首頁",
+    "toolNewPassword": "新密碼",
+    "toolConvertText": "文字轉換",
+    "toolCountdown": "倒數計時",
+    "toolRoster": "排班",
+    "toolAlarm": "鬧鐘"
+  },
+  "Login": {
+    "title": "登入",
+    "googleLogin": "Google 登入",
+    "githubLogin": "GitHub 登入",
+    "lineLogin": "LINE 登入",
+    "comingSoon": "即將推出",
+    "errorDefault": "登入失敗，請重試",
+    "errorOauthFailed": "登入失敗，請重試",
+    "errorOauthDenied": "已取消授權"
+  },
+  "NotFound": {
+    "title": "404 - 頁面不存在",
+    "backHome": "回首頁"
+  }
+}

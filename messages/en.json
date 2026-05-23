@@ -1,0 +1,36 @@
+{
+  "Header": {
+    "notes": "Notes",
+    "tools": "Tools",
+    "about": "About",
+    "login": "Login",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "notifications": "Notifications",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "openToolsMenu": "Open tools menu",
+    "openMemberMenu": "Open member menu",
+    "backToHome": "Back to home",
+    "toolNewPassword": "New Password",
+    "toolConvertText": "Convert Text",
+    "toolCountdown": "Countdown",
+    "toolRoster": "Roster",
+    "toolAlarm": "Alarm"
+  },
+  "Login": {
+    "title": "Login",
+    "googleLogin": "Login with Google",
+    "githubLogin": "Login with GitHub",
+    "lineLogin": "Login with LINE",
+    "comingSoon": "Coming soon",
+    "errorDefault": "Login failed, please try again",
+    "errorOauthFailed": "Login failed, please try again",
+    "errorOauthDenied": "Authorization cancelled"
+  },
+  "NotFound": {
+    "title": "404 - Page Not Found",
+    "backHome": "Back to Home"
+  }
+}
