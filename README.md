@@ -6,23 +6,25 @@
 
 ## 功能模組
 
+前台路由加 locale prefix（`zh-TW` / `zh-CN` / `en`），`/` 自動 redirect 至 `/{defaultLocale}`。
+
 | 路由 | 說明 |
 |------|------|
-| `/` | 首頁，顯示網站資訊 |
-| `/blogs/[id]` | 文章內容（Markdown 渲染） |
-| `/hackmd-notes` | HackMD 筆記整合，支援標籤篩選 |
-| `/tools/alarm` | 鬧鐘工具 |
-| `/tools/convert-text` | 文字轉換工具 |
-| `/tools/countdown` | 倒數計時工具 |
-| `/tools/new-password` | 密碼產生工具 |
-| `/tools/roster` | 排班功能 |
-| `/ws` | WebSocket 即時訊息 |
-| `/dashboard` | 個人儀表板 |
-| `/dashboard/notifications` | 通知列表 |
-| `/profile` | 個人資料 |
-| `/about` | 關於頁面 |
-| `/login` | OAuth 登入（Google） |
-| `/admin/*` | 後台管理（需登入）：文章、圖片、股票、會員、角色、使用者、WS、稽核日誌 |
+| `/{locale}` | 首頁，文章列表 |
+| `/{locale}/blogs/[id]` | 文章內容（Markdown 渲染） |
+| `/{locale}/hackmd-notes` | HackMD 筆記整合，支援標籤篩選 |
+| `/{locale}/tools/alarm` | 鬧鐘工具 |
+| `/{locale}/tools/convert-text` | 文字轉換工具 |
+| `/{locale}/tools/countdown` | 倒數計時工具 |
+| `/{locale}/tools/new-password` | 密碼產生工具 |
+| `/{locale}/tools/roster` | 排班功能 |
+| `/{locale}/ws` | WebSocket 即時訊息 |
+| `/{locale}/dashboard` | 個人儀表板（需登入） |
+| `/{locale}/dashboard/notifications` | 通知列表（需登入） |
+| `/{locale}/profile` | 個人資料（需登入） |
+| `/{locale}/about` | 關於頁面 |
+| `/{locale}/login` | OAuth 登入（Google） |
+| `/admin/*` | 後台管理（需登入，無 locale prefix）：文章、圖片、股票、會員、角色、使用者、WS、稽核日誌 |
 
 ---
 
@@ -30,6 +32,7 @@
 
 - **框架**：Next.js 16 (App Router, Turbopack)
 - **UI**：React 19 + Tailwind CSS + lucide-react
+- **i18n**：next-intl v4，支援 zh-TW / zh-CN / en
 - **Markdown**：react-markdown
 - **圖片**：plaiceholder + sharp（模糊佔位圖），本地儲存（`/uploads/*`）
 - **認證**：JWT (`jsonwebtoken`)，middleware 保護 `/admin/*`
@@ -42,12 +45,18 @@
 ## 專案結構
 
 ```
-app/          # Next.js App Router 頁面
+app/
+  [locale]/   # 前台（zh-TW / zh-CN / en）
+  admin/      # 後台（無 locale prefix）
+  api/        # Route Handlers
+  auth/       # OAuth callback
 components/   # 共用 UI 元件
+i18n/         # next-intl 設定（routing / request / navigation）
+messages/     # 翻譯字串（zh-TW.json / zh-CN.json / en.json）
 api/          # 前端 API 請求函式（fetch 封裝）
 hooks/        # React custom hooks
 libs/         # 工具函式庫
-provider/     # Context providers（zustand store、app-level）
+provider/     # Context providers
 public/       # 靜態資源
 ```
 
