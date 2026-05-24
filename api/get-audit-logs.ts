@@ -1,3 +1,6 @@
+"use server";
+
+import adminRequest from "@/libs/adminRequest";
 import type { AuditLog, HttpMethod } from "@/types";
 
 export interface GetAuditLogsParams {
@@ -8,14 +11,6 @@ export interface GetAuditLogsParams {
     to?: string;
     limit?: number;
     offset?: number;
-}
-
-export class AuditLogAuthError extends Error {
-    status: 401 | 403;
-    constructor(status: 401 | 403) {
-        super(`Auth error: ${status}`);
-        this.status = status;
-    }
 }
 
 async function getAuditLogs({
@@ -36,13 +31,9 @@ async function getAuditLogs({
     params.set('limit', String(limit));
     params.set('offset', String(offset));
 
-    const response = await fetch(`/api/audit_logs?${params}`, { cache: 'no-store' });
-
-    if (response.status === 401) throw new AuditLogAuthError(401);
-    if (response.status === 403) throw new AuditLogAuthError(403);
-    if (!response.ok) throw new Error(`API ${response.status}: ${response.statusText}`);
-
-    return response.json();
+    return adminRequest<AuditLog[]>({
+        url: `${process.env.API_URL}/admin/audit_logs?${params}`,
+    });
 }
 
 export default getAuditLogs;

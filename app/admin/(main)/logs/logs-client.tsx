@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useTransition } from "react";
-import getLogs, { LogAuthError } from "@/api/get-logs";
+import getLogs from "@/api/get-logs";
 import type { Log, LogLevel } from "@/types";
 import { LEVEL_BADGE, LEVEL_ROW_BG } from "@/libs/badge-styles";
 
@@ -17,16 +17,6 @@ export default function LogsClient() {
     const [error, setError] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
 
-    function handleAuthError(e: unknown) {
-        if (e instanceof LogAuthError) {
-            if (e.status === 401) {
-                window.location.href = `/admin/login?redirect=${encodeURIComponent('/admin/logs')}`;
-            } else {
-                setError("無 log:read 權限");
-            }
-        }
-    }
-
     useEffect(() => {
         startTransition(async () => {
             try {
@@ -34,7 +24,7 @@ export default function LogsClient() {
                 setLogs(data);
                 setOffset(data.length);
                 setHasMore(data.length >= LIMIT);
-            } catch (e) { handleAuthError(e); }
+            } catch { /* adminRequest handles auth redirect */ }
         });
     }, []);
 
@@ -48,7 +38,7 @@ export default function LogsClient() {
                 setLogs(data);
                 setOffset(data.length);
                 setHasMore(data.length >= LIMIT);
-            } catch (e) { handleAuthError(e); }
+            } catch { /* adminRequest handles auth redirect */ }
         });
     }
 
@@ -61,7 +51,7 @@ export default function LogsClient() {
                 setLogs(prev => [...prev, ...data]);
                 setOffset(prev => prev + data.length);
                 setHasMore(data.length >= LIMIT);
-            } catch (e) { handleAuthError(e); }
+            } catch { /* adminRequest handles auth redirect */ }
         });
     }
 

@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef, useTransition } from "react";
-import getAuditLogs, { AuditLogAuthError } from "@/api/get-audit-logs";
+import getAuditLogs from "@/api/get-audit-logs";
 import type { AuditLog, HttpMethod } from "@/types";
 import { METHOD_BADGE, httpStatusBadgeClass } from "@/libs/badge-styles";
 
 const LIMIT = 100;
-const REDIRECT = '/admin/audit_logs';
 
 interface Filters {
     user_email: string;
@@ -33,20 +32,6 @@ export default function AuditLogsClient() {
     useEffect(() => { logsRef.current = logs; }, [logs]);
     useEffect(() => { appliedFiltersRef.current = appliedFilters; }, [appliedFilters]);
 
-    function handleRedirect(status: 401 | 403) {
-        if (status === 401) {
-            window.location.href = `/admin/login?redirect=${encodeURIComponent(REDIRECT)}`;
-        } else {
-            setError("無 audit:read 權限");
-        }
-    }
-
-    function handleAuthError(e: unknown) {
-        if (e instanceof AuditLogAuthError) {
-            handleRedirect(e.status);
-        }
-    }
-
     useEffect(() => {
         startTransition(async () => {
             try {
@@ -54,7 +39,7 @@ export default function AuditLogsClient() {
                 setLogs(data);
                 setOffset(data.length);
                 setHasMore(data.length >= LIMIT);
-            } catch (e) { handleAuthError(e); }
+            } catch { /* adminRequest handles auth redirect */ }
         });
     }, []);
 
@@ -83,7 +68,7 @@ export default function AuditLogsClient() {
                 setLogs(data);
                 setOffset(data.length);
                 setHasMore(data.length >= LIMIT);
-            } catch (e) { handleAuthError(e); }
+            } catch { /* adminRequest handles auth redirect */ }
         });
     }
 
@@ -97,7 +82,7 @@ export default function AuditLogsClient() {
                 setLogs(data);
                 setOffset(data.length);
                 setHasMore(data.length >= LIMIT);
-            } catch (e) { handleAuthError(e); }
+            } catch { /* adminRequest handles auth redirect */ }
         });
     }
 
@@ -109,7 +94,7 @@ export default function AuditLogsClient() {
                 setLogs(prev => [...prev, ...data]);
                 setOffset(prev => prev + data.length);
                 setHasMore(data.length >= LIMIT);
-            } catch (e) { handleAuthError(e); }
+            } catch { /* adminRequest handles auth redirect */ }
         });
     }
 
