@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
 import type { ManagedImage } from '@/hooks/useImageManager';
@@ -17,7 +18,7 @@ const ImageGrid = ({ images, deletingImage, copiedImage, onDelete, onCopy }: Pro
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {images.map((image) => (
                 <div key={image.name} className="bg-white dark:bg-gray-800 p-4 rounded shadow-md flex flex-col items-center">
-                    <img width={150} height={150} src={image.url} alt={`Image ${image.name}`} className="rounded-lg mb-4 object-cover" />
+                    <Image width={150} height={150} src={image.url} alt={`Image ${image.name}`} className="rounded-lg mb-4 object-cover" />
                     {image.status && (
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded mb-2 ${image.status === 'active' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300'}`}>
                             {image.status}
