@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -184,7 +185,23 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         />
                     </div>
                     <div className="p-4 h-full min-h-[300px] overflow-auto border border-gray-300 bg-white dark:bg-gray-800 dark:text-white rounded prose max-w-none dark:prose-invert">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]} urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}>{markdown}</ReactMarkdown>
+                        <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}
+                            components={{
+                                img: ({ src, alt }) => (
+                                    <Image
+                                        src={typeof src === 'string' ? src : ''}
+                                        alt={alt || ''}
+                                        width={800}
+                                        height={600}
+                                        style={{ width: 'auto', height: 'auto', maxWidth: '100%' }}
+                                    />
+                                )
+                            }}
+                        >
+                            {markdown}
+                        </ReactMarkdown>
                     </div>
                 </div>
             </div>
