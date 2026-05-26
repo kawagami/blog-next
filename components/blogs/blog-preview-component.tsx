@@ -15,7 +15,7 @@ export default function BlogPreviewComponent({ markdown }: { markdown: string })
                                 alt={alt || ''}
                                 width={800}
                                 height={600}
-                                style={{ width: '100%', height: 'auto' }}
+                                style={{ width: 'auto', height: 'auto', maxWidth: '100%' }}
                             />
                         )
                     }}
