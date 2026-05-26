@@ -34,7 +34,7 @@
 - **UI**：React 19 + Tailwind CSS + lucide-react
 - **i18n**：next-intl v4，支援 zh-TW / zh-CN / en
 - **Markdown**：react-markdown
-- **圖片**：plaiceholder + sharp（模糊佔位圖），本地儲存（`/uploads/*`）
+- **圖片**：next/image（自動 WebP 轉換、lazy loading、縮圖），本地儲存（`/uploads/*`）
 - **認證**：JWT (`jsonwebtoken`)，middleware 保護 `/admin/*`
 - **後端 API**：`https://axum.kawa.homes`（Rust Axum）
 - **WebSocket**：`wss://axum.kawa.homes`
