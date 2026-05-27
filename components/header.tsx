@@ -38,31 +38,31 @@ export default function Header({ member }: HeaderProps) {
 
                 {/* Desktop nav */}
                 <nav className="hidden sm:flex items-center gap-4">
-                    <Link href="/hackmd-notes" aria-label={t('notes')} className="block px-4 hover:scale-110 hover:text-blue-400">{t('notes')}</Link>
+                    <Link href="/hackmd-notes" aria-label={t('notes')} className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400">{t('notes')}</Link>
                     <div className="relative">
                         <button
-                            className="block px-4 hover:scale-110 hover:text-blue-400"
+                            className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
                             aria-label={t('openToolsMenu')}
                             aria-expanded={isResourcesOpen}
                             onClick={() => setIsResourcesOpen(o => !o)}
                         >{t('tools')}</button>
                         {isResourcesOpen && (
                             <div className="absolute left-0 bg-white dark:bg-gray-800 shadow-lg rounded-md overflow-hidden z-10">
-                                <Link href="/tools/new-password" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>{t('toolNewPassword')}</Link>
-                                <Link href="/tools/convert-text" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>{t('toolConvertText')}</Link>
-                                <Link href="/tools/countdown" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>{t('toolCountdown')}</Link>
-                                <Link href="/tools/roster" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>{t('toolRoster')}</Link>
-                                <Link href="/tools/alarm" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setIsResourcesOpen(false)}>{t('toolAlarm')}</Link>
+                                <Link href="/tools/new-password" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolNewPassword')}</Link>
+                                <Link href="/tools/convert-text" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolConvertText')}</Link>
+                                <Link href="/tools/countdown" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolCountdown')}</Link>
+                                <Link href="/tools/roster" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolRoster')}</Link>
+                                <Link href="/tools/alarm" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolAlarm')}</Link>
                             </div>
                         )}
                     </div>
-                    <Link href="/about" aria-label={t('about')} className="block px-4 hover:scale-110 hover:text-blue-400">{t('about')}</Link>
+                    <Link href="/about" aria-label={t('about')} className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400">{t('about')}</Link>
                     <LocaleSwitcher />
                     <ThemeButton />
                     {member ? (
                         <div className="relative">
                             <button
-                                className="flex items-center gap-1 px-4 hover:scale-110 hover:text-blue-400"
+                                className="flex items-center gap-1 px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 aria-label={t('openMemberMenu')}
                                 aria-expanded={isMemberOpen}
                                 onClick={() => setIsMemberOpen(o => !o)}
@@ -72,20 +72,20 @@ export default function Header({ member }: HeaderProps) {
                             </button>
                             {isMemberOpen && (
                                 <div className="absolute right-0 bg-white dark:bg-gray-800 shadow-lg rounded-md overflow-hidden z-10 min-w-[120px]">
-                                    <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm" onClick={() => setIsMemberOpen(false)}>
+                                    <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 text-sm" onClick={() => setIsMemberOpen(false)}>
                                         <LayoutDashboard size={14} />
                                         {t('dashboard')}
                                     </Link>
-                                    <Link href="/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm" onClick={() => setIsMemberOpen(false)}>
+                                    <Link href="/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 text-sm" onClick={() => setIsMemberOpen(false)}>
                                         <User size={14} />
                                         {t('profile')}
                                     </Link>
-                                    <Link href="/dashboard/notifications" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm" onClick={() => setIsMemberOpen(false)}>
+                                    <Link href="/dashboard/notifications" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 text-sm" onClick={() => setIsMemberOpen(false)}>
                                         <Bell size={14} />
                                         {t('notifications')}
                                     </Link>
                                     <form action={logout}>
-                                        <button type="submit" className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm text-red-500 dark:text-red-400">
+                                        <button type="submit" className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 text-sm text-red-500 dark:text-red-400">
                                             {t('logout')}
                                         </button>
                                     </form>
@@ -93,13 +93,13 @@ export default function Header({ member }: HeaderProps) {
                             )}
                         </div>
                     ) : (
-                        <Link href="/login" className="block px-4 hover:scale-110 hover:text-blue-400">{t('login')}</Link>
+                        <Link href="/login" className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400">{t('login')}</Link>
                     )}
                 </nav>
 
                 {/* Mobile hamburger */}
                 <button
-                    className="sm:hidden p-2"
+                    className="sm:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                     onClick={() => setIsOpen(o => !o)}
                     aria-label={isOpen ? t('closeMenu') : t('openMenu')}
                 >
@@ -110,12 +110,12 @@ export default function Header({ member }: HeaderProps) {
             {/* Mobile nav overlay */}
             {isOpen && (
                 <>
-                    <div className="sm:hidden fixed inset-0 z-30 bg-black/40" onClick={closeAll} />
+                    <div className="sm:hidden fixed inset-0 z-30 bg-black/40" onClick={closeAll} aria-hidden="true" />
                     <nav className="sm:hidden fixed top-[50px] left-0 right-0 z-40 bg-white dark:bg-gray-900 shadow-lg border-t border-gray-200 dark:border-gray-700 flex flex-col p-4 gap-1">
-                        <Link href="/hackmd-notes" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={closeAll}>{t('notes')}</Link>
+                        <Link href="/hackmd-notes" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400" onClick={closeAll}>{t('notes')}</Link>
 
                         <button
-                            className="flex items-center justify-between px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 w-full text-left"
+                            className="flex items-center justify-between px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full text-left"
                             aria-expanded={isResourcesOpen}
                             onClick={() => setIsResourcesOpen(o => !o)}
                         >
@@ -124,15 +124,15 @@ export default function Header({ member }: HeaderProps) {
                         </button>
                         {isResourcesOpen && (
                             <div className="ml-4 flex flex-col gap-1">
-                                <Link href="/tools/new-password" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm" onClick={closeAll}>{t('toolNewPassword')}</Link>
-                                <Link href="/tools/convert-text" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm" onClick={closeAll}>{t('toolConvertText')}</Link>
-                                <Link href="/tools/countdown" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm" onClick={closeAll}>{t('toolCountdown')}</Link>
-                                <Link href="/tools/roster" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm" onClick={closeAll}>{t('toolRoster')}</Link>
-                                <Link href="/tools/alarm" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm" onClick={closeAll}>{t('toolAlarm')}</Link>
+                                <Link href="/tools/new-password" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolNewPassword')}</Link>
+                                <Link href="/tools/convert-text" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolConvertText')}</Link>
+                                <Link href="/tools/countdown" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolCountdown')}</Link>
+                                <Link href="/tools/roster" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolRoster')}</Link>
+                                <Link href="/tools/alarm" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolAlarm')}</Link>
                             </div>
                         )}
 
-                        <Link href="/about" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={closeAll}>{t('about')}</Link>
+                        <Link href="/about" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400" onClick={closeAll}>{t('about')}</Link>
                         <div className="px-4 py-2">
                             <ThemeButton />
                         </div>
@@ -142,26 +142,26 @@ export default function Header({ member }: HeaderProps) {
 
                         {member ? (
                             <>
-                                <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm" onClick={closeAll}>
+                                <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>
                                     <LayoutDashboard size={14} />
                                     {t('dashboard')}
                                 </Link>
-                                <Link href="/profile" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm" onClick={closeAll}>
+                                <Link href="/profile" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>
                                     <User size={14} />
                                     {t('profile')}
                                 </Link>
-                                <Link href="/dashboard/notifications" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm" onClick={closeAll}>
+                                <Link href="/dashboard/notifications" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>
                                     <Bell size={14} />
                                     {t('notifications')}
                                 </Link>
                                 <form action={logout}>
-                                    <button type="submit" className="w-full flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-red-500 dark:text-red-400">
+                                    <button type="submit" className="w-full flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-red-500 dark:text-red-400">
                                         {t('logout')}
                                     </button>
                                 </form>
                             </>
                         ) : (
-                            <Link href="/login" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800" onClick={closeAll}>{t('login')}</Link>
+                            <Link href="/login" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400" onClick={closeAll}>{t('login')}</Link>
                         )}
                     </nav>
                 </>

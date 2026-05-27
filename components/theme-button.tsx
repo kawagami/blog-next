@@ -13,10 +13,14 @@ export default function ThemeButton() {
 
     return (
         <div className="w-full grid place-content-center hover:scale-150">
-            <div className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full grid place-content-center" onClick={changeTheme}>
-                <Image src={sun} alt="sun" className="hidden dark:block" />
-                <Image src={moon} alt="moon" className="block dark:hidden" />
-            </div>
+            <button
+                    className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full grid place-content-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    onClick={changeTheme}
+                    aria-label="切換深色/淺色模式"
+                >
+                <Image src={sun} alt="" className="hidden dark:block" />
+                <Image src={moon} alt="" className="block dark:hidden" />
+            </button>
         </div>
     );
 }
