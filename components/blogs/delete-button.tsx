@@ -3,7 +3,7 @@
 import deleteBlog from "@/api/delete-blog";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import LoadingButton from "@/components/blogs/loading-button";
 
 export default function DeleteButton({ uuid }: { uuid: string }) {
     const router = useRouter();
@@ -27,17 +27,15 @@ export default function DeleteButton({ uuid }: { uuid: string }) {
     };
 
     return (
-        <button
+        <LoadingButton
+            loading={isDeleting}
             onClick={handleDelete}
-            disabled={isDeleting}
-            className={`ml-2 px-4 py-2 font-medium rounded-lg text-white transition duration-200 ${isDeleting
+            className={`ml-2 px-4 py-2 font-medium rounded-lg text-white flex items-center gap-1 transition duration-200 ${isDeleting
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
                 }`}
         >
-            {isDeleting ? (
-                <span className="flex items-center gap-1"><Loader2 className="w-4 h-4 animate-spin" />刪除中...</span>
-            ) : "刪除"}
-        </button>
+            {isDeleting ? "刪除中..." : "刪除"}
+        </LoadingButton>
     );
 }

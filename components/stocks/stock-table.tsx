@@ -1,4 +1,5 @@
 import StockTableRow from "@/components/stocks/stock-table-row";
+import { Th } from "@/components/stocks/table-cells";
 import type { StockChange } from "@/types";
 
 export default function StockTable({ data }: { data: StockChange[] }) {
@@ -6,15 +7,15 @@ export default function StockTable({ data }: { data: StockChange[] }) {
         <table className="w-full border-collapse border border-gray-300 dark:border-gray-600">
             <thead>
                 <tr className="bg-gray-200 dark:bg-gray-700">
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">股票代號</th>
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">股票名稱</th>
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">狀態</th>
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">起始日期</th>
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">起始價格</th>
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">結束日期</th>
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">結束價格</th>
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">變動 (%)</th>
-                    <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 dark:text-gray-200">動作</th>
+                    <Th>股票代號</Th>
+                    <Th>股票名稱</Th>
+                    <Th>狀態</Th>
+                    <Th>起始日期</Th>
+                    <Th>起始價格</Th>
+                    <Th>結束日期</Th>
+                    <Th>結束價格</Th>
+                    <Th>變動 (%)</Th>
+                    <Th>動作</Th>
                 </tr>
             </thead>
             <tbody>
