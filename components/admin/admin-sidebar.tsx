@@ -36,6 +36,7 @@ const groups = [
             { label: "Roles", href: "/admin/roles" },
             { label: "Users", href: "/admin/users" },
             { label: "修改密碼", href: "/admin/change-password" },
+            { label: "Settings", href: "/admin/settings" },
         ],
     },
     {

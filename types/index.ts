@@ -160,6 +160,13 @@ export interface WsConnection {
   user_email: string | null;
 }
 
+// Setting
+export interface Setting {
+  key: string;
+  value: string;
+  description: string;
+}
+
 // Audit Log
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
