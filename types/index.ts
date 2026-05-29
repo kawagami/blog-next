@@ -165,7 +165,10 @@ export interface Setting {
   key: string;
   value: string;
   description: string;
+  category: string;
 }
+
+export type SettingsResponse = Record<string, Setting[]>;
 
 // Audit Log
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
