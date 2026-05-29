@@ -5,6 +5,8 @@ import { updateSetting } from "./actions";
 import type { Setting, SettingsResponse } from "@/types";
 
 export default function SettingsClient({ initialSettings }: { initialSettings: SettingsResponse }) {
+    const categories = Object.keys(initialSettings);
+    const [activeTab, setActiveTab] = useState(categories[0] ?? "");
     const [settings, setSettings] = useState<SettingsResponse>(initialSettings);
     const [drafts, setDrafts] = useState<Record<string, string>>(
         Object.fromEntries(
@@ -60,17 +62,25 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
     );
 
     return (
-        <div className="space-y-8">
-            {Object.entries(settings).map(([category, items]) => (
-                <div key={category}>
-                    <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
-                        {category}
-                    </h2>
-                    <div className="space-y-3">
-                        {items.map(renderSetting)}
-                    </div>
-                </div>
-            ))}
+        <div>
+            <div className="flex gap-1 border-b border-gray-200 dark:border-gray-700 mb-6">
+                {categories.map(cat => (
+                    <button
+                        key={cat}
+                        onClick={() => setActiveTab(cat)}
+                        className={`px-4 py-2 text-sm font-medium capitalize transition-colors border-b-2 -mb-px
+                            ${activeTab === cat
+                                ? "border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400"
+                                : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                            }`}
+                    >
+                        {cat}
+                    </button>
+                ))}
+            </div>
+            <div className="space-y-3">
+                {(settings[activeTab] ?? []).map(renderSetting)}
+            </div>
         </div>
     );
 }
