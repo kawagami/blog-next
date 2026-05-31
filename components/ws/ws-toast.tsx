@@ -31,6 +31,9 @@ function ToastShell({ bg, children, onDismiss }: { bg: string; children: React.R
     );
 }
 
+function UserJoinedToast(_: ToastItemProps) { return null; }
+function UserLeftToast(_: ToastItemProps) { return null; }
+
 function BlogCreatedToast({ data, onDismiss }: ToastItemProps) {
     const blog = data as BlogData;
     return (
@@ -61,7 +64,9 @@ function StockFailedToast({ data, onDismiss }: ToastItemProps) {
     );
 }
 
-const TOAST_MAP: Partial<Record<WsEventType, ToastComponent>> = {
+const TOAST_MAP: Record<WsEventType, ToastComponent> = {
+    user_joined: UserJoinedToast,
+    user_left: UserLeftToast,
     blog_created: BlogCreatedToast,
     stock_completed: StockCompletedToast,
     stock_failed: StockFailedToast,
@@ -76,7 +81,6 @@ export default function WsToast() {
         <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2">
             {notifications.map(({ id, type, data }) => {
                 const Toast = TOAST_MAP[type];
-                if (!Toast) return null;
                 return <Toast key={id} data={data} onDismiss={() => dismiss(id)} />;
             })}
         </div>
