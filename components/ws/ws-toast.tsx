@@ -14,7 +14,7 @@ interface BlogData {
     title?: string;
 }
 
-export default function StockToast() {
+export default function WsToast() {
     const { notifications, dismiss } = useWsNotification();
 
     if (notifications.length === 0) return null;

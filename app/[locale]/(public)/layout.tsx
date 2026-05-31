@@ -1,6 +1,6 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import StockToast from "@/components/stocks/stock-toast";
+import WsToast from "@/components/ws/ws-toast";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 
@@ -27,7 +27,7 @@ export default async function PublicLayout({ children }: { children: React.React
                 {children}
             </main>
             <Footer />
-            <StockToast />
+            <WsToast />
         </>
     );
 }
