@@ -1,8 +1,15 @@
 "use client";
 
 import { useWsNotification } from '@/hooks/useWsNotification';
+import type { WsEventType } from '@/types';
 import { X } from 'lucide-react';
-import type { WsUserEventData } from '@/types';
+
+interface ToastItemProps {
+    data: unknown;
+    onDismiss: () => void;
+}
+
+type ToastComponent = React.ComponentType<ToastItemProps>;
 
 interface StockData {
     stock_name?: string;
@@ -10,9 +17,55 @@ interface StockData {
 }
 
 interface BlogData {
-    id?: string;
     title?: string;
 }
+
+function ToastShell({ bg, children, onDismiss }: { bg: string; children: React.ReactNode; onDismiss: () => void }) {
+    return (
+        <div className={`flex items-start gap-3 px-4 py-3 rounded-lg shadow-lg text-white min-w-[260px] max-w-sm ${bg}`}>
+            <div className="flex-1 text-sm">{children}</div>
+            <button onClick={onDismiss} className="mt-0.5 hover:opacity-75">
+                <X size={16} />
+            </button>
+        </div>
+    );
+}
+
+function BlogCreatedToast({ data, onDismiss }: ToastItemProps) {
+    const blog = data as BlogData;
+    return (
+        <ToastShell bg="bg-blue-600 dark:bg-blue-700" onDismiss={onDismiss}>
+            <p className="font-semibold">新文章發布</p>
+            <p>{blog.title}</p>
+        </ToastShell>
+    );
+}
+
+function StockCompletedToast({ data, onDismiss }: ToastItemProps) {
+    const s = data as StockData;
+    return (
+        <ToastShell bg="bg-green-600 dark:bg-green-700" onDismiss={onDismiss}>
+            <p className="font-semibold">股票完成 ✓</p>
+            <p>{s.stock_name}（{s.stock_no}）</p>
+        </ToastShell>
+    );
+}
+
+function StockFailedToast({ data, onDismiss }: ToastItemProps) {
+    const s = data as StockData;
+    return (
+        <ToastShell bg="bg-red-600 dark:bg-red-700" onDismiss={onDismiss}>
+            <p className="font-semibold">股票失敗 ✗</p>
+            <p>股票代號：{s.stock_no}</p>
+        </ToastShell>
+    );
+}
+
+const TOAST_MAP: Partial<Record<WsEventType, ToastComponent>> = {
+    blog_created: BlogCreatedToast,
+    stock_completed: StockCompletedToast,
+    stock_failed: StockFailedToast,
+};
 
 export default function WsToast() {
     const { notifications, dismiss } = useWsNotification();
@@ -22,63 +75,9 @@ export default function WsToast() {
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2">
             {notifications.map(({ id, type, data }) => {
-                if (type === 'user_joined' || type === 'user_left') {
-                    const user = data as WsUserEventData;
-                    const isJoin = type === 'user_joined';
-                    const label = user.user_email ?? '訪客';
-                    return (
-                        <div key={id} className="flex items-start gap-3 px-4 py-3 rounded-lg shadow-lg text-white min-w-[260px] max-w-sm bg-gray-600">
-                            <div className="flex-1 text-sm">
-                                <p className="font-semibold">{isJoin ? '使用者上線' : '使用者離線'}</p>
-                                <p>{label}</p>
-                            </div>
-                            <button onClick={() => dismiss(id)} className="mt-0.5 hover:opacity-75">
-                                <X size={16} />
-                            </button>
-                        </div>
-                    );
-                }
-
-                if (type === 'blog_created') {
-                    const blog = data as BlogData;
-                    return (
-                        <div key={id} className="flex items-start gap-3 px-4 py-3 rounded-lg shadow-lg text-white min-w-[260px] max-w-sm bg-blue-600">
-                            <div className="flex-1 text-sm">
-                                <p className="font-semibold">新文章發布</p>
-                                <p>{blog.title}</p>
-                            </div>
-                            <button onClick={() => dismiss(id)} className="mt-0.5 hover:opacity-75">
-                                <X size={16} />
-                            </button>
-                        </div>
-                    );
-                }
-
-                const isSuccess = type === 'stock_completed';
-                const stockData = data as StockData;
-                return (
-                    <div
-                        key={id}
-                        className={`flex items-start gap-3 px-4 py-3 rounded-lg shadow-lg text-white min-w-[260px] max-w-sm ${isSuccess ? 'bg-green-600' : 'bg-red-600'}`}
-                    >
-                        <div className="flex-1 text-sm">
-                            {isSuccess ? (
-                                <>
-                                    <p className="font-semibold">股票完成 ✓</p>
-                                    <p>{stockData.stock_name}（{stockData.stock_no}）</p>
-                                </>
-                            ) : (
-                                <>
-                                    <p className="font-semibold">股票失敗 ✗</p>
-                                    <p>股票代號：{stockData.stock_no}</p>
-                                </>
-                            )}
-                        </div>
-                        <button onClick={() => dismiss(id)} className="mt-0.5 hover:opacity-75">
-                            <X size={16} />
-                        </button>
-                    </div>
-                );
+                const Toast = TOAST_MAP[type];
+                if (!Toast) return null;
+                return <Toast key={id} data={data} onDismiss={() => dismiss(id)} />;
             })}
         </div>
     );
