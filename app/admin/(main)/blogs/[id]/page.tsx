@@ -7,7 +7,7 @@ export default async function BlogPage({ params }: { params: Promise<{ id: strin
     const id = (await params).id;
     const [blogResult, allTags] = await Promise.all([
         getBlog(id).catch((e: Error): Blog => {
-            if (e.message.includes(': 404')) return { id, markdown: '', tags: [], tocs: [] };
+            if (e.message.includes('API 404')) return { id, markdown: '', tags: [], tocs: [] };
             throw e;
         }),
         getBlogTags(),
