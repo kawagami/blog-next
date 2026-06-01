@@ -15,8 +15,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN cp .env.example .env
 
-# 如果你的專案很大，可以在這裡加入關閉檢查的參數 (若 CI 已有獨立檢查)
-# ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # Stage 3: Runner (最終執行檔)
