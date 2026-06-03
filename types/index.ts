@@ -1,4 +1,12 @@
 // Portfolio
+export interface HistoryRecord {
+  date: string;
+  close: number;
+  adjusted_cost: number;
+  pnl: number;
+  pnl_pct: number;
+}
+
 export interface PortfolioEntry {
   id: string;
   member_id: number;
