@@ -6,7 +6,7 @@ import ThemeButton from "@/components/theme-button";
 import Image from "next/image";
 import loglImg from "@/assets/kawagami.svg";
 import { logout } from '@/actions/auth';
-import { LayoutDashboard, User, Bell, ChevronDown, X, Menu } from 'lucide-react';
+import { LayoutDashboard, User, Bell, ChevronDown, X, Menu, TrendingUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '@/components/locale-switcher';
 
@@ -84,6 +84,10 @@ export default function Header({ member }: HeaderProps) {
                                         <Bell size={14} />
                                         {t('notifications')}
                                     </Link>
+                                    <Link href="/portfolio" className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 text-sm" onClick={() => setIsMemberOpen(false)}>
+                                        <TrendingUp size={14} />
+                                        {t('portfolio')}
+                                    </Link>
                                     <form action={logout}>
                                         <button type="submit" className="w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400 text-sm text-red-500 dark:text-red-400">
                                             {t('logout')}
@@ -153,6 +157,10 @@ export default function Header({ member }: HeaderProps) {
                                 <Link href="/dashboard/notifications" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>
                                     <Bell size={14} />
                                     {t('notifications')}
+                                </Link>
+                                <Link href="/portfolio" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>
+                                    <TrendingUp size={14} />
+                                    {t('portfolio')}
                                 </Link>
                                 <form action={logout}>
                                     <button type="submit" className="w-full flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-red-500 dark:text-red-400">

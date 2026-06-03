@@ -8,6 +8,7 @@
     "dashboard": "仪表盘",
     "profile": "个人资料",
     "notifications": "通知",
+    "portfolio": "投资组合",
     "openMenu": "打开导航菜单",
     "closeMenu": "关闭导航菜单",
     "openToolsMenu": "打开工具菜单",
@@ -32,5 +33,33 @@
   "NotFound": {
     "title": "404 - 页面不存在",
     "backHome": "回首页"
+  },
+  "Portfolio": {
+    "title": "投资组合",
+    "addEntry": "新增持股",
+    "editEntry": "编辑持股",
+    "deleteEntry": "删除",
+    "confirmDelete": "确定删除此笔持股？",
+    "stockCode": "股票代号",
+    "buyDate": "买入日期",
+    "costPerShare": "每股成本",
+    "shares": "股数",
+    "save": "保存",
+    "cancel": "取消",
+    "viewHistory": "查看涨跌",
+    "historyTitle": "每日涨跌",
+    "date": "日期",
+    "closePrice": "收盘价",
+    "dailyChange": "涨跌",
+    "pnl": "盈亏",
+    "pnlPercent": "回报率",
+    "loading": "加载中...",
+    "noEntries": "暂无持股记录，点击新增",
+    "noHistory": "无数据",
+    "errorLoad": "加载失败",
+    "errorSave": "保存失败",
+    "errorDelete": "删除失败",
+    "totalCost": "总成本",
+    "currentValue": "当前市值"
   }
 }

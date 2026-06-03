@@ -8,6 +8,7 @@
     "dashboard": "Dashboard",
     "profile": "Profile",
     "notifications": "Notifications",
+    "portfolio": "Portfolio",
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
     "openToolsMenu": "Open tools menu",
@@ -32,5 +33,33 @@
   "NotFound": {
     "title": "404 - Page Not Found",
     "backHome": "Back to Home"
+  },
+  "Portfolio": {
+    "title": "Portfolio",
+    "addEntry": "Add Position",
+    "editEntry": "Edit Position",
+    "deleteEntry": "Delete",
+    "confirmDelete": "Delete this position?",
+    "stockCode": "Stock Code",
+    "buyDate": "Buy Date",
+    "costPerShare": "Cost per Share",
+    "shares": "Shares",
+    "save": "Save",
+    "cancel": "Cancel",
+    "viewHistory": "View History",
+    "historyTitle": "Daily Price History",
+    "date": "Date",
+    "closePrice": "Close",
+    "dailyChange": "Change",
+    "pnl": "P&L",
+    "pnlPercent": "Return",
+    "loading": "Loading...",
+    "noEntries": "No positions yet. Click Add to get started.",
+    "noHistory": "No data",
+    "errorLoad": "Failed to load",
+    "errorSave": "Failed to save",
+    "errorDelete": "Failed to delete",
+    "totalCost": "Total Cost",
+    "currentValue": "Current Value"
   }
 }

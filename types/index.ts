@@ -1,3 +1,22 @@
+// Portfolio
+export interface PortfolioEntry {
+  id: string;
+  member_id: number;
+  stock_code: string;
+  buy_date: string;
+  cost_per_share: number;
+  shares: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PortfolioEntryInput {
+  stock_code: string;
+  buy_date: string;
+  cost_per_share: number;
+  shares: number;
+}
+
 // Blog
 export interface Toc {
   id: string;

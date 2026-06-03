@@ -8,6 +8,7 @@
     "dashboard": "儀表板",
     "profile": "個人資料",
     "notifications": "通知",
+    "portfolio": "投資組合",
     "openMenu": "開啟導航菜單",
     "closeMenu": "關閉導航菜單",
     "openToolsMenu": "開啟工具選單",
@@ -32,5 +33,33 @@
   "NotFound": {
     "title": "404 - 頁面不存在",
     "backHome": "回首頁"
+  },
+  "Portfolio": {
+    "title": "投資組合",
+    "addEntry": "新增持股",
+    "editEntry": "編輯持股",
+    "deleteEntry": "刪除",
+    "confirmDelete": "確定刪除此筆持股？",
+    "stockCode": "股票代號",
+    "buyDate": "買入日期",
+    "costPerShare": "每股成本",
+    "shares": "股數",
+    "save": "儲存",
+    "cancel": "取消",
+    "viewHistory": "查看漲跌",
+    "historyTitle": "每日漲跌",
+    "date": "日期",
+    "closePrice": "收盤價",
+    "dailyChange": "漲跌",
+    "pnl": "盈虧",
+    "pnlPercent": "報酬率",
+    "loading": "載入中...",
+    "noEntries": "尚無持股記錄，點擊新增",
+    "noHistory": "無資料",
+    "errorLoad": "載入失敗",
+    "errorSave": "儲存失敗",
+    "errorDelete": "刪除失敗",
+    "totalCost": "總成本",
+    "currentValue": "目前市值"
   }
 }

@@ -21,6 +21,7 @@
 | `/{locale}/ws` | WebSocket 即時訊息 |
 | `/{locale}/dashboard` | 個人儀表板（需登入） |
 | `/{locale}/dashboard/notifications` | 通知列表（需登入） |
+| `/{locale}/portfolio` | 投資組合追蹤，記錄持股並查看每日漲跌盈虧（需登入） |
 | `/{locale}/profile` | 個人資料（需登入） |
 | `/{locale}/about` | 關於頁面 |
 | `/{locale}/login` | OAuth 登入（Google） |
