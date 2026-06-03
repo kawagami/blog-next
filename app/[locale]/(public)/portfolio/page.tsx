@@ -1,4 +1,4 @@
-import getPortfolio from "@/api/get-portfolio";
+import getPortfolioSummary from "@/api/get-portfolio-summary";
 import PortfolioClient from "@/components/portfolio/PortfolioClient";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function PortfolioPage() {
     const [entries, t] = await Promise.all([
-        getPortfolio(),
+        getPortfolioSummary(),
         getTranslations('Portfolio'),
     ]);
 

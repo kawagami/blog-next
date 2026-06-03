@@ -60,6 +60,8 @@
     "errorSave": "Failed to save",
     "errorDelete": "Failed to delete",
     "totalCost": "Total Cost",
-    "currentValue": "Current Value"
+    "currentValue": "Current Value",
+    "currentPrice": "Price",
+    "noPriceData": "No quote"
   }
 }

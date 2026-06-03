@@ -60,6 +60,8 @@
     "errorSave": "儲存失敗",
     "errorDelete": "刪除失敗",
     "totalCost": "總成本",
-    "currentValue": "目前市值"
+    "currentValue": "目前市值",
+    "currentPrice": "現價",
+    "noPriceData": "無報價"
   }
 }

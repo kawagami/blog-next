@@ -25,6 +25,14 @@ export interface PortfolioEntryInput {
   shares: number;
 }
 
+export interface PortfolioSummaryEntry extends PortfolioEntry {
+  stock_name: string;
+  current_price: number | null;
+  current_value: number | null;
+  pnl: number | null;
+  pnl_pct: number | null;
+}
+
 // Blog
 export interface Toc {
   id: string;
