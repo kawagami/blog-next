@@ -65,7 +65,7 @@ export async function getStockDayAll({ trade_date = "", stock_code = "", limit =
 }
 
 export async function getStockBuybackPeriods(): Promise<StockBuybackPeriod[]> {
-    return adminRequest<StockBuybackPeriod[]>({ url: `${process.env.API_URL}/admin/stocks/get_stock_buyback_periods_v2` });
+    return adminRequest<StockBuybackPeriod[]>({ url: `${process.env.API_URL}/admin/stocks/get_stock_buyback_periods` });
 }
 
 export async function getUnfinishedBuybackPriceGap(): Promise<unknown> {
