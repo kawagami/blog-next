@@ -12,9 +12,9 @@ export default function ThemeButton() {
     }
 
     return (
-        <div className="w-full grid place-content-center hover:scale-150">
+        <div className="flex items-center">
             <button
-                    className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full grid place-content-center focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-8 h-8 bg-gray-400 dark:bg-white rounded-full grid place-content-center focus:outline-none focus:ring-2 focus:ring-blue-400 hover:scale-110 transition-transform"
                     onClick={changeTheme}
                     aria-label="切換深色/淺色模式"
                 >

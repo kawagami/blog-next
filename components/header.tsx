@@ -29,7 +29,7 @@ export default function Header({ member }: HeaderProps) {
 
     return (
         <>
-            <header className="min-h-[50px] flex items-center justify-between px-4 relative z-50 overflow-x-hidden">
+            <header className="min-h-[50px] flex items-center justify-between px-4 relative z-50">
                 <div className="flex items-center flex-shrink-0">
                     <Link href="/" className="block px-2" aria-label={t('backToHome')} onClick={closeAll}>
                         <Image src={loglImg} width={iconSize} height={iconSize} alt="KAWAGAMI" />
@@ -37,7 +37,7 @@ export default function Header({ member }: HeaderProps) {
                 </div>
 
                 {/* Desktop nav */}
-                <nav className="hidden md:flex items-center gap-2 overflow-x-auto flex-shrink min-w-0">
+                <nav className="hidden md:flex items-center gap-2">
                     <Link href="/hackmd-notes" aria-label={t('notes')} className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 whitespace-nowrap">{t('notes')}</Link>
                     <div className="relative">
                         <button
