@@ -29,19 +29,19 @@ export default function Header({ member }: HeaderProps) {
 
     return (
         <>
-            <header className="min-h-[50px] flex items-center justify-between px-4 relative z-50">
-                <div className="flex items-center">
+            <header className="min-h-[50px] flex items-center justify-between px-4 relative z-50 overflow-x-hidden">
+                <div className="flex items-center flex-shrink-0">
                     <Link href="/" className="block px-2" aria-label={t('backToHome')} onClick={closeAll}>
                         <Image src={loglImg} width={iconSize} height={iconSize} alt="KAWAGAMI" />
                     </Link>
                 </div>
 
                 {/* Desktop nav */}
-                <nav className="hidden sm:flex items-center gap-4">
-                    <Link href="/hackmd-notes" aria-label={t('notes')} className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400">{t('notes')}</Link>
+                <nav className="hidden md:flex items-center gap-2 overflow-x-auto flex-shrink min-w-0">
+                    <Link href="/hackmd-notes" aria-label={t('notes')} className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 whitespace-nowrap">{t('notes')}</Link>
                     <div className="relative">
                         <button
-                            className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 whitespace-nowrap"
                             aria-label={t('openToolsMenu')}
                             aria-expanded={isResourcesOpen}
                             onClick={() => setIsResourcesOpen(o => !o)}
@@ -56,7 +56,7 @@ export default function Header({ member }: HeaderProps) {
                             </div>
                         )}
                     </div>
-                    <Link href="/about" aria-label={t('about')} className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400">{t('about')}</Link>
+                    <Link href="/about" aria-label={t('about')} className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 whitespace-nowrap">{t('about')}</Link>
                     <LocaleSwitcher />
                     <ThemeButton />
                     {member ? (
@@ -97,13 +97,13 @@ export default function Header({ member }: HeaderProps) {
                             )}
                         </div>
                     ) : (
-                        <Link href="/login" className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400">{t('login')}</Link>
+                        <Link href="/login" className="block px-4 rounded hover:scale-110 hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 whitespace-nowrap">{t('login')}</Link>
                     )}
                 </nav>
 
                 {/* Mobile hamburger */}
                 <button
-                    className="sm:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                     onClick={() => setIsOpen(o => !o)}
                     aria-label={isOpen ? t('closeMenu') : t('openMenu')}
                 >
@@ -114,8 +114,8 @@ export default function Header({ member }: HeaderProps) {
             {/* Mobile nav overlay */}
             {isOpen && (
                 <>
-                    <div className="sm:hidden fixed inset-0 z-30 bg-black/40" onClick={closeAll} aria-hidden="true" />
-                    <nav className="sm:hidden fixed top-[50px] left-0 right-0 z-40 bg-white dark:bg-gray-900 shadow-lg border-t border-gray-200 dark:border-gray-700 flex flex-col p-4 gap-1">
+                    <div className="md:hidden fixed inset-0 z-30 bg-black/40" onClick={closeAll} aria-hidden="true" />
+                    <nav className="md:hidden fixed top-[50px] left-0 right-0 z-40 bg-white dark:bg-gray-900 shadow-lg border-t border-gray-200 dark:border-gray-700 flex flex-col p-4 gap-1">
                         <Link href="/hackmd-notes" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400" onClick={closeAll}>{t('notes')}</Link>
 
                         <button
