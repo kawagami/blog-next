@@ -53,6 +53,7 @@ export default function Header({ member }: HeaderProps) {
                                 <Link href="/tools/countdown" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolCountdown')}</Link>
                                 <Link href="/tools/roster" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolRoster')}</Link>
                                 <Link href="/tools/alarm" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolAlarm')}</Link>
+                                <Link href="/tools/hourly-chime" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-400" onClick={() => setIsResourcesOpen(false)}>{t('toolHourlyChime')}</Link>
                             </div>
                         )}
                     </div>
@@ -133,6 +134,7 @@ export default function Header({ member }: HeaderProps) {
                                 <Link href="/tools/countdown" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolCountdown')}</Link>
                                 <Link href="/tools/roster" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolRoster')}</Link>
                                 <Link href="/tools/alarm" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolAlarm')}</Link>
+                                <Link href="/tools/hourly-chime" className="px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm" onClick={closeAll}>{t('toolHourlyChime')}</Link>
                             </div>
                         )}
 

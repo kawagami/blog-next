@@ -18,7 +18,8 @@
     "toolConvertText": "Convert Text",
     "toolCountdown": "Countdown",
     "toolRoster": "Roster",
-    "toolAlarm": "Alarm"
+    "toolAlarm": "Alarm",
+    "toolHourlyChime": "Hourly Chime"
   },
   "Login": {
     "title": "Login",

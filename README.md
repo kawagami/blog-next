@@ -14,6 +14,7 @@
 | `/{locale}/blogs/[id]` | 文章內容（Markdown 渲染） |
 | `/{locale}/hackmd-notes` | HackMD 筆記整合，支援標籤篩選 |
 | `/{locale}/tools/alarm` | 鬧鐘工具 |
+| `/{locale}/tools/hourly-chime` | 整點報時（Web Speech API TTS） |
 | `/{locale}/tools/convert-text` | 文字轉換工具 |
 | `/{locale}/tools/countdown` | 倒數計時工具 |
 | `/{locale}/tools/new-password` | 密碼產生工具 |

@@ -18,7 +18,8 @@
     "toolConvertText": "文字转换",
     "toolCountdown": "倒计时",
     "toolRoster": "排班",
-    "toolAlarm": "闹钟"
+    "toolAlarm": "闹钟",
+    "toolHourlyChime": "整点报时"
   },
   "Login": {
     "title": "登录",
