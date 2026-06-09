@@ -25,12 +25,34 @@ export default function HourlyChime() {
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const clockRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+    function playBell(ctx: AudioContext, startTime: number) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(1047, startTime);
+        osc.frequency.exponentialRampToValueAtTime(880, startTime + 0.1);
+        gain.gain.setValueAtTime(1, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 1.2);
+        osc.start(startTime);
+        osc.stop(startTime + 1.2);
+    }
+
     const chime = useCallback(() => {
         const hour = new Date().getHours();
-        const utterance = new SpeechSynthesisUtterance(`現在 ${hour} 點整`);
-        utterance.lang = 'zh-TW';
-        utterance.rate = 0.9;
-        speechSynthesis.speak(utterance);
+        const ctx = new AudioContext();
+        const gap = 1.4;
+        for (let i = 0; i < 3; i++) {
+            playBell(ctx, ctx.currentTime + i * gap);
+        }
+        setTimeout(() => {
+            const utterance = new SpeechSynthesisUtterance(`現在 ${hour} 點整`);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.75;
+            utterance.volume = 1;
+            speechSynthesis.speak(utterance);
+        }, 3 * gap * 1000);
         setLastChime(`${hour.toString().padStart(2, '0')}:00`);
     }, []);
 
