@@ -22,7 +22,7 @@ async function postRoster(params: RosterParams): Promise<RosterResponse> {
         }),
         cache: 'no-store',
     });
-    if (!res.ok) throw new Error(`Roster request failed: ${res.status}`);
+    if (!res.ok) throw new Error(`API ${res.status}: ${res.statusText}`);
     return res.json();
 }
 

@@ -1,10 +1,10 @@
 import getUsers from "@/api/get-users";
 import getUserRoles from "@/api/get-user-roles";
 import getRoles from "@/api/get-roles";
-import DeleteButton from "@/components/users/delete-button";
 import UserRolesPanel from "@/components/users/user-roles-panel";
 import type { Metadata } from "next";
 import AdminTableContainer from "@/components/admin/admin-table-container";
+import { AdminTable, AdminHeadRow, AdminRow, AdminTh, AdminTd } from "@/components/admin/table";
 
 export const metadata: Metadata = {
     title: "Users page",
@@ -23,37 +23,33 @@ export default async function Users() {
 
     return (
         <AdminTableContainer>
-            <table className="w-full border-collapse border border-gray-200 dark:border-gray-700">
-                    <thead>
-                        <tr className="bg-gray-100 dark:bg-gray-800">
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">ID</th>
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">Name</th>
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">Email</th>
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">Roles</th>
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-center text-gray-700 dark:text-gray-300">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {usersWithRoles.map(user => (
-                            <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100 text-xs">{user.id}</td>
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100">{user.name}</td>
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100">{user.email}</td>
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2">
-                                    <UserRolesPanel
-                                        userId={user.id}
-                                        userName={user.name ?? user.email}
-                                        initialRoles={user.roles}
-                                        allRoles={allRoles}
-                                    />
-                                </td>
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-center">
-                                    <DeleteButton user={user} />
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-            </table>
+            <AdminTable>
+                <thead>
+                    <AdminHeadRow>
+                        <AdminTh>ID</AdminTh>
+                        <AdminTh>Name</AdminTh>
+                        <AdminTh>Email</AdminTh>
+                        <AdminTh>Roles</AdminTh>
+                    </AdminHeadRow>
+                </thead>
+                <tbody>
+                    {usersWithRoles.map(user => (
+                        <AdminRow key={user.id}>
+                            <AdminTd className="text-xs">{user.id}</AdminTd>
+                            <AdminTd>{user.name}</AdminTd>
+                            <AdminTd>{user.email}</AdminTd>
+                            <AdminTd>
+                                <UserRolesPanel
+                                    userId={user.id}
+                                    userName={user.name ?? user.email}
+                                    initialRoles={user.roles}
+                                    allRoles={allRoles}
+                                />
+                            </AdminTd>
+                        </AdminRow>
+                    ))}
+                </tbody>
+            </AdminTable>
         </AdminTableContainer>
     );
 }

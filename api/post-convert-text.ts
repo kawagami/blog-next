@@ -10,7 +10,7 @@ async function postConvertText(text: string, direction: "t2s" | "s2t"): Promise<
     });
 
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`API ${response.status}: ${response.statusText}`);
     }
 
     return response.json();

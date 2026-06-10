@@ -1,6 +1,7 @@
 import getWsConnections from "@/api/get-ws-connections";
 import SaySomethingForm from "./say-something-form";
 import type { Metadata } from "next";
+import { AdminTable, AdminHeadRow, AdminRow, AdminTh, AdminTd } from "@/components/admin/table";
 
 export const metadata: Metadata = {
     title: "WS Management",
@@ -18,12 +19,12 @@ export default async function WsAdminPage() {
                         Online Connections ({connections.length})
                     </h2>
                     <div className="bg-white dark:bg-gray-900 shadow-lg rounded-lg overflow-hidden">
-                        <table className="w-full border-collapse border border-gray-200 dark:border-gray-700">
+                        <AdminTable>
                             <thead>
-                                <tr className="bg-gray-100 dark:bg-gray-800">
-                                    <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">Addr</th>
-                                    <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">User Email</th>
-                                </tr>
+                                <AdminHeadRow>
+                                    <AdminTh>Addr</AdminTh>
+                                    <AdminTh>User Email</AdminTh>
+                                </AdminHeadRow>
                             </thead>
                             <tbody>
                                 {connections.length === 0 ? (
@@ -34,18 +35,18 @@ export default async function WsAdminPage() {
                                     </tr>
                                 ) : (
                                     connections.map((conn) => (
-                                        <tr key={conn.addr} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                            <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100 font-mono text-sm">
+                                        <AdminRow key={conn.addr}>
+                                            <AdminTd className="font-mono text-sm">
                                                 {conn.addr}
-                                            </td>
-                                            <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100 text-sm">
+                                            </AdminTd>
+                                            <AdminTd className="text-sm">
                                                 {conn.user_email ?? <span className="text-gray-400">anonymous</span>}
-                                            </td>
-                                        </tr>
+                                            </AdminTd>
+                                        </AdminRow>
                                     ))
                                 )}
                             </tbody>
-                        </table>
+                        </AdminTable>
                     </div>
                 </section>
 

@@ -2,6 +2,7 @@ import getMembers from "@/api/get-members";
 import Link from "next/link";
 import type { Metadata } from "next";
 import AdminTableContainer from "@/components/admin/admin-table-container";
+import { AdminTable, AdminHeadRow, AdminRow, AdminTh, AdminTd } from "@/components/admin/table";
 
 export const metadata: Metadata = {
     title: "Members",
@@ -13,36 +14,36 @@ export default async function MembersPage() {
 
     return (
         <AdminTableContainer>
-            <table className="w-full border-collapse border border-gray-200 dark:border-gray-700">
-                    <thead>
-                        <tr className="bg-gray-100 dark:bg-gray-800">
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">ID</th>
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">Name</th>
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">Email</th>
-                            <th className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-left text-gray-700 dark:text-gray-300">Created At</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {members.map(member => (
-                            <tr key={member.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100 text-xs">
-                                    <Link href={`/admin/members/${member.id}`} className="text-blue-600 dark:text-blue-400 hover:underline">
-                                        {member.id}
-                                    </Link>
-                                </td>
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100">
-                                    <Link href={`/admin/members/${member.id}`} className="hover:underline">
-                                        {member.name}
-                                    </Link>
-                                </td>
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100">{member.email ?? '—'}</td>
-                                <td className="border border-gray-300 dark:border-gray-700 px-4 py-2 text-gray-900 dark:text-gray-100 text-sm">
-                                    {new Date(member.created_at).toLocaleString()}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-            </table>
+            <AdminTable>
+                <thead>
+                    <AdminHeadRow>
+                        <AdminTh>ID</AdminTh>
+                        <AdminTh>Name</AdminTh>
+                        <AdminTh>Email</AdminTh>
+                        <AdminTh>Created At</AdminTh>
+                    </AdminHeadRow>
+                </thead>
+                <tbody>
+                    {members.map(member => (
+                        <AdminRow key={member.id}>
+                            <AdminTd className="text-xs">
+                                <Link href={`/admin/members/${member.id}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                                    {member.id}
+                                </Link>
+                            </AdminTd>
+                            <AdminTd>
+                                <Link href={`/admin/members/${member.id}`} className="hover:underline">
+                                    {member.name}
+                                </Link>
+                            </AdminTd>
+                            <AdminTd>{member.email ?? '—'}</AdminTd>
+                            <AdminTd className="text-sm">
+                                {new Date(member.created_at).toLocaleString()}
+                            </AdminTd>
+                        </AdminRow>
+                    ))}
+                </tbody>
+            </AdminTable>
         </AdminTableContainer>
     );
 }

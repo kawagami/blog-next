@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useTransition } from "react";
+import { useState, useEffect, useRef } from "react";
 import getAuditLogs from "@/api/get-audit-logs";
+import usePagedList from "@/hooks/usePagedList";
 import type { AuditLog, HttpMethod } from "@/types";
 import { METHOD_BADGE, httpStatusBadgeClass } from "@/libs/badge-styles";
 
@@ -18,13 +19,10 @@ interface Filters {
 const defaultFilters: Filters = { user_email: '', method: '', path: '', from: '', to: '' };
 
 export default function AuditLogsClient() {
-    const [logs, setLogs] = useState<AuditLog[]>([]);
+    const { items: logs, setItems: setLogs, hasMore, isPending, load, loadMore } = usePagedList<AuditLog>(LIMIT);
     const [filters, setFilters] = useState<Filters>(defaultFilters);
     const [appliedFilters, setAppliedFilters] = useState<Filters>(defaultFilters);
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [isPending, startTransition] = useTransition();
 
     const logsRef = useRef<AuditLog[]>([]);
     const appliedFiltersRef = useRef<Filters>(defaultFilters);
@@ -33,15 +31,8 @@ export default function AuditLogsClient() {
     useEffect(() => { appliedFiltersRef.current = appliedFilters; }, [appliedFilters]);
 
     useEffect(() => {
-        startTransition(async () => {
-            try {
-                const data = await getAuditLogs({ page: 1, per_page: LIMIT });
-                setLogs(data);
-                setPage(1);
-                setHasMore(data.length >= LIMIT);
-            } catch { /* adminRequest handles auth redirect */ }
-        });
-    }, []);
+        load(page => getAuditLogs({ page, per_page: LIMIT }));
+    }, [load]);
 
     useEffect(() => {
         const id = setInterval(async () => {
@@ -55,47 +46,25 @@ export default function AuditLogsClient() {
             } catch { /* silent */ }
         }, 1_800_000);
         return () => clearInterval(id);
-    }, []);
+    }, [setLogs]);
 
     function handleSearch() {
         if (isPending) return;
         setError(null);
         setAppliedFilters(filters);
-        startTransition(async () => {
-            try {
-                const data = await getAuditLogs({ ...filters, page: 1, per_page: LIMIT });
-                setLogs(data);
-                setPage(1);
-                setHasMore(data.length >= LIMIT);
-            } catch { /* adminRequest handles auth redirect */ }
-        });
+        load(page => getAuditLogs({ ...filters, page, per_page: LIMIT }));
     }
 
     function handleReset() {
         setFilters(defaultFilters);
         setAppliedFilters(defaultFilters);
         setError(null);
-        startTransition(async () => {
-            try {
-                const data = await getAuditLogs({ page: 1, per_page: LIMIT });
-                setLogs(data);
-                setPage(1);
-                setHasMore(data.length >= LIMIT);
-            } catch { /* adminRequest handles auth redirect */ }
-        });
+        load(page => getAuditLogs({ page, per_page: LIMIT }));
     }
 
     function handleLoadMore() {
         if (isPending) return;
-        startTransition(async () => {
-            try {
-                const nextPage = page + 1;
-                const data = await getAuditLogs({ ...appliedFilters, page: nextPage, per_page: LIMIT });
-                setLogs(prev => [...prev, ...data]);
-                setPage(nextPage);
-                setHasMore(data.length >= LIMIT);
-            } catch { /* adminRequest handles auth redirect */ }
-        });
+        loadMore();
     }
 
     const inputClass = "px-2 py-1.5 text-sm rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-400";

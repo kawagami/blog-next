@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect } from "react";
 import getLogs from "@/api/get-logs";
+import usePagedList from "@/hooks/usePagedList";
 import type { Log, LogLevel } from "@/types";
 import { LEVEL_BADGE, LEVEL_ROW_BG } from "@/libs/badge-styles";
 
@@ -10,50 +11,25 @@ const LIMIT = 100;
 type LevelFilter = '' | LogLevel;
 
 export default function LogsClient() {
-    const [logs, setLogs] = useState<Log[]>([]);
+    const { items: logs, hasMore, isPending, load, loadMore } = usePagedList<Log>(LIMIT);
     const [level, setLevel] = useState<LevelFilter>('');
-    const [page, setPage] = useState(1);
-    const [hasMore, setHasMore] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [isPending, startTransition] = useTransition();
 
     useEffect(() => {
-        startTransition(async () => {
-            try {
-                const data = await getLogs({ page: 1, per_page: LIMIT });
-                setLogs(data);
-                setPage(1);
-                setHasMore(data.length >= LIMIT);
-            } catch { /* adminRequest handles auth redirect */ }
-        });
-    }, []);
+        load(page => getLogs({ page, per_page: LIMIT }));
+    }, [load]);
 
     function handleFilterChange(newLevel: LevelFilter) {
         if (newLevel === level || isPending) return;
         setError(null);
-        startTransition(async () => {
-            try {
-                const data = await getLogs({ level: newLevel || undefined, page: 1, per_page: LIMIT });
-                setLevel(newLevel);
-                setLogs(data);
-                setPage(1);
-                setHasMore(data.length >= LIMIT);
-            } catch { /* adminRequest handles auth redirect */ }
-        });
+        setLevel(newLevel);
+        load(page => getLogs({ level: newLevel || undefined, page, per_page: LIMIT }));
     }
 
     function handleLoadMore() {
         if (isPending) return;
         setError(null);
-        startTransition(async () => {
-            try {
-                const nextPage = page + 1;
-                const data = await getLogs({ level: level || undefined, page: nextPage, per_page: LIMIT });
-                setLogs(prev => [...prev, ...data]);
-                setPage(nextPage);
-                setHasMore(data.length >= LIMIT);
-            } catch { /* adminRequest handles auth redirect */ }
-        });
+        loadMore();
     }
 
     return (

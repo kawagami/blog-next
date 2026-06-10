@@ -5,7 +5,7 @@ async function getNewPassword(count = 1, length = 8): Promise<string[]> {
         `${process.env.API_URL}/tools/new_password?count=${count}&length=${length}`,
         { cache: 'no-store' }
     );
-    if (!res.ok) throw new Error(`Failed to fetch new password: ${res.status}`);
+    if (!res.ok) throw new Error(`API ${res.status}: ${res.statusText}`);
     return res.json();
 }
 

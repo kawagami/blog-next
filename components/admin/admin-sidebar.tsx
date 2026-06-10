@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -15,7 +15,7 @@ import {
     LogOut,
 } from "lucide-react";
 import { clearSession } from "@/app/admin/login/actions";
-import { restartTokenRefresh, stopTokenRefresh } from "@/libs/token-refresh";
+import { stopTokenRefresh } from "@/libs/token-refresh";
 
 const groups = [
     {
@@ -139,10 +139,6 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
 export default function AdminSidebar() {
     const pathname = usePathname();
     const [drawerOpen, setDrawerOpen] = useState(false);
-
-    useEffect(() => {
-        restartTokenRefresh();
-    }, []);
 
     return (
         <>
