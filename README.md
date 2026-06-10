@@ -55,7 +55,7 @@ app/
 components/   # 共用 UI 元件
 i18n/         # next-intl 設定（routing / request / navigation）
 messages/     # 翻譯字串（zh-TW.json / zh-CN.json / en.json）
-api/          # 前端 API 請求函式（fetch 封裝）
+api/          # 前端 API 請求函式（fetch 封裝，一個資源一檔：blogs / portfolio / images …）
 types/        # 後端 API 共用型別
 hooks/        # React custom hooks
 libs/         # 工具函式庫
