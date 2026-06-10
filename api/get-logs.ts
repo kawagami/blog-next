@@ -5,15 +5,15 @@ import type { Log, LogLevel } from "@/types";
 
 interface GetLogsParams {
     level?: LogLevel;
-    limit?: number;
-    offset?: number;
+    page?: number;
+    per_page?: number;
 }
 
-async function getLogs({ level, limit = 100, offset = 0 }: GetLogsParams = {}): Promise<Log[]> {
+async function getLogs({ level, page = 1, per_page = 100 }: GetLogsParams = {}): Promise<Log[]> {
     const params = new URLSearchParams();
     if (level) params.set('level', level);
-    params.set('limit', String(limit));
-    params.set('offset', String(offset));
+    params.set('page', String(page));
+    params.set('per_page', String(per_page));
 
     return adminRequest<Log[]>({
         url: `${process.env.API_URL}/logs?${params}`,

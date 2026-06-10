@@ -6,22 +6,23 @@ import { StatusLink } from "@/components/stocks/status-link";
 import { getStockChanges } from "@/app/admin/(main)/stocks/actions";
 import type { StockChange } from "@/types";
 
-const LIMIT = 50;
+const PER_PAGE = 50;
 
-function buildHref(status: string | undefined, offset: number) {
+function buildHref(status: string | undefined, page: number) {
     const params = new URLSearchParams();
     if (status) params.append("status", status);
-    if (offset > 0) params.append("offset", String(offset));
+    if (page > 1) params.append("page", String(page));
     const qs = params.toString();
     return `/admin/stocks/list${qs ? `?${qs}` : ""}`;
 }
 
-async function StockContent({ status, offset }: { status: string | undefined; offset: number }) {
-    const { data, total } = await getStockChanges(status ?? null, LIMIT, offset);
+async function StockContent({ status, page }: { status: string | undefined; page: number }) {
+    const { data, total } = await getStockChanges(status ?? null, page, PER_PAGE);
     const totalChange = data.reduce((sum: number, item: StockChange) => sum + (item.change ?? 0), 0);
     const totalCount = data.reduce((sum: number, item: StockChange) => sum + (item.change ? 1 : 0), 0);
-    const hasPrev = offset > 0;
-    const hasNext = offset + LIMIT < total;
+    const offset = (page - 1) * PER_PAGE;
+    const hasPrev = page > 1;
+    const hasNext = offset + PER_PAGE < total;
 
     return (
         <>
@@ -34,12 +35,12 @@ async function StockContent({ status, offset }: { status: string | undefined; of
             <StockTable data={data} />
             <div className="flex items-center justify-between mt-4">
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {offset + 1}–{Math.min(offset + LIMIT, total)} / {total}
+                    {offset + 1}–{Math.min(offset + PER_PAGE, total)} / {total}
                 </span>
                 <div className="flex gap-2">
                     {hasPrev ? (
                         <Link
-                            href={buildHref(status, offset - LIMIT)}
+                            href={buildHref(status, page - 1)}
                             className="flex items-center gap-1 px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
                         >
                             <ChevronLeft className="w-4 h-4" /> 上一頁
@@ -51,7 +52,7 @@ async function StockContent({ status, offset }: { status: string | undefined; of
                     )}
                     {hasNext ? (
                         <Link
-                            href={buildHref(status, offset + LIMIT)}
+                            href={buildHref(status, page + 1)}
                             className="flex items-center gap-1 px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
                         >
                             下一頁 <ChevronRight className="w-4 h-4" />
@@ -75,9 +76,9 @@ function StockContentSkeleton() {
     );
 }
 
-export default async function List({ searchParams }: { searchParams: Promise<{ status?: string; offset?: string }> }) {
-    const { status, offset: offsetStr } = await searchParams;
-    const offset = Math.max(0, Number(offsetStr ?? 0));
+export default async function List({ searchParams }: { searchParams: Promise<{ status?: string; page?: string }> }) {
+    const { status, page: pageStr } = await searchParams;
+    const page = Math.max(1, Number(pageStr ?? 1) || 1);
 
     return (
         <div className="w-full p-6 bg-gray-100 dark:bg-gray-800">
@@ -88,8 +89,8 @@ export default async function List({ searchParams }: { searchParams: Promise<{ s
                     </StatusLink>
                 ))}
             </div>
-            <Suspense key={`${status ?? ''}-${offset}`} fallback={<StockContentSkeleton />}>
-                <StockContent status={status} offset={offset} />
+            <Suspense key={`${status ?? ''}-${page}`} fallback={<StockContentSkeleton />}>
+                <StockContent status={status} page={page} />
             </Suspense>
         </div>
     );

@@ -12,7 +12,7 @@ type LevelFilter = '' | LogLevel;
 export default function LogsClient() {
     const [logs, setLogs] = useState<Log[]>([]);
     const [level, setLevel] = useState<LevelFilter>('');
-    const [offset, setOffset] = useState(0);
+    const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
@@ -20,9 +20,9 @@ export default function LogsClient() {
     useEffect(() => {
         startTransition(async () => {
             try {
-                const data = await getLogs({ limit: LIMIT, offset: 0 });
+                const data = await getLogs({ page: 1, per_page: LIMIT });
                 setLogs(data);
-                setOffset(data.length);
+                setPage(1);
                 setHasMore(data.length >= LIMIT);
             } catch { /* adminRequest handles auth redirect */ }
         });
@@ -33,10 +33,10 @@ export default function LogsClient() {
         setError(null);
         startTransition(async () => {
             try {
-                const data = await getLogs({ level: newLevel || undefined, limit: LIMIT, offset: 0 });
+                const data = await getLogs({ level: newLevel || undefined, page: 1, per_page: LIMIT });
                 setLevel(newLevel);
                 setLogs(data);
-                setOffset(data.length);
+                setPage(1);
                 setHasMore(data.length >= LIMIT);
             } catch { /* adminRequest handles auth redirect */ }
         });
@@ -47,9 +47,10 @@ export default function LogsClient() {
         setError(null);
         startTransition(async () => {
             try {
-                const data = await getLogs({ level: level || undefined, limit: LIMIT, offset });
+                const nextPage = page + 1;
+                const data = await getLogs({ level: level || undefined, page: nextPage, per_page: LIMIT });
                 setLogs(prev => [...prev, ...data]);
-                setOffset(prev => prev + data.length);
+                setPage(nextPage);
                 setHasMore(data.length >= LIMIT);
             } catch { /* adminRequest handles auth redirect */ }
         });

@@ -21,7 +21,7 @@ export default function AuditLogsClient() {
     const [logs, setLogs] = useState<AuditLog[]>([]);
     const [filters, setFilters] = useState<Filters>(defaultFilters);
     const [appliedFilters, setAppliedFilters] = useState<Filters>(defaultFilters);
-    const [offset, setOffset] = useState(0);
+    const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isPending, startTransition] = useTransition();
@@ -35,9 +35,9 @@ export default function AuditLogsClient() {
     useEffect(() => {
         startTransition(async () => {
             try {
-                const data = await getAuditLogs({ limit: LIMIT, offset: 0 });
+                const data = await getAuditLogs({ page: 1, per_page: LIMIT });
                 setLogs(data);
-                setOffset(data.length);
+                setPage(1);
                 setHasMore(data.length >= LIMIT);
             } catch { /* adminRequest handles auth redirect */ }
         });
@@ -46,12 +46,11 @@ export default function AuditLogsClient() {
     useEffect(() => {
         const id = setInterval(async () => {
             try {
-                const fresh = await getAuditLogs({ ...appliedFiltersRef.current, limit: LIMIT, offset: 0 });
+                const fresh = await getAuditLogs({ ...appliedFiltersRef.current, page: 1, per_page: LIMIT });
                 const existingIds = new Set(logsRef.current.map(l => l.id));
                 const newEntries = fresh.filter(l => !existingIds.has(l.id));
                 if (newEntries.length > 0) {
                     setLogs(prev => [...newEntries, ...prev]);
-                    setOffset(prev => prev + newEntries.length);
                 }
             } catch { /* silent */ }
         }, 1_800_000);
@@ -64,9 +63,9 @@ export default function AuditLogsClient() {
         setAppliedFilters(filters);
         startTransition(async () => {
             try {
-                const data = await getAuditLogs({ ...filters, limit: LIMIT, offset: 0 });
+                const data = await getAuditLogs({ ...filters, page: 1, per_page: LIMIT });
                 setLogs(data);
-                setOffset(data.length);
+                setPage(1);
                 setHasMore(data.length >= LIMIT);
             } catch { /* adminRequest handles auth redirect */ }
         });
@@ -78,9 +77,9 @@ export default function AuditLogsClient() {
         setError(null);
         startTransition(async () => {
             try {
-                const data = await getAuditLogs({ limit: LIMIT, offset: 0 });
+                const data = await getAuditLogs({ page: 1, per_page: LIMIT });
                 setLogs(data);
-                setOffset(data.length);
+                setPage(1);
                 setHasMore(data.length >= LIMIT);
             } catch { /* adminRequest handles auth redirect */ }
         });
@@ -90,9 +89,10 @@ export default function AuditLogsClient() {
         if (isPending) return;
         startTransition(async () => {
             try {
-                const data = await getAuditLogs({ ...appliedFilters, limit: LIMIT, offset });
+                const nextPage = page + 1;
+                const data = await getAuditLogs({ ...appliedFilters, page: nextPage, per_page: LIMIT });
                 setLogs(prev => [...prev, ...data]);
-                setOffset(prev => prev + data.length);
+                setPage(nextPage);
                 setHasMore(data.length >= LIMIT);
             } catch { /* adminRequest handles auth redirect */ }
         });

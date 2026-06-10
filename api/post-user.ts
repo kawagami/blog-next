@@ -8,8 +8,8 @@ interface CreateUserInput {
     password: string;
 }
 
-async function postUser(user: CreateUserInput): Promise<unknown> {
-    return adminRequest({
+async function postUser(user: CreateUserInput): Promise<void> {
+    await adminRequest({
         url: `${process.env.API_URL}/admin/users`,
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

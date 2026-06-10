@@ -18,11 +18,12 @@ export async function saySomethingToSomeone(
         return { ok: false, message: "addr and message are required" };
     }
 
-    const params = new URLSearchParams({ addr, message });
-
     try {
         await adminRequest({
-            url: `${process.env.API_URL}/ws/say_something_to_someone?${params}`,
+            url: `${process.env.API_URL}/ws/say_something_to_someone`,
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ addr, message }),
         });
         return { ok: true, message: "Sent" };
     } catch (err) {
