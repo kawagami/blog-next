@@ -22,5 +22,5 @@ export const LEVEL_BADGE: Record<string, string> = {
 export const LEVEL_ROW_BG: Record<string, string> = {
     ERROR: "bg-red-50 dark:bg-red-900/10 hover:bg-red-100/70 dark:hover:bg-red-900/20",
     WARN: "bg-yellow-50 dark:bg-yellow-900/10 hover:bg-yellow-100/70 dark:hover:bg-yellow-900/20",
-    INFO: "hover:bg-gray-50 dark:hover:bg-gray-800/50",
+    INFO: "hover:bg-stone-50 dark:hover:bg-stone-800/50",
 };

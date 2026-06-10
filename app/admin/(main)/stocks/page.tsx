@@ -19,9 +19,9 @@ const LINKS: Link[] = [
 ];
 
 const COLOR_MAP: Record<string, string> = {
-    green: "bg-green-600 border-green-700 hover:bg-green-700",
-    indigo: "bg-indigo-600 border-indigo-700 hover:bg-indigo-700",
-    blue: "bg-blue-600 border-blue-700 hover:bg-blue-700",
+    green: "bg-primary-600 border-primary-700 hover:bg-primary-700",
+    indigo: "bg-primary-600 border-primary-700 hover:bg-primary-700",
+    blue: "bg-primary-600 border-primary-700 hover:bg-primary-700",
 };
 
 export default function Stocks() {
@@ -37,7 +37,7 @@ export default function Stocks() {
     }
 
     return (
-        <div className="w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-gray-100 dark:bg-gray-800">
+        <div className="w-4/5 max-h-[calc(100svh-180px)] overflow-auto p-6 bg-stone-100 dark:bg-stone-800">
             <div className="w-full flex flex-wrap justify-center gap-4">
                 {LINKS.map(({ href, label, color }) => {
                     const isLoading = isPending && loadingHref === href;

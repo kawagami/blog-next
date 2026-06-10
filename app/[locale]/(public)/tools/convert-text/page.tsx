@@ -59,7 +59,7 @@ export default function ConvertText() {
                             key={value}
                             type="button"
                             onClick={() => setDirection(value)}
-                            className={`px-4 py-1.5 rounded-md border text-sm font-medium transition-colors ${direction === value ? "bg-blue-500 text-white border-blue-500" : "border-gray-300 hover:border-blue-400 dark:border-gray-600"}`}
+                            className={`px-4 py-1.5 rounded-md border text-sm font-medium transition-colors ${direction === value ? "bg-primary-500 text-white border-primary-500" : "border-stone-300 hover:border-primary-400 dark:border-stone-600"}`}
                         >
                             {label}
                         </button>
@@ -69,11 +69,11 @@ export default function ConvertText() {
                     name="inputText"
                     rows={5}
                     placeholder={direction === "s2t" ? "請輸入簡體中文" : "請輸入繁體中文"}
-                    className="w-full mb-3 p-3 text-lg border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-600"
+                    className="w-full mb-3 p-3 text-lg border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-stone-800 dark:border-stone-600"
                 />
                 <button
                     type="submit"
-                    className="px-5 py-2 text-lg bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-3"
+                    className="px-5 py-2 text-lg bg-primary-500 text-white rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-400 mb-3"
                     disabled={isPending}
                 >
                     {isPending ? "處理中..." : "轉換"}
@@ -84,7 +84,7 @@ export default function ConvertText() {
                 rows={5}
                 readOnly
                 value={state.converted_text}
-                className="w-4/6 p-3 text-lg border border-gray-300 rounded-md bg-gray-100 dark:bg-gray-700 dark:border-gray-600"
+                className="w-4/6 p-3 text-lg border border-stone-300 rounded-md bg-stone-100 dark:bg-stone-700 dark:border-stone-600"
             />
             <button
                 onClick={handleCopy}

@@ -44,17 +44,17 @@ export default function NotificationFeed() {
     return (
         <div className="w-full h-[calc(100svh-120px)] overflow-auto p-6">
             <div className="max-w-2xl mx-auto flex flex-col gap-3">
-                <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">WS Notifications</h1>
+                <h1 className="text-2xl font-bold text-stone-800 dark:text-stone-100">WS Notifications</h1>
                 {entries.length === 0 ? (
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">Waiting for events…</p>
+                    <p className="text-stone-500 dark:text-stone-400 text-sm">Waiting for events…</p>
                 ) : (
                     entries.map(entry => (
-                        <div key={entry.key} className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow text-sm font-mono">
+                        <div key={entry.key} className="bg-white dark:bg-stone-800 rounded-lg p-4 shadow text-sm font-mono">
                             <div className="flex items-center gap-3 mb-1">
-                                <span className="text-indigo-600 dark:text-indigo-400 font-semibold">{entry.type}</span>
-                                <span className="text-gray-400 text-xs">{entry.ts}</span>
+                                <span className="text-primary-600 dark:text-primary-400 font-semibold">{entry.type}</span>
+                                <span className="text-stone-400 text-xs">{entry.ts}</span>
                             </div>
-                            <pre className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap break-all text-xs">
+                            <pre className="text-stone-700 dark:text-stone-300 whitespace-pre-wrap break-all text-xs">
                                 {JSON.stringify(entry.data, null, 2)}
                             </pre>
                         </div>

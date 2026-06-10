@@ -34,23 +34,23 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
     };
 
     const renderSetting = (setting: Setting) => (
-        <div key={setting.key} className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+        <div key={setting.key} className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-lg p-4">
+            <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">
                 {setting.description}
-                <span className="ml-2 text-xs text-gray-400 dark:text-gray-500 font-mono">{setting.key}</span>
+                <span className="ml-2 text-xs text-stone-400 dark:text-stone-500 font-mono">{setting.key}</span>
             </label>
             <div className="flex gap-2 mt-2">
                 <input
                     type="text"
                     value={drafts[setting.key] ?? ""}
                     onChange={e => setDrafts(prev => ({ ...prev, [setting.key]: e.target.value }))}
-                    className="flex-1 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="flex-1 px-3 py-2 text-sm border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder={setting.description}
                 />
                 <button
                     onClick={() => handleSave(setting.key)}
                     disabled={saving[setting.key]}
-                    className="px-4 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-lg transition-colors"
+                    className="px-4 py-2 text-sm font-medium bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white rounded-lg transition-colors"
                 >
                     {saving[setting.key] ? "儲存中..." : "儲存"}
                 </button>
@@ -63,15 +63,15 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
 
     return (
         <div>
-            <div className="flex gap-1 border-b border-gray-200 dark:border-gray-700 mb-6">
+            <div className="flex gap-1 border-b border-stone-200 dark:border-stone-700 mb-6">
                 {categories.map(cat => (
                     <button
                         key={cat}
                         onClick={() => setActiveTab(cat)}
                         className={`px-4 py-2 text-sm font-medium capitalize transition-colors border-b-2 -mb-px
                             ${activeTab === cat
-                                ? "border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400"
-                                : "border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                                ? "border-primary-600 text-primary-600 dark:text-primary-400 dark:border-primary-400"
+                                : "border-transparent text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200"
                             }`}
                     >
                         {cat}

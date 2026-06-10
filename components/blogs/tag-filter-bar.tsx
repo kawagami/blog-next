@@ -30,8 +30,8 @@ export default function TagFilterBar({ tags, selectedTag }: Props) {
                     onClick={() => selectTag(tag)}
                     className={`text-xs font-semibold px-2.5 py-1 rounded transition-colors text-left ${
                         selectedTag === tag
-                            ? 'bg-blue-600 text-white dark:bg-blue-500'
-                            : 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800'
+                            ? 'bg-primary-600 text-white dark:bg-primary-500'
+                            : 'bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300 hover:bg-primary-200 dark:hover:bg-primary-800'
                     }`}
                 >
                     {tag}

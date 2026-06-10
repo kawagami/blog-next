@@ -47,22 +47,22 @@ export default function Login() {
 
     return (
         <div className="w-full h-[calc(100svh-120px)] overflow-auto flex justify-center items-start">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-100">Login</h2>
+            <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-stone-800 rounded-lg shadow-md">
+                <h2 className="text-2xl font-bold text-center text-stone-800 dark:text-stone-100">Login</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email</label>
-                        <input type="email" id="email" name="email" className="w-full px-4 py-2 mt-1 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your email" required />
+                        <label htmlFor="email" className="block text-sm font-medium text-stone-700 dark:text-stone-300">Email</label>
+                        <input type="email" id="email" name="email" className="w-full px-4 py-2 mt-1 text-stone-900 dark:text-stone-100 bg-white dark:bg-stone-700 border dark:border-stone-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" placeholder="Enter your email" required />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                        <input type="password" id="password" name="password" className="w-full px-4 py-2 mt-1 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 border dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your password" required />
+                        <label htmlFor="password" className="block text-sm font-medium text-stone-700 dark:text-stone-300">Password</label>
+                        <input type="password" id="password" name="password" className="w-full px-4 py-2 mt-1 text-stone-900 dark:text-stone-100 bg-white dark:bg-stone-700 border dark:border-stone-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" placeholder="Enter your password" required />
                     </div>
                     {error && <p className="text-sm text-red-500">{error}</p>}
                     <button
                         type="submit"
                         disabled={pending}
-                        className={`w-full px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 ${pending ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`w-full px-4 py-2 text-white bg-primary-600 rounded-md hover:bg-primary-700 focus:ring-4 focus:ring-primary-500 focus:ring-opacity-50 ${pending ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {pending ? (
                             <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" />Logging in...</span>

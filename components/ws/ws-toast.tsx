@@ -37,7 +37,7 @@ function UserLeftToast(_: ToastItemProps) { return null; }
 function BlogCreatedToast({ data, onDismiss }: ToastItemProps) {
     const blog = data as BlogData;
     return (
-        <ToastShell bg="bg-blue-600 dark:bg-blue-700" onDismiss={onDismiss}>
+        <ToastShell bg="bg-primary-600 dark:bg-primary-700" onDismiss={onDismiss}>
             <p className="font-semibold">新文章發布</p>
             <p>{blog.title}</p>
         </ToastShell>

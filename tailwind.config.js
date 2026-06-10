@@ -11,6 +11,22 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        // 森林主色階（moss / forest green）
+        primary: {
+          50: '#f3f8f4',
+          100: '#d8f3dc',
+          200: '#b7e4c7',
+          300: '#95d5b2',
+          400: '#74c69d',
+          500: '#52b788',
+          600: '#40916c',
+          700: '#2d6a4f',
+          800: '#1b4332',
+          900: '#122e23',
+          950: '#081c15',
+        },
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

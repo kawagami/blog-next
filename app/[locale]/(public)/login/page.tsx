@@ -29,19 +29,19 @@ function LoginContent() {
             <div className="flex flex-col gap-3 w-64">
                 <button
                     onClick={() => handleLogin('google')}
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-stone-300 bg-white text-stone-700 hover:bg-stone-50 dark:bg-stone-800 dark:text-white dark:border-stone-600 dark:hover:bg-stone-700 transition-colors"
                 >
                     {t('googleLogin')}
                 </button>
                 <button
                     disabled
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500 dark:border-gray-700 cursor-not-allowed"
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-500 dark:border-stone-700 cursor-not-allowed"
                 >
                     {t('githubLogin')} <span className="text-xs">（{t('comingSoon')}）</span>
                 </button>
                 <button
                     disabled
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-200 bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500 dark:border-gray-700 cursor-not-allowed"
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-stone-200 bg-stone-100 text-stone-400 dark:bg-stone-800 dark:text-stone-500 dark:border-stone-700 cursor-not-allowed"
                 >
                     {t('lineLogin')} <span className="text-xs">（{t('comingSoon')}）</span>
                 </button>

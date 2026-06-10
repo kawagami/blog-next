@@ -81,8 +81,8 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
                                 onClick={() => toggle(group.label)}
                                 className={`w-full flex items-center justify-between px-4 py-2 text-sm font-semibold rounded-lg transition-colors
                                     ${hasActive
-                                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30"
-                                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                        ? "text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30"
+                                        : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
                                     }`}
                             >
                                 <span className="flex items-center gap-2">
@@ -105,8 +105,8 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
                                                 onClick={onNavigate}
                                                 className={`block px-4 py-1.5 text-sm rounded-lg transition-colors
                                                     ${isActive
-                                                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-900/50 font-medium"
-                                                        : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                                        ? "text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-900/50 font-medium"
+                                                        : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
                                                     }`}
                                             >
                                                 {item.label}
@@ -119,7 +119,7 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
                     );
                 })}
             </div>
-            <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+            <div className="border-t border-stone-200 dark:border-stone-700 p-4">
                 <button
                     onClick={() => {
                         stopTokenRefresh();
@@ -143,13 +143,13 @@ export default function AdminSidebar() {
     return (
         <>
             {/* Desktop sidebar */}
-            <aside className="hidden sm:flex flex-col w-52 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-900/60 h-screen sticky top-0">
+            <aside className="hidden sm:flex flex-col w-52 shrink-0 border-r border-stone-200 dark:border-stone-700 bg-white/60 dark:bg-stone-900/60 h-screen sticky top-0">
                 <SidebarContent pathname={pathname} />
             </aside>
 
             {/* Mobile: hamburger button */}
             <button
-                className="sm:hidden fixed top-3 left-3 z-40 p-1.5 rounded-lg bg-white dark:bg-gray-800 shadow border border-gray-200 dark:border-gray-700"
+                className="sm:hidden fixed top-3 left-3 z-40 p-1.5 rounded-lg bg-white dark:bg-stone-800 shadow border border-stone-200 dark:border-stone-700"
                 onClick={() => setDrawerOpen(true)}
                 aria-label="開啟選單"
             >
@@ -166,11 +166,11 @@ export default function AdminSidebar() {
 
             {/* Mobile: drawer */}
             <aside
-                className={`sm:hidden fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-gray-900 shadow-xl transition-transform duration-300
+                className={`sm:hidden fixed top-0 left-0 z-50 h-full w-64 bg-white dark:bg-stone-900 shadow-xl transition-transform duration-300
                     ${drawerOpen ? "translate-x-0" : "-translate-x-full"}`}
             >
-                <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                    <span className="font-semibold text-gray-800 dark:text-white">Admin</span>
+                <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 dark:border-stone-700">
+                    <span className="font-semibold text-stone-800 dark:text-white">Admin</span>
                     <button onClick={() => setDrawerOpen(false)} aria-label="關閉選單">
                         <X size={20} />
                     </button>

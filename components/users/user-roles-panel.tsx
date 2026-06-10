@@ -32,7 +32,7 @@ export default function UserRolesPanel({ userId, userName, initialRoles, allRole
         <div>
             <button
                 onClick={() => setExpanded(prev => !prev)}
-                className="flex items-center gap-1 text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="flex items-center gap-1 text-sm text-primary-600 dark:text-primary-400 hover:underline"
             >
                 {expanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                 {assignedIds.length > 0 ? `${assignedIds.length} role(s)` : '無'}
@@ -49,8 +49,8 @@ export default function UserRolesPanel({ userId, userName, initialRoles, allRole
                                 disabled={isPending}
                                 className={`px-2 py-0.5 text-xs rounded-full border transition-colors ${
                                     active
-                                        ? 'bg-indigo-100 border-indigo-400 text-indigo-700 dark:bg-indigo-900 dark:border-indigo-500 dark:text-indigo-300'
-                                        : 'bg-gray-100 border-gray-300 text-gray-600 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400'
+                                        ? 'bg-primary-100 border-primary-400 text-primary-700 dark:bg-primary-900 dark:border-primary-500 dark:text-primary-300'
+                                        : 'bg-stone-100 border-stone-300 text-stone-600 dark:bg-stone-800 dark:border-stone-600 dark:text-stone-400'
                                 }`}
                             >
                                 {role.name}

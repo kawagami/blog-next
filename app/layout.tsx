@@ -22,7 +22,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     <script dangerouslySetInnerHTML={{ __html: `(function(){try{if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark');}}catch(e){}})();` }} />
                 )}
             </head>
-            <body className="bg-gradient-to-br from-blue-100 via-green-100 to-red-100 dark:from-blue-900 dark:via-green-900 dark:to-red-900 dark:text-white">
+            <body className="bg-gradient-to-b from-primary-50 to-stone-100 text-stone-800 dark:from-primary-950 dark:to-stone-900 dark:text-stone-100">
                 <WsProvider jwt={jwt}>
                     <BubbleBackground />
                     {children}

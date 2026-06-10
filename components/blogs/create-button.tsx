@@ -13,7 +13,7 @@ export default function CreateButton() {
         <LoadingButton
             loading={isPending}
             onClick={() => startTransition(() => router.push(`/admin/blogs/${uuidv4()}`))}
-            className={`px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 ${isPending ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-600"}`}
+            className={`px-6 py-2 bg-primary-500 text-white font-semibold rounded-lg shadow-md flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-opacity-75 ${isPending ? "opacity-60 cursor-not-allowed" : "hover:bg-primary-600"}`}
         >
             新增 Blog
         </LoadingButton>

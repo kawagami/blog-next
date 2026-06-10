@@ -28,8 +28,8 @@ function SummaryCard({ label, value, colored, positive }: {
     positive?: boolean;
 }) {
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-xl px-4 py-3 shadow border dark:border-gray-700">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">{label}</p>
+        <div className="bg-white dark:bg-stone-800 rounded-xl px-4 py-3 shadow border dark:border-stone-700">
+            <p className="text-xs text-stone-500 dark:text-stone-400 mb-1">{label}</p>
             <p className={`font-semibold text-lg ${colored ? (positive ? 'text-red-500' : 'text-green-500') : ''}`}>
                 {value}
             </p>
@@ -116,7 +116,7 @@ export default function PortfolioClient({ initialEntries }: Props) {
                 <div className="flex justify-end">
                     <button
                         onClick={() => setMode({ type: 'add' })}
-                        className="flex items-center gap-2 px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 text-sm"
+                        className="flex items-center gap-2 px-4 py-2 rounded bg-primary-500 text-white hover:bg-primary-600 text-sm"
                     >
                         <Plus size={16} />
                         {t('addEntry')}
@@ -126,7 +126,7 @@ export default function PortfolioClient({ initialEntries }: Props) {
 
             {/* Add form */}
             {mode.type === 'add' && (
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow border dark:border-gray-700">
+                <div className="bg-white dark:bg-stone-800 rounded-xl p-5 shadow border dark:border-stone-700">
                     <h2 className="font-semibold mb-4">{t('addEntry')}</h2>
                     <PortfolioForm
                         onSave={handleAdd}
@@ -137,7 +137,7 @@ export default function PortfolioClient({ initialEntries }: Props) {
 
             {/* Edit form */}
             {mode.type === 'edit' && (
-                <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow border dark:border-gray-700">
+                <div className="bg-white dark:bg-stone-800 rounded-xl p-5 shadow border dark:border-stone-700">
                     <h2 className="font-semibold mb-4">{t('editEntry')}</h2>
                     <PortfolioForm
                         initial={mode.entry}
@@ -149,7 +149,7 @@ export default function PortfolioClient({ initialEntries }: Props) {
 
             {/* Entry list */}
             {entries.length === 0 && mode.type === 'list' ? (
-                <p className="text-center text-gray-500 dark:text-gray-400 py-12">{t('noEntries')}</p>
+                <p className="text-center text-stone-500 dark:text-stone-400 py-12">{t('noEntries')}</p>
             ) : (
                 <div className="flex flex-col gap-3">
                     {entries.map(entry => {
@@ -157,25 +157,25 @@ export default function PortfolioClient({ initialEntries }: Props) {
                         return (
                             <div
                                 key={entry.id}
-                                className="bg-white dark:bg-gray-800 rounded-xl px-5 py-4 shadow border dark:border-gray-700 flex items-center justify-between gap-4"
+                                className="bg-white dark:bg-stone-800 rounded-xl px-5 py-4 shadow border dark:border-stone-700 flex items-center justify-between gap-4"
                             >
                                 <div className="flex flex-col gap-1 min-w-0 flex-1">
                                     {/* Stock code + name */}
                                     <div className="flex items-baseline gap-2">
                                         <span className="font-bold text-lg">{entry.stock_code}</span>
                                         {entry.stock_name && (
-                                            <span className="text-sm text-gray-500 dark:text-gray-400">{entry.stock_name}</span>
+                                            <span className="text-sm text-stone-500 dark:text-stone-400">{entry.stock_name}</span>
                                         )}
                                     </div>
                                     {/* Meta */}
-                                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                                    <span className="text-xs text-stone-500 dark:text-stone-400">
                                         {entry.buy_date} · {entry.shares.toLocaleString()} {t('shares')} · @{entry.cost_per_share}
                                     </span>
                                     {/* P&L */}
                                     <div className="flex items-center gap-3 mt-1 text-sm">
                                         {hasPnl ? (
                                             <>
-                                                <span className="text-gray-500 dark:text-gray-400">
+                                                <span className="text-stone-500 dark:text-stone-400">
                                                     {t('currentPrice')}: {entry.current_price?.toFixed(2)}
                                                 </span>
                                                 <span className={`font-semibold ${entry.pnl! >= 0 ? 'text-red-500' : 'text-green-500'}`}>
@@ -186,7 +186,7 @@ export default function PortfolioClient({ initialEntries }: Props) {
                                                 </span>
                                             </>
                                         ) : (
-                                            <span className="text-gray-400 dark:text-gray-500 text-xs">{t('noPriceData')}</span>
+                                            <span className="text-stone-400 dark:text-stone-500 text-xs">{t('noPriceData')}</span>
                                         )}
                                     </div>
                                 </div>
@@ -196,14 +196,14 @@ export default function PortfolioClient({ initialEntries }: Props) {
                                     <button
                                         onClick={() => setMode({ type: 'history', entry })}
                                         title={t('viewHistory')}
-                                        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-500"
+                                        className="p-2 rounded hover:bg-stone-100 dark:hover:bg-stone-700 text-primary-500"
                                     >
                                         <BarChart2 size={16} />
                                     </button>
                                     <button
                                         onClick={() => setMode({ type: 'edit', entry })}
                                         title={t('editEntry')}
-                                        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                                        className="p-2 rounded hover:bg-stone-100 dark:hover:bg-stone-700"
                                     >
                                         <Pencil size={16} />
                                     </button>
@@ -211,7 +211,7 @@ export default function PortfolioClient({ initialEntries }: Props) {
                                         onClick={() => handleDelete(entry.id)}
                                         disabled={mutating}
                                         title={t('deleteEntry')}
-                                        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-red-500 disabled:opacity-50"
+                                        className="p-2 rounded hover:bg-stone-100 dark:hover:bg-stone-700 text-red-500 disabled:opacity-50"
                                     >
                                         <Trash2 size={16} />
                                     </button>

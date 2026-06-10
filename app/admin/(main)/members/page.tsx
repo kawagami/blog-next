@@ -27,7 +27,7 @@ export default async function MembersPage() {
                     {members.map(member => (
                         <AdminRow key={member.id}>
                             <AdminTd className="text-xs">
-                                <Link href={`/admin/members/${member.id}`} className="text-blue-600 dark:text-blue-400 hover:underline">
+                                <Link href={`/admin/members/${member.id}`} className="text-primary-600 dark:text-primary-400 hover:underline">
                                     {member.id}
                                 </Link>
                             </AdminTd>

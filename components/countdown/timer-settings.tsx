@@ -26,7 +26,7 @@ export default function TimerSettings({ minutes, setMinutes, disabled, onEnterPr
 
     return (
         <form onSubmit={handleSubmit} className="mb-6">
-            <label className="text-lg font-medium block mb-2 text-gray-700 dark:text-gray-300">設定分鐘數：</label>
+            <label className="text-lg font-medium block mb-2 text-stone-700 dark:text-stone-300">設定分鐘數：</label>
             <div className="relative">
                 <input
                     ref={inputRef}
@@ -38,7 +38,7 @@ export default function TimerSettings({ minutes, setMinutes, disabled, onEnterPr
                     min="1"
                     max="999"
                     disabled={disabled}
-                    className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                    className="w-full p-3 border border-stone-300 dark:border-stone-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100"
                     onMouseEnter={handleMouseEnter}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' && !disabled) {

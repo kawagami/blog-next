@@ -12,7 +12,7 @@ export default async function SettingsPage() {
 
     return (
         <div className="w-full max-w-2xl">
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">設定</h1>
+            <h1 className="text-xl font-semibold text-stone-900 dark:text-white mb-6">設定</h1>
             <SettingsClient initialSettings={settings} />
         </div>
     );

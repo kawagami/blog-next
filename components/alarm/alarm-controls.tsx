@@ -11,7 +11,7 @@ export default function AlarmControls({ isRunning, isBeeping, startAlarm, resetA
     return (
         <>
             {!isRunning && !isBeeping && (
-                <button onClick={startAlarm} className="w-full px-6 py-3 bg-purple-500 text-white font-semibold rounded-lg shadow-md hover:bg-purple-600 transition focus:outline-none focus:ring-2 focus:ring-purple-400">
+                <button onClick={startAlarm} className="w-full px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg shadow-md hover:bg-primary-600 transition focus:outline-none focus:ring-2 focus:ring-primary-400">
                     設定鬧鐘
                 </button>
             )}

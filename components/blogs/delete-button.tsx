@@ -31,7 +31,7 @@ export default function DeleteButton({ uuid }: { uuid: string }) {
             loading={isDeleting}
             onClick={handleDelete}
             className={`ml-2 px-4 py-2 font-medium rounded-lg text-white flex items-center gap-1 transition duration-200 ${isDeleting
-                ? "bg-gray-400 cursor-not-allowed"
+                ? "bg-stone-400 cursor-not-allowed"
                 : "bg-red-500 hover:bg-red-600 focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
                 }`}
         >

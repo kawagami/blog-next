@@ -19,7 +19,7 @@ export default function HackmdNoteTagButtons({ tags, openArray, setOpenArray }: 
         setOpenArray(result);
     };
 
-    const commonStyle = "p-2 border-2 rounded-lg bg-gray-200 dark:bg-gray-800 dark:text-white hover:scale-105";
+    const commonStyle = "p-2 border-2 rounded-lg bg-stone-200 dark:bg-stone-800 dark:text-white hover:border-primary-400 transition-colors";
 
     return (
         <>
@@ -37,8 +37,8 @@ export default function HackmdNoteTagButtons({ tags, openArray, setOpenArray }: 
                     <div className="flex flex-wrap justify-center gap-2">
                         {tags.map(tag => {
                             const tailwindStyle = openArray.includes(tag.name)
-                                ? "invert bg-blue-500 hover:bg-blue-400"
-                                : "hover:bg-blue-100 dark:hover:bg-blue-900 bg-gray-300 dark:bg-gray-600";
+                                ? "invert bg-primary-500 hover:bg-primary-400"
+                                : "hover:bg-primary-100 dark:hover:bg-primary-900 bg-stone-300 dark:bg-stone-600";
                             return (
                                 <button
                                     type="button"

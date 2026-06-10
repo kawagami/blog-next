@@ -12,29 +12,29 @@ export default function SaySomethingForm() {
     return (
         <form action={formAction} className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Addr</label>
+                <label className="text-sm font-medium text-stone-700 dark:text-stone-300">Addr</label>
                 <input
                     name="addr"
                     type="text"
                     placeholder="socket addr (e.g. 1.2.3.4:5678)"
-                    className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                    className="border border-stone-300 dark:border-stone-600 rounded px-3 py-2 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm"
                     required
                 />
             </div>
             <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Message</label>
+                <label className="text-sm font-medium text-stone-700 dark:text-stone-300">Message</label>
                 <input
                     name="message"
                     type="text"
                     placeholder="message content"
-                    className="border border-gray-300 dark:border-gray-600 rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
+                    className="border border-stone-300 dark:border-stone-600 rounded px-3 py-2 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm"
                     required
                 />
             </div>
             <button
                 type="submit"
                 disabled={isPending}
-                className="self-start px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white text-sm font-medium rounded"
+                className="self-start px-4 py-2 bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white text-sm font-medium rounded"
             >
                 {isPending ? (
                     <span className="flex items-center gap-1"><Loader2 className="w-4 h-4 animate-spin" />Sending…</span>

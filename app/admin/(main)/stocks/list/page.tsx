@@ -34,31 +34,31 @@ async function StockContent({ status, page }: { status: string | undefined; page
             </div>
             <StockTable data={data} />
             <div className="flex items-center justify-between mt-4">
-                <span className="text-sm text-gray-500 dark:text-gray-400">
+                <span className="text-sm text-stone-500 dark:text-stone-400">
                     {offset + 1}–{Math.min(offset + PER_PAGE, total)} / {total}
                 </span>
                 <div className="flex gap-2">
                     {hasPrev ? (
                         <Link
                             href={buildHref(status, page - 1)}
-                            className="flex items-center gap-1 px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                            className="flex items-center gap-1 px-3 py-1.5 rounded border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 text-sm"
                         >
                             <ChevronLeft className="w-4 h-4" /> 上一頁
                         </Link>
                     ) : (
-                        <span className="flex items-center gap-1 px-3 py-1.5 rounded border border-gray-200 dark:border-gray-700 text-gray-300 dark:text-gray-600 text-sm cursor-not-allowed">
+                        <span className="flex items-center gap-1 px-3 py-1.5 rounded border border-stone-200 dark:border-stone-700 text-stone-300 dark:text-stone-600 text-sm cursor-not-allowed">
                             <ChevronLeft className="w-4 h-4" /> 上一頁
                         </span>
                     )}
                     {hasNext ? (
                         <Link
                             href={buildHref(status, page + 1)}
-                            className="flex items-center gap-1 px-3 py-1.5 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                            className="flex items-center gap-1 px-3 py-1.5 rounded border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 text-sm"
                         >
                             下一頁 <ChevronRight className="w-4 h-4" />
                         </Link>
                     ) : (
-                        <span className="flex items-center gap-1 px-3 py-1.5 rounded border border-gray-200 dark:border-gray-700 text-gray-300 dark:text-gray-600 text-sm cursor-not-allowed">
+                        <span className="flex items-center gap-1 px-3 py-1.5 rounded border border-stone-200 dark:border-stone-700 text-stone-300 dark:text-stone-600 text-sm cursor-not-allowed">
                             下一頁 <ChevronRight className="w-4 h-4" />
                         </span>
                     )}
@@ -71,7 +71,7 @@ async function StockContent({ status, page }: { status: string | undefined; page
 function StockContentSkeleton() {
     return (
         <div className="flex items-center justify-center py-16">
-            <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+            <Loader2 className="w-8 h-8 animate-spin text-primary-500" />
         </div>
     );
 }
@@ -81,7 +81,7 @@ export default async function List({ searchParams }: { searchParams: Promise<{ s
     const page = Math.max(1, Number(pageStr ?? 1) || 1);
 
     return (
-        <div className="w-full p-6 bg-gray-100 dark:bg-gray-800">
+        <div className="w-full p-6 bg-stone-100 dark:bg-stone-800">
             <div className="flex gap-2 mb-4">
                 {["", "completed", "failed", "pending"].map((s) => (
                     <StatusLink key={s || 'all'} status={s} currentStatus={status ?? ''}>

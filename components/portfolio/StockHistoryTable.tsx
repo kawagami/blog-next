@@ -38,20 +38,20 @@ export default function StockHistoryTable({ entry, onClose }: Props) {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={onClose}>
             <div
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-xl w-full max-w-2xl max-h-[85vh] flex flex-col mx-4"
+                className="bg-white dark:bg-stone-800 rounded-xl shadow-xl w-full max-w-2xl max-h-[85vh] flex flex-col mx-4"
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between px-5 py-4 border-b dark:border-gray-700">
+                <div className="flex items-center justify-between px-5 py-4 border-b dark:border-stone-700">
                     <div>
                         <h2 className="font-bold text-lg">{entry.stock_code} {t('historyTitle')}</h2>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                        <p className="text-xs text-stone-500 dark:text-stone-400">
                             {t('buyDate')}: {entry.buy_date} · {t('costPerShare')}: {entry.cost_per_share} · {t('shares')}: {entry.shares}
                         </p>
                     </div>
                     <button
                         onClick={onClose}
-                        className="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-xl leading-none px-2"
+                        className="text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 text-xl leading-none px-2"
                     >
                         ✕
                     </button>
@@ -59,17 +59,17 @@ export default function StockHistoryTable({ entry, onClose }: Props) {
 
                 {/* Summary */}
                 {currentValue !== null && totalPnl !== null && (
-                    <div className="grid grid-cols-3 gap-3 px-5 py-3 border-b dark:border-gray-700 text-sm">
+                    <div className="grid grid-cols-3 gap-3 px-5 py-3 border-b dark:border-stone-700 text-sm">
                         <div>
-                            <p className="text-gray-500 dark:text-gray-400">{t('totalCost')}</p>
+                            <p className="text-stone-500 dark:text-stone-400">{t('totalCost')}</p>
                             <p className="font-semibold">{totalCost.toLocaleString()}</p>
                         </div>
                         <div>
-                            <p className="text-gray-500 dark:text-gray-400">{t('currentValue')}</p>
+                            <p className="text-stone-500 dark:text-stone-400">{t('currentValue')}</p>
                             <p className="font-semibold">{currentValue.toLocaleString()}</p>
                         </div>
                         <div>
-                            <p className="text-gray-500 dark:text-gray-400">{t('pnl')}</p>
+                            <p className="text-stone-500 dark:text-stone-400">{t('pnl')}</p>
                             <p className={`font-semibold ${totalPnl >= 0 ? 'text-red-500' : 'text-green-500'}`}>
                                 {totalPnl >= 0 ? '+' : ''}{totalPnl.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                                 <span className="text-xs ml-1">
@@ -83,27 +83,27 @@ export default function StockHistoryTable({ entry, onClose }: Props) {
                 {/* Table */}
                 <div className="overflow-y-auto flex-1">
                     {loading ? (
-                        <p className="text-center py-8 text-gray-500">{t('loading')}</p>
+                        <p className="text-center py-8 text-stone-500">{t('loading')}</p>
                     ) : error ? (
                         <p className="text-center py-8 text-red-500">{t('errorLoad')}</p>
                     ) : records.length === 0 ? (
-                        <p className="text-center py-8 text-gray-500">{t('noHistory')}</p>
+                        <p className="text-center py-8 text-stone-500">{t('noHistory')}</p>
                     ) : (
                         <table className="w-full text-sm">
-                            <thead className="sticky top-0 bg-white dark:bg-gray-800 border-b dark:border-gray-700">
+                            <thead className="sticky top-0 bg-white dark:bg-stone-800 border-b dark:border-stone-700">
                                 <tr>
-                                    <th className="text-left px-4 py-2 font-medium text-gray-500 dark:text-gray-400">{t('date')}</th>
-                                    <th className="text-right px-4 py-2 font-medium text-gray-500 dark:text-gray-400">{t('closePrice')}</th>
-                                    <th className="text-right px-4 py-2 font-medium text-gray-500 dark:text-gray-400">{t('dailyChange')}</th>
-                                    <th className="text-right px-4 py-2 font-medium text-gray-500 dark:text-gray-400">{t('pnl')}</th>
-                                    <th className="text-right px-4 py-2 font-medium text-gray-500 dark:text-gray-400">{t('pnlPercent')}</th>
+                                    <th className="text-left px-4 py-2 font-medium text-stone-500 dark:text-stone-400">{t('date')}</th>
+                                    <th className="text-right px-4 py-2 font-medium text-stone-500 dark:text-stone-400">{t('closePrice')}</th>
+                                    <th className="text-right px-4 py-2 font-medium text-stone-500 dark:text-stone-400">{t('dailyChange')}</th>
+                                    <th className="text-right px-4 py-2 font-medium text-stone-500 dark:text-stone-400">{t('pnl')}</th>
+                                    <th className="text-right px-4 py-2 font-medium text-stone-500 dark:text-stone-400">{t('pnlPercent')}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {records.map((r, i) => {
                                     const chg = dailyChange(i);
                                     return (
-                                        <tr key={r.date} className="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                        <tr key={r.date} className="border-b dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-700/50">
                                             <td className="px-4 py-2">{r.date}</td>
                                             <td className="px-4 py-2 text-right">{r.close.toFixed(2)}</td>
                                             <td className={`px-4 py-2 text-right ${chg > 0 ? 'text-red-500' : chg < 0 ? 'text-green-500' : ''}`}>

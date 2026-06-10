@@ -13,7 +13,7 @@ export default function TimerControls({ isRunning, isPaused, isBeeping, startCou
     return (
         <>
             {!isRunning && !isPaused && !isBeeping && (
-                <button onClick={startCountdown} className="w-full px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 transition focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <button onClick={startCountdown} className="w-full px-6 py-3 bg-primary-500 text-white font-semibold rounded-lg shadow-md hover:bg-primary-600 transition focus:outline-none focus:ring-2 focus:ring-primary-400">
                     開始倒數
                 </button>
             )}
