@@ -1,22 +1,24 @@
 import getCurrentMember from "@/api/get-current-member";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { Bell, User, BookOpen, FileText, Wrench } from "lucide-react";
 
-export const metadata: Metadata = {
-    title: "儀表板",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const t = await getTranslations("Dashboard");
+    return { title: t("title") };
+}
 
 const QUICK_LINKS = [
-    { href: "/dashboard/notifications", label: "通知", icon: Bell, desc: "即時 WebSocket 通知" },
-    { href: "/profile", label: "個人資料", icon: User, desc: "查看與管理帳號" },
-    { href: "/", label: "部落格", icon: BookOpen, desc: "所有文章" },
-    { href: "/hackmd-notes", label: "筆記", icon: FileText, desc: "HackMD 同步筆記" },
-    { href: "/tools/new-password", label: "工具", icon: Wrench, desc: "密碼、計時、排班" },
-];
+    { href: "/dashboard/notifications", labelKey: "notifications", descKey: "notificationsDesc", icon: Bell },
+    { href: "/profile", labelKey: "profile", descKey: "profileDesc", icon: User },
+    { href: "/", labelKey: "blogs", descKey: "blogsDesc", icon: BookOpen },
+    { href: "/hackmd-notes", labelKey: "notes", descKey: "notesDesc", icon: FileText },
+    { href: "/tools/new-password", labelKey: "tools", descKey: "toolsDesc", icon: Wrench },
+] as const;
 
 export default async function DashboardPage() {
-    const member = await getCurrentMember();
+    const [member, t] = await Promise.all([getCurrentMember(), getTranslations("Dashboard")]);
 
     return (
         <div className="w-full max-w-3xl px-4 py-8 flex flex-col gap-8">
@@ -34,21 +36,21 @@ export default async function DashboardPage() {
                     </div>
                 )}
                 <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">歡迎回來</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{t("welcomeBack")}</p>
                     <h1 className="text-2xl font-bold">{member.name}</h1>
                 </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {QUICK_LINKS.map(({ href, label, icon: Icon, desc }) => (
+                {QUICK_LINKS.map(({ href, labelKey, descKey, icon: Icon }) => (
                     <Link
                         key={href}
                         href={href}
                         className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow hover:shadow-md transition-shadow flex flex-col gap-2 group"
                     >
                         <Icon size={20} className="text-indigo-500 group-hover:scale-110 transition-transform" />
-                        <span className="font-semibold text-sm">{label}</span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">{desc}</span>
+                        <span className="font-semibold text-sm">{t(labelKey)}</span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">{t(descKey)}</span>
                     </Link>
                 ))}
             </div>

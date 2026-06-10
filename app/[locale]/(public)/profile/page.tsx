@@ -1,11 +1,13 @@
 import getCurrentMember from "@/api/get-current-member";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { LayoutDashboard } from "lucide-react";
 
-export const metadata: Metadata = {
-    title: "個人資料",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const t = await getTranslations("Profile");
+    return { title: t("title") };
+}
 
 const PROVIDER_LABELS: Record<string, string> = {
     google: "Google",
@@ -14,18 +16,22 @@ const PROVIDER_LABELS: Record<string, string> = {
 };
 
 export default async function ProfilePage() {
-    const member = await getCurrentMember();
+    const [member, t, locale] = await Promise.all([
+        getCurrentMember(),
+        getTranslations("Profile"),
+        getLocale(),
+    ]);
 
     return (
         <div className="w-full max-w-2xl px-4 py-8 flex flex-col gap-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold">個人資料</h1>
+                <h1 className="text-2xl font-bold">{t("title")}</h1>
                 <Link
                     href="/dashboard"
                     className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-500 dark:hover:text-indigo-400"
                 >
                     <LayoutDashboard size={16} />
-                    儀表板
+                    {t("dashboard")}
                 </Link>
             </div>
 
@@ -52,12 +58,12 @@ export default async function ProfilePage() {
                 </div>
 
                 <div className="flex flex-col gap-2 text-sm text-gray-500 dark:text-gray-400 border-t border-gray-100 dark:border-gray-700 pt-4">
-                    <span>加入時間：{new Date(member.created_at).toLocaleDateString("zh-TW", { year: "numeric", month: "long", day: "numeric" })}</span>
+                    <span>{t("joinedAt")}{new Date(member.created_at).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })}</span>
                 </div>
 
                 {member.providers.length > 0 && (
                     <div className="flex flex-col gap-2 border-t border-gray-100 dark:border-gray-700 pt-4">
-                        <span className="text-sm text-gray-500 dark:text-gray-400">已連結帳號</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">{t("linkedAccounts")}</span>
                         <div className="flex gap-2 flex-wrap">
                             {member.providers.map(p => (
                                 <span

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { Plus, Pencil, Trash2, BarChart2 } from "lucide-react";
 import postPortfolio from "@/api/post-portfolio";
@@ -44,9 +44,12 @@ export default function PortfolioClient({ initialEntries }: Props) {
     const [mode, setMode] = useState<Mode>({ type: 'list' });
     const [mutating, setMutating] = useState(false);
 
-    useEffect(() => {
+    // router.refresh() 後同步新 props（adjust-state-during-render 模式，取代 useEffect）
+    const [prevInitialEntries, setPrevInitialEntries] = useState(initialEntries);
+    if (prevInitialEntries !== initialEntries) {
+        setPrevInitialEntries(initialEntries);
         setEntries(initialEntries);
-    }, [initialEntries]);
+    }
 
     async function handleAdd(input: PortfolioEntryInput) {
         await postPortfolio(input);

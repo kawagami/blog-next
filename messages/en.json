@@ -64,5 +64,68 @@
     "currentValue": "Current Value",
     "currentPrice": "Price",
     "noPriceData": "No quote"
+  },
+  "Profile": {
+    "title": "Profile",
+    "dashboard": "Dashboard",
+    "joinedAt": "Joined: ",
+    "linkedAccounts": "Linked accounts"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "welcomeBack": "Welcome back",
+    "notifications": "Notifications",
+    "notificationsDesc": "Real-time WebSocket notifications",
+    "profile": "Profile",
+    "profileDesc": "View and manage your account",
+    "blogs": "Blog",
+    "blogsDesc": "All posts",
+    "notes": "Notes",
+    "notesDesc": "HackMD synced notes",
+    "tools": "Tools",
+    "toolsDesc": "Passwords, timers, rosters"
+  },
+  "BlogError": {
+    "title": "Failed to load",
+    "message": "Could not load this post.",
+    "retry": "Retry",
+    "home": "Back to home"
+  },
+  "BlogListCard": {
+    "created": "Created",
+    "updated": "Updated"
+  },
+  "About": {
+    "intro": "Intro",
+    "cards": [
+      {
+        "title": "About this site",
+        "contents": [
+          "Backend API built with Rust's axum framework",
+          "Frontend built with React + Next.js",
+          "Blog pages rendered with react-markdown",
+          "UI/UX continuously improving",
+          "More features added as ideas come up"
+        ]
+      },
+      {
+        "title": "Notes page",
+        "contents": [
+          "Uses React Context to share state between client components",
+          "Pairs with the Rust backend API — an axum + Next.js combo"
+        ]
+      },
+      {
+        "title": "Countdown page",
+        "contents": [
+          "Handy utilities of all kinds",
+          "Added to tools as they get built"
+        ]
+      }
+    ]
+  },
+  "Ws": {
+    "title": "WS Notifications",
+    "description": "Real-time WebSocket notifications"
   }
 }

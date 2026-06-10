@@ -1,8 +1,7 @@
 "use client";
 
 import React from 'react';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import { Link, usePathname } from '@/i18n/navigation';
 
 interface BreadcrumbProps {
     homeElement: React.ReactNode;

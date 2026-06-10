@@ -64,5 +64,68 @@
     "currentValue": "当前市值",
     "currentPrice": "现价",
     "noPriceData": "无报价"
+  },
+  "Profile": {
+    "title": "个人资料",
+    "dashboard": "仪表板",
+    "joinedAt": "加入时间：",
+    "linkedAccounts": "已链接账号"
+  },
+  "Dashboard": {
+    "title": "仪表板",
+    "welcomeBack": "欢迎回来",
+    "notifications": "通知",
+    "notificationsDesc": "实时 WebSocket 通知",
+    "profile": "个人资料",
+    "profileDesc": "查看与管理账号",
+    "blogs": "博客",
+    "blogsDesc": "所有文章",
+    "notes": "笔记",
+    "notesDesc": "HackMD 同步笔记",
+    "tools": "工具",
+    "toolsDesc": "密码、计时、排班"
+  },
+  "BlogError": {
+    "title": "加载失败",
+    "message": "无法加载这篇文章。",
+    "retry": "重试",
+    "home": "回首页"
+  },
+  "BlogListCard": {
+    "created": "创建",
+    "updated": "更新"
+  },
+  "About": {
+    "intro": "简介",
+    "cards": [
+      {
+        "title": "关于本站",
+        "contents": [
+          "后端 API 使用 rust 的 axum 框架",
+          "前端页面使用 react + next.js 框架",
+          "blogs 页面使用 react-markdown render",
+          "UI/UX 持续完善中",
+          "其余的想到什么就会加进来"
+        ]
+      },
+      {
+        "title": "Notes 页面",
+        "contents": [
+          "使用 React Context 完成在 client component 间的 state 信息共享",
+          "搭配 rust 的后端 API 完成 axum + NextJS 的组合"
+        ]
+      },
+      {
+        "title": "倒数页面",
+        "contents": [
+          "各种会用到的功能",
+          "实现后就会加进 tools 来"
+        ]
+      }
+    ]
+  },
+  "Ws": {
+    "title": "WS 通知",
+    "description": "实时 WebSocket 通知"
   }
 }

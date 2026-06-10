@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import ShowClientTime from "@/components/blogs/show-client-time";
 
 interface Props {
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export default function BlogListCard({ id, toc, tags, created_at, updated_at }: Props) {
+    const t = useTranslations("BlogListCard");
+
     return (
         <Link
             href={`/blogs/${id}`}
@@ -31,11 +34,11 @@ export default function BlogListCard({ id, toc, tags, created_at, updated_at }: 
                 </div>
                 <div className="text-gray-400 dark:text-gray-500 text-xs text-right">
                     <p>
-                        <strong>Created:</strong>{" "}
+                        <strong>{t("created")}:</strong>{" "}
                         <ShowClientTime datetimeString={created_at} />
                     </p>
                     <p>
-                        <strong>Updated:</strong>{" "}
+                        <strong>{t("updated")}:</strong>{" "}
                         <ShowClientTime datetimeString={updated_at} />
                     </p>
                 </div>

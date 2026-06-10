@@ -32,11 +32,14 @@ export default function ConvertText() {
         }
     };
 
-    useEffect(() => {
+    // action state 變更時同步 notification（adjust-state-during-render 模式，取代 useEffect）
+    const [prevState, setPrevState] = useState(state);
+    if (prevState !== state) {
+        setPrevState(state);
         if (state.status && state.message) {
             setNotification({ type: state.status, message: state.message });
         }
-    }, [state.status, state.message]);
+    }
 
     useEffect(() => {
         if (notification) {
