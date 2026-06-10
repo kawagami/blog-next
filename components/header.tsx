@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Link } from '@/i18n/navigation';
 import ThemeButton from "@/components/theme-button";
 import Image from "next/image";
-import loglImg from "@/assets/kawagami.svg";
+import logoImg from "@/assets/kawa-logo.svg";
 import { logout } from '@/actions/auth';
 import { LayoutDashboard, User, Bell, ChevronDown, X, Menu, TrendingUp, type LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -48,7 +48,6 @@ export default function Header({ member }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isResourcesOpen, setIsResourcesOpen] = useState(false);
     const [isMemberOpen, setIsMemberOpen] = useState(false);
-    const iconSize = 50;
     const t = useTranslations('Header');
 
     const closeAll = () => {
@@ -70,7 +69,7 @@ export default function Header({ member }: HeaderProps) {
             <header className="min-h-[50px] flex items-center justify-between px-4 relative z-50">
                 <div className="flex items-center flex-shrink-0">
                     <Link href="/" className="block px-2" aria-label={t('backToHome')} onClick={closeAll}>
-                        <Image src={loglImg} width={iconSize} height={iconSize} alt="KAWAGAMI" />
+                        <Image src={logoImg} width={100} height={40} alt="Kawa" priority />
                     </Link>
                 </div>
 
