@@ -56,25 +56,22 @@ export default function HourlyChime() {
         setLastChime(`${hour.toString().padStart(2, '0')}:00`);
     }, []);
 
-    const schedule = useCallback(() => {
-        if (timerRef.current) clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => {
-            chime();
-            schedule();
-        }, msToNextHour());
-    }, [chime]);
-
     useEffect(() => {
-        if (enabled) {
-            schedule();
-        } else {
-            if (timerRef.current) clearTimeout(timerRef.current);
+        if (!enabled) {
             speechSynthesis.cancel();
+            return;
         }
+        function schedule() {
+            timerRef.current = setTimeout(() => {
+                chime();
+                schedule();
+            }, msToNextHour());
+        }
+        schedule();
         return () => {
             if (timerRef.current) clearTimeout(timerRef.current);
         };
-    }, [enabled, schedule]);
+    }, [enabled, chime]);
 
     useEffect(() => {
         clockRef.current = setInterval(() => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Loader2 } from "lucide-react";
 
 interface Props {
@@ -13,17 +13,11 @@ interface Props {
 }
 
 const UploadSection = ({ fileInputRef, selectedFiles, isUploading, onImageChange, onRemoveSelectedImage, onUpload }: Props) => {
-    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+    const previewUrls = useMemo(() => selectedFiles.map(f => URL.createObjectURL(f)), [selectedFiles]);
 
     useEffect(() => {
-        if (!selectedFiles.length) {
-            setPreviewUrls([]);
-            return;
-        }
-        const urls = selectedFiles.map(f => URL.createObjectURL(f));
-        setPreviewUrls(urls);
-        return () => urls.forEach(u => URL.revokeObjectURL(u));
-    }, [selectedFiles]);
+        return () => previewUrls.forEach(u => URL.revokeObjectURL(u));
+    }, [previewUrls]);
 
     return (
         <div className="flex flex-col justify-center items-center pt-4">
@@ -32,6 +26,7 @@ const UploadSection = ({ fileInputRef, selectedFiles, isUploading, onImageChange
                 <div className="mt-4 flex flex-col items-center gap-4">
                     <div className="flex flex-wrap justify-center gap-4">
                         {previewUrls.map((url, i) => (
+                            // eslint-disable-next-line @next/next/no-img-element -- blob: URL 無法經 next/image 最佳化
                             <img key={url} src={url} className="max-w-[200px] max-h-48 rounded-lg" alt={`Selected ${i + 1}`} />
                         ))}
                     </div>

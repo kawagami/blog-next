@@ -28,11 +28,12 @@ export default function useTimer() {
         return () => clearInterval(timer);
     }, [isRunning, targetTime]);
 
-    useEffect(() => {
+    const updateMinutes = useCallback((m: number) => {
+        setMinutes(m);
         if (!isRunning && targetTime === null) {
-            setTimeLeft(minutes * 60);
+            setTimeLeft(m * 60);
         }
-    }, [minutes, isRunning, targetTime]);
+    }, [isRunning, targetTime]);
 
     const stopBeeping = useCallback(() => {
         setIsBeeping(false);
@@ -51,7 +52,7 @@ export default function useTimer() {
         }
 
         setIsRunning(true);
-    }, [targetTime, minutes, timeLeft]);
+    }, [targetTime, minutes, timeLeft, isPaused]);
 
     const pauseCountdown = useCallback(() => {
         setIsRunning(false);
@@ -66,7 +67,7 @@ export default function useTimer() {
 
     return {
         minutes,
-        setMinutes,
+        setMinutes: updateMinutes,
         timeLeft,
         isRunning,
         isPaused,
