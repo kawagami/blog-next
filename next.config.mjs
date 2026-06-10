@@ -29,7 +29,7 @@ const nextConfig = {
             },
         ]
     },
-    reactStrictMode: false,
+    reactStrictMode: true,
     experimental: {
         serverActions: {
             allowedOrigins: ["kawa.homes", "next-blog:3000"],
