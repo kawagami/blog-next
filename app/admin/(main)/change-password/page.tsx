@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import postChangePassword from "@/api/post-change-password";
+import { postChangePassword } from "@/api/auth";
 
 export default function ChangePasswordPage() {
     const [currentPassword, setCurrentPassword] = useState("");

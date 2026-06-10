@@ -1,5 +1,5 @@
-import getRoles from "@/api/get-roles";
-import getPermissions from "@/api/get-permissions";
+import { getRoles } from "@/api/roles";
+import { getPermissions } from "@/api/roles";
 import RolesManager from "@/components/roles/roles-manager";
 import type { Metadata } from "next";
 

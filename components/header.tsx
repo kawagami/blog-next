@@ -1,17 +1,47 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from '@/i18n/navigation';
 import ThemeButton from "@/components/theme-button";
 import Image from "next/image";
 import loglImg from "@/assets/kawagami.svg";
 import { logout } from '@/actions/auth';
-import { LayoutDashboard, User, Bell, ChevronDown, X, Menu, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, User, Bell, ChevronDown, X, Menu, TrendingUp, type LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '@/components/locale-switcher';
 
 interface HeaderProps {
     member: { id: string } | null
+}
+
+// 工具選單與會員選單的單一來源；新增工具只要加一行
+const TOOLS = [
+    { href: "/tools/new-password", labelKey: "toolNewPassword" },
+    { href: "/tools/convert-text", labelKey: "toolConvertText" },
+    { href: "/tools/countdown", labelKey: "toolCountdown" },
+    { href: "/tools/roster", labelKey: "toolRoster" },
+    { href: "/tools/alarm", labelKey: "toolAlarm" },
+    { href: "/tools/hourly-chime", labelKey: "toolHourlyChime" },
+] as const;
+
+const MEMBER_LINKS: ReadonlyArray<{ href: string; labelKey: string; icon: LucideIcon }> = [
+    { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
+    { href: "/profile", labelKey: "profile", icon: User },
+    { href: "/dashboard/notifications", labelKey: "notifications", icon: Bell },
+    { href: "/portfolio", labelKey: "portfolio", icon: TrendingUp },
+];
+
+const navLinkClass = "block px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400 whitespace-nowrap";
+const dropdownItemClass = "flex items-center gap-2 px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400";
+const mobileItemClass = "px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400";
+
+function DesktopDropdown({ isOpen, align = 'left', children }: { isOpen: boolean; align?: 'left' | 'right'; children: React.ReactNode }) {
+    if (!isOpen) return null;
+    return (
+        <div className={`absolute ${align === 'left' ? 'left-0' : 'right-0'} bg-white dark:bg-stone-800 shadow-lg rounded-md overflow-hidden z-10 min-w-[120px]`}>
+            {children}
+        </div>
+    );
 }
 
 export default function Header({ member }: HeaderProps) {
@@ -27,6 +57,14 @@ export default function Header({ member }: HeaderProps) {
         setIsMemberOpen(false);
     };
 
+    // Escape 關閉所有選單
+    useEffect(() => {
+        if (!isOpen && !isResourcesOpen && !isMemberOpen) return;
+        const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeAll(); };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [isOpen, isResourcesOpen, isMemberOpen]);
+
     return (
         <>
             <header className="min-h-[50px] flex items-center justify-between px-4 relative z-50">
@@ -38,32 +76,29 @@ export default function Header({ member }: HeaderProps) {
 
                 {/* Desktop nav */}
                 <nav className="hidden md:flex items-center gap-2">
-                    <Link href="/hackmd-notes" aria-label={t('notes')} className="block px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400 whitespace-nowrap">{t('notes')}</Link>
+                    <Link href="/hackmd-notes" aria-label={t('notes')} className={navLinkClass}>{t('notes')}</Link>
                     <div className="relative">
                         <button
-                            className="block px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400 whitespace-nowrap"
+                            className={navLinkClass}
                             aria-label={t('openToolsMenu')}
                             aria-expanded={isResourcesOpen}
                             onClick={() => setIsResourcesOpen(o => !o)}
                         >{t('tools')}</button>
-                        {isResourcesOpen && (
-                            <div className="absolute left-0 bg-white dark:bg-stone-800 shadow-lg rounded-md overflow-hidden z-10">
-                                <Link href="/tools/new-password" className="block px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400" onClick={() => setIsResourcesOpen(false)}>{t('toolNewPassword')}</Link>
-                                <Link href="/tools/convert-text" className="block px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400" onClick={() => setIsResourcesOpen(false)}>{t('toolConvertText')}</Link>
-                                <Link href="/tools/countdown" className="block px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400" onClick={() => setIsResourcesOpen(false)}>{t('toolCountdown')}</Link>
-                                <Link href="/tools/roster" className="block px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400" onClick={() => setIsResourcesOpen(false)}>{t('toolRoster')}</Link>
-                                <Link href="/tools/alarm" className="block px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400" onClick={() => setIsResourcesOpen(false)}>{t('toolAlarm')}</Link>
-                                <Link href="/tools/hourly-chime" className="block px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400" onClick={() => setIsResourcesOpen(false)}>{t('toolHourlyChime')}</Link>
-                            </div>
-                        )}
+                        <DesktopDropdown isOpen={isResourcesOpen}>
+                            {TOOLS.map(({ href, labelKey }) => (
+                                <Link key={href} href={href} className={dropdownItemClass} onClick={() => setIsResourcesOpen(false)}>
+                                    {t(labelKey)}
+                                </Link>
+                            ))}
+                        </DesktopDropdown>
                     </div>
-                    <Link href="/about" aria-label={t('about')} className="block px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400 whitespace-nowrap">{t('about')}</Link>
+                    <Link href="/about" aria-label={t('about')} className={navLinkClass}>{t('about')}</Link>
                     <LocaleSwitcher />
                     <ThemeButton />
                     {member ? (
                         <div className="relative">
                             <button
-                                className="flex items-center gap-1 px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400"
+                                className="flex items-center gap-1 px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 focus:outline-none focus:ring-2 focus:ring-primary-400"
                                 aria-label={t('openMemberMenu')}
                                 aria-expanded={isMemberOpen}
                                 onClick={() => setIsMemberOpen(o => !o)}
@@ -71,34 +106,22 @@ export default function Header({ member }: HeaderProps) {
                                 <User size={16} />
                                 <ChevronDown size={14} />
                             </button>
-                            {isMemberOpen && (
-                                <div className="absolute right-0 bg-white dark:bg-stone-800 shadow-lg rounded-md overflow-hidden z-10 min-w-[120px]">
-                                    <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 text-sm" onClick={() => setIsMemberOpen(false)}>
-                                        <LayoutDashboard size={14} />
-                                        {t('dashboard')}
+                            <DesktopDropdown isOpen={isMemberOpen} align="right">
+                                {MEMBER_LINKS.map(({ href, labelKey, icon: Icon }) => (
+                                    <Link key={href} href={href} className={`${dropdownItemClass} text-sm`} onClick={() => setIsMemberOpen(false)}>
+                                        <Icon size={14} />
+                                        {t(labelKey)}
                                     </Link>
-                                    <Link href="/profile" className="flex items-center gap-2 px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 text-sm" onClick={() => setIsMemberOpen(false)}>
-                                        <User size={14} />
-                                        {t('profile')}
-                                    </Link>
-                                    <Link href="/dashboard/notifications" className="flex items-center gap-2 px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 text-sm" onClick={() => setIsMemberOpen(false)}>
-                                        <Bell size={14} />
-                                        {t('notifications')}
-                                    </Link>
-                                    <Link href="/portfolio" className="flex items-center gap-2 px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 text-sm" onClick={() => setIsMemberOpen(false)}>
-                                        <TrendingUp size={14} />
-                                        {t('portfolio')}
-                                    </Link>
-                                    <form action={logout}>
-                                        <button type="submit" className="w-full flex items-center gap-2 px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400 text-sm text-red-500 dark:text-red-400">
-                                            {t('logout')}
-                                        </button>
-                                    </form>
-                                </div>
-                            )}
+                                ))}
+                                <form action={logout}>
+                                    <button type="submit" className={`w-full ${dropdownItemClass} text-sm text-red-500 dark:text-red-400`}>
+                                        {t('logout')}
+                                    </button>
+                                </form>
+                            </DesktopDropdown>
                         </div>
                     ) : (
-                        <Link href="/login" className="block px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400 whitespace-nowrap">{t('login')}</Link>
+                        <Link href="/login" className={navLinkClass}>{t('login')}</Link>
                     )}
                 </nav>
 
@@ -117,10 +140,10 @@ export default function Header({ member }: HeaderProps) {
                 <>
                     <div className="md:hidden fixed inset-0 z-30 bg-black/40" onClick={closeAll} aria-hidden="true" />
                     <nav className="md:hidden fixed top-[50px] left-0 right-0 z-40 bg-white dark:bg-stone-900 shadow-lg border-t border-stone-200 dark:border-stone-700 flex flex-col p-4 gap-1">
-                        <Link href="/hackmd-notes" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400" onClick={closeAll}>{t('notes')}</Link>
+                        <Link href="/hackmd-notes" className={mobileItemClass} onClick={closeAll}>{t('notes')}</Link>
 
                         <button
-                            className="flex items-center justify-between px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 w-full text-left"
+                            className={`${mobileItemClass} flex items-center justify-between w-full text-left`}
                             aria-expanded={isResourcesOpen}
                             onClick={() => setIsResourcesOpen(o => !o)}
                         >
@@ -129,16 +152,15 @@ export default function Header({ member }: HeaderProps) {
                         </button>
                         {isResourcesOpen && (
                             <div className="ml-4 flex flex-col gap-1">
-                                <Link href="/tools/new-password" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>{t('toolNewPassword')}</Link>
-                                <Link href="/tools/convert-text" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>{t('toolConvertText')}</Link>
-                                <Link href="/tools/countdown" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>{t('toolCountdown')}</Link>
-                                <Link href="/tools/roster" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>{t('toolRoster')}</Link>
-                                <Link href="/tools/alarm" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>{t('toolAlarm')}</Link>
-                                <Link href="/tools/hourly-chime" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>{t('toolHourlyChime')}</Link>
+                                {TOOLS.map(({ href, labelKey }) => (
+                                    <Link key={href} href={href} className={`${mobileItemClass} text-sm`} onClick={closeAll}>
+                                        {t(labelKey)}
+                                    </Link>
+                                ))}
                             </div>
                         )}
 
-                        <Link href="/about" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400" onClick={closeAll}>{t('about')}</Link>
+                        <Link href="/about" className={mobileItemClass} onClick={closeAll}>{t('about')}</Link>
                         <div className="px-4 py-2">
                             <ThemeButton />
                         </div>
@@ -148,30 +170,20 @@ export default function Header({ member }: HeaderProps) {
 
                         {member ? (
                             <>
-                                <Link href="/dashboard" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>
-                                    <LayoutDashboard size={14} />
-                                    {t('dashboard')}
-                                </Link>
-                                <Link href="/profile" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>
-                                    <User size={14} />
-                                    {t('profile')}
-                                </Link>
-                                <Link href="/dashboard/notifications" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>
-                                    <Bell size={14} />
-                                    {t('notifications')}
-                                </Link>
-                                <Link href="/portfolio" className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm" onClick={closeAll}>
-                                    <TrendingUp size={14} />
-                                    {t('portfolio')}
-                                </Link>
+                                {MEMBER_LINKS.map(({ href, labelKey, icon: Icon }) => (
+                                    <Link key={href} href={href} className={`${mobileItemClass} flex items-center gap-2 text-sm`} onClick={closeAll}>
+                                        <Icon size={14} />
+                                        {t(labelKey)}
+                                    </Link>
+                                ))}
                                 <form action={logout}>
-                                    <button type="submit" className="w-full flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400 text-sm text-red-500 dark:text-red-400">
+                                    <button type="submit" className={`w-full ${mobileItemClass} flex items-center gap-2 text-sm text-red-500 dark:text-red-400`}>
                                         {t('logout')}
                                     </button>
                                 </form>
                             </>
                         ) : (
-                            <Link href="/login" className="px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400" onClick={closeAll}>{t('login')}</Link>
+                            <Link href="/login" className={mobileItemClass} onClick={closeAll}>{t('login')}</Link>
                         )}
                     </nav>
                 </>

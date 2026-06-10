@@ -7,7 +7,7 @@ interface ChangePasswordBody {
     new_password: string;
 }
 
-async function postChangePassword(body: ChangePasswordBody): Promise<void> {
+export async function postChangePassword(body: ChangePasswordBody): Promise<void> {
     await adminRequest<void>({
         url: `${process.env.API_URL}/admin/auth/change_password`,
         method: 'POST',
@@ -15,5 +15,3 @@ async function postChangePassword(body: ChangePasswordBody): Promise<void> {
         body: JSON.stringify(body),
     });
 }
-
-export default postChangePassword;

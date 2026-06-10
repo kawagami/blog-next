@@ -1,5 +1,5 @@
-import getBlogs from '@/api/get-blogs';
-import { getBlogTags } from '@/api/get-blog-tags';
+import { getBlogs } from '@/api/blogs';
+import { getBlogTags } from '@/api/blogs';
 import BlogListCard from '@/components/blogs/blog-list-card';
 import TagFilterBar from '@/components/blogs/tag-filter-bar';
 import Pagination from '@/components/blogs/pagination';

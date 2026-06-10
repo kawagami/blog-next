@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
-import uploadImages from '@/api/upload-images';
-import deleteImage from '@/api/delete-image';
+import { uploadImages } from '@/api/images';
+import { deleteImage } from '@/api/images';
 
 export interface ManagedImage {
     name: string;

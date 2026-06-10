@@ -1,4 +1,4 @@
-import getPortfolioSummary from "@/api/get-portfolio-summary";
+import { getPortfolioSummary } from "@/api/portfolio";
 import PortfolioClient from "@/components/portfolio/PortfolioClient";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";

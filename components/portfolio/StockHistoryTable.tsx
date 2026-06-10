@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { getPortfolioHistory } from "@/api/get-stock-history";
+import { getPortfolioHistory } from "@/api/portfolio";
 import type { HistoryRecord, PortfolioEntry } from "@/types";
 
 interface Props {

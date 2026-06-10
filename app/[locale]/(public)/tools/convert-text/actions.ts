@@ -1,6 +1,6 @@
 "use server";
 
-import postConvertText from "@/api/post-convert-text";
+import { postConvertText } from "@/api/tools";
 
 interface ConvertTextState {
     status: string | null;

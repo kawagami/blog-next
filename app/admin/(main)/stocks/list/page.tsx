@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import StockTable from "@/components/stocks/stock-table";
-import { StatusLink } from "@/components/stocks/status-link";
+import { StatusLink } from "./status-link";
 import { getStockChanges } from "@/app/admin/(main)/stocks/actions";
 import type { StockChange } from "@/types";
 

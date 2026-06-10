@@ -1,7 +1,6 @@
-import getUsers from "@/api/get-users";
-import getUserRoles from "@/api/get-user-roles";
-import getRoles from "@/api/get-roles";
-import UserRolesPanel from "@/components/users/user-roles-panel";
+import { getUsers, getUserRoles } from "@/api/users";
+import { getRoles } from "@/api/roles";
+import UserRolesPanel from "./user-roles-panel";
 import type { Metadata } from "next";
 import AdminTableContainer from "@/components/admin/admin-table-container";
 import { AdminTable, AdminHeadRow, AdminRow, AdminTh, AdminTd } from "@/components/admin/table";

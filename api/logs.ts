@@ -1,7 +1,24 @@
 "use server";
 
 import adminRequest from "@/libs/adminRequest";
-import type { AuditLog, HttpMethod } from "@/types";
+import type { Log, LogLevel, AuditLog, HttpMethod } from "@/types";
+
+interface GetLogsParams {
+    level?: LogLevel;
+    page?: number;
+    per_page?: number;
+}
+
+export async function getLogs({ level, page = 1, per_page = 100 }: GetLogsParams = {}): Promise<Log[]> {
+    const params = new URLSearchParams();
+    if (level) params.set('level', level);
+    params.set('page', String(page));
+    params.set('per_page', String(per_page));
+
+    return adminRequest<Log[]>({
+        url: `${process.env.API_URL}/logs?${params}`,
+    });
+}
 
 export interface GetAuditLogsParams {
     user_email?: string;
@@ -13,7 +30,7 @@ export interface GetAuditLogsParams {
     per_page?: number;
 }
 
-async function getAuditLogs({
+export async function getAuditLogs({
     user_email,
     method,
     path,
@@ -35,5 +52,3 @@ async function getAuditLogs({
         url: `${process.env.API_URL}/admin/audit_logs?${params}`,
     });
 }
-
-export default getAuditLogs;

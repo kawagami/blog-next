@@ -1,4 +1,4 @@
-import getCurrentMember from "@/api/get-current-member";
+import { getCurrentMember } from "@/api/members";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { Metadata } from "next";

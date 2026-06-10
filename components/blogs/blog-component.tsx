@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Loader2 } from 'lucide-react';
-import putBlog from '@/api/put-blog';
-import uploadImages from '@/api/upload-images';
+import { putBlog } from '@/api/blogs';
+import { uploadImages } from '@/api/images';
 import type { Blog, Toc } from '@/types';
 
 function extractTocs(markdown: string): Toc[] {

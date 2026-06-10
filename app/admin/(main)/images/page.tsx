@@ -1,4 +1,4 @@
-import getImages from "@/api/get-images";
+import { getImages } from "@/api/images";
 import ImageManager from "@/components/images/image-manager";
 import type { Metadata } from "next";
 

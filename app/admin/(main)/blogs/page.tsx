@@ -1,7 +1,5 @@
-import getBlogs from '@/api/get-blogs';
-import CreateButton from '@/components/blogs/create-button';
-import EditButton from '@/components/blogs/edit-button';
-import DeleteButton from '@/components/blogs/delete-button';
+import { getBlogs } from '@/api/blogs';
+import { CreateButton, EditButton, DeleteButton } from '@/components/blogs/blog-action-buttons';
 
 export default async function BlogsPage() {
     const { data: blogs } = await getBlogs({ per_page: 1000 });

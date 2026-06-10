@@ -1,5 +1,4 @@
-import getHackMDNoteTags from "@/api/get-hackmd-note-tags";
-import getHackMDNotes from "@/api/get-hackmd-notes";
+import { getHackMDNotes, getHackMDNoteTags } from "@/api/hackmd";
 import HackMDNotesWrapper from "@/components/hackmd/hackmd-notes-wrapper";
 import type { Metadata } from "next";
 

@@ -1,4 +1,4 @@
-import getWsConnections from "@/api/get-ws-connections";
+import { getWsConnections } from "@/api/ws";
 import SaySomethingForm from "./say-something-form";
 import type { Metadata } from "next";
 import { AdminTable, AdminHeadRow, AdminRow, AdminTh, AdminTd } from "@/components/admin/table";

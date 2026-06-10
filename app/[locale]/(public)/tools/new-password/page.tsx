@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import getNewPassword from "@/api/get-new-password";
+import { getNewPassword } from "@/api/tools";
 
 export default function NewPasswordPage() {
     const [count, setCount] = useState(5);

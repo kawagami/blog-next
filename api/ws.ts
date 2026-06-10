@@ -3,10 +3,8 @@
 import adminRequest from "@/libs/adminRequest";
 import type { WsConnection } from "@/types";
 
-async function getWsConnections(): Promise<WsConnection[]> {
+export async function getWsConnections(): Promise<WsConnection[]> {
     return adminRequest<WsConnection[]>({
         url: `${process.env.API_URL}/ws/get_online_connections`,
     });
 }
-
-export default getWsConnections;

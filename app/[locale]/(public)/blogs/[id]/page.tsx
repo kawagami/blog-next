@@ -1,6 +1,6 @@
 import { cache } from "react";
 import type { Metadata } from "next";
-import getBlog from "@/api/get-blog";
+import { getBlog } from "@/api/blogs";
 import BlogPreviewComponent from "@/components/blogs/blog-preview-component";
 
 const fetchBlog = cache(getBlog);

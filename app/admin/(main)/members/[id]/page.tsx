@@ -1,4 +1,4 @@
-import getMember from "@/api/get-member";
+import { getMember } from "@/api/members";
 import Image from "next/image";
 import type { Metadata } from "next";
 

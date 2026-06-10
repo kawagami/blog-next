@@ -1,4 +1,4 @@
-import getMembers from "@/api/get-members";
+import { getMembers } from "@/api/members";
 import Link from "next/link";
 import type { Metadata } from "next";
 import AdminTableContainer from "@/components/admin/admin-table-container";

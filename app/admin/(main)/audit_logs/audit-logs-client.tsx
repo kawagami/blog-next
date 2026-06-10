@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import getAuditLogs from "@/api/get-audit-logs";
+import { getAuditLogs } from "@/api/logs";
+import ErrorBanner from "@/components/admin/error-banner";
 import usePagedList from "@/hooks/usePagedList";
 import type { AuditLog, HttpMethod } from "@/types";
 import { METHOD_BADGE, httpStatusBadgeClass } from "@/libs/badge-styles";
@@ -147,11 +148,7 @@ export default function AuditLogsClient() {
                     </div>
                 </div>
 
-                {error && (
-                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded p-3 text-red-700 dark:text-red-400 text-sm">
-                        {error}
-                    </div>
-                )}
+                <ErrorBanner message={error} />
 
                 <div className={`bg-white dark:bg-stone-900 shadow-lg rounded-lg overflow-hidden transition-opacity ${isPending ? 'opacity-60' : ''}`}>
                     <div className="overflow-x-auto">

@@ -1,5 +1,5 @@
-import getBlog from "@/api/get-blog";
-import { getBlogTags } from "@/api/get-blog-tags";
+import { getBlog } from "@/api/blogs";
+import { getBlogTags } from "@/api/blogs";
 import BlogComponent from "@/components/blogs/blog-component";
 import type { Blog } from "@/types";
 
