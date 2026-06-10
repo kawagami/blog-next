@@ -25,7 +25,7 @@
 | `/{locale}/portfolio` | 投資組合追蹤，記錄持股並查看每日漲跌盈虧（需登入） |
 | `/{locale}/profile` | 個人資料（需登入） |
 | `/{locale}/about` | 關於頁面 |
-| `/{locale}/login` | OAuth 登入（Google） |
+| `/{locale}/login` | OAuth 登入（Google；GitHub / LINE 規劃中） |
 | `/admin/*` | 後台管理（需登入，無 locale prefix）：文章、圖片、股票、會員、角色、使用者、WS、稽核日誌、設定 |
 
 ---
@@ -37,7 +37,7 @@
 - **i18n**：next-intl v4，支援 zh-TW / zh-CN / en
 - **Markdown**：react-markdown
 - **圖片**：next/image（自動 WebP 轉換、lazy loading、縮圖），本地儲存（`/uploads/*`）
-- **認證**：JWT (`jsonwebtoken`)，middleware 保護 `/admin/*`
+- **認證**：JWT（`jose`），middleware 保護 `/admin/*` 與 `/{locale}/dashboard|profile|portfolio`
 - **後端 API**：`https://axum.kawa.homes`（Rust Axum）
 - **WebSocket**：`wss://axum.kawa.homes`
 - **部署**：Docker multi-stage build，standalone output
@@ -56,9 +56,9 @@ components/   # 共用 UI 元件
 i18n/         # next-intl 設定（routing / request / navigation）
 messages/     # 翻譯字串（zh-TW.json / zh-CN.json / en.json）
 api/          # 前端 API 請求函式（fetch 封裝）
+types/        # 後端 API 共用型別
 hooks/        # React custom hooks
 libs/         # 工具函式庫
-provider/     # Context providers
 public/       # 靜態資源
 ```
 
@@ -69,6 +69,7 @@ public/       # 靜態資源
 ```bash
 npm install
 npm run dev       # http://localhost:3000
+npm run lint      # ESLint（flat config）
 ```
 
 需設定 `.env.local`：
@@ -77,7 +78,6 @@ npm run dev       # http://localhost:3000
 API_URL=https://axum.kawa.homes
 NEXT_PUBLIC_WS_URL=wss://axum.kawa.homes
 JWT_SECRET=...
-JWT_EMAIL=...
 ```
 
 ---
