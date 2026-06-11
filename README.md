@@ -33,7 +33,7 @@
 ## 技術棧
 
 - **框架**：Next.js 16 (App Router, Turbopack)
-- **UI**：React 19 + Tailwind CSS + lucide-react
+- **UI**：React 19 + Tailwind CSS + lucide-react；主題系統 runtime 切換（森林/海洋/天空，admin 設定全站生效，CSS variables）
 - **i18n**：next-intl v4，支援 zh-TW / zh-CN / en
 - **Markdown**：react-markdown
 - **圖片**：next/image（自動 WebP 轉換、lazy loading、縮圖），本地儲存（`/uploads/*`）
@@ -82,22 +82,16 @@ JWT_SECRET=...
 
 ---
 
-## Docker 部署
+## 部署
+
+push `master` 即自動部署：GitHub Actions build + push image（`kawagami77/my-next-blog`）→ SSH 進 VPS pull + 重啟（`.github/workflows/cicd.yml`）。
+
+- image 不含任何 env/secrets，設定由 VPS mount `.env.production` 於 runtime 注入
+- multi-stage build（deps → builder → Node Alpine runner，non-root、standalone output）
+- 本機驗證 image：`docker build -t blog-next . && docker-compose up -d`（需同目錄 `.env`）
 
 ```bash
-# 建置
-docker build -t blog-next .
-
-# 或用 docker-compose
-docker-compose up -d
+# 本地開發容器工具
+bash app.sh <cmd>   # 在 node 容器內跑指令（如 bash app.sh npm ci）
+bash up.sh          # 開 VS Code + 容器內 dev server
 ```
-
-```bash
-# 快速腳本
-bash app.sh   # 啟動
-bash up.sh    # 更新並重啟
-```
-
-multi-stage build：
-1. **Builder**：安裝依賴、`next build`、裁剪 devDependencies
-2. **Final**：Node Alpine 最小映像，non-root user 執行
