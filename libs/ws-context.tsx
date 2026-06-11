@@ -14,18 +14,19 @@ const WsContext = createContext<WsContextValue | null>(null);
 const RECONNECT_BASE_MS = 3000;
 const RECONNECT_MAX_MS = 30000;
 
-export function WsProvider({ children, jwt }: { children: React.ReactNode; jwt: string | null }) {
+export function WsProvider({ children, jwt, wsUrl }: { children: React.ReactNode; jwt: string | null; wsUrl: string }) {
     const listenersRef = useRef<Map<string, Set<Listener>>>(new Map());
 
     useEffect(() => {
+        // WS_URL 未設定時直接不建立連線（例如本地後端沒開）
+        if (!wsUrl) return;
+
         let destroyed = false;
         let attempt = 0;
         let timeoutId: ReturnType<typeof setTimeout>;
         let currentWs: WebSocket | null = null;
 
-        const url = jwt
-            ? `${process.env.NEXT_PUBLIC_WS_URL}/ws?jwt=${jwt}`
-            : `${process.env.NEXT_PUBLIC_WS_URL}/ws`;
+        const url = jwt ? `${wsUrl}/ws?jwt=${jwt}` : `${wsUrl}/ws`;
 
         const connect = () => {
             const ws = new WebSocket(url);
@@ -59,7 +60,7 @@ export function WsProvider({ children, jwt }: { children: React.ReactNode; jwt: 
             clearTimeout(timeoutId);
             currentWs?.close();
         };
-    }, [jwt]);
+    }, [jwt, wsUrl]);
 
     const value = useMemo<WsContextValue>(() => ({
         subscribe: (type, fn) => {

@@ -8,7 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default async function HackMDNotes() {
-    const [notes, tags] = await Promise.all([getHackMDNotes(), getHackMDNoteTags()]);
+    // ISR 頁：build 階段（Docker 內無 env / 後端不可達）fetch 失敗時以空資料預渲染，
+    // runtime 第一次 revalidate 就會補上真資料
+    const [notes, tags] = await Promise.all([
+        getHackMDNotes().catch(() => []),
+        getHackMDNoteTags().catch(() => []),
+    ]);
 
     return (
         <div className="w-full h-[calc(100svh-120px)] text-center overflow-auto">

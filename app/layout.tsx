@@ -31,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 )}
             </head>
             <body className="bg-gradient-to-b from-primary-50 to-neutral-100 text-neutral-800 dark:from-primary-950 dark:to-neutral-900 dark:text-neutral-100">
-                <WsProvider jwt={jwt}>
+                <WsProvider jwt={jwt} wsUrl={process.env.WS_URL ?? ''}>
                     <ThemeBackground theme={siteTheme} />
                     {children}
                 </WsProvider>

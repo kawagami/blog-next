@@ -76,7 +76,7 @@ npm run lint      # ESLint（flat config）
 
 ```env
 API_URL=https://axum.kawa.homes
-NEXT_PUBLIC_WS_URL=wss://axum.kawa.homes
+WS_URL=wss://axum.kawa.homes
 JWT_SECRET=...
 ```
 
