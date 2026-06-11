@@ -1,7 +1,8 @@
 import "./globals.css";
 import { WsProvider } from "@/libs/ws-context";
 import ThemeBackground from "@/components/ThemeBackground";
-import { SITE_THEMES, type SiteTheme } from "@/libs/site-theme";
+import { getPublicSettings } from "@/api/settings";
+import { resolveSiteTheme } from "@/libs/site-theme";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
@@ -11,13 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-    const cookieStore = await cookies();
-    const themeCookie = cookieStore.get('theme')?.value;       // dark / light
+    const [cookieStore, publicSettings] = await Promise.all([cookies(), getPublicSettings()]);
+    const themeCookie = cookieStore.get('theme')?.value;   // dark / light
     const isDark = themeCookie === 'dark';
-    const siteThemeCookie = cookieStore.get('site-theme')?.value;  // forest / ocean
-    const siteTheme: SiteTheme = SITE_THEMES.includes(siteThemeCookie as SiteTheme)
-        ? (siteThemeCookie as SiteTheme)
-        : 'forest';
+    const siteTheme = resolveSiteTheme(publicSettings.site_theme);  // 全站設定（admin settings 控制）
     const jwt = cookieStore.get('session')?.value ?? null;
 
     return (

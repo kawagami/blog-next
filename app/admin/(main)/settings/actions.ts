@@ -18,3 +18,10 @@ export async function updateSetting(key: string, value: string): Promise<Setting
     revalidatePath("/admin/settings");
     return response;
 }
+
+/** 改全站主題：PATCH 後失效整站 layout cache，讓 getPublicSettings 立即重抓 */
+export async function updateSiteTheme(theme: string): Promise<Setting> {
+    const response = await updateSetting("site_theme", theme);
+    revalidatePath("/", "layout");
+    return response;
+}

@@ -1,6 +1,6 @@
 # 網站主題（風格）系統
 
-> 主題已是 **runtime 切換**：色階走 CSS variables，`site-theme` cookie 控制 `<html data-theme>`，不用重 build。
+> 主題已是 **runtime 切換 + 全站設定**：色階走 CSS variables，主題值存後端 settings（key `site_theme`），root layout 讀取後設 `<html data-theme>`，不用重 build。
 > 現有主題：**forest**（預設，moss green + stone 暖灰）、**ocean**（sky blue + slate 冷灰）。
 
 ---
@@ -11,9 +11,10 @@
 |----|------|------|
 | Token 定義 | `tailwind.config.js` | `primary` / `neutral` 各 11 階，值為 `rgb(var(--primary-N) / <alpha-value>)` |
 | 色階實際值 | `app/globals.css` | `:root` = forest；`[data-theme="ocean"]` = ocean。RGB 三元組格式（`82 183 136`） |
-| 主題清單/常數 | `libs/site-theme.ts` | `SITE_THEMES`、label、cookie 名、`applySiteTheme()`（client 寫 cookie + 即時切 attr） |
-| 切換入口 | `app/admin/(main)/settings/theme-picker.tsx` | admin settings 頁的選擇器，cookie 制（只影響該瀏覽器） |
-| 套用點 | `app/layout.tsx` | server 讀 `site-theme` cookie → `<html data-theme>`，並把 theme 傳給背景特效 |
+| 主題清單/常數 | `libs/site-theme.ts` | `SITE_THEMES`、label、`resolveSiteTheme()`、`applySiteThemeAttr()`（client 樂觀更新 attr） |
+| 主題值存放 | 後端 settings 表（key `site_theme`） | `GET /settings/public`（無認證白名單）讀、`PATCH /admin/settings/site_theme` 寫（驗證 forest/ocean，非法 422） |
+| 切換入口 | `app/admin/(main)/settings/theme-picker.tsx` | admin settings 頁選擇器 → `updateSiteTheme` action（PATCH + `revalidatePath('/', 'layout')`），**全站訪客生效** |
+| 套用點 | `app/layout.tsx` | `getPublicSettings()`（`api/settings.ts`，60s cache、後端掛掉 fallback forest）→ `<html data-theme>`，並把 theme 傳給背景特效 |
 | 背景特效 | `components/ThemeBackground.tsx` | forest=落葉飄下、ocean=氣泡上浮；色全走 `rgb(var(--primary-N) / alpha)` |
 | Logo | `components/kawa-logo.tsx` | inline SVG，stroke/fill 走 var，自動跟主題 |
 | Favicon | `app/icon.svg` | **固定 forest 色**（favicon 是獨立請求吃不到 CSS var，不跟主題） |
@@ -57,7 +58,7 @@
 2. **`prose-stone` 例外**：typography plugin 色票是 build 時烤死的，跟不了 var。目前 markdown 內文固定 stone 暖灰，各主題下視覺差異極小，接受
 3. **favicon 不跟主題**（獨立請求吃不到 page CSS）。要跟的話得做 `/icon?theme=` 動態路由，不值得
 4. **dark mode 與主題正交**：dark/light 存 `theme` cookie（class `dark`），風格存 `site-theme` cookie（attr `data-theme`），互不干擾。新主題的 var 同一套值同時服務亮暗——亮暗差異由元件的 `dark:` class 選不同階實現
-5. **切換器是 cookie 制**：只影響當前瀏覽器。要做「admin 設定全站訪客生效」需後端 settings 端點 + layout fetch，目前刻意不做
+5. **全站設定的傳播延遲**：`getPublicSettings()` 有 60s cache；admin 自己經 `revalidatePath` 立即生效，其他訪客最多延遲 60 秒。後端 `/settings/public` 讀記憶體 map（settings 整表駐留 `Arc<RwLock<HashMap>>`），無 DB 往返
 6. 禁止回加全域 transition；hover scale 只給塊級（上限 105）
 
 ---
@@ -66,9 +67,9 @@
 
 ```bash
 npm run lint && npx tsc --noEmit && npm run build
-# dev 起來後用 cookie 驗證兩套主題的 SSR：
+# dev 起來後驗證 SSR 的 data-theme（值來自後端 /settings/public）：
 curl -s http://localhost:3000/zh-TW | grep -o 'data-theme="[a-z]*"'
-curl -s -H "Cookie: site-theme=ocean" http://localhost:3000/zh-TW | grep -o 'data-theme="[a-z]*"'
+# 在 admin settings 切主題後再 curl 一次，應變新值
 ```
 
 瀏覽器走一輪：首頁、blogs、admin 表格頁、portfolio，各看亮/暗 × 每套主題；對比抽查用 [WebAIM](https://webaim.org/resources/contrastchecker/)。

@@ -1,0 +1,20 @@
+"use server";
+
+import { fetchApi } from "@/libs/fetchApi";
+
+// 公開設定白名單（後端硬編碼 PUBLIC_KEYS），目前只有 site_theme
+export interface PublicSettings {
+    site_theme?: string;
+}
+
+export async function getPublicSettings(): Promise<PublicSettings> {
+    try {
+        // 60s cache：admin 改主題後由 updateSiteTheme 的 revalidatePath 立即失效
+        return await fetchApi<PublicSettings>(`${process.env.API_URL}/settings/public`, {
+            next: { revalidate: 60 },
+        });
+    } catch {
+        // 後端不可用時不擋頁面渲染，fallback 預設主題
+        return {};
+    }
+}
