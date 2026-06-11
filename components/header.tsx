@@ -9,8 +9,12 @@ import { LayoutDashboard, User, Bell, ChevronDown, X, Menu, TrendingUp, type Luc
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '@/components/locale-switcher';
 
+import type { UserColorMode } from "@/libs/color-mode";
+
 interface HeaderProps {
     member: { id: string } | null
+    colorMode: UserColorMode
+    defaultIsDark: boolean | null
 }
 
 // 工具選單與會員選單的單一來源；新增工具只要加一行
@@ -43,7 +47,7 @@ function DesktopDropdown({ isOpen, align = 'left', children }: { isOpen: boolean
     );
 }
 
-export default function Header({ member }: HeaderProps) {
+export default function Header({ member, colorMode, defaultIsDark }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isResourcesOpen, setIsResourcesOpen] = useState(false);
     const [isMemberOpen, setIsMemberOpen] = useState(false);
@@ -92,7 +96,7 @@ export default function Header({ member }: HeaderProps) {
                     </div>
                     <Link href="/about" aria-label={t('about')} className={navLinkClass}>{t('about')}</Link>
                     <LocaleSwitcher />
-                    <ThemeButton />
+                    <ThemeButton initialMode={colorMode} defaultIsDark={defaultIsDark} />
                     {member ? (
                         <div className="relative">
                             <button
@@ -160,7 +164,7 @@ export default function Header({ member }: HeaderProps) {
 
                         <Link href="/about" className={mobileItemClass} onClick={closeAll}>{t('about')}</Link>
                         <div className="px-4 py-2">
-                            <ThemeButton />
+                            <ThemeButton initialMode={colorMode} defaultIsDark={defaultIsDark} />
                         </div>
                         <div className="px-4 py-2">
                             <LocaleSwitcher />

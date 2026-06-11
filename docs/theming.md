@@ -58,7 +58,9 @@
 1. **語意色永遠不跟主題**：紅=錯誤、badge-styles 的 method/level 色、**股票紅漲綠跌**（台股慣例，任何主題都不反轉）
 2. **`prose-stone` 例外**：typography plugin 色票是 build 時烤死的，跟不了 var。目前 markdown 內文固定 stone 暖灰，各主題下視覺差異極小，接受
 3. **favicon 不跟主題**（獨立請求吃不到 page CSS）。要跟的話得做 `/icon?theme=` 動態路由，不值得
-4. **dark mode 與主題正交**：dark/light 存 `theme` cookie（class `dark`），風格存 `site-theme` cookie（attr `data-theme`），互不干擾。新主題的 var 同一套值同時服務亮暗——亮暗差異由元件的 `dark:` class 選不同階實現
+4. **dark mode 與主題正交**：dark/light 用 class `dark`、風格用 attr `data-theme`，互不干擾。新主題的 var 同一套值同時服務亮暗——亮暗差異由元件的 `dark:` class 選不同階實現
+   - 深淺色優先序：使用者 `theme` cookie ＞ admin 設定 `default_color_mode`（light/dark/system，存後端 settings、走 `/settings/public`）＞ 系統 `prefers-color-scheme`
+   - `libs/color-mode.ts` 管 resolve；ThemeButton 三態循環：亮 → 暗 → 跟隨網站預設（清 cookie）
 5. **全站設定的傳播延遲**：`getPublicSettings()` 有 60s cache；admin 自己經 `revalidatePath` 立即生效，其他訪客最多延遲 60 秒。後端 `/settings/public` 讀記憶體 map（settings 整表駐留 `Arc<RwLock<HashMap>>`），無 DB 往返
 6. 禁止回加全域 transition；hover scale 只給塊級（上限 105）
 

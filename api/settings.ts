@@ -2,9 +2,10 @@
 
 import { fetchApi } from "@/libs/fetchApi";
 
-// 公開設定白名單（後端硬編碼 PUBLIC_KEYS），目前只有 site_theme
+// 公開設定白名單（後端硬編碼 PUBLIC_KEYS）
 export interface PublicSettings {
     site_theme?: string;
+    default_color_mode?: string;  // light / dark / system
 }
 
 export async function getPublicSettings(): Promise<PublicSettings> {
