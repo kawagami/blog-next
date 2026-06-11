@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Bell, BellOff } from 'lucide-react';
+import { startSecondTick } from '@/libs/second-tick';
 
 function msToNextHour(): number {
     const now = new Date();
@@ -23,7 +24,6 @@ export default function HourlyChime() {
     const [timeLeft, setTimeLeft] = useState('');
     const [lastChime, setLastChime] = useState<string | null>(null);
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const clockRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
     function playBell(ctx: AudioContext, startTime: number) {
         const osc = ctx.createOscillator();
@@ -74,17 +74,14 @@ export default function HourlyChime() {
     }, [enabled, chime]);
 
     useEffect(() => {
-        clockRef.current = setInterval(() => {
+        return startSecondTick(() => {
             const now = new Date();
             const h = now.getHours().toString().padStart(2, '0');
             const m = now.getMinutes().toString().padStart(2, '0');
             const s = now.getSeconds().toString().padStart(2, '0');
             setCurrentTime(`${h}:${m}:${s}`);
             setTimeLeft(formatTimeLeft(msToNextHour()));
-        }, 1000);
-        return () => {
-            if (clockRef.current) clearInterval(clockRef.current);
-        };
+        });
     }, []);
 
     return (

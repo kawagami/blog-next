@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
+import { startSecondTick } from '@/libs/second-tick';
 
 export default function useTimer() {
     const [minutes, setMinutes] = useState(30);
@@ -11,21 +12,17 @@ export default function useTimer() {
     const isPaused = !isRunning && targetTime !== null;
 
     useEffect(() => {
-        let timer: ReturnType<typeof setInterval>;
-        if (isRunning && targetTime) {
-            timer = setInterval(() => {
-                const now = new Date().getTime();
-                const remaining = Math.max(0, Math.floor((targetTime - now) / 1000));
-                setTimeLeft(remaining);
+        if (!isRunning || !targetTime) return;
+        return startSecondTick(() => {
+            const remaining = Math.max(0, Math.floor((targetTime - Date.now()) / 1000));
+            setTimeLeft(remaining);
 
-                if (remaining === 0) {
-                    setIsRunning(false);
-                    setIsBeeping(true);
-                    setTargetTime(null);
-                }
-            }, 1000);
-        }
-        return () => clearInterval(timer);
+            if (remaining === 0) {
+                setIsRunning(false);
+                setIsBeeping(true);
+                setTargetTime(null);
+            }
+        }, targetTime);
     }, [isRunning, targetTime]);
 
     const updateMinutes = useCallback((m: number) => {

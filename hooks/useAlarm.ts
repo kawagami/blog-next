@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
+import { startSecondTick } from '@/libs/second-tick';
 
 export default function useAlarm() {
     const now = new Date();
@@ -12,19 +13,16 @@ export default function useAlarm() {
     const [isBeeping, setIsBeeping] = useState(false);
 
     useEffect(() => {
-        let timer: ReturnType<typeof setInterval>;
-        if (isRunning && targetTime !== null) {
-            timer = setInterval(() => {
-                const remaining = Math.max(0, Math.floor((targetTime - Date.now()) / 1000));
-                setTimeLeft(remaining);
-                if (remaining === 0) {
-                    setIsRunning(false);
-                    setIsBeeping(true);
-                    setTargetTime(null);
-                }
-            }, 1000);
-        }
-        return () => clearInterval(timer);
+        if (!isRunning || targetTime === null) return;
+        return startSecondTick(() => {
+            const remaining = Math.max(0, Math.floor((targetTime - Date.now()) / 1000));
+            setTimeLeft(remaining);
+            if (remaining === 0) {
+                setIsRunning(false);
+                setIsBeeping(true);
+                setTargetTime(null);
+            }
+        }, targetTime);
     }, [isRunning, targetTime]);
 
     const startAlarm = useCallback(() => {
