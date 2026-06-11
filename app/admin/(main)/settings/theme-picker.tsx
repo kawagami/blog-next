@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Trees, Waves } from "lucide-react";
+import { Trees, Waves, CloudSun } from "lucide-react";
 import { updateSiteTheme } from "./actions";
 import { SITE_THEMES, SITE_THEME_LABELS, applySiteThemeAttr, type SiteTheme } from "@/libs/site-theme";
 
-const THEME_ICONS = { forest: Trees, ocean: Waves } as const;
+const THEME_ICONS = { forest: Trees, ocean: Waves, sky: CloudSun } as const;
 
 export default function ThemePicker({ initialTheme }: { initialTheme: SiteTheme }) {
     const router = useRouter();

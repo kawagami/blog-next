@@ -160,10 +160,83 @@ function Bubbles() {
     );
 }
 
+/** sky：雲朵橫飄 */
+function Clouds() {
+    return (
+        <>
+            <style>{`
+                @keyframes cloud-drift {
+                    0%   { transform: translateX(-15vw); opacity: 0; }
+                    8%   { opacity: 1; }
+                    85%  { opacity: 0.8; }
+                    100% { transform: translateX(112vw); opacity: 0; }
+                }
+                @keyframes cloud-bob {
+                    0%   { transform: translateY(-6px); }
+                    50%  { transform: translateY(6px); }
+                    100% { transform: translateY(-6px); }
+                }
+                .cloud-wrap {
+                    position: absolute;
+                    left: 0;
+                    will-change: transform, opacity;
+                    animation: cloud-drift linear infinite;
+                    animation-fill-mode: both;
+                    pointer-events: none;
+                }
+                .cloud {
+                    display: block;
+                    animation: cloud-bob ease-in-out infinite;
+                }
+                .cloud .puff { fill: rgb(var(--primary-300) / 0.35); }
+                .dark .cloud .puff { fill: rgb(var(--primary-200) / 0.1); }
+                @media (prefers-reduced-motion: reduce) {
+                    .cloud-wrap { animation: none; opacity: 0; }
+                }
+            `}</style>
+            {PARTICLES.map((p, i) => (
+                <div
+                    key={i}
+                    className="cloud-wrap"
+                    style={{
+                        // 雲分佈在畫面上 75% 高度區間，橫飄速度放慢（落下參數 ×3）
+                        top: `${(p.left * 0.75)}%`,
+                        animationDelay: `${p.delay * 2}s`,
+                        animationDuration: `${p.duration * 3}s`,
+                    }}
+                >
+                    <svg
+                        className="cloud"
+                        width={p.size * 2.6}
+                        height={p.size * 1.6}
+                        viewBox="0 0 52 32"
+                        style={{
+                            animationDuration: `${p.swayDuration * 2}s`,
+                            animationDelay: `-${(i % 5) * 1.1}s`,
+                        }}
+                    >
+                        <path
+                            className="puff"
+                            d="M14 26 a8 8 0 0 1 -1 -16 a10 10 0 0 1 19 -3 a8 8 0 0 1 11 7 a6.5 6.5 0 0 1 -2 12 Z"
+                        />
+                    </svg>
+                </div>
+            ))}
+        </>
+    );
+}
+
+const PARTICLE_VARIANTS: Record<SiteTheme, () => React.JSX.Element> = {
+    forest: Leaves,
+    ocean: Bubbles,
+    sky: Clouds,
+};
+
 export default function ThemeBackground({ theme }: { theme: SiteTheme }) {
+    const Particles = PARTICLE_VARIANTS[theme] ?? Leaves;
     return (
         <div aria-hidden="true" style={containerStyle}>
-            {theme === 'ocean' ? <Bubbles /> : <Leaves />}
+            <Particles />
         </div>
     );
 }

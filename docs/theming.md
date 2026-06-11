@@ -1,7 +1,7 @@
 # 網站主題（風格）系統
 
 > 主題已是 **runtime 切換 + 全站設定**：色階走 CSS variables，主題值存後端 settings（key `site_theme`），root layout 讀取後設 `<html data-theme>`，不用重 build。
-> 現有主題：**forest**（預設，moss green + stone 暖灰）、**ocean**（sky blue + slate 冷灰）。
+> 現有主題：**forest**（預設，moss green + stone 暖灰）、**ocean**（sky blue + slate 冷灰）、**sky**（true blue + slate 冷灰）。
 
 ---
 
@@ -12,10 +12,10 @@
 | Token 定義 | `tailwind.config.js` | `primary` / `neutral` 各 11 階，值為 `rgb(var(--primary-N) / <alpha-value>)` |
 | 色階實際值 | `app/globals.css` | `:root` = forest；`[data-theme="ocean"]` = ocean。RGB 三元組格式（`82 183 136`） |
 | 主題清單/常數 | `libs/site-theme.ts` | `SITE_THEMES`、label、`resolveSiteTheme()`、`applySiteThemeAttr()`（client 樂觀更新 attr） |
-| 主題值存放 | 後端 settings 表（key `site_theme`） | `GET /settings/public`（無認證白名單）讀、`PATCH /admin/settings/site_theme` 寫（驗證 forest/ocean，非法 422） |
+| 主題值存放 | 後端 settings 表（key `site_theme`） | `GET /settings/public`（無認證白名單）讀、`PATCH /admin/settings/site_theme` 寫（驗證 forest/ocean/sky，非法 422） |
 | 切換入口 | `app/admin/(main)/settings/theme-picker.tsx` | admin settings 頁選擇器 → `updateSiteTheme` action（PATCH + `revalidatePath('/', 'layout')`），**全站訪客生效** |
 | 套用點 | `app/layout.tsx` | `getPublicSettings()`（`api/settings.ts`，60s cache、後端掛掉 fallback forest）→ `<html data-theme>`，並把 theme 傳給背景特效 |
-| 背景特效 | `components/ThemeBackground.tsx` | forest=落葉飄下、ocean=氣泡上浮；色全走 `rgb(var(--primary-N) / alpha)` |
+| 背景特效 | `components/ThemeBackground.tsx` | forest=落葉飄下、ocean=氣泡上浮、sky=雲朵橫飄；色全走 `rgb(var(--primary-N) / alpha)`，新主題未指定粒子時 fallback 落葉 |
 | Logo | `components/kawa-logo.tsx` | inline SVG，stroke/fill 走 var，自動跟主題 |
 | Favicon | `app/icon.svg` | **固定 forest 色**（favicon 是獨立請求吃不到 CSS var，不跟主題） |
 | 語意色 | `libs/badge-styles.ts` 等 | 與主題無關，永遠不動（見注意事項） |
@@ -27,6 +27,7 @@
 ## 新增一套主題（如 desert）
 
 1. **`libs/site-theme.ts`**：`SITE_THEMES` 加 `'desert'`、`SITE_THEME_LABELS` 加 label、theme-picker 的 `THEME_ICONS` 加 icon
+   - **後端同步**：`site_theme` 驗證表（services/app_settings.rs 的 match arm）也要加新值，否則 PATCH 回 422
 2. **`app/globals.css`**：加一段 `[data-theme="desert"] { ... }`，22 個 var（11 階 primary + 11 階 neutral），格式是 RGB 三元組：
    ```css
    [data-theme="desert"] {
