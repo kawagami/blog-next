@@ -89,10 +89,10 @@ export default function HourlyChime() {
 
     return (
         <div className="h-[calc(100svh-120px)] overflow-auto flex flex-col items-center justify-center p-4">
-            <div className="bg-white dark:bg-stone-800 shadow-lg rounded-lg p-8 w-full max-w-md flex flex-col items-center gap-6">
+            <div className="bg-white dark:bg-neutral-800 shadow-lg rounded-lg p-8 w-full max-w-md flex flex-col items-center gap-6">
                 <h1 className="text-4xl font-extrabold text-center text-primary-600 dark:text-primary-400">整點報時</h1>
 
-                <div className="text-6xl font-mono font-bold text-stone-800 dark:text-stone-100 tabular-nums">
+                <div className="text-6xl font-mono font-bold text-neutral-800 dark:text-neutral-100 tabular-nums">
                     {currentTime || '--:--:--'}
                 </div>
 
@@ -101,28 +101,28 @@ export default function HourlyChime() {
                     className={`flex items-center gap-2 px-6 py-3 rounded-full text-lg font-semibold transition-colors ${
                         enabled
                             ? 'bg-primary-600 hover:bg-primary-700 text-white'
-                            : 'bg-stone-200 dark:bg-stone-700 hover:bg-stone-300 dark:hover:bg-stone-600 text-stone-800 dark:text-stone-200'
+                            : 'bg-neutral-200 dark:bg-neutral-700 hover:bg-neutral-300 dark:hover:bg-neutral-600 text-neutral-800 dark:text-neutral-200'
                     }`}
                 >
                     {enabled ? <Bell size={20} /> : <BellOff size={20} />}
                     {enabled ? '報時中' : '已停用'}
                 </button>
 
-                <div className="w-full bg-stone-100 dark:bg-stone-700 rounded-lg p-4 flex flex-col gap-2 text-sm text-stone-600 dark:text-stone-400">
+                <div className="w-full bg-neutral-100 dark:bg-neutral-700 rounded-lg p-4 flex flex-col gap-2 text-sm text-neutral-600 dark:text-neutral-400">
                     <div className="flex justify-between">
                         <span>距下一個整點</span>
-                        <span className="font-mono font-semibold text-stone-800 dark:text-stone-200">{timeLeft || '--:--'}</span>
+                        <span className="font-mono font-semibold text-neutral-800 dark:text-neutral-200">{timeLeft || '--:--'}</span>
                     </div>
                     {lastChime && (
                         <div className="flex justify-between">
                             <span>最近報時</span>
-                            <span className="font-mono font-semibold text-stone-800 dark:text-stone-200">{lastChime}</span>
+                            <span className="font-mono font-semibold text-neutral-800 dark:text-neutral-200">{lastChime}</span>
                         </div>
                     )}
                 </div>
 
                 {!enabled && (
-                    <p className="text-xs text-stone-400 dark:text-stone-500 text-center">
+                    <p className="text-xs text-neutral-400 dark:text-neutral-500 text-center">
                         開啟後，每個整點自動播報語音
                     </p>
                 )}

@@ -19,7 +19,7 @@ export default function HackmdNoteTagButtons({ tags, openArray, setOpenArray }: 
         setOpenArray(result);
     };
 
-    const commonStyle = "p-2 border-2 rounded-lg bg-stone-200 dark:bg-stone-800 dark:text-white hover:border-primary-400 transition-colors";
+    const commonStyle = "p-2 border-2 rounded-lg bg-neutral-200 dark:bg-neutral-800 dark:text-white hover:border-primary-400 transition-colors";
 
     return (
         <>
@@ -38,7 +38,7 @@ export default function HackmdNoteTagButtons({ tags, openArray, setOpenArray }: 
                         {tags.map(tag => {
                             const tailwindStyle = openArray.includes(tag.name)
                                 ? "invert bg-primary-500 hover:bg-primary-400"
-                                : "hover:bg-primary-100 dark:hover:bg-primary-900 bg-stone-300 dark:bg-stone-600";
+                                : "hover:bg-primary-100 dark:hover:bg-primary-900 bg-neutral-300 dark:bg-neutral-600";
                             return (
                                 <button
                                     type="button"

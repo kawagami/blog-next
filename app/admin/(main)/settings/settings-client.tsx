@@ -34,17 +34,17 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
     };
 
     const renderSetting = (setting: Setting) => (
-        <div key={setting.key} className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-lg p-4">
-            <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">
+        <div key={setting.key} className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg p-4">
+            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-1">
                 {setting.description}
-                <span className="ml-2 text-xs text-stone-400 dark:text-stone-500 font-mono">{setting.key}</span>
+                <span className="ml-2 text-xs text-neutral-400 dark:text-neutral-500 font-mono">{setting.key}</span>
             </label>
             <div className="flex gap-2 mt-2">
                 <input
                     type="text"
                     value={drafts[setting.key] ?? ""}
                     onChange={e => setDrafts(prev => ({ ...prev, [setting.key]: e.target.value }))}
-                    className="flex-1 px-3 py-2 text-sm border border-stone-300 dark:border-stone-600 rounded-lg bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    className="flex-1 px-3 py-2 text-sm border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     placeholder={setting.description}
                 />
                 <button
@@ -63,7 +63,7 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
 
     return (
         <div>
-            <div className="flex gap-1 border-b border-stone-200 dark:border-stone-700 mb-6">
+            <div className="flex gap-1 border-b border-neutral-200 dark:border-neutral-700 mb-6">
                 {categories.map(cat => (
                     <button
                         key={cat}
@@ -71,7 +71,7 @@ export default function SettingsClient({ initialSettings }: { initialSettings: S
                         className={`px-4 py-2 text-sm font-medium capitalize transition-colors border-b-2 -mb-px
                             ${activeTab === cat
                                 ? "border-primary-600 text-primary-600 dark:text-primary-400 dark:border-primary-400"
-                                : "border-transparent text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200"
+                                : "border-transparent text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200"
                             }`}
                     >
                         {cat}

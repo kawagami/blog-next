@@ -48,20 +48,20 @@ export default function RosterPage() {
 
     return (
         <div className="w-full max-w-6xl px-4 pb-10 space-y-8">
-            <section className="bg-white/60 dark:bg-stone-800/60 backdrop-blur-md p-6 rounded-3xl shadow-lg border border-white/20">
+            <section className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-md p-6 rounded-3xl shadow-lg border border-white/20">
                 <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                     <CalendarDays className="text-primary-500" /> 排班參數設定
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-3">
-                        <label className="text-sm font-medium text-stone-700 dark:text-stone-300">參與人員 ({names.length})</label>
+                        <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">參與人員 ({names.length})</label>
                         <div className="flex gap-2">
-                            <input value={newName} onChange={(e) => setNewName(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addName()} placeholder="輸入姓名..." className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-primary-500 outline-none dark:bg-stone-700 dark:border-stone-600" />
+                            <input value={newName} onChange={(e) => setNewName(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addName()} placeholder="輸入姓名..." className="flex-1 px-4 py-2 rounded-xl border focus:ring-2 focus:ring-primary-500 outline-none dark:bg-neutral-700 dark:border-neutral-600" />
                             <button onClick={addName} className="p-2 bg-primary-500 text-white rounded-xl hover:bg-primary-600 transition-colors"><UserPlus size={20} /></button>
                         </div>
                         <div className="flex flex-wrap gap-2 mt-2 max-h-32 overflow-y-auto p-1">
                             {names.map((name, i) => (
-                                <span key={i} className="px-3 py-1 bg-white/80 dark:bg-stone-600 rounded-full text-sm flex items-center gap-2 shadow-sm border border-stone-100 dark:border-stone-500">
+                                <span key={i} className="px-3 py-1 bg-white/80 dark:bg-neutral-600 rounded-full text-sm flex items-center gap-2 shadow-sm border border-neutral-100 dark:border-neutral-500">
                                     {name}
                                     <button onClick={() => removeName(i)} className="hover:text-red-500 transition-colors"><Trash2 size={14} /></button>
                                 </span>
@@ -70,12 +70,12 @@ export default function RosterPage() {
                     </div>
                     <div className="space-y-4">
                         <div>
-                            <label className="text-sm font-medium text-stone-700 dark:text-stone-300">排班天數 (1-31 天)</label>
-                            <input type="number" min="1" max="31" value={days} onChange={(e) => setDays(Math.min(31, Math.max(1, parseInt(e.target.value) || 1)))} className="w-full mt-1 px-4 py-2 rounded-xl border dark:bg-stone-700 dark:border-stone-600 outline-none focus:ring-2 focus:ring-primary-500" />
+                            <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">排班天數 (1-31 天)</label>
+                            <input type="number" min="1" max="31" value={days} onChange={(e) => setDays(Math.min(31, Math.max(1, parseInt(e.target.value) || 1)))} className="w-full mt-1 px-4 py-2 rounded-xl border dark:bg-neutral-700 dark:border-neutral-600 outline-none focus:ring-2 focus:ring-primary-500" />
                         </div>
                         <div>
-                            <label className="text-sm font-medium text-stone-700 dark:text-stone-300">排班規則</label>
-                            <select value={rule} onChange={(e) => setRule(e.target.value)} className="w-full mt-1 px-4 py-2 rounded-xl border dark:bg-stone-700 dark:border-stone-600 outline-none focus:ring-2 focus:ring-primary-500">
+                            <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">排班規則</label>
+                            <select value={rule} onChange={(e) => setRule(e.target.value)} className="w-full mt-1 px-4 py-2 rounded-xl border dark:bg-neutral-700 dark:border-neutral-600 outline-none focus:ring-2 focus:ring-primary-500">
                                 <option value="fairness">平均分配 (公平)</option>
                                 <option value="morning_heavy">早班優先</option>
                                 <option value="night_heavy">晚班優先</option>
@@ -89,25 +89,25 @@ export default function RosterPage() {
                 </button>
             </section>
             {rosterData && (
-                <section className="bg-white/70 dark:bg-stone-900/70 backdrop-blur-lg rounded-3xl shadow-xl border border-white/30 overflow-hidden">
+                <section className="bg-white/70 dark:bg-neutral-900/70 backdrop-blur-lg rounded-3xl shadow-xl border border-white/30 overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-stone-100/50 dark:bg-stone-800/50">
-                                    <th className="p-4 border-b dark:border-stone-700 font-semibold sticky left-0 bg-white/95 dark:bg-stone-800/95 z-20">人員名單</th>
+                                <tr className="bg-neutral-100/50 dark:bg-neutral-800/50">
+                                    <th className="p-4 border-b dark:border-neutral-700 font-semibold sticky left-0 bg-white/95 dark:bg-neutral-800/95 z-20">人員名單</th>
                                     {rosterData[0]?.shifts.map((_, i) => (
-                                        <th key={i} className="p-4 border-b dark:border-stone-700 font-semibold text-center min-w-[90px]">
-                                            <div className="text-xs text-stone-500 font-mono">DAY {i + 1}</div>
+                                        <th key={i} className="p-4 border-b dark:border-neutral-700 font-semibold text-center min-w-[90px]">
+                                            <div className="text-xs text-neutral-500 font-mono">DAY {i + 1}</div>
                                         </th>
                                     ))}
                                 </tr>
                             </thead>
                             <tbody>
                                 {rosterData.map((staff) => (
-                                    <tr key={staff.id} className="hover:bg-white/40 dark:hover:bg-stone-800/40 transition-colors">
-                                        <td className="p-4 border-b dark:border-stone-700 font-bold sticky left-0 bg-white/95 dark:bg-stone-800/95 z-10">{staff.name}</td>
+                                    <tr key={staff.id} className="hover:bg-white/40 dark:hover:bg-neutral-800/40 transition-colors">
+                                        <td className="p-4 border-b dark:border-neutral-700 font-bold sticky left-0 bg-white/95 dark:bg-neutral-800/95 z-10">{staff.name}</td>
                                         {staff.shifts.map((shift, idx) => (
-                                            <td key={idx} className="p-2 border-b dark:border-stone-700 text-center"><ShiftBadge type={shift} /></td>
+                                            <td key={idx} className="p-2 border-b dark:border-neutral-700 text-center"><ShiftBadge type={shift} /></td>
                                         ))}
                                     </tr>
                                 ))}

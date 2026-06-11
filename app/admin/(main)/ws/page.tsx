@@ -15,10 +15,10 @@ export default async function WsAdminPage() {
         <div className="w-full h-[calc(100svh-180px)] overflow-auto p-6">
             <div className="max-w-4xl mx-auto flex flex-col gap-8">
                 <section>
-                    <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4">
+                    <h2 className="text-xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4">
                         Online Connections ({connections.length})
                     </h2>
-                    <div className="bg-white dark:bg-stone-900 shadow-lg rounded-lg overflow-hidden">
+                    <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden">
                         <AdminTable>
                             <thead>
                                 <AdminHeadRow>
@@ -29,7 +29,7 @@ export default async function WsAdminPage() {
                             <tbody>
                                 {connections.length === 0 ? (
                                     <tr>
-                                        <td colSpan={2} className="border border-stone-300 dark:border-stone-700 px-4 py-4 text-center text-stone-500 dark:text-stone-400">
+                                        <td colSpan={2} className="border border-neutral-300 dark:border-neutral-700 px-4 py-4 text-center text-neutral-500 dark:text-neutral-400">
                                             No active connections
                                         </td>
                                     </tr>
@@ -40,7 +40,7 @@ export default async function WsAdminPage() {
                                                 {conn.addr}
                                             </AdminTd>
                                             <AdminTd className="text-sm">
-                                                {conn.user_email ?? <span className="text-stone-400">anonymous</span>}
+                                                {conn.user_email ?? <span className="text-neutral-400">anonymous</span>}
                                             </AdminTd>
                                         </AdminRow>
                                     ))
@@ -51,10 +51,10 @@ export default async function WsAdminPage() {
                 </section>
 
                 <section>
-                    <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-4">
+                    <h2 className="text-xl font-semibold text-neutral-800 dark:text-neutral-100 mb-4">
                         Say Something to Someone
                     </h2>
-                    <div className="bg-white dark:bg-stone-900 shadow-lg rounded-lg p-6">
+                    <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg p-6">
                         <SaySomethingForm />
                     </div>
                 </section>

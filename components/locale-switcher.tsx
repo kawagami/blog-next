@@ -23,12 +23,12 @@ export default function LocaleSwitcher() {
         <div className="flex items-center gap-1 text-sm">
             {routing.locales.map((l, i) => (
                 <span key={l} className="flex items-center gap-1">
-                    {i > 0 && <span className="text-stone-400 dark:text-stone-600">|</span>}
+                    {i > 0 && <span className="text-neutral-400 dark:text-neutral-600">|</span>}
                     <button
                         onClick={() => handleChange(l)}
                         className={locale === l
                             ? 'font-bold text-primary-500 dark:text-primary-400'
-                            : 'hover:text-primary-400 text-stone-500 dark:text-stone-400'
+                            : 'hover:text-primary-400 text-neutral-500 dark:text-neutral-400'
                         }
                     >
                         {LOCALE_LABELS[l]}

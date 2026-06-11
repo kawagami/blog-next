@@ -59,7 +59,7 @@ export default function ConvertText() {
                             key={value}
                             type="button"
                             onClick={() => setDirection(value)}
-                            className={`px-4 py-1.5 rounded-md border text-sm font-medium transition-colors ${direction === value ? "bg-primary-500 text-white border-primary-500" : "border-stone-300 hover:border-primary-400 dark:border-stone-600"}`}
+                            className={`px-4 py-1.5 rounded-md border text-sm font-medium transition-colors ${direction === value ? "bg-primary-500 text-white border-primary-500" : "border-neutral-300 hover:border-primary-400 dark:border-neutral-600"}`}
                         >
                             {label}
                         </button>
@@ -69,7 +69,7 @@ export default function ConvertText() {
                     name="inputText"
                     rows={5}
                     placeholder={direction === "s2t" ? "請輸入簡體中文" : "請輸入繁體中文"}
-                    className="w-full mb-3 p-3 text-lg border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-stone-800 dark:border-stone-600"
+                    className="w-full mb-3 p-3 text-lg border border-neutral-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-neutral-800 dark:border-neutral-600"
                 />
                 <button
                     type="submit"
@@ -84,7 +84,7 @@ export default function ConvertText() {
                 rows={5}
                 readOnly
                 value={state.converted_text}
-                className="w-4/6 p-3 text-lg border border-stone-300 rounded-md bg-stone-100 dark:bg-stone-700 dark:border-stone-600"
+                className="w-4/6 p-3 text-lg border border-neutral-300 rounded-md bg-neutral-100 dark:bg-neutral-700 dark:border-neutral-600"
             />
             <button
                 onClick={handleCopy}

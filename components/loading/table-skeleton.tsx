@@ -1,4 +1,4 @@
-const PULSE = "bg-stone-200 dark:bg-stone-700 rounded animate-pulse";
+const PULSE = "bg-neutral-200 dark:bg-neutral-700 rounded animate-pulse";
 // 寬度循環，讓骨架看起來不死板
 const WIDTHS = ["w-24", "w-40", "w-28", "w-32", "w-20", "w-36"];
 
@@ -11,12 +11,12 @@ interface TableSkeletonProps {
 export function BorderedTableSkeleton({ headers, rows = 8 }: TableSkeletonProps) {
     return (
         <div className="w-full h-[calc(100svh-180px)] overflow-auto p-6">
-            <div className="max-w-4xl mx-auto bg-white dark:bg-stone-900 shadow-lg rounded-lg overflow-hidden">
-                <table className="w-full border-collapse border border-stone-200 dark:border-stone-700">
+            <div className="max-w-4xl mx-auto bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden">
+                <table className="w-full border-collapse border border-neutral-200 dark:border-neutral-700">
                     <thead>
-                        <tr className="bg-stone-100 dark:bg-stone-800">
+                        <tr className="bg-neutral-100 dark:bg-neutral-800">
                             {headers.map((h) => (
-                                <th key={h} className="border border-stone-300 dark:border-stone-700 px-4 py-2 text-left text-stone-700 dark:text-stone-300">
+                                <th key={h} className="border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-left text-neutral-700 dark:text-neutral-300">
                                     {h}
                                 </th>
                             ))}
@@ -26,7 +26,7 @@ export function BorderedTableSkeleton({ headers, rows = 8 }: TableSkeletonProps)
                         {Array.from({ length: rows }).map((_, r) => (
                             <tr key={r}>
                                 {headers.map((h, c) => (
-                                    <td key={h} className="border border-stone-300 dark:border-stone-700 px-4 py-2">
+                                    <td key={h} className="border border-neutral-300 dark:border-neutral-700 px-4 py-2">
                                         <div className={`h-4 ${WIDTHS[(r + c) % WIDTHS.length]} ${PULSE}`} />
                                     </td>
                                 ))}
@@ -52,12 +52,12 @@ export function ListTableSkeleton({ headers, rows = 10 }: TableSkeletonProps) {
                         ))}
                     </div>
                 </div>
-                <div className="bg-white dark:bg-stone-900 shadow-lg rounded-lg overflow-hidden">
+                <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden">
                     <table className="w-full border-collapse text-sm">
                         <thead>
-                            <tr className="bg-stone-100 dark:bg-stone-800">
+                            <tr className="bg-neutral-100 dark:bg-neutral-800">
                                 {headers.map((h) => (
-                                    <th key={h} className="px-4 py-2 text-left text-stone-700 dark:text-stone-300 border-b border-stone-200 dark:border-stone-700">
+                                    <th key={h} className="px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 border-b border-neutral-200 dark:border-neutral-700">
                                         {h}
                                     </th>
                                 ))}
@@ -65,7 +65,7 @@ export function ListTableSkeleton({ headers, rows = 10 }: TableSkeletonProps) {
                         </thead>
                         <tbody>
                             {Array.from({ length: rows }).map((_, r) => (
-                                <tr key={r} className="border-b border-stone-100 dark:border-stone-800">
+                                <tr key={r} className="border-b border-neutral-100 dark:border-neutral-800">
                                     {headers.map((h, c) => (
                                         <td key={h} className="px-4 py-2">
                                             <div className={`h-4 ${WIDTHS[(r + c) % WIDTHS.length]} ${PULSE}`} />

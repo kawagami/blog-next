@@ -12,22 +12,22 @@ export default function SaySomethingForm() {
     return (
         <form action={formAction} className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-stone-700 dark:text-stone-300">Addr</label>
+                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Addr</label>
                 <input
                     name="addr"
                     type="text"
                     placeholder="socket addr (e.g. 1.2.3.4:5678)"
-                    className="border border-stone-300 dark:border-stone-600 rounded px-3 py-2 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm"
+                    className="border border-neutral-300 dark:border-neutral-600 rounded px-3 py-2 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-sm"
                     required
                 />
             </div>
             <div className="flex flex-col gap-1">
-                <label className="text-sm font-medium text-stone-700 dark:text-stone-300">Message</label>
+                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">Message</label>
                 <input
                     name="message"
                     type="text"
                     placeholder="message content"
-                    className="border border-stone-300 dark:border-stone-600 rounded px-3 py-2 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm"
+                    className="border border-neutral-300 dark:border-neutral-600 rounded px-3 py-2 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 text-sm"
                     required
                 />
             </div>

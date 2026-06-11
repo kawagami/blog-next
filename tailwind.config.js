@@ -1,3 +1,12 @@
+// 色階走 CSS variables（globals.css 依 data-theme 切換），runtime 換主題不用重 build
+const varScale = (prefix) =>
+  Object.fromEntries(
+    [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map((step) => [
+      step,
+      `rgb(var(--${prefix}-${step}) / <alpha-value>)`,
+    ])
+  );
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'selector',
@@ -12,20 +21,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // 森林主色階（moss / forest green）
-        primary: {
-          50: '#f3f8f4',
-          100: '#d8f3dc',
-          200: '#b7e4c7',
-          300: '#95d5b2',
-          400: '#74c69d',
-          500: '#52b788',
-          600: '#40916c',
-          700: '#2d6a4f',
-          800: '#1b4332',
-          900: '#122e23',
-          950: '#081c15',
-        },
+        // 主色與中性色實際值定義在 app/globals.css 的 :root / [data-theme="..."]
+        primary: varScale('primary'),
+        neutral: varScale('neutral'),
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

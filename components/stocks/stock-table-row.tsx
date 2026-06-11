@@ -4,7 +4,7 @@ import type { StockChange } from "@/types";
 
 export default function StockTableRow({ stock }: { stock: StockChange }) {
     return (
-        <tr className="text-center dark:text-stone-200">
+        <tr className="text-center dark:text-neutral-200">
             <Td>{stock.stock_no}</Td>
             <Td>{stock.stock_name}</Td>
             <Td>{stock.status}</Td>

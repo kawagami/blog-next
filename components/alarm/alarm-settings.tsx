@@ -29,7 +29,7 @@ export default function AlarmSettings({ hour, setHour, minute, setMinute, disabl
 
     return (
         <form onSubmit={handleSubmit} className="mb-6">
-            <label className="text-lg font-medium block mb-2 text-stone-700 dark:text-stone-300">設定鬧鐘時間：</label>
+            <label className="text-lg font-medium block mb-2 text-neutral-700 dark:text-neutral-300">設定鬧鐘時間：</label>
             <div className="flex items-center gap-2">
                 <input
                     ref={hourRef}
@@ -41,9 +41,9 @@ export default function AlarmSettings({ hour, setHour, minute, setMinute, disabl
                     min="0"
                     max="23"
                     disabled={disabled}
-                    className="w-full p-3 border border-stone-300 dark:border-stone-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 text-center text-xl"
+                    className="w-full p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 text-center text-xl"
                 />
-                <span className="text-2xl font-bold text-stone-700 dark:text-stone-300">:</span>
+                <span className="text-2xl font-bold text-neutral-700 dark:text-neutral-300">:</span>
                 <input
                     ref={minuteRef}
                     type="number"
@@ -54,10 +54,10 @@ export default function AlarmSettings({ hour, setHour, minute, setMinute, disabl
                     min="0"
                     max="59"
                     disabled={disabled}
-                    className="w-full p-3 border border-stone-300 dark:border-stone-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 text-center text-xl"
+                    className="w-full p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 text-center text-xl"
                 />
             </div>
-            <p className="mt-2 text-sm text-stone-500 dark:text-stone-400 text-center">
+            <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400 text-center">
                 鬧鐘設定：{String(hour).padStart(2, '0')}:{String(minute).padStart(2, '0')}
             </p>
             <button type="submit" className="hidden" />

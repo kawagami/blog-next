@@ -68,17 +68,17 @@ export default function AuditLogsClient() {
         loadMore();
     }
 
-    const inputClass = "px-2 py-1.5 text-sm rounded border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-1 focus:ring-primary-400";
+    const inputClass = "px-2 py-1.5 text-sm rounded border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-1 focus:ring-primary-400";
 
     return (
         <div className="w-full">
             <div className="flex flex-col gap-4">
-                <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100">Audit Logs</h1>
+                <h1 className="text-xl font-semibold text-neutral-800 dark:text-neutral-100">Audit Logs</h1>
 
                 {/* Filter bar */}
-                <div className="flex flex-wrap gap-2 items-end bg-stone-50 dark:bg-stone-800/50 rounded-lg p-3 border border-stone-200 dark:border-stone-700">
+                <div className="flex flex-wrap gap-2 items-end bg-neutral-50 dark:bg-neutral-800/50 rounded-lg p-3 border border-neutral-200 dark:border-neutral-700">
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs text-stone-500 dark:text-stone-400">User email</label>
+                        <label className="text-xs text-neutral-500 dark:text-neutral-400">User email</label>
                         <input
                             type="text"
                             value={filters.user_email}
@@ -89,7 +89,7 @@ export default function AuditLogsClient() {
                         />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs text-stone-500 dark:text-stone-400">Method</label>
+                        <label className="text-xs text-neutral-500 dark:text-neutral-400">Method</label>
                         <select
                             value={filters.method}
                             onChange={e => setFilters(f => ({ ...f, method: e.target.value as HttpMethod | '' }))}
@@ -102,7 +102,7 @@ export default function AuditLogsClient() {
                         </select>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs text-stone-500 dark:text-stone-400">Path</label>
+                        <label className="text-xs text-neutral-500 dark:text-neutral-400">Path</label>
                         <input
                             type="text"
                             value={filters.path}
@@ -113,7 +113,7 @@ export default function AuditLogsClient() {
                         />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs text-stone-500 dark:text-stone-400">From</label>
+                        <label className="text-xs text-neutral-500 dark:text-neutral-400">From</label>
                         <input
                             type="datetime-local"
                             value={filters.from}
@@ -122,7 +122,7 @@ export default function AuditLogsClient() {
                         />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs text-stone-500 dark:text-stone-400">To</label>
+                        <label className="text-xs text-neutral-500 dark:text-neutral-400">To</label>
                         <input
                             type="datetime-local"
                             value={filters.to}
@@ -141,7 +141,7 @@ export default function AuditLogsClient() {
                         <button
                             onClick={handleReset}
                             disabled={isPending}
-                            className="px-4 py-1.5 text-sm font-medium rounded bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-stone-600 disabled:opacity-50 transition-colors"
+                            className="px-4 py-1.5 text-sm font-medium rounded bg-neutral-200 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-300 dark:hover:bg-neutral-600 disabled:opacity-50 transition-colors"
                         >
                             Reset
                         </button>
@@ -150,23 +150,23 @@ export default function AuditLogsClient() {
 
                 <ErrorBanner message={error} />
 
-                <div className={`bg-white dark:bg-stone-900 shadow-lg rounded-lg overflow-hidden transition-opacity ${isPending ? 'opacity-60' : ''}`}>
+                <div className={`bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden transition-opacity ${isPending ? 'opacity-60' : ''}`}>
                     <div className="overflow-x-auto">
                         <table className="w-full border-collapse text-sm">
                             <thead>
-                                <tr className="bg-stone-100 dark:bg-stone-800">
-                                    <th className="px-4 py-2 text-left text-stone-700 dark:text-stone-300 border-b border-stone-200 dark:border-stone-700 w-44">Time</th>
-                                    <th className="px-4 py-2 text-left text-stone-700 dark:text-stone-300 border-b border-stone-200 dark:border-stone-700">User</th>
-                                    <th className="px-4 py-2 text-left text-stone-700 dark:text-stone-300 border-b border-stone-200 dark:border-stone-700 w-20">Method</th>
-                                    <th className="px-4 py-2 text-left text-stone-700 dark:text-stone-300 border-b border-stone-200 dark:border-stone-700">Path</th>
-                                    <th className="px-4 py-2 text-left text-stone-700 dark:text-stone-300 border-b border-stone-200 dark:border-stone-700 hidden lg:table-cell">Query</th>
-                                    <th className="px-4 py-2 text-left text-stone-700 dark:text-stone-300 border-b border-stone-200 dark:border-stone-700 w-20">Status</th>
+                                <tr className="bg-neutral-100 dark:bg-neutral-800">
+                                    <th className="px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 border-b border-neutral-200 dark:border-neutral-700 w-44">Time</th>
+                                    <th className="px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 border-b border-neutral-200 dark:border-neutral-700">User</th>
+                                    <th className="px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 border-b border-neutral-200 dark:border-neutral-700 w-20">Method</th>
+                                    <th className="px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 border-b border-neutral-200 dark:border-neutral-700">Path</th>
+                                    <th className="px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 border-b border-neutral-200 dark:border-neutral-700 hidden lg:table-cell">Query</th>
+                                    <th className="px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 border-b border-neutral-200 dark:border-neutral-700 w-20">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {logs.length === 0 ? (
                                     <tr>
-                                        <td colSpan={6} className="px-4 py-8 text-center text-stone-500 dark:text-stone-400">
+                                        <td colSpan={6} className="px-4 py-8 text-center text-neutral-500 dark:text-neutral-400">
                                             {isPending ? 'Loading...' : 'No audit logs found'}
                                         </td>
                                     </tr>
@@ -174,23 +174,23 @@ export default function AuditLogsClient() {
                                     logs.map(log => (
                                         <tr
                                             key={log.id}
-                                            className="border-b border-stone-100 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-800/50"
+                                            className="border-b border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
                                         >
-                                            <td className="px-4 py-2 text-stone-500 dark:text-stone-400 text-xs whitespace-nowrap">
+                                            <td className="px-4 py-2 text-neutral-500 dark:text-neutral-400 text-xs whitespace-nowrap">
                                                 {new Date(log.created_at).toLocaleString()}
                                             </td>
-                                            <td className="px-4 py-2 text-stone-900 dark:text-stone-100 text-xs font-mono">
+                                            <td className="px-4 py-2 text-neutral-900 dark:text-neutral-100 text-xs font-mono">
                                                 {log.user_email}
                                             </td>
                                             <td className="px-4 py-2">
-                                                <span className={`px-2 py-0.5 rounded text-xs font-semibold ${METHOD_BADGE[log.method] ?? 'bg-stone-100 dark:bg-stone-700 text-stone-600 dark:text-stone-400'}`}>
+                                                <span className={`px-2 py-0.5 rounded text-xs font-semibold ${METHOD_BADGE[log.method] ?? 'bg-neutral-100 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-400'}`}>
                                                     {log.method}
                                                 </span>
                                             </td>
-                                            <td className="px-4 py-2 text-stone-900 dark:text-stone-100 font-mono text-xs break-all">
+                                            <td className="px-4 py-2 text-neutral-900 dark:text-neutral-100 font-mono text-xs break-all">
                                                 {log.path}
                                             </td>
-                                            <td className="px-4 py-2 text-stone-500 dark:text-stone-400 font-mono text-xs hidden lg:table-cell">
+                                            <td className="px-4 py-2 text-neutral-500 dark:text-neutral-400 font-mono text-xs hidden lg:table-cell">
                                                 {log.query ?? '—'}
                                             </td>
                                             <td className="px-4 py-2">
@@ -211,7 +211,7 @@ export default function AuditLogsClient() {
                         <button
                             onClick={handleLoadMore}
                             disabled={isPending}
-                            className="px-6 py-2 bg-stone-800 dark:bg-stone-200 text-white dark:text-stone-900 rounded hover:bg-stone-700 dark:hover:bg-stone-300 disabled:opacity-50 text-sm font-medium transition-colors"
+                            className="px-6 py-2 bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900 rounded hover:bg-neutral-700 dark:hover:bg-neutral-300 disabled:opacity-50 text-sm font-medium transition-colors"
                         >
                             {isPending ? 'Loading...' : 'Load More'}
                         </button>

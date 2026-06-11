@@ -54,7 +54,7 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
 
     return (
         <div className="max-w-3xl mx-auto space-y-6">
-            <h1 className="text-2xl font-bold text-stone-800 dark:text-white">角色管理</h1>
+            <h1 className="text-2xl font-bold text-neutral-800 dark:text-white">角色管理</h1>
 
             {/* Create form */}
             <form action={handleCreate} className="flex gap-2">
@@ -62,12 +62,12 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
                     name="name"
                     required
                     placeholder="角色名稱"
-                    className="flex-1 px-3 py-2 border rounded-md text-sm dark:bg-stone-800 dark:border-stone-600 dark:text-white"
+                    className="flex-1 px-3 py-2 border rounded-md text-sm dark:bg-neutral-800 dark:border-neutral-600 dark:text-white"
                 />
                 <input
                     name="description"
                     placeholder="說明（選填）"
-                    className="flex-1 px-3 py-2 border rounded-md text-sm dark:bg-stone-800 dark:border-stone-600 dark:text-white"
+                    className="flex-1 px-3 py-2 border rounded-md text-sm dark:bg-neutral-800 dark:border-neutral-600 dark:text-white"
                 />
                 <button
                     type="submit"
@@ -82,7 +82,7 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
             {/* Role list */}
             <div className="space-y-2">
                 {roles.map(role => (
-                    <div key={role.id} className="border rounded-lg dark:border-stone-700">
+                    <div key={role.id} className="border rounded-lg dark:border-neutral-700">
                         <div className="flex items-center justify-between px-4 py-3">
                             <button
                                 onClick={() => toggleExpand(role.id)}
@@ -91,7 +91,7 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
                                 {expandedId === role.id ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
                                 <span className="font-medium dark:text-white">{role.name}</span>
                                 {role.description && (
-                                    <span className="text-sm text-stone-500 dark:text-stone-400">— {role.description}</span>
+                                    <span className="text-sm text-neutral-500 dark:text-neutral-400">— {role.description}</span>
                                 )}
                             </button>
                             <button
@@ -104,8 +104,8 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
                         </div>
 
                         {expandedId === role.id && (
-                            <div className="px-4 pb-4 border-t dark:border-stone-700">
-                                <p className="text-xs text-stone-500 dark:text-stone-400 mt-3 mb-2">權限設定（點擊切換）</p>
+                            <div className="px-4 pb-4 border-t dark:border-neutral-700">
+                                <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-3 mb-2">權限設定（點擊切換）</p>
                                 <div className="flex flex-wrap gap-2">
                                     {allPermissions.map(perm => {
                                         const active = role.permissions?.some(p => p.id === perm.id) ?? false;
@@ -117,7 +117,7 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
                                                 className={`px-2 py-1 text-xs rounded-full border transition-colors ${
                                                     active
                                                         ? 'bg-primary-100 border-primary-400 text-primary-700 dark:bg-primary-900 dark:border-primary-500 dark:text-primary-300'
-                                                        : 'bg-stone-100 border-stone-300 text-stone-600 dark:bg-stone-800 dark:border-stone-600 dark:text-stone-400'
+                                                        : 'bg-neutral-100 border-neutral-300 text-neutral-600 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400'
                                                 }`}
                                             >
                                                 {perm.resource}:{perm.action}
@@ -131,7 +131,7 @@ export default function RolesManager({ initialRoles, allPermissions }: Props) {
                 ))}
 
                 {roles.length === 0 && (
-                    <p className="text-center text-stone-500 dark:text-stone-400 py-8">尚無角色</p>
+                    <p className="text-center text-neutral-500 dark:text-neutral-400 py-8">尚無角色</p>
                 )}
             </div>
         </div>

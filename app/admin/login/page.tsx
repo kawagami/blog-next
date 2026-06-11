@@ -47,16 +47,16 @@ export default function Login() {
 
     return (
         <div className="w-full h-[calc(100svh-120px)] overflow-auto flex justify-center items-start">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-stone-800 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold text-center text-stone-800 dark:text-stone-100">Login</h2>
+            <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-neutral-800 rounded-lg shadow-md">
+                <h2 className="text-2xl font-bold text-center text-neutral-800 dark:text-neutral-100">Login</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-stone-700 dark:text-stone-300">Email</label>
-                        <input type="email" id="email" name="email" className="w-full px-4 py-2 mt-1 text-stone-900 dark:text-stone-100 bg-white dark:bg-stone-700 border dark:border-stone-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" placeholder="Enter your email" required />
+                        <label htmlFor="email" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Email</label>
+                        <input type="email" id="email" name="email" className="w-full px-4 py-2 mt-1 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-700 border dark:border-neutral-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" placeholder="Enter your email" required />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-stone-700 dark:text-stone-300">Password</label>
-                        <input type="password" id="password" name="password" className="w-full px-4 py-2 mt-1 text-stone-900 dark:text-stone-100 bg-white dark:bg-stone-700 border dark:border-stone-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" placeholder="Enter your password" required />
+                        <label htmlFor="password" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Password</label>
+                        <input type="password" id="password" name="password" className="w-full px-4 py-2 mt-1 text-neutral-900 dark:text-neutral-100 bg-white dark:bg-neutral-700 border dark:border-neutral-600 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500" placeholder="Enter your password" required />
                     </div>
                     {error && <p className="text-sm text-red-500">{error}</p>}
                     <button

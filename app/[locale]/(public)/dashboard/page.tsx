@@ -36,7 +36,7 @@ export default async function DashboardPage() {
                     </div>
                 )}
                 <div>
-                    <p className="text-sm text-stone-500 dark:text-stone-400">{t("welcomeBack")}</p>
+                    <p className="text-sm text-neutral-500 dark:text-neutral-400">{t("welcomeBack")}</p>
                     <h1 className="text-2xl font-bold">{member.name}</h1>
                 </div>
             </div>
@@ -46,11 +46,11 @@ export default async function DashboardPage() {
                     <Link
                         key={href}
                         href={href}
-                        className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow hover:shadow-md transition-shadow flex flex-col gap-2 group"
+                        className="bg-white dark:bg-neutral-800 rounded-xl p-4 shadow hover:shadow-md transition-shadow flex flex-col gap-2 group"
                     >
                         <Icon size={20} className="text-primary-500 group-hover:scale-110 transition-transform" />
                         <span className="font-semibold text-sm">{t(labelKey)}</span>
-                        <span className="text-xs text-stone-500 dark:text-stone-400">{t(descKey)}</span>
+                        <span className="text-xs text-neutral-500 dark:text-neutral-400">{t(descKey)}</span>
                     </Link>
                 ))}
             </div>

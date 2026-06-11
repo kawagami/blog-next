@@ -50,7 +50,7 @@ export default function UserRolesPanel({ userId, userName, initialRoles, allRole
                                 className={`px-2 py-0.5 text-xs rounded-full border transition-colors ${
                                     active
                                         ? 'bg-primary-100 border-primary-400 text-primary-700 dark:bg-primary-900 dark:border-primary-500 dark:text-primary-300'
-                                        : 'bg-stone-100 border-stone-300 text-stone-600 dark:bg-stone-800 dark:border-stone-600 dark:text-stone-400'
+                                        : 'bg-neutral-100 border-neutral-300 text-neutral-600 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400'
                                 }`}
                             >
                                 {role.name}

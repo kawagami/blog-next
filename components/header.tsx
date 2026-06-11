@@ -3,8 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@/i18n/navigation';
 import ThemeButton from "@/components/theme-button";
-import Image from "next/image";
-import logoImg from "@/assets/kawa-logo.svg";
+import KawaLogo from "@/components/kawa-logo";
 import { logout } from '@/actions/auth';
 import { LayoutDashboard, User, Bell, ChevronDown, X, Menu, TrendingUp, type LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -32,13 +31,13 @@ const MEMBER_LINKS: ReadonlyArray<{ href: string; labelKey: string; icon: Lucide
 ];
 
 const navLinkClass = "block px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400 whitespace-nowrap";
-const dropdownItemClass = "flex items-center gap-2 px-4 py-2 hover:bg-stone-100 dark:hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400";
-const mobileItemClass = "px-4 py-2 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-primary-400";
+const dropdownItemClass = "flex items-center gap-2 px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400";
+const mobileItemClass = "px-4 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary-400";
 
 function DesktopDropdown({ isOpen, align = 'left', children }: { isOpen: boolean; align?: 'left' | 'right'; children: React.ReactNode }) {
     if (!isOpen) return null;
     return (
-        <div className={`absolute ${align === 'left' ? 'left-0' : 'right-0'} bg-white dark:bg-stone-800 shadow-lg rounded-md overflow-hidden z-10 min-w-[120px]`}>
+        <div className={`absolute ${align === 'left' ? 'left-0' : 'right-0'} bg-white dark:bg-neutral-800 shadow-lg rounded-md overflow-hidden z-10 min-w-[120px]`}>
             {children}
         </div>
     );
@@ -69,7 +68,7 @@ export default function Header({ member }: HeaderProps) {
             <header className="min-h-[50px] flex items-center justify-between px-4 relative z-50">
                 <div className="flex items-center flex-shrink-0">
                     <Link href="/" className="block px-2" aria-label={t('backToHome')} onClick={closeAll}>
-                        <Image src={logoImg} width={100} height={40} alt="Kawa" priority />
+                        <KawaLogo width={100} height={40} />
                     </Link>
                 </div>
 
@@ -138,7 +137,7 @@ export default function Header({ member }: HeaderProps) {
             {isOpen && (
                 <>
                     <div className="md:hidden fixed inset-0 z-30 bg-black/40" onClick={closeAll} aria-hidden="true" />
-                    <nav className="md:hidden fixed top-[50px] left-0 right-0 z-40 bg-white dark:bg-stone-900 shadow-lg border-t border-stone-200 dark:border-stone-700 flex flex-col p-4 gap-1">
+                    <nav className="md:hidden fixed top-[50px] left-0 right-0 z-40 bg-white dark:bg-neutral-900 shadow-lg border-t border-neutral-200 dark:border-neutral-700 flex flex-col p-4 gap-1">
                         <Link href="/hackmd-notes" className={mobileItemClass} onClick={closeAll}>{t('notes')}</Link>
 
                         <button

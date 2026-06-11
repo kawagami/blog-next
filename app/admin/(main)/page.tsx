@@ -3,7 +3,7 @@ import Link from "next/link";
 export default async function AdminPage() {
     return (
         <div className="w-full h-[calc(100svh-180px)] overflow-auto flex flex-col items-center">
-            <h1 className="text-4xl font-bold text-stone-800 my-8">Admin Dashboard</h1>
+            <h1 className="text-4xl font-bold text-neutral-800 my-8">Admin Dashboard</h1>
             <div className="w-full flex justify-center gap-4">
                 <Link href="/admin/stocks" className="px-6 py-3 font-semibold text-white bg-primary-600 border-2 border-primary-700 rounded-lg shadow-md hover:bg-primary-700 hover:scale-105 transition duration-300">股票</Link>
                 <Link href="/admin/users" className="px-6 py-3 font-semibold text-white bg-primary-600 border-2 border-primary-700 rounded-lg shadow-md hover:bg-primary-700 hover:scale-105 transition duration-300">Manage Users</Link>

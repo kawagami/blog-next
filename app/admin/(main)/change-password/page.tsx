@@ -33,14 +33,14 @@ export default function ChangePasswordPage() {
         }
     };
 
-    const inputClass = "w-full px-3 py-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-primary-500";
+    const inputClass = "w-full px-3 py-2 rounded-lg border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 focus:outline-none focus:ring-2 focus:ring-primary-500";
 
     return (
         <div className="max-w-md">
-            <h1 className="text-xl font-semibold text-stone-800 dark:text-stone-100 mb-6">修改密碼</h1>
+            <h1 className="text-xl font-semibold text-neutral-800 dark:text-neutral-100 mb-6">修改密碼</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-sm text-stone-600 dark:text-stone-400 mb-1">目前密碼</label>
+                    <label className="block text-sm text-neutral-600 dark:text-neutral-400 mb-1">目前密碼</label>
                     <input
                         type="password"
                         required
@@ -50,7 +50,7 @@ export default function ChangePasswordPage() {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm text-stone-600 dark:text-stone-400 mb-1">新密碼</label>
+                    <label className="block text-sm text-neutral-600 dark:text-neutral-400 mb-1">新密碼</label>
                     <input
                         type="password"
                         required
@@ -60,7 +60,7 @@ export default function ChangePasswordPage() {
                     />
                 </div>
                 <div>
-                    <label className="block text-sm text-stone-600 dark:text-stone-400 mb-1">確認新密碼</label>
+                    <label className="block text-sm text-neutral-600 dark:text-neutral-400 mb-1">確認新密碼</label>
                     <input
                         type="password"
                         required

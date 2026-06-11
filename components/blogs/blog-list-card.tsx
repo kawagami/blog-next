@@ -16,10 +16,10 @@ export default function BlogListCard({ id, toc, tags, created_at, updated_at }: 
     return (
         <Link
             href={`/blogs/${id}`}
-            className="block bg-white dark:bg-stone-800 shadow-md rounded-xl hover:shadow-lg transition-shadow duration-300 m-4"
+            className="block bg-white dark:bg-neutral-800 shadow-md rounded-xl hover:shadow-lg transition-shadow duration-300 m-4"
         >
             <div className="p-4">
-                <h2 className="text-center text-xl font-semibold text-stone-800 dark:text-stone-100 mb-2">
+                <h2 className="text-center text-xl font-semibold text-neutral-800 dark:text-neutral-100 mb-2">
                     {toc || `Blog Post #${id}`}
                 </h2>
                 <div className="flex flex-wrap justify-center gap-2 mb-3">
@@ -32,7 +32,7 @@ export default function BlogListCard({ id, toc, tags, created_at, updated_at }: 
                         </span>
                     ))}
                 </div>
-                <div className="text-stone-400 dark:text-stone-500 text-xs text-right">
+                <div className="text-neutral-400 dark:text-neutral-500 text-xs text-right">
                     <p>
                         <strong>{t("created")}:</strong>{" "}
                         <ShowClientTime datetimeString={created_at} />

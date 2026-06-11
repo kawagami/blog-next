@@ -4,9 +4,9 @@ import type { StockChange } from "@/types";
 
 export default function StockTable({ data }: { data: StockChange[] }) {
     return (
-        <table className="w-full border-collapse border border-stone-300 dark:border-stone-600">
+        <table className="w-full border-collapse border border-neutral-300 dark:border-neutral-600">
             <thead>
-                <tr className="bg-stone-200 dark:bg-stone-700">
+                <tr className="bg-neutral-200 dark:bg-neutral-700">
                     <Th>股票代號</Th>
                     <Th>股票名稱</Th>
                     <Th>狀態</Th>

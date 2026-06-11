@@ -11,13 +11,13 @@ export default function HackMDNotesComponent({ notes, openArray }: Props) {
 
     return (
         <>
-            <div className="text-lg font-semibold mb-4 text-stone-800 dark:text-stone-100">總共 {data.length} 個筆記</div>
+            <div className="text-lg font-semibold mb-4 text-neutral-800 dark:text-neutral-100">總共 {data.length} 個筆記</div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-4">
                 {data.map(note => (
-                    <div key={note.id} className="border border-stone-300 dark:border-stone-700 rounded-lg shadow-lg hover:shadow-xl transition-shadow bg-white dark:bg-stone-800">
+                    <div key={note.id} className="border border-neutral-300 dark:border-neutral-700 rounded-lg shadow-lg hover:shadow-xl transition-shadow bg-white dark:bg-neutral-800">
                         <Link className="block p-4 text-center" target="_blank" href={note.publish_link}>
                             <div className="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">{note.title}</div>
-                            <div suppressHydrationWarning className="text-stone-600 dark:text-stone-300">
+                            <div suppressHydrationWarning className="text-neutral-600 dark:text-neutral-300">
                                 {new Intl.DateTimeFormat('zh-TW', {
                                     year: 'numeric', month: '2-digit', day: '2-digit',
                                     hour: '2-digit', minute: '2-digit', second: '2-digit',
@@ -25,7 +25,7 @@ export default function HackMDNotesComponent({ notes, openArray }: Props) {
                             </div>
                             <div className="flex gap-2 flex-wrap justify-center mt-2">
                                 {note.tags.map(category => (
-                                    <span key={category} className="bg-stone-200 dark:bg-stone-700 text-sm px-3 py-1 rounded-full">
+                                    <span key={category} className="bg-neutral-200 dark:bg-neutral-700 text-sm px-3 py-1 rounded-full">
                                         {category}
                                     </span>
                                 ))}

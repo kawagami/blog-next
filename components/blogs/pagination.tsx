@@ -27,17 +27,17 @@ export default function Pagination({ page, totalPages }: Props) {
             <button
                 onClick={() => goTo(page - 1)}
                 disabled={page <= 1}
-                className="p-1 rounded text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                className="p-1 rounded text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 disabled:opacity-30 disabled:cursor-not-allowed"
             >
                 <ChevronLeft size={20} />
             </button>
-            <span className="text-sm text-stone-600 dark:text-stone-400">
+            <span className="text-sm text-neutral-600 dark:text-neutral-400">
                 {page} / {totalPages}
             </span>
             <button
                 onClick={() => goTo(page + 1)}
                 disabled={page >= totalPages}
-                className="p-1 rounded text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                className="p-1 rounded text-neutral-500 dark:text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 disabled:opacity-30 disabled:cursor-not-allowed"
             >
                 <ChevronRight size={20} />
             </button>

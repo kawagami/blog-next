@@ -141,7 +141,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         onClick={handleSave}
                         disabled={isSaving}
                         className={`px-6 py-2 font-semibold rounded-lg shadow-md transition-all duration-300 ${isSaving
-                            ? 'bg-stone-400 text-stone-700 cursor-not-allowed'
+                            ? 'bg-neutral-400 text-neutral-700 cursor-not-allowed'
                             : 'bg-primary-600 text-white hover:bg-primary-700'}`}
                     >
                         {isSaving ? (
@@ -157,7 +157,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                     <button
                         onClick={() => fileInputRef.current?.click()}
                         disabled={isSaving || isUploading}
-                        className="px-6 py-2 font-semibold bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:bg-stone-400 disabled:cursor-not-allowed flex items-center gap-2"
+                        className="px-6 py-2 font-semibold bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:bg-neutral-400 disabled:cursor-not-allowed flex items-center gap-2"
                     >
                         {isUploading && <Loader2 className="w-4 h-4 animate-spin" />}
                         {isUploading ? '上傳中...' : '上傳圖片'}
@@ -180,11 +180,11 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                             onChange={(e) => setMarkdown(e.target.value)}
                             onKeyDown={handleKeyDown}
                             onPaste={handlePaste}
-                            className="w-full h-full p-4 rounded border border-stone-300 font-mono resize-none dark:bg-stone-800 dark:text-white dark:border-stone-600"
+                            className="w-full h-full p-4 rounded border border-neutral-300 font-mono resize-none dark:bg-neutral-800 dark:text-white dark:border-neutral-600"
                             placeholder="輸入 Markdown 內容..."
                         />
                     </div>
-                    <div className="p-4 h-full min-h-[300px] overflow-auto border border-stone-300 bg-white dark:bg-stone-800 dark:text-white rounded prose max-w-none dark:prose-invert">
+                    <div className="p-4 h-full min-h-[300px] overflow-auto border border-neutral-300 bg-white dark:bg-neutral-800 dark:text-white rounded prose max-w-none dark:prose-invert">
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}
@@ -211,14 +211,14 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                     className="fixed min-w-max z-10"
                     style={{ transform: `translate(${modalPosition.x}px, ${modalPosition.y}px)`, left: 0, top: 0 }}
                 >
-                    <div className="bg-white dark:bg-stone-800 p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+                    <div className="bg-white dark:bg-neutral-800 p-6 rounded-lg shadow-lg w-[90%] max-w-md">
                         <h2 className="text-lg font-semibold mb-4">編輯類型</h2>
                         <input
                             type="text"
                             value={newTag}
                             onChange={(e) => setNewTag(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
-                            className="w-full p-2 mb-4 border rounded dark:bg-stone-700"
+                            className="w-full p-2 mb-4 border rounded dark:bg-neutral-700"
                             placeholder="輸入新類型..."
                         />
                         <button
@@ -258,7 +258,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                         </div>
                         <button
                             onClick={() => setShowTagModal(false)}
-                            className="mt-4 w-full px-4 py-2 bg-stone-600 text-white rounded-lg hover:bg-stone-700"
+                            className="mt-4 w-full px-4 py-2 bg-neutral-600 text-white rounded-lg hover:bg-neutral-700"
                         >
                             關閉
                         </button>

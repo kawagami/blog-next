@@ -17,7 +17,7 @@ const ImageGrid = ({ images, deletingImage, copiedImage, onDelete, onCopy }: Pro
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
             {images.map((image) => (
-                <div key={image.name} className="bg-white dark:bg-stone-800 p-4 rounded shadow-md flex flex-col items-center">
+                <div key={image.name} className="bg-white dark:bg-neutral-800 p-4 rounded shadow-md flex flex-col items-center">
                     <Image width={150} height={150} src={image.url} alt={`Image ${image.name}`} className="rounded-lg mb-4 object-cover" />
                     {image.status && (
                         <span className={`text-xs font-semibold px-2 py-0.5 rounded mb-2 ${image.status === 'active' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300'}`}>
@@ -27,7 +27,7 @@ const ImageGrid = ({ images, deletingImage, copiedImage, onDelete, onCopy }: Pro
                     {pathname === '/admin/images' && (
                         <button
                             onClick={() => { if (window.confirm('確定刪除此圖片？')) onDelete(image.name); }}
-                            className={`mt-2 py-1 px-4 rounded transition ${deletingImage === image.name ? 'bg-stone-500 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600 text-white'}`}
+                            className={`mt-2 py-1 px-4 rounded transition ${deletingImage === image.name ? 'bg-neutral-500 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600 text-white'}`}
                             disabled={deletingImage === image.name}
                         >
                             {deletingImage === image.name ? (

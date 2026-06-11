@@ -46,32 +46,32 @@ export default function NewPasswordPage() {
             )}
             <div className="flex flex-col items-center gap-2 mb-4">
                 <div>
-                    <label htmlFor="count" className="mr-2 dark:text-stone-200">個數:</label>
-                    <input id="count" type="number" value={count} onChange={(e) => handleCountChange(e.target.value)} className="border rounded px-2 py-1 w-20 dark:bg-stone-700 dark:border-stone-600 dark:text-stone-100" />
+                    <label htmlFor="count" className="mr-2 dark:text-neutral-200">個數:</label>
+                    <input id="count" type="number" value={count} onChange={(e) => handleCountChange(e.target.value)} className="border rounded px-2 py-1 w-20 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100" />
                 </div>
                 <div>
-                    <label htmlFor="length" className="mr-2 dark:text-stone-200">長度:</label>
-                    <input id="length" type="number" value={length} onChange={(e) => handleLengthChange(e.target.value)} className="border rounded px-2 py-1 w-20 dark:bg-stone-700 dark:border-stone-600 dark:text-stone-100" />
+                    <label htmlFor="length" className="mr-2 dark:text-neutral-200">長度:</label>
+                    <input id="length" type="number" value={length} onChange={(e) => handleLengthChange(e.target.value)} className="border rounded px-2 py-1 w-20 dark:bg-neutral-700 dark:border-neutral-600 dark:text-neutral-100" />
                 </div>
             </div>
             <button onClick={fetchNewPasswords} className="bg-primary-500 text-white px-4 py-2 rounded hover:bg-primary-600 dark:bg-primary-600 dark:hover:bg-primary-700" disabled={isLoading}>
                 {isLoading ? "Loading..." : "Generate Passwords"}
             </button>
             <div className="mt-6">
-                <h2 className="text-lg font-semibold dark:text-stone-100">生成密碼:</h2>
+                <h2 className="text-lg font-semibold dark:text-neutral-100">生成密碼:</h2>
                 {isLoading ? (
-                    <div className="mt-4 dark:text-stone-300">Loading...</div>
+                    <div className="mt-4 dark:text-neutral-300">Loading...</div>
                 ) : newPasswords.length > 0 ? (
                     <ul className="mt-2 text-center">
                         {newPasswords.map((password, index) => (
                             <li key={index} className="mb-1 flex justify-center items-center gap-2">
-                                <span className="dark:text-stone-200">{password}</span>
-                                <button onClick={() => handleCopy(password)} className="bg-stone-200 text-stone-800 px-2 py-1 rounded hover:bg-stone-300 dark:bg-stone-600 dark:text-stone-100 dark:hover:bg-stone-500">複製</button>
+                                <span className="dark:text-neutral-200">{password}</span>
+                                <button onClick={() => handleCopy(password)} className="bg-neutral-200 text-neutral-800 px-2 py-1 rounded hover:bg-neutral-300 dark:bg-neutral-600 dark:text-neutral-100 dark:hover:bg-neutral-500">複製</button>
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    <p className="dark:text-stone-400">尚未生成密碼</p>
+                    <p className="dark:text-neutral-400">尚未生成密碼</p>
                 )}
             </div>
         </div>
