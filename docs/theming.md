@@ -82,4 +82,4 @@ curl -s -H "Cookie: site-theme=ocean" http://localhost:3000/zh-TW | grep -o 'dat
 | Build-time token 建立 | `da8182b` | 彩虹→森林，92 檔收斂到 primary/stone |
 | 特效 | `514e4ff` | 氣泡→落葉 |
 | Logo | `c342ccf` | Kawa 字標 + favicon |
-| Runtime 主題系統 | `5fff764` | token var 化、stone→neutral、data-theme 切換、ocean 主題、admin picker |
+| Runtime 主題系統 | `3f84f58` | token var 化、stone→neutral、data-theme 切換、ocean 主題、admin picker |
