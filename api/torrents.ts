@@ -2,7 +2,7 @@
 
 import { unstable_rethrow } from "next/navigation";
 import adminRequest from "@/libs/adminRequest";
-import type { TorrentPaginatedResponse, TorrentDownloadLink } from "@/types";
+import type { Torrent, TorrentPaginatedResponse, TorrentDownloadLink } from "@/types";
 
 // 後端錯誤帶 status（409 / 422 / 507 等），mutation 統一回 result object 讓 client 顯示訊息
 // （server action throw 在 production 會被 Next.js 遮蔽，拿不到 status）
@@ -40,6 +40,11 @@ export async function getTorrents(
     return adminRequest<TorrentPaginatedResponse>({
         url: `${process.env.API_URL}/admin/torrents?${params}`,
     });
+}
+
+// 詳情：進行中任務帶 live 即時進度（列表 API 不帶），頁面掛載時用來補回進度
+export async function getTorrent(id: number): Promise<Torrent> {
+    return adminRequest<Torrent>({ url: `${process.env.API_URL}/admin/torrents/${id}` });
 }
 
 export async function postTorrent(magnetUri: string): Promise<TorrentActionResult> {

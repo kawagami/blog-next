@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Download, Loader2, Plus, RotateCcw, Trash2, X } from "lucide-react";
 import { AdminHeadRow, AdminRow, AdminTable, AdminTd, AdminTh } from "@/components/admin/table";
@@ -8,6 +8,7 @@ import { useWsSubscribe } from "@/hooks/useWsSubscribe";
 import {
     createTorrentDownloadLinks,
     deleteTorrent,
+    getTorrent,
     getTorrents,
     postTorrent,
     retryTorrent,
@@ -63,15 +64,36 @@ export default function TorrentManager({ initialTorrents, initialTotal, status, 
     const [modalTorrent, setModalTorrent] = useState<Torrent | null>(null);
     const [downloadingKey, setDownloadingKey] = useState<string | null>(null);
 
+    // WS「進度有變動才推」，卡住的任務不會再推 — 掛載/刷新後打詳情端點把 live 進度補回來
+    const seedLive = useCallback(async (list: Torrent[]) => {
+        const ids = list.filter((t) => t.status === "downloading").map((t) => t.id);
+        if (ids.length === 0) return;
+        const details = await Promise.all(ids.map((id) => getTorrent(id).catch(() => null)));
+        setLiveMap((prev) => {
+            const next = { ...prev };
+            for (const d of details) {
+                if (d?.live) next[d.id] = { id: d.id, name: d.name ?? "", ...d.live };
+            }
+            return next;
+        });
+    }, []);
+
+    useEffect(() => {
+        // setState 發生在 fetch await 之後，非同步、不會 cascading render
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        seedLive(initialTorrents);
+    }, [seedLive, initialTorrents]);
+
     const refresh = useCallback(async () => {
         try {
             const { data, total } = await getTorrents(status || null, page, perPage);
             setTorrents(data);
             setTotal(total);
+            seedLive(data);
         } catch {
             // 列表刷新失敗就維持現狀，下次事件再試
         }
-    }, [status, page, perPage]);
+    }, [status, page, perPage, seedLive]);
 
     useWsSubscribe("torrent_progress", (data) => {
         const ev = data as TorrentProgressEvent;
