@@ -241,6 +241,11 @@ export interface TorrentDownloadLink {
   expires_at: string;
 }
 
+export interface TorrentStorage {
+  disk: { total_bytes: number; available_bytes: number };
+  torrent: { used_bytes: number; max_bytes: number };
+}
+
 export interface TorrentProgressEvent extends TorrentLive {
   id: number;
   name: string;

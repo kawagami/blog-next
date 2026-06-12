@@ -10,16 +10,19 @@ import {
     deleteTorrent,
     getTorrent,
     getTorrents,
+    getTorrentStorage,
     postTorrent,
     retryTorrent,
 } from "@/api/torrents";
+import StorageBars from "./storage-bars";
 import { TORRENT_STATUS_BADGE } from "@/libs/badge-styles";
 import { formatBytes } from "@/libs/format-bytes";
-import type { Torrent, TorrentProgressEvent } from "@/types";
+import type { Torrent, TorrentProgressEvent, TorrentStorage } from "@/types";
 
 interface Props {
     initialTorrents: Torrent[];
     initialTotal: number;
+    initialStorage: TorrentStorage | null;
     status: string;
     page: number;
     perPage: number;
@@ -51,9 +54,10 @@ function addErrorMessage(status?: number, message?: string) {
 const pageBtnClass = "flex items-center gap-1 px-3 py-1.5 rounded border border-neutral-300 dark:border-neutral-600 bg-white dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 text-sm transition-colors";
 const pageBtnDisabledClass = "flex items-center gap-1 px-3 py-1.5 rounded border border-neutral-200 dark:border-neutral-700 text-neutral-300 dark:text-neutral-600 text-sm cursor-not-allowed";
 
-export default function TorrentManager({ initialTorrents, initialTotal, status, page, perPage }: Props) {
+export default function TorrentManager({ initialTorrents, initialTotal, initialStorage, status, page, perPage }: Props) {
     const [torrents, setTorrents] = useState<Torrent[]>(initialTorrents);
     const [total, setTotal] = useState(initialTotal);
+    const [storage, setStorage] = useState<TorrentStorage | null>(initialStorage);
     const [liveMap, setLiveMap] = useState<Record<number, TorrentProgressEvent>>({});
 
     const [magnet, setMagnet] = useState("");
@@ -86,9 +90,13 @@ export default function TorrentManager({ initialTorrents, initialTotal, status, 
 
     const refresh = useCallback(async () => {
         try {
-            const { data, total } = await getTorrents(status || null, page, perPage);
+            const [{ data, total }, storageRes] = await Promise.all([
+                getTorrents(status || null, page, perPage),
+                getTorrentStorage().catch(() => null),
+            ]);
             setTorrents(data);
             setTotal(total);
+            if (storageRes) setStorage(storageRes);
             seedLive(data);
         } catch {
             // 列表刷新失敗就維持現狀，下次事件再試
@@ -192,6 +200,7 @@ export default function TorrentManager({ initialTorrents, initialTotal, status, 
 
     return (
         <div className="flex flex-col gap-4">
+            <StorageBars storage={storage} />
             <form onSubmit={handleAdd} className="flex flex-col gap-1">
                 <div className="flex gap-2">
                     <input

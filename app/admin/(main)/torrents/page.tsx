@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { getTorrents } from "@/api/torrents";
+import { getTorrents, getTorrentStorage } from "@/api/torrents";
 import { ListTableSkeleton } from "@/components/loading/table-skeleton";
 import TorrentManager from "./torrent-manager";
 
@@ -17,11 +17,15 @@ function buildHref(status: string, page = 1) {
 }
 
 async function TorrentContent({ status, page }: { status: string; page: number }) {
-    const { data, total } = await getTorrents(status || null, page, PER_PAGE);
+    const [{ data, total }, storage] = await Promise.all([
+        getTorrents(status || null, page, PER_PAGE),
+        getTorrentStorage().catch(() => null),
+    ]);
     return (
         <TorrentManager
             initialTorrents={data}
             initialTotal={total}
+            initialStorage={storage}
             status={status}
             page={page}
             perPage={PER_PAGE}
