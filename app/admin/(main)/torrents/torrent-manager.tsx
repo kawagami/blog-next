@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Download, Loader2, Plus, RotateCcw, Trash2, X } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Copy, Download, Loader2, Plus, RotateCcw, Trash2, X } from "lucide-react";
 import { AdminHeadRow, AdminRow, AdminTable, AdminTd, AdminTh } from "@/components/admin/table";
 import { useWsSubscribe } from "@/hooks/useWsSubscribe";
 import {
@@ -67,6 +67,7 @@ export default function TorrentManager({ initialTorrents, initialTotal, initialS
     const [busyId, setBusyId] = useState<number | null>(null);
     const [modalTorrent, setModalTorrent] = useState<Torrent | null>(null);
     const [downloadingKey, setDownloadingKey] = useState<string | null>(null);
+    const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
     // WS「進度有變動才推」，卡住的任務不會再推 — 掛載/刷新後打詳情端點把 live 進度補回來
     const seedLive = useCallback(async (list: Torrent[]) => {
@@ -148,23 +149,40 @@ export default function TorrentManager({ initialTorrents, initialTotal, initialS
         }
     };
 
-    // 點擊當下才產生連結（效期以回應的 expires_at 為準，後端 torrent_link_ttl_minutes 可調），
+    // 點擊當下才產生連結（效期以回應的 expires_at 為準，後端 torrent_link_ttl_minutes 可調）
+    const fetchLink = async (torrentId: number, fileIndex: number): Promise<string | null> => {
+        const result = await createTorrentDownloadLinks(torrentId);
+        if (!result.ok) {
+            alert(`產生下載連結失敗：${result.message}`);
+            return null;
+        }
+        const link = result.links?.find((l) => l.file_index === fileIndex) ?? result.links?.[0];
+        return link?.url ?? null;
+    };
+
     // 大檔走瀏覽器原生下載，不用 fetch + blob
     const downloadFile = async (torrentId: number, fileIndex: number) => {
+        if (downloadingKey) return;
+        setDownloadingKey(`${torrentId}:${fileIndex}`);
+        const url = await fetchLink(torrentId, fileIndex);
+        setDownloadingKey(null);
+        if (!url) return;
+        const a = document.createElement("a");
+        a.href = url;
+        a.click();
+    };
+
+    // 複製連結給外部下載器（aria2 / IDM）用 — 一樣現換新 token
+    const copyLink = async (torrentId: number, fileIndex: number) => {
         const key = `${torrentId}:${fileIndex}`;
         if (downloadingKey) return;
         setDownloadingKey(key);
-        const result = await createTorrentDownloadLinks(torrentId);
+        const url = await fetchLink(torrentId, fileIndex);
         setDownloadingKey(null);
-        if (!result.ok) {
-            alert(`產生下載連結失敗：${result.message}`);
-            return;
-        }
-        const link = result.links?.find((l) => l.file_index === fileIndex) ?? result.links?.[0];
-        if (!link) return;
-        const a = document.createElement("a");
-        a.href = link.url;
-        a.click();
+        if (!url) return;
+        await navigator.clipboard.writeText(url);
+        setCopiedKey(key);
+        setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 1500);
     };
 
     const handleDownload = (t: Torrent) => {
@@ -306,6 +324,18 @@ export default function TorrentManager({ initialTorrents, initialTotal, initialS
                                                         : <Download className="w-4 h-4" />}
                                                 </button>
                                             )}
+                                            {t.status === "completed" && !(t.files && t.files.length > 1) && (
+                                                <button
+                                                    onClick={() => copyLink(t.id, t.files?.[0]?.index ?? 0)}
+                                                    disabled={downloadingKey !== null}
+                                                    className="p-1.5 rounded text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                                                    title="複製下載連結"
+                                                >
+                                                    {copiedKey === `${t.id}:${t.files?.[0]?.index ?? 0}`
+                                                        ? <Check className="w-4 h-4 text-green-500" />
+                                                        : <Copy className="w-4 h-4" />}
+                                                </button>
+                                            )}
                                             {t.status === "failed" && (
                                                 <button
                                                     onClick={() => handleRetry(t)}
@@ -402,6 +432,17 @@ export default function TorrentManager({ initialTorrents, initialTotal, initialS
                                                 ? <Loader2 className="w-4 h-4 animate-spin" />
                                                 : <Download className="w-4 h-4" />}
                                             下載
+                                        </button>
+                                        <button
+                                            onClick={() => copyLink(modalTorrent.id, f.index)}
+                                            disabled={downloadingKey !== null}
+                                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm transition-colors disabled:opacity-60"
+                                            title="複製下載連結"
+                                        >
+                                            {copiedKey === key
+                                                ? <Check className="w-4 h-4 text-green-500" />
+                                                : <Copy className="w-4 h-4" />}
+                                            複製
                                         </button>
                                     </li>
                                 );
