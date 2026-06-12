@@ -67,10 +67,12 @@ export async function createTorrentDownloadLinks(id: number): Promise<TorrentLin
             url: `${process.env.API_URL}/admin/torrents/${id}/download_links`,
             method: "POST",
         });
-        // 後端回相對路徑，server-side 補上 API base 給瀏覽器直接下載
+        // 後端回相對路徑，補上 base 給瀏覽器直接下載 — 必須用公開位址，
+        // production 的 API_URL 是 docker 內網 hostname，瀏覽器解析不了
+        const base = process.env.API_PUBLIC_URL || process.env.API_URL;
         return {
             ok: true,
-            links: links.map((l) => ({ ...l, url: `${process.env.API_URL}${l.url}` })),
+            links: links.map((l) => ({ ...l, url: `${base}${l.url}` })),
         };
     } catch (e) {
         return toErrorResult(e);
