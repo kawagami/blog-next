@@ -172,13 +172,31 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }, 0);
     };
 
-    const handlePaste = (e: React.ClipboardEvent) => {
+    const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
         const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'))
             ?? Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'))?.getAsFile()
             ?? undefined;
-        if (!file) return;
+        if (file) {
+            e.preventDefault();
+            handleImageUpload(file);
+            return;
+        }
+
+        // paste URL over a text selection → wrap selection as markdown link
+        const textarea = textareaRef.current;
+        if (!textarea) return;
+        const { selectionStart, selectionEnd, value } = textarea;
+        if (selectionStart === selectionEnd) return;
+        const pasted = e.clipboardData.getData('text').trim();
+        if (!/^https?:\/\/\S+$/.test(pasted)) return;
         e.preventDefault();
-        handleImageUpload(file);
+        const selected = value.slice(selectionStart, selectionEnd);
+        const link = `[${selected}](${pasted})`;
+        setMarkdown(value.slice(0, selectionStart) + link + value.slice(selectionEnd));
+        setTimeout(() => {
+            textarea.selectionStart = textarea.selectionEnd = selectionStart + link.length;
+            textarea.focus();
+        }, 0);
     };
 
     const handleShowTagModal = (event: React.MouseEvent) => {
