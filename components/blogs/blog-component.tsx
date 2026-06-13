@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 import { Loader2 } from 'lucide-react';
 import { putBlog } from '@/api/blogs';
 import { uploadImages } from '@/api/images';
+import { useMarkdownTextarea } from '@/hooks/useMarkdownTextarea';
 import type { Blog, Toc } from '@/types';
 
 function extractTocs(markdown: string): Toc[] {
@@ -34,8 +35,12 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
     const [showTagModal, setShowTagModal] = useState(false);
     const [modalPosition, setModalPosition] = useState({ x: 0, y: 0 });
     const [newTag, setNewTag] = useState('');
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const { ref: textareaRef, handlers: editorHandlers, insert: insertAtCursor } = useMarkdownTextarea(
+        markdown,
+        setMarkdown,
+        { onImageUpload: handleImageUpload },
+    );
 
     const handleSave = async () => {
         setIsSaving(true);
@@ -51,19 +56,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }
     };
 
-    const insertAtCursor = (text: string) => {
-        const textarea = textareaRef.current;
-        if (!textarea) return;
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        setMarkdown(markdown.slice(0, start) + text + markdown.slice(end));
-        setTimeout(() => {
-            textarea.selectionStart = textarea.selectionEnd = start + text.length;
-            textarea.focus();
-        }, 0);
-    };
-
-    const handleImageUpload = async (files: File | FileList | null) => {
+    async function handleImageUpload(files: File | FileList | null) {
         if (!files || isUploading) return;
         const fileArray = files instanceof File ? [files] : Array.from(files);
         if (!fileArray.length) return;
@@ -78,126 +71,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         } finally {
             setIsUploading(false);
         }
-    };
-
-    const INDENT = '  ';
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        const textarea = textareaRef.current;
-        if (!textarea) return;
-
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            const { selectionStart, selectionEnd, value } = textarea;
-            const lineStart = value.lastIndexOf('\n', selectionStart - 1) + 1;
-            const hasSelection = selectionStart !== selectionEnd;
-            const multiLine = value.slice(selectionStart, selectionEnd).includes('\n');
-
-            if (e.shiftKey) {
-                // unindent each line in (or touching) the selection
-                const blockEnd = selectionEnd;
-                const before = value.slice(0, lineStart);
-                const block = value.slice(lineStart, blockEnd);
-                const after = value.slice(blockEnd);
-                let removedFirst = 0;
-                let removedTotal = 0;
-                const newBlock = block.split('\n').map((line, i) => {
-                    const m = line.match(/^( {1,2}|\t)/);
-                    const cut = m ? m[0].length : 0;
-                    if (i === 0) removedFirst = cut;
-                    removedTotal += cut;
-                    return line.slice(cut);
-                }).join('\n');
-                const newValue = before + newBlock + after;
-                setMarkdown(newValue);
-                setTimeout(() => {
-                    textarea.selectionStart = Math.max(lineStart, selectionStart - removedFirst);
-                    textarea.selectionEnd = blockEnd - removedTotal;
-                    textarea.focus();
-                }, 0);
-                return;
-            }
-
-            if (multiLine) {
-                // indent every line in the selection
-                const before = value.slice(0, lineStart);
-                const block = value.slice(lineStart, selectionEnd);
-                const after = value.slice(selectionEnd);
-                const lines = block.split('\n');
-                const newBlock = lines.map(l => INDENT + l).join('\n');
-                setMarkdown(before + newBlock + after);
-                setTimeout(() => {
-                    textarea.selectionStart = selectionStart + INDENT.length;
-                    textarea.selectionEnd = selectionEnd + INDENT.length * lines.length;
-                    textarea.focus();
-                }, 0);
-                return;
-            }
-
-            // single cursor (or single-line selection) → insert indent
-            const newValue = value.slice(0, selectionStart) + INDENT + value.slice(selectionEnd);
-            setMarkdown(newValue);
-            setTimeout(() => {
-                textarea.selectionStart = textarea.selectionEnd = selectionStart + INDENT.length;
-                textarea.focus();
-            }, 0);
-            return;
-        }
-
-        if (e.key !== 'Enter') return;
-        const { selectionStart, selectionEnd, value } = textarea;
-        const lineStart = value.lastIndexOf('\n', selectionStart - 1) + 1;
-        const currentLine = value.slice(lineStart, selectionStart);
-        const match = currentLine.match(/^(\s*[-*]\s)/);
-        if (!match) return;
-        e.preventDefault();
-        const prefix = match[1];
-        const lineContent = currentLine.slice(prefix.length);
-        if (!lineContent) {
-            // empty list item → exit list
-            const newValue = value.slice(0, lineStart) + '\n' + value.slice(selectionEnd);
-            setMarkdown(newValue);
-            setTimeout(() => {
-                textarea.selectionStart = textarea.selectionEnd = lineStart + 1;
-                textarea.focus();
-            }, 0);
-            return;
-        }
-        const insertion = '\n' + prefix;
-        const newValue = value.slice(0, selectionStart) + insertion + value.slice(selectionEnd);
-        setMarkdown(newValue);
-        setTimeout(() => {
-            textarea.selectionStart = textarea.selectionEnd = selectionStart + insertion.length;
-            textarea.focus();
-        }, 0);
-    };
-
-    const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
-        const file = Array.from(e.clipboardData.files).find(f => f.type.startsWith('image/'))
-            ?? Array.from(e.clipboardData.items).find(i => i.type.startsWith('image/'))?.getAsFile()
-            ?? undefined;
-        if (file) {
-            e.preventDefault();
-            handleImageUpload(file);
-            return;
-        }
-
-        // paste URL over a text selection → wrap selection as markdown link
-        const textarea = textareaRef.current;
-        if (!textarea) return;
-        const { selectionStart, selectionEnd, value } = textarea;
-        if (selectionStart === selectionEnd) return;
-        const pasted = e.clipboardData.getData('text').trim();
-        if (!/^https?:\/\/\S+$/.test(pasted)) return;
-        e.preventDefault();
-        const selected = value.slice(selectionStart, selectionEnd);
-        const link = `[${selected}](${pasted})`;
-        setMarkdown(value.slice(0, selectionStart) + link + value.slice(selectionEnd));
-        setTimeout(() => {
-            textarea.selectionStart = textarea.selectionEnd = selectionStart + link.length;
-            textarea.focus();
-        }, 0);
-    };
+    }
 
     const handleShowTagModal = (event: React.MouseEvent) => {
         setModalPosition({ x: event.clientX, y: event.clientY });
@@ -257,8 +131,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                             ref={textareaRef}
                             value={markdown}
                             onChange={(e) => setMarkdown(e.target.value)}
-                            onKeyDown={handleKeyDown}
-                            onPaste={handlePaste}
+                            {...editorHandlers}
                             className="w-full h-full p-4 rounded border border-neutral-300 font-mono resize-none dark:bg-neutral-800 dark:text-white dark:border-neutral-600"
                             placeholder="輸入 Markdown 內容..."
                         />
