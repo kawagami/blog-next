@@ -4,6 +4,8 @@ import {
     indent,
     insert,
     isUrl,
+    prefixLines,
+    surround,
     unindent,
     wrapLink,
     type EditResult,
@@ -84,5 +86,21 @@ export function useMarkdownTextarea(
         apply(insert(value, start, end, text));
     };
 
-    return { ref, handlers: { onKeyDown, onPaste }, insert: insertText };
+    /** Wrap the selection with markers (toolbar bold/italic/code/...). */
+    const wrap = (before: string, after: string = before, placeholder = '') => {
+        const ta = ref.current;
+        const start = ta?.selectionStart ?? value.length;
+        const end = ta?.selectionEnd ?? value.length;
+        apply(surround(value, start, end, before, after, placeholder));
+    };
+
+    /** Prefix each selected line with a marker (toolbar heading/quote/list). */
+    const prefix = (marker: string) => {
+        const ta = ref.current;
+        const start = ta?.selectionStart ?? 0;
+        const end = ta?.selectionEnd ?? start;
+        apply(prefixLines(value, start, end, marker));
+    };
+
+    return { ref, handlers: { onKeyDown, onPaste }, insert: insertText, wrap, prefix };
 }

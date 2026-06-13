@@ -88,3 +88,34 @@ export function wrapLink(value: string, start: number, end: number, url: string)
     const caret = start + link.length;
     return { value: value.slice(0, start) + link + value.slice(end), start: caret, end: caret };
 }
+
+/** Wrap the selection with `before`/`after` markers (e.g. `**bold**`), dropping
+ *  in `placeholder` when nothing is selected. Caret selects the inner text. */
+export function surround(
+    value: string, start: number, end: number,
+    before: string, after: string = before, placeholder = '',
+): EditResult {
+    const inner = value.slice(start, end) || placeholder;
+    const text = before + inner + after;
+    return {
+        value: value.slice(0, start) + text + value.slice(end),
+        start: start + before.length,
+        end: start + before.length + inner.length,
+    };
+}
+
+/** Prepend `marker` to the start of every line the selection touches
+ *  (heading/quote/list). Empty selection prefixes just the caret line. */
+export function prefixLines(value: string, start: number, end: number, marker: string): EditResult {
+    const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+    const before = value.slice(0, lineStart);
+    const block = value.slice(lineStart, end);
+    const after = value.slice(end);
+    const lines = block.split('\n');
+    const newBlock = lines.map(l => marker + l).join('\n');
+    return {
+        value: before + newBlock + after,
+        start: start + marker.length,
+        end: end + marker.length * lines.length,
+    };
+}
