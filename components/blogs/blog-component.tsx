@@ -80,10 +80,71 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
         }
     };
 
+    const INDENT = '  ';
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key !== 'Enter') return;
         const textarea = textareaRef.current;
         if (!textarea) return;
+
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const { selectionStart, selectionEnd, value } = textarea;
+            const lineStart = value.lastIndexOf('\n', selectionStart - 1) + 1;
+            const hasSelection = selectionStart !== selectionEnd;
+            const multiLine = value.slice(selectionStart, selectionEnd).includes('\n');
+
+            if (e.shiftKey) {
+                // unindent each line in (or touching) the selection
+                const blockEnd = selectionEnd;
+                const before = value.slice(0, lineStart);
+                const block = value.slice(lineStart, blockEnd);
+                const after = value.slice(blockEnd);
+                let removedFirst = 0;
+                let removedTotal = 0;
+                const newBlock = block.split('\n').map((line, i) => {
+                    const m = line.match(/^( {1,2}|\t)/);
+                    const cut = m ? m[0].length : 0;
+                    if (i === 0) removedFirst = cut;
+                    removedTotal += cut;
+                    return line.slice(cut);
+                }).join('\n');
+                const newValue = before + newBlock + after;
+                setMarkdown(newValue);
+                setTimeout(() => {
+                    textarea.selectionStart = Math.max(lineStart, selectionStart - removedFirst);
+                    textarea.selectionEnd = blockEnd - removedTotal;
+                    textarea.focus();
+                }, 0);
+                return;
+            }
+
+            if (multiLine) {
+                // indent every line in the selection
+                const before = value.slice(0, lineStart);
+                const block = value.slice(lineStart, selectionEnd);
+                const after = value.slice(selectionEnd);
+                const lines = block.split('\n');
+                const newBlock = lines.map(l => INDENT + l).join('\n');
+                setMarkdown(before + newBlock + after);
+                setTimeout(() => {
+                    textarea.selectionStart = selectionStart + INDENT.length;
+                    textarea.selectionEnd = selectionEnd + INDENT.length * lines.length;
+                    textarea.focus();
+                }, 0);
+                return;
+            }
+
+            // single cursor (or single-line selection) → insert indent
+            const newValue = value.slice(0, selectionStart) + INDENT + value.slice(selectionEnd);
+            setMarkdown(newValue);
+            setTimeout(() => {
+                textarea.selectionStart = textarea.selectionEnd = selectionStart + INDENT.length;
+                textarea.focus();
+            }, 0);
+            return;
+        }
+
+        if (e.key !== 'Enter') return;
         const { selectionStart, selectionEnd, value } = textarea;
         const lineStart = value.lastIndexOf('\n', selectionStart - 1) + 1;
         const currentLine = value.slice(lineStart, selectionStart);
