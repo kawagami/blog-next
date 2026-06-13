@@ -2,13 +2,16 @@
 FROM node:24-alpine AS deps
 # Alpine 需要這個庫來執行某些原生模組
 RUN apk add --no-cache libc6-compat
+# 啟用 corepack，pnpm 版本由 package.json 的 packageManager 欄位釘住
+RUN corepack enable
 WORKDIR /app
-COPY package*.json ./
-# 使用 npm ci 取代 npm install，專為 CI 環境設計，更穩定且快速
-RUN npm ci --include=optional
+COPY package.json pnpm-lock.yaml ./
+# --frozen-lockfile：lockfile 與 package.json 不一致就 fail，等同 npm ci 的嚴格安裝
+RUN pnpm install --frozen-lockfile
 
 # Stage 2: Builder (建構專案)
 FROM node:24-alpine AS builder
+RUN corepack enable
 WORKDIR /app
 # 直接複製已經安裝好的 node_modules，不用重新安裝
 COPY --from=deps /app/node_modules ./node_modules
@@ -17,7 +20,7 @@ COPY . .
 # 不烤任何 .env 進 image：所有設定（API_URL / WS_URL / JWT_SECRET）都是 server-side
 # runtime 讀取，由 docker-compose 的 env_file 注入
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+RUN pnpm run build
 
 # Stage 3: Runner (最終執行檔)
 FROM node:24-alpine AS runner

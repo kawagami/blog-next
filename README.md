@@ -67,10 +67,12 @@ public/       # 靜態資源
 ## 本地開發
 
 ```bash
-npm install
-npm run dev       # http://localhost:3000
-npm run lint      # ESLint（flat config）
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm lint         # ESLint（flat config）
 ```
+
+> 套件管理用 pnpm（版本由 `package.json` 的 `packageManager` 釘住，`corepack enable` 即自動取用）。
 
 需設定 `.env.local`：
 
@@ -92,6 +94,6 @@ push `master` 即自動部署：GitHub Actions build + push image（`kawagami77/
 
 ```bash
 # 本地開發容器工具
-bash app.sh <cmd>   # 在 node 容器內跑指令（如 bash app.sh npm ci）
+bash app.sh <cmd>   # 在 node 容器內跑指令（如 bash app.sh corepack enable && pnpm i）
 bash up.sh          # 開 VS Code + 容器內 dev server
 ```
