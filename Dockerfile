@@ -29,15 +29,16 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # 關鍵：從 builder 複製 Standalone 產出的檔案
 # 這些檔案已經過優化，且包含執行所需的最少 node_modules
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
+# 用 --chown 直接設好擁有者，省去額外 chown -R 層（避免重寫整個目錄、撐大 image）
+COPY --from=builder --chown=appuser:appgroup /app/.next/standalone ./
+COPY --from=builder --chown=appuser:appgroup /app/.next/static ./.next/static
+COPY --from=builder --chown=appuser:appgroup /app/public ./public
 
-# 調整權限 (僅調整必要目錄，節省時間)
-RUN chown -R appuser:appgroup /app
 USER appuser
 
 EXPOSE 3000
-ENV PORT 3000
+ENV PORT=3000
+# standalone server.js 綁 process.env.HOSTNAME；明設 0.0.0.0 確保容器外可連
+ENV HOSTNAME=0.0.0.0
 
 CMD ["node", "server.js"]
