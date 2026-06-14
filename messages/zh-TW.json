@@ -127,5 +127,12 @@
   "Ws": {
     "title": "WS 通知",
     "description": "即時 WebSocket 通知"
+  },
+  "Games": {
+    "metalSlugTitle": "越南大戰（試作）",
+    "metalSlugDescription": "Bevy 製作的 2D 橫向捲軸動作遊戲",
+    "loading": "載入遊戲中…",
+    "error": "遊戲載入失敗，請稍後再試",
+    "hint": "鍵盤操作，先點一下畫面取得焦點"
   }
 }

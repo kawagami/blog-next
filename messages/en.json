@@ -127,5 +127,12 @@
   "Ws": {
     "title": "WS Notifications",
     "description": "Real-time WebSocket notifications"
+  },
+  "Games": {
+    "metalSlugTitle": "Metal Slug (WIP)",
+    "metalSlugDescription": "A 2D side-scrolling action game built with Bevy",
+    "loading": "Loading game…",
+    "error": "Failed to load the game, please try again later",
+    "hint": "Keyboard controls — click the canvas first to focus"
   }
 }
