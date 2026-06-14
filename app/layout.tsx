@@ -2,7 +2,7 @@ import "./globals.css";
 import { WsProvider } from "@/libs/ws-context";
 import ThemeBackground from "@/components/ThemeBackground";
 import { getPublicSettings } from "@/api/settings";
-import { resolveSiteTheme } from "@/libs/site-theme";
+import { resolveActiveTheme, normalizeRotation } from "@/libs/site-theme";
 import { resolveDefaultColorMode } from "@/libs/color-mode";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
@@ -14,7 +14,9 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const [cookieStore, publicSettings] = await Promise.all([cookies(), getPublicSettings()]);
-    const siteTheme = resolveSiteTheme(publicSettings.site_theme);  // 全站風格（admin settings 控制）
+    // 全站風格：site_theme 是具體主題 → 固定；是 'auto' → 依 theme_rotation + 當天星期（Asia/Taipei）輪播
+    // layout 因 cookies() 為動態渲染、每 request 重算，跨午夜自動換主題不受 60s settings cache 影響
+    const siteTheme = resolveActiveTheme(publicSettings.site_theme, normalizeRotation(publicSettings.theme_rotation));
     const jwt = cookieStore.get('session')?.value ?? null;
 
     // 深淺色：使用者 cookie ＞ admin 預設 ＞ 系統偏好

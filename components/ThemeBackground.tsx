@@ -226,10 +226,142 @@ function Clouds() {
     );
 }
 
+/** sakura：花瓣飄下（落葉變體，圓潤花瓣形） */
+function Petals() {
+    return (
+        <>
+            <style>{`
+                @keyframes petal-fall {
+                    0%   { transform: translateY(-8vh); opacity: 0; }
+                    8%   { opacity: 1; }
+                    85%  { opacity: 0.75; }
+                    100% { transform: translateY(105vh); opacity: 0; }
+                }
+                @keyframes petal-sway {
+                    0%   { transform: translateX(-16px) rotate(-30deg); }
+                    50%  { transform: translateX(16px) rotate(25deg); }
+                    100% { transform: translateX(-16px) rotate(-30deg); }
+                }
+                .petal-wrap {
+                    position: absolute;
+                    top: 0;
+                    will-change: transform, opacity;
+                    animation: petal-fall linear infinite;
+                    animation-fill-mode: both;
+                    pointer-events: none;
+                }
+                .petal {
+                    display: block;
+                    animation: petal-sway ease-in-out infinite;
+                }
+                .petal .blade { fill: rgb(var(--primary-400) / 0.5); }
+                .dark .petal .blade { fill: rgb(var(--primary-300) / 0.3); }
+                @media (prefers-reduced-motion: reduce) {
+                    .petal-wrap { animation: none; opacity: 0; }
+                }
+            `}</style>
+            {PARTICLES.map((p, i) => (
+                <div
+                    key={i}
+                    className="petal-wrap"
+                    style={{
+                        left: `${p.left}%`,
+                        animationDelay: `${p.delay}s`,
+                        animationDuration: `${p.duration}s`,
+                    }}
+                >
+                    <svg
+                        className="petal"
+                        width={p.size}
+                        height={p.size}
+                        viewBox="0 0 32 32"
+                        style={{
+                            animationDuration: `${p.swayDuration}s`,
+                            animationDelay: `-${(i % 5) * 0.7}s`,
+                        }}
+                    >
+                        {/* 花瓣：上窄下圓、頂端有小凹口 */}
+                        <path className="blade" d="M16 3 C 9 11, 9 22, 16 29 C 23 22, 23 11, 16 3 Z M16 3 C 17 6, 15 6, 16 3 Z" />
+                    </svg>
+                </div>
+            ))}
+        </>
+    );
+}
+
+/** sunset：餘燼緩緩上浮（氣泡變體，暖色實心小點 + 微光） */
+function Embers() {
+    return (
+        <>
+            <style>{`
+                @keyframes ember-rise {
+                    0%   { transform: translateY(105vh); opacity: 0; }
+                    10%  { opacity: 1; }
+                    85%  { opacity: 0.6; }
+                    100% { transform: translateY(-8vh); opacity: 0; }
+                }
+                @keyframes ember-sway {
+                    0%   { transform: translateX(-8px); }
+                    50%  { transform: translateX(8px); }
+                    100% { transform: translateX(-8px); }
+                }
+                .ember-wrap {
+                    position: absolute;
+                    top: 0;
+                    will-change: transform, opacity;
+                    animation: ember-rise linear infinite;
+                    animation-fill-mode: both;
+                    pointer-events: none;
+                }
+                .ember {
+                    display: block;
+                    border-radius: 50%;
+                    animation: ember-sway ease-in-out infinite;
+                    background: radial-gradient(circle, rgb(var(--primary-400) / 0.85), rgb(var(--primary-600) / 0.2));
+                    box-shadow: 0 0 8px rgb(var(--primary-500) / 0.5);
+                }
+                .dark .ember {
+                    background: radial-gradient(circle, rgb(var(--primary-300) / 0.7), rgb(var(--primary-500) / 0.15));
+                    box-shadow: 0 0 10px rgb(var(--primary-400) / 0.4);
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    .ember-wrap { animation: none; opacity: 0; }
+                }
+            `}</style>
+            {PARTICLES.map((p, i) => (
+                <div
+                    key={i}
+                    className="ember-wrap"
+                    style={{
+                        left: `${p.left}%`,
+                        animationDelay: `${p.delay}s`,
+                        animationDuration: `${p.duration}s`,
+                    }}
+                >
+                    <div
+                        className="ember"
+                        style={{
+                            // 餘燼比氣泡小一截
+                            width: p.size * 0.5,
+                            height: p.size * 0.5,
+                            animationDuration: `${p.swayDuration}s`,
+                            animationDelay: `-${(i % 5) * 0.7}s`,
+                        }}
+                    />
+                </div>
+            ))}
+        </>
+    );
+}
+
 const PARTICLE_VARIANTS: Record<SiteTheme, () => React.JSX.Element> = {
     forest: Leaves,
     ocean: Bubbles,
     sky: Clouds,
+    sunset: Embers,
+    sakura: Petals,
+    grape: Bubbles,   // 紫色氣泡上浮（色走 var）
+    mono: Clouds,     // 灰雲橫飄（色走 var）
 };
 
 export default function ThemeBackground({ theme }: { theme: SiteTheme }) {

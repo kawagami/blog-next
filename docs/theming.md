@@ -1,7 +1,8 @@
 # 網站主題（風格）系統
 
 > 主題已是 **runtime 切換 + 全站設定**：色階走 CSS variables，主題值存後端 settings（key `site_theme`），root layout 讀取後設 `<html data-theme>`，不用重 build。
-> 現有主題：**forest**（預設，moss green + stone 暖灰）、**ocean**（sky blue + slate 冷灰）、**sky**（true blue + slate 冷灰）。
+> 現有 7 套主題：**forest**（預設，moss green + stone 暖灰）、**ocean**（sky blue + slate 冷灰）、**sky**（true blue + slate 冷灰）、**sunset**（orange 暖橘 + stone）、**sakura**（pink 櫻花粉 + zinc）、**grape**（violet 葡萄紫 + zinc）、**mono**（slate 灰藍當主色 + zinc）。
+> **每日輪播**：`site_theme` 另接受特殊值 `auto`，表示依 `theme_rotation`（星期→主題對應表）+ 當天星期（`Asia/Taipei`）自動換主題。見下方〈每日輪播〉。
 
 ---
 
@@ -50,6 +51,21 @@
 | 500 | spinner、icon、按鈕底 | — |
 | 600–700 | 按鈕底、亮色模式連結文字 | 700 配白底 ≥ 4.5:1 |
 | 950 | dark body 漸層起點 | 接近黑、帶主色調 |
+
+---
+
+## 每日輪播（auto）
+
+| 層 | 位置 | 說明 |
+|----|------|------|
+| 設定值 | 後端 settings `site_theme` | 具體主題 = 固定；`auto` = 走輪播 |
+| 對應表 | 後端 settings `theme_rotation` | `{ "0".."6": <theme> }`，0 = 週日（對齊 JS `getDay()`）；經 `/settings/public` 公開 |
+| 解析 | `libs/site-theme.ts` | `resolveActiveTheme(setting, rotation)`：`auto` → `getTaipeiWeekday()` 查表；`normalizeRotation()` 收斂後端值（物件或 JSON 字串），缺漏補 `DEFAULT_THEME_ROTATION` |
+| 套用 | `app/layout.tsx` | 因 `cookies()` 動態渲染、**每 request 重算星期**，跨午夜自動換主題不受 60s settings cache 影響 |
+| 編輯 | `settings/theme-picker.tsx` | 選「每日輪播」→ `updateSiteTheme('auto')`；下方 7 天 select → `updateThemeRotation()` |
+
+- **時區釘 `Asia/Taipei`**：`getTaipeiWeekday()` 用 `Intl.DateTimeFormat({ timeZone })`，不用裸 `getDay()`（會吃 server UTC 半夜換錯天）
+- 後端規格見 `docs/theme-rotation-backend-spec.md`
 
 ---
 
