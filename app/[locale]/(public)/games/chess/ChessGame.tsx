@@ -127,9 +127,9 @@ export default function ChessGame() {
     };
 
     return (
-        <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-4 py-4 lg:max-w-2xl xl:max-w-3xl">
+        <div className="mx-auto flex h-[calc(100svh-120px)] w-full max-w-xl flex-col items-center gap-3 overflow-hidden py-2 lg:max-w-2xl xl:max-w-3xl">
             {/* 對手時鐘（上） */}
-            <div className="w-full">
+            <div className="w-full flex-none">
                 <Clock
                     key={`opp-${clock[opponent(myColor)]}`}
                     side={opponent(myColor)}
@@ -140,7 +140,7 @@ export default function ChessGame() {
             </div>
 
             {/* 棋盤 */}
-            <div className={['relative w-full', shake ? 'animate-[shake_0.4s]' : ''].join(' ')}>
+            <div className={['relative flex min-h-0 w-full flex-1 items-center justify-center', shake ? 'animate-[shake_0.4s]' : ''].join(' ')}>
                 <Board
                     board={board}
                     myColor={myColor}
@@ -176,7 +176,7 @@ export default function ChessGame() {
             </div>
 
             {/* 我方時鐘（下）＋ 控制 */}
-            <div className="flex w-full items-center gap-3">
+            <div className="flex w-full flex-none items-center gap-3">
                 <div className="flex-1">
                     <Clock
                         key={`me-${clock[myColor]}`}
@@ -205,7 +205,7 @@ export default function ChessGame() {
             </div>
 
             {/* 狀態提示 */}
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+            <p className="flex-none text-sm text-neutral-500 dark:text-neutral-400">
                 {phase === 'playing' && (myTurn ? t('yourTurn') : t('opponentTurn'))}
                 {checkSide && phase === 'playing' && <span className="ml-2 font-semibold text-red-500">{t('check')}</span>}
             </p>

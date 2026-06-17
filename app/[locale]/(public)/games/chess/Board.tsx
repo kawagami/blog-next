@@ -68,7 +68,9 @@ export function Board({
     return (
         <svg
             viewBox={`0 0 ${W} ${H}`}
-            className="w-full h-auto max-h-[calc(100svh-220px)] select-none rounded-lg bg-amber-50 dark:bg-neutral-900 shadow"
+            width={W}
+            height={H}
+            className="max-h-full max-w-full select-none rounded-lg bg-amber-50 dark:bg-neutral-900 shadow"
             role="img"
         >
             {/* 棋盤線 */}
