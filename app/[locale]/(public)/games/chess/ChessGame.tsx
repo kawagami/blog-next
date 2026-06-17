@@ -127,9 +127,9 @@ export default function ChessGame() {
     };
 
     return (
-        <div className="flex flex-col items-center gap-4 py-4">
+        <div className="mx-auto flex w-full max-w-xl flex-col items-center gap-4 py-4 lg:max-w-2xl xl:max-w-3xl">
             {/* 對手時鐘（上） */}
-            <div className="w-full max-w-xl">
+            <div className="w-full">
                 <Clock
                     key={`opp-${clock[opponent(myColor)]}`}
                     side={opponent(myColor)}
@@ -140,7 +140,7 @@ export default function ChessGame() {
             </div>
 
             {/* 棋盤 */}
-            <div className={['relative w-full max-w-xl', shake ? 'animate-[shake_0.4s]' : ''].join(' ')}>
+            <div className={['relative w-full', shake ? 'animate-[shake_0.4s]' : ''].join(' ')}>
                 <Board
                     board={board}
                     myColor={myColor}
@@ -176,7 +176,7 @@ export default function ChessGame() {
             </div>
 
             {/* 我方時鐘（下）＋ 控制 */}
-            <div className="flex w-full max-w-xl items-center gap-3">
+            <div className="flex w-full items-center gap-3">
                 <div className="flex-1">
                     <Clock
                         key={`me-${clock[myColor]}`}
