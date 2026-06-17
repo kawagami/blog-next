@@ -2,6 +2,7 @@
   "Header": {
     "notes": "Notes",
     "tools": "Tools",
+    "games": "Games",
     "about": "About",
     "login": "Login",
     "logout": "Logout",
@@ -12,6 +13,7 @@
     "openMenu": "Open navigation menu",
     "closeMenu": "Close navigation menu",
     "openToolsMenu": "Open tools menu",
+    "openGamesMenu": "Open games menu",
     "openMemberMenu": "Open member menu",
     "backToHome": "Back to home",
     "toolNewPassword": "New Password",
@@ -19,7 +21,9 @@
     "toolCountdown": "Countdown",
     "toolRoster": "Roster",
     "toolAlarm": "Alarm",
-    "toolHourlyChime": "Hourly Chime"
+    "toolHourlyChime": "Hourly Chime",
+    "gameChess": "Online Xiangqi",
+    "gameMetalSlug": "Metal Slug"
   },
   "Login": {
     "title": "Login",
@@ -134,5 +138,30 @@
     "loading": "Loading game…",
     "error": "Failed to load the game, please try again later",
     "hint": "Keyboard controls — click the canvas first to focus"
+  },
+  "Chess": {
+    "title": "Online Xiangqi",
+    "description": "Real-time Chinese chess against another player, auto-matched on load",
+    "queueing": "Finding an opponent…",
+    "you": "You",
+    "opponent": "Opponent",
+    "red": "Red",
+    "black": "Black",
+    "yourTurn": "Your turn",
+    "opponentTurn": "Waiting for opponent…",
+    "check": "Check!",
+    "win": "You win",
+    "lose": "You lose",
+    "draw": "Draw",
+    "resign": "Resign",
+    "playAgain": "Play again",
+    "soundOn": "Unmute",
+    "soundOff": "Mute",
+    "reason_checkmate": "Checkmate",
+    "reason_stalemate": "Stalemate (loss)",
+    "reason_timeout": "Time out",
+    "reason_resign": "Resignation",
+    "reason_disconnect": "Opponent disconnected",
+    "reason_draw_60": "60-move no-capture draw"
   }
 }

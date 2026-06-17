@@ -27,6 +27,12 @@ const TOOLS = [
     { href: "/tools/hourly-chime", labelKey: "toolHourlyChime" },
 ] as const;
 
+// 遊戲選單；新增遊戲只要加一行
+const GAMES = [
+    { href: "/games/chess", labelKey: "gameChess" },
+    { href: "/games/metal-slug", labelKey: "gameMetalSlug" },
+] as const;
+
 const MEMBER_LINKS: ReadonlyArray<{ href: string; labelKey: string; icon: LucideIcon }> = [
     { href: "/dashboard", labelKey: "dashboard", icon: LayoutDashboard },
     { href: "/profile", labelKey: "profile", icon: User },
@@ -50,22 +56,24 @@ function DesktopDropdown({ isOpen, align = 'left', children }: { isOpen: boolean
 export default function Header({ member, colorMode, defaultIsDark }: HeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isResourcesOpen, setIsResourcesOpen] = useState(false);
+    const [isGamesOpen, setIsGamesOpen] = useState(false);
     const [isMemberOpen, setIsMemberOpen] = useState(false);
     const t = useTranslations('Header');
 
     const closeAll = () => {
         setIsOpen(false);
         setIsResourcesOpen(false);
+        setIsGamesOpen(false);
         setIsMemberOpen(false);
     };
 
     // Escape 關閉所有選單
     useEffect(() => {
-        if (!isOpen && !isResourcesOpen && !isMemberOpen) return;
+        if (!isOpen && !isResourcesOpen && !isGamesOpen && !isMemberOpen) return;
         const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeAll(); };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
-    }, [isOpen, isResourcesOpen, isMemberOpen]);
+    }, [isOpen, isResourcesOpen, isGamesOpen, isMemberOpen]);
 
     return (
         <>
@@ -89,6 +97,21 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                         <DesktopDropdown isOpen={isResourcesOpen}>
                             {TOOLS.map(({ href, labelKey }) => (
                                 <Link key={href} href={href} className={dropdownItemClass} onClick={() => setIsResourcesOpen(false)}>
+                                    {t(labelKey)}
+                                </Link>
+                            ))}
+                        </DesktopDropdown>
+                    </div>
+                    <div className="relative">
+                        <button
+                            className={navLinkClass}
+                            aria-label={t('openGamesMenu')}
+                            aria-expanded={isGamesOpen}
+                            onClick={() => setIsGamesOpen(o => !o)}
+                        >{t('games')}</button>
+                        <DesktopDropdown isOpen={isGamesOpen}>
+                            {GAMES.map(({ href, labelKey }) => (
+                                <Link key={href} href={href} className={dropdownItemClass} onClick={() => setIsGamesOpen(false)}>
                                     {t(labelKey)}
                                 </Link>
                             ))}
@@ -155,6 +178,24 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                         {isResourcesOpen && (
                             <div className="ml-4 flex flex-col gap-1">
                                 {TOOLS.map(({ href, labelKey }) => (
+                                    <Link key={href} href={href} className={`${mobileItemClass} text-sm`} onClick={closeAll}>
+                                        {t(labelKey)}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+
+                        <button
+                            className={`${mobileItemClass} flex items-center justify-between w-full text-left`}
+                            aria-expanded={isGamesOpen}
+                            onClick={() => setIsGamesOpen(o => !o)}
+                        >
+                            {t('games')}
+                            <ChevronDown size={14} className={`transition-transform ${isGamesOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                        {isGamesOpen && (
+                            <div className="ml-4 flex flex-col gap-1">
+                                {GAMES.map(({ href, labelKey }) => (
                                     <Link key={href} href={href} className={`${mobileItemClass} text-sm`} onClick={closeAll}>
                                         {t(labelKey)}
                                     </Link>

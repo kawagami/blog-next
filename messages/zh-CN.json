@@ -2,6 +2,7 @@
   "Header": {
     "notes": "Notes",
     "tools": "工具",
+    "games": "游戏",
     "about": "关于",
     "login": "登录",
     "logout": "退出",
@@ -12,6 +13,7 @@
     "openMenu": "打开导航菜单",
     "closeMenu": "关闭导航菜单",
     "openToolsMenu": "打开工具菜单",
+    "openGamesMenu": "打开游戏菜单",
     "openMemberMenu": "打开会员菜单",
     "backToHome": "返回首页",
     "toolNewPassword": "新密码",
@@ -19,7 +21,9 @@
     "toolCountdown": "倒计时",
     "toolRoster": "排班",
     "toolAlarm": "闹钟",
-    "toolHourlyChime": "整点报时"
+    "toolHourlyChime": "整点报时",
+    "gameChess": "在线象棋",
+    "gameMetalSlug": "越南大战"
   },
   "Login": {
     "title": "登录",
@@ -134,5 +138,30 @@
     "loading": "加载游戏中…",
     "error": "游戏加载失败，请稍后再试",
     "hint": "键盘操作，先点一下画面获取焦点"
+  },
+  "Chess": {
+    "title": "在线象棋",
+    "description": "实时连线对战中国象棋，进页自动配对",
+    "queueing": "匹配中…",
+    "you": "你",
+    "opponent": "对手",
+    "red": "红",
+    "black": "黑",
+    "yourTurn": "轮到你了",
+    "opponentTurn": "等待对手落子…",
+    "check": "将军！",
+    "win": "你赢了",
+    "lose": "你输了",
+    "draw": "和棋",
+    "resign": "认输",
+    "playAgain": "再来一局",
+    "soundOn": "开启音效",
+    "soundOff": "静音",
+    "reason_checkmate": "将死",
+    "reason_stalemate": "困毙判负",
+    "reason_timeout": "超时",
+    "reason_resign": "认输",
+    "reason_disconnect": "对手断线",
+    "reason_draw_60": "六十回合无吃子和棋"
   }
 }

@@ -7,6 +7,7 @@ type Listener = (data: unknown) => void;
 interface WsContextValue {
     subscribe: (type: string, fn: Listener) => void;
     unsubscribe: (type: string, fn: Listener) => void;
+    send: (type: string, data?: unknown) => void;
 }
 
 const WsContext = createContext<WsContextValue | null>(null);
@@ -16,6 +17,9 @@ const RECONNECT_MAX_MS = 30000;
 
 export function WsProvider({ children, jwt, wsUrl }: { children: React.ReactNode; jwt: string | null; wsUrl: string }) {
     const listenersRef = useRef<Map<string, Set<Listener>>>(new Map());
+    const wsRef = useRef<WebSocket | null>(null);
+    // open 前送的訊息暫存，onopen 時 flush（給 mount 即送的 join_queue 用）
+    const pendingRef = useRef<string[]>([]);
 
     useEffect(() => {
         // WS_URL 未設定時直接不建立連線（例如本地後端沒開）
@@ -24,13 +28,12 @@ export function WsProvider({ children, jwt, wsUrl }: { children: React.ReactNode
         let destroyed = false;
         let attempt = 0;
         let timeoutId: ReturnType<typeof setTimeout>;
-        let currentWs: WebSocket | null = null;
 
         const url = jwt ? `${wsUrl}/ws?jwt=${jwt}` : `${wsUrl}/ws`;
 
         const connect = () => {
             const ws = new WebSocket(url);
-            currentWs = ws;
+            wsRef.current = ws;
 
             ws.onmessage = (event: MessageEvent) => {
                 try {
@@ -43,9 +46,13 @@ export function WsProvider({ children, jwt, wsUrl }: { children: React.ReactNode
 
             ws.onopen = () => {
                 attempt = 0;
+                const pending = pendingRef.current;
+                pendingRef.current = [];
+                pending.forEach(frame => ws.send(frame));
             };
 
             ws.onclose = () => {
+                if (wsRef.current === ws) wsRef.current = null;
                 if (destroyed) return;
                 const delay = Math.min(RECONNECT_BASE_MS * 2 ** attempt, RECONNECT_MAX_MS);
                 attempt++;
@@ -58,7 +65,8 @@ export function WsProvider({ children, jwt, wsUrl }: { children: React.ReactNode
         return () => {
             destroyed = true;
             clearTimeout(timeoutId);
-            currentWs?.close();
+            wsRef.current?.close();
+            wsRef.current = null;
         };
     }, [jwt, wsUrl]);
 
@@ -70,6 +78,16 @@ export function WsProvider({ children, jwt, wsUrl }: { children: React.ReactNode
         },
         unsubscribe: (type, fn) => {
             listenersRef.current.get(type)?.delete(fn);
+        },
+        send: (type, data) => {
+            const frame = JSON.stringify(data === undefined ? { type } : { type, data });
+            const ws = wsRef.current;
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(frame);
+            } else {
+                // 連線未開：暫存，onopen flush
+                pendingRef.current.push(frame);
+            }
         },
     }), []);
 
