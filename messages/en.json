@@ -162,6 +162,27 @@
     "reason_timeout": "Time out",
     "reason_resign": "Resignation",
     "reason_disconnect": "Opponent disconnected",
-    "reason_draw_60": "60-move no-capture draw"
+    "reason_draw_60": "60-move no-capture draw",
+    "connecting": "Connecting…",
+    "lobbyTitle": "Xiangqi Lobby",
+    "quickMatch": "Quick match",
+    "createTable": "Create table",
+    "tableNamePlaceholder": "Table name (optional)",
+    "tablesHeading": "Open tables",
+    "noTables": "No open tables — create one or quick match",
+    "join": "Join",
+    "queuedPosition": "Matching… (position {position} in queue)",
+    "leaveQueue": "Leave queue",
+    "waitingOpponent": "Waiting for an opponent…",
+    "tableLabel": "Table #{id}",
+    "cancel": "Cancel",
+    "errGeneric": "Action failed, please try again",
+    "err_already_committed": "You're already in a queue or table",
+    "err_bad_table_id": "Invalid table id",
+    "err_table_not_found": "That table no longer exists",
+    "err_table_full": "That table is full",
+    "err_cannot_join_self": "You can't join your own table",
+    "err_not_in_game": "You're not in a game",
+    "err_game_ended": "The game has ended"
   }
 }

@@ -2,24 +2,36 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Loader2, Flag, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { Flag, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { Board } from './Board';
 import { Clock } from './Clock';
+import { Lobby } from './Lobby';
 import { sound } from './chess-sound';
 import {
     applyMove, initialBoard, key, opponent,
     type Board as BoardModel, type Side, type Square,
 } from './chess-logic';
-import { useChessSocket, type GameOverReason } from './useChessSocket';
+import { useChessSocket, type GameOverReason, type Table } from './useChessSocket';
 
-type Phase = 'connecting' | 'queued' | 'playing' | 'over';
+type Phase = 'connecting' | 'lobby' | 'queued' | 'hosting' | 'playing' | 'over';
 
 interface Result { winner: Side | null; reason: GameOverReason; }
+
+const KNOWN_ERR = new Set([
+    'already_committed', 'bad_table_id', 'table_not_found',
+    'table_full', 'cannot_join_self', 'not_in_game', 'game_ended',
+]);
 
 export default function ChessGame() {
     const t = useTranslations('Chess');
 
     const [phase, setPhase] = useState<Phase>('connecting');
+    // 大廳
+    const [tables, setTables] = useState<Table[]>([]);
+    const [queuePos, setQueuePos] = useState(0);
+    const [hostedTableId, setHostedTableId] = useState<number | null>(null);
+    const [notice, setNotice] = useState<string | null>(null);
+    // 對局
     const [myColor, setMyColor] = useState<Side>('red');
     const [board, setBoard] = useState<BoardModel>(() => initialBoard());
     const [turn, setTurn] = useState<Side>('red');
@@ -38,7 +50,21 @@ export default function ChessGame() {
     useEffect(() => { boardRef.current = board; }, [board]);
 
     const actions = useChessSocket({
-        onQueued: () => setPhase('queued'),
+        onTableList: ({ tables: ts }) => {
+            setTables(ts);
+            setPhase(p => (p === 'connecting' ? 'lobby' : p));
+        },
+        onLobbyUpdate: ({ tables: ts }) => setTables(ts),
+        onTableCreated: ({ table_id }) => {
+            setHostedTableId(table_id);
+            setNotice(null);
+            setPhase('hosting');
+        },
+        onQueued: ({ position }) => {
+            setQueuePos(position);
+            setNotice(null);
+            setPhase('queued');
+        },
         onMatchFound: ({ color, clock_ms }) => {
             setMyColor(color);
             setBoard(initialBoard());
@@ -49,6 +75,8 @@ export default function ChessGame() {
             setCheckSide(null);
             setResult(null);
             setPending(false);
+            setHostedTableId(null);
+            setNotice(null);
             setPhase('playing');
         },
         onMoveMade: ({ from, to, turn: nextTurn, clock: c }) => {
@@ -78,15 +106,17 @@ export default function ChessGame() {
             setPending(false);
             setTimeout(() => setShake(false), 400);
         },
+        onError: ({ reason }) => {
+            setNotice(KNOWN_ERR.has(reason) ? t(`err_${reason}`) : t('errGeneric'));
+        },
     });
 
-    // 進頁自動配對（一次）
+    // 進頁進大廳（一次）
     const startedRef = useRef(false);
     useEffect(() => {
         if (startedRef.current) return;
         startedRef.current = true;
-        actions.joinQueue();
-        setPhase('queued');
+        actions.joinLobby();
     }, [actions]);
 
     const myTurn = phase === 'playing' && turn === myColor;
@@ -113,10 +143,11 @@ export default function ChessGame() {
         sound.setMuted(next);
     };
 
-    const replay = () => {
-        actions.joinQueue();
-        setPhase('queued');
+    const backToLobby = () => {
+        setNotice(null);
         setResult(null);
+        actions.joinLobby();
+        setPhase('connecting');
     };
 
     const resultText = (): { title: string; reason: string } => {
@@ -126,6 +157,25 @@ export default function ChessGame() {
         return { title: result.winner === myColor ? t('win') : t('lose'), reason };
     };
 
+    // 大廳系列畫面（連線中 / 大廳 / 佇列中 / 等待對手）
+    if (phase === 'connecting' || phase === 'lobby' || phase === 'queued' || phase === 'hosting') {
+        return (
+            <Lobby
+                phase={phase}
+                tables={tables}
+                queuePos={queuePos}
+                hostedTableId={hostedTableId}
+                notice={notice}
+                onQuickMatch={() => { setNotice(null); actions.joinQueue(); }}
+                onCreateTable={(name) => { setNotice(null); actions.createTable(name || undefined); }}
+                onJoinTable={(id) => { setNotice(null); actions.joinTable(id); }}
+                onLeaveQueue={() => { actions.leaveQueue(); setPhase('lobby'); }}
+                onCancelHost={() => { actions.leaveTable(); setHostedTableId(null); setPhase('lobby'); }}
+            />
+        );
+    }
+
+    // 對局畫面（playing / over）
     return (
         <div className="mx-auto flex h-[calc(100svh-120px)] w-full max-w-xl flex-col items-center gap-3 overflow-hidden py-2 lg:max-w-2xl xl:max-w-3xl">
             {/* 對手時鐘（上） */}
@@ -151,21 +201,13 @@ export default function ChessGame() {
                     onPoint={onPoint}
                 />
 
-                {/* 配對中遮罩 */}
-                {(phase === 'connecting' || phase === 'queued') && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-lg bg-neutral-900/70 backdrop-blur-sm">
-                        <Loader2 className="h-10 w-10 animate-spin text-primary-400" />
-                        <p className="text-sm text-neutral-100">{t('queueing')}</p>
-                    </div>
-                )}
-
                 {/* 結束遮罩 */}
                 {phase === 'over' && result && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-lg bg-neutral-900/80 px-6 text-center backdrop-blur-sm">
                         <p className="text-2xl font-bold text-neutral-50">{resultText().title}</p>
                         <p className="text-sm text-neutral-300">{resultText().reason}</p>
                         <button
-                            onClick={replay}
+                            onClick={backToLobby}
                             className="mt-2 flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
                         >
                             <RotateCcw className="h-4 w-4" />

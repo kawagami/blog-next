@@ -19,7 +19,7 @@
 | `/{locale}/tools/countdown` | 倒數計時工具 |
 | `/{locale}/tools/new-password` | 密碼產生工具 |
 | `/{locale}/tools/roster` | 排班功能 |
-| `/{locale}/games/chess` | 線上象棋，即時連線對戰（WS 配對，server 權威裁判） |
+| `/{locale}/games/chess` | 線上象棋，即時連線對戰（大廳開桌 / 快速配對，server 權威裁判） |
 | `/{locale}/games/metal-slug` | 越南大戰，Bevy wasm 動作遊戲 |
 | `/{locale}/ws` | WebSocket 即時訊息 |
 | `/{locale}/dashboard` | 個人儀表板（需登入） |

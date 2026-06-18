@@ -162,6 +162,27 @@
     "reason_timeout": "超時",
     "reason_resign": "認輸",
     "reason_disconnect": "對手斷線",
-    "reason_draw_60": "六十回合無吃子和棋"
+    "reason_draw_60": "六十回合無吃子和棋",
+    "connecting": "連線中…",
+    "lobbyTitle": "象棋大廳",
+    "quickMatch": "快速配對",
+    "createTable": "建桌",
+    "tableNamePlaceholder": "桌名（選填）",
+    "tablesHeading": "等待中的桌",
+    "noTables": "目前沒有等待中的桌，建一桌或快速配對",
+    "join": "加入",
+    "queuedPosition": "配對中…（佇列第 {position} 位）",
+    "leaveQueue": "離開佇列",
+    "waitingOpponent": "等待對手加入…",
+    "tableLabel": "桌 #{id}",
+    "cancel": "取消",
+    "errGeneric": "操作失敗，請再試一次",
+    "err_already_committed": "你已在佇列或某張桌中",
+    "err_bad_table_id": "桌號無效",
+    "err_table_not_found": "該桌已不存在",
+    "err_table_full": "該桌已滿",
+    "err_cannot_join_self": "不能加入自己的桌",
+    "err_not_in_game": "你不在對局中",
+    "err_game_ended": "對局已結束"
   }
 }
