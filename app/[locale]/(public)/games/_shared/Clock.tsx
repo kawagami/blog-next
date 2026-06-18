@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import type { Side } from './chess-logic';
 
 function fmt(ms: number): string {
     const total = Math.max(0, Math.ceil(ms / 1000));
@@ -13,14 +12,14 @@ function fmt(ms: number): string {
 const TICK = 250;
 
 // server 在每次 move_made 帶權威時鐘；兩步之間前端本地遞減「當前行棋方」做平滑顯示。
-// 重設靠父層用 key={side-baseMs} 重掛載（避免 effect 內同步 setState）。判輸仍由 server 權威。
+// 重設靠父層用 key 重掛載（避免 effect 內同步 setState）。判輸仍由 server 權威。
 export function Clock({
-    side, label, baseMs, running,
+    label, dotClass, baseMs, running,
 }: {
-    side: Side;
     label: string;
-    baseMs: number;   // 該方最後一次 server 回報的剩餘 ms
-    running: boolean; // 是否輪到此方（本地遞減）
+    dotClass: string;   // 標示該方的小圓點配色（各遊戲傳入）
+    baseMs: number;
+    running: boolean;
 }) {
     const [displayMs, setDisplayMs] = useState(baseMs);
 
@@ -42,13 +41,7 @@ export function Clock({
             ].join(' ')}
         >
             <span className="flex items-center gap-2 text-sm font-medium text-neutral-700 dark:text-neutral-200">
-                <span
-                    className={
-                        side === 'red'
-                            ? 'inline-block h-3 w-3 rounded-full bg-red-600'
-                            : 'inline-block h-3 w-3 rounded-full bg-neutral-900 dark:bg-neutral-100'
-                    }
-                />
+                <span className={`inline-block h-3 w-3 rounded-full ${dotClass}`} />
                 {label}
             </span>
             <span

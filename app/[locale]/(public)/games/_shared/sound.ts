@@ -1,4 +1,4 @@
-// Web Audio 合成音效（無音檔，見 spec §5）。
+// Web Audio 合成音效（無音檔）。三遊戲共用。
 // AudioContext 必須在使用者手勢後建立/resume（瀏覽器 autoplay 政策）。
 
 type Tone = { freq: number; dur: number; type?: OscillatorType; gain?: number };
@@ -42,8 +42,7 @@ function play(tones: Tone[]): void {
 export const sound = {
     setMuted(m: boolean) { muted = m; },
     isMuted() { return muted; },
-    // 先暖機（接在使用者手勢的 click 內），讓首次落子不被 autoplay 擋
-    warmup() { ac(); },
+    warmup() { ac(); }, // 接在使用者手勢內，解 autoplay 鎖
     move() { play([{ freq: 320, dur: 0.06 }]); },
     capture() { play([{ freq: 380, dur: 0.05 }, { freq: 200, dur: 0.08 }]); },
     check() { play([{ freq: 880, dur: 0.1, type: 'sawtooth' }]); },

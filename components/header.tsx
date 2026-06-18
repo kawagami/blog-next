@@ -30,6 +30,8 @@ const TOOLS = [
 // 遊戲選單；新增遊戲只要加一行
 const GAMES = [
     { href: "/games/chess", labelKey: "gameChess" },
+    { href: "/games/gomoku", labelKey: "gameGomoku" },
+    { href: "/games/banqi", labelKey: "gameBanqi" },
     { href: "/games/metal-slug", labelKey: "gameMetalSlug" },
 ] as const;
 

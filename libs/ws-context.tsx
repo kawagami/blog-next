@@ -2,12 +2,16 @@
 
 import { createContext, useContext, useEffect, useMemo, useRef } from 'react';
 
-type Listener = (data: unknown) => void;
+// 下行訊息外殼。遊戲框架信封含 `game` 欄（chess/gomoku/banqi）；
+// 非遊戲訊息（user_joined 等）無 game。listener 第二參數拿到整則 msg 供過濾。
+export interface WsMessage { type: string; game?: string; data?: unknown }
+type Listener = (data: unknown, msg: WsMessage) => void;
 
 interface WsContextValue {
     subscribe: (type: string, fn: Listener) => void;
     unsubscribe: (type: string, fn: Listener) => void;
-    send: (type: string, data?: unknown) => void;
+    // game：遊戲框架信封需帶（如 'chess'）；一般 WS 訊息省略
+    send: (type: string, data?: unknown, game?: string) => void;
 }
 
 const WsContext = createContext<WsContextValue | null>(null);
@@ -37,8 +41,8 @@ export function WsProvider({ children, jwt, wsUrl }: { children: React.ReactNode
 
             ws.onmessage = (event: MessageEvent) => {
                 try {
-                    const msg = JSON.parse(event.data as string);
-                    listenersRef.current.get(msg.type)?.forEach(fn => fn(msg.data));
+                    const msg = JSON.parse(event.data as string) as WsMessage;
+                    listenersRef.current.get(msg.type)?.forEach(fn => fn(msg.data, msg));
                 } catch {
                     // ignore non-JSON frames
                 }
@@ -79,8 +83,11 @@ export function WsProvider({ children, jwt, wsUrl }: { children: React.ReactNode
         unsubscribe: (type, fn) => {
             listenersRef.current.get(type)?.delete(fn);
         },
-        send: (type, data) => {
-            const frame = JSON.stringify(data === undefined ? { type } : { type, data });
+        send: (type, data, game) => {
+            const envelope: WsMessage = { type };
+            if (game !== undefined) envelope.game = game;
+            if (data !== undefined) envelope.data = data;
+            const frame = JSON.stringify(envelope);
             const ws = wsRef.current;
             if (ws && ws.readyState === WebSocket.OPEN) {
                 ws.send(frame);
