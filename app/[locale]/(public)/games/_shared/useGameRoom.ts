@@ -139,6 +139,16 @@ export function useGameRoom(game: GameId, sides: readonly [string, string], cb: 
         send('join_lobby', undefined, game);
     }, [send, game]);
 
+    // 切離頁面主動退出（共用 socket 不會因切頁斷線）：依當下 phase 送對應指令
+    const phaseRef = useRef(phase);
+    useEffect(() => { phaseRef.current = phase; }, [phase]);
+    useEffect(() => () => {
+        const p = phaseRef.current;
+        if (p === 'queued') send('leave_queue', undefined, game);
+        else if (p === 'hosting') send('leave_table', undefined, game);
+        else if (p === 'playing') send('resign', undefined, game);
+    }, [send, game]);
+
     const actions = {
         quickMatch: useCallback(() => { setNotice(null); send('join_queue', undefined, game); }, [send, game]),
         createTable: useCallback((name: string) => { setNotice(null); send('create_table', name ? { name } : {}, game); }, [send, game]),

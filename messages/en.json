@@ -23,7 +23,9 @@
     "toolAlarm": "Alarm",
     "toolHourlyChime": "Hourly Chime",
     "gameChess": "Online Xiangqi",
+    "gameWesternChess": "Online Chess",
     "gameGomoku": "Online Gomoku",
+    "gameGo": "Online Go",
     "gameBanqi": "Online Banqi",
     "gameMetalSlug": "Metal Slug"
   },
@@ -206,6 +208,30 @@
     "reason_elimination": "All pieces captured",
     "reason_no_moves": "Opponent has no moves",
     "reason_draw_quiet": "60-move no-capture draw",
+    "reason_timeout": "Time out",
+    "reason_resign": "Resignation",
+    "reason_disconnect": "Opponent disconnected"
+  },
+  "WesternChess": {
+    "title": "Online Chess",
+    "description": "Real-time chess with castling, en passant and promotion",
+    "white": "White",
+    "black": "Black",
+    "check": "Check!",
+    "reason_checkmate": "Checkmate",
+    "reason_stalemate": "Stalemate",
+    "reason_draw": "Draw",
+    "reason_timeout": "Time out",
+    "reason_resign": "Resignation",
+    "reason_disconnect": "Opponent disconnected"
+  },
+  "Go": {
+    "title": "Online Go",
+    "description": "Real-time Go (19×19, komi 7.5) — two passes ends the game",
+    "black": "Black",
+    "white": "White",
+    "pass": "Pass",
+    "reason_score": "Win by score",
     "reason_timeout": "Time out",
     "reason_resign": "Resignation",
     "reason_disconnect": "Opponent disconnected"

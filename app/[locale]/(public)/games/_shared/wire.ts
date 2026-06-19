@@ -2,7 +2,7 @@
 // 大廳/桌位/配對/計時/斷線三遊戲共用；各遊戲的 move/move_made 內容在各自 logic 檔。
 // 信封 { game, type, data }，game 必填（'chess'/'gomoku'/'banqi'）。
 
-export type GameId = 'chess' | 'gomoku' | 'banqi';
+export type GameId = 'chess' | 'gomoku' | 'banqi' | 'western_chess' | 'go';
 
 export type TableStatus = 'waiting' | 'playing';
 export interface WireTable { id: number; name: string; status: TableStatus; }

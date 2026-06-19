@@ -23,7 +23,9 @@
     "toolAlarm": "鬧鐘",
     "toolHourlyChime": "整點報時",
     "gameChess": "線上象棋",
+    "gameWesternChess": "線上西洋棋",
     "gameGomoku": "線上五子棋",
+    "gameGo": "線上圍棋",
     "gameBanqi": "線上暗棋",
     "gameMetalSlug": "越南大戰"
   },
@@ -206,6 +208,30 @@
     "reason_elimination": "吃光對方",
     "reason_no_moves": "對方無步可走",
     "reason_draw_quiet": "六十手無吃子和棋",
+    "reason_timeout": "超時",
+    "reason_resign": "認輸",
+    "reason_disconnect": "對手斷線"
+  },
+  "WesternChess": {
+    "title": "線上西洋棋",
+    "description": "即時連線對戰西洋棋，支援易位／吃過路兵／升變",
+    "white": "白",
+    "black": "黑",
+    "check": "將軍！",
+    "reason_checkmate": "將死",
+    "reason_stalemate": "逼和",
+    "reason_draw": "和棋",
+    "reason_timeout": "超時",
+    "reason_resign": "認輸",
+    "reason_disconnect": "對手斷線"
+  },
+  "Go": {
+    "title": "線上圍棋",
+    "description": "即時連線對戰圍棋（19 路，貼目 7.5），雙虛手終局數子",
+    "black": "黑",
+    "white": "白",
+    "pass": "虛手",
+    "reason_score": "數子勝",
     "reason_timeout": "超時",
     "reason_resign": "認輸",
     "reason_disconnect": "對手斷線"

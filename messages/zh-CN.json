@@ -23,7 +23,9 @@
     "toolAlarm": "闹钟",
     "toolHourlyChime": "整点报时",
     "gameChess": "在线象棋",
+    "gameWesternChess": "在线国际象棋",
     "gameGomoku": "在线五子棋",
+    "gameGo": "在线围棋",
     "gameBanqi": "在线暗棋",
     "gameMetalSlug": "越南大战"
   },
@@ -206,6 +208,30 @@
     "reason_elimination": "吃光对方",
     "reason_no_moves": "对方无步可走",
     "reason_draw_quiet": "六十手无吃子和棋",
+    "reason_timeout": "超时",
+    "reason_resign": "认输",
+    "reason_disconnect": "对手断线"
+  },
+  "WesternChess": {
+    "title": "在线国际象棋",
+    "description": "实时连线对战国际象棋，支持易位／吃过路兵／升变",
+    "white": "白",
+    "black": "黑",
+    "check": "将军！",
+    "reason_checkmate": "将死",
+    "reason_stalemate": "逼和",
+    "reason_draw": "和棋",
+    "reason_timeout": "超时",
+    "reason_resign": "认输",
+    "reason_disconnect": "对手断线"
+  },
+  "Go": {
+    "title": "在线围棋",
+    "description": "实时连线对战围棋（19 路，贴目 7.5），双虚手终局数子",
+    "black": "黑",
+    "white": "白",
+    "pass": "虚手",
+    "reason_score": "数子胜",
     "reason_timeout": "超时",
     "reason_resign": "认输",
     "reason_disconnect": "对手断线"

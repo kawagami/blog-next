@@ -11,7 +11,7 @@ import type { UseGameRoom } from './useGameRoom';
 // 對局外框（時鐘 + 盤位 + 控制 + 結束遮罩），大廳系列委派 Lobby。
 // 文案走 GameLobby namespace；各遊戲提供 title / 側標籤 / dot 配色 / reason 文字 / 盤面節點。
 export function GameFrame({
-    room, title, sides, sideLabel, sideDotClass, reasonLabel, board, extraStatus,
+    room, title, sides, sideLabel, sideDotClass, reasonLabel, board, extraStatus, extraControls,
 }: {
     room: UseGameRoom;
     title: string;
@@ -20,7 +20,8 @@ export function GameFrame({
     sideDotClass: (side: string) => string;
     reasonLabel: (reason: string) => string;
     board: React.ReactNode;
-    extraStatus?: React.ReactNode; // 例如象棋將軍提示
+    extraStatus?: React.ReactNode;   // 例如象棋將軍提示
+    extraControls?: React.ReactNode; // 例如圍棋 pass 鈕（置於控制列）
 }) {
     const t = useTranslations('GameLobby');
     const [muted, setMuted] = useState(false);
@@ -104,6 +105,7 @@ export function GameFrame({
                 >
                     {muted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
                 </button>
+                {phase === 'playing' && extraControls}
                 {phase === 'playing' && (
                     <button
                         onClick={actions.resign}

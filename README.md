@@ -20,7 +20,9 @@
 | `/{locale}/tools/new-password` | 密碼產生工具 |
 | `/{locale}/tools/roster` | 排班功能 |
 | `/{locale}/games/chess` | 線上象棋，即時連線對戰（大廳開桌 / 快速配對，server 權威裁判） |
+| `/{locale}/games/western-chess` | 線上西洋棋，即時連線對戰（易位／過路兵／升變，共用大廳框架） |
 | `/{locale}/games/gomoku` | 線上五子棋，即時連線對戰（共用大廳框架） |
+| `/{locale}/games/go` | 線上圍棋（19 路，貼目 7.5，雙虛手終局），共用大廳框架 |
 | `/{locale}/games/banqi` | 線上暗棋（翻棋），即時連線對戰（共用大廳框架） |
 | `/{locale}/games/metal-slug` | 越南大戰，Bevy wasm 動作遊戲 |
 | `/{locale}/ws` | WebSocket 即時訊息 |
