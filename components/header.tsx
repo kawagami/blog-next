@@ -35,6 +35,7 @@ const GAMES = [
     { href: "/games/go", labelKey: "gameGo" },
     { href: "/games/banqi", labelKey: "gameBanqi" },
     { href: "/games/avalon", labelKey: "gameAvalon" },
+    { href: "/games/farm", labelKey: "gameFarm" },
     { href: "/games/metal-slug", labelKey: "gameMetalSlug" },
 ] as const;
 
