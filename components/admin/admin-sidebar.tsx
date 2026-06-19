@@ -9,9 +9,11 @@ import {
     Menu,
     X,
     FileText,
-    Shield,
     Users,
     TrendingUp,
+    Wrench,
+    ScrollText,
+    Settings,
     LogOut,
 } from "lucide-react";
 import { clearSession } from "@/app/admin/login/actions";
@@ -27,21 +29,6 @@ const groups = [
         ],
     },
     {
-        label: "系統",
-        icon: Shield,
-        items: [
-            { label: "WS", href: "/admin/ws" },
-            { label: "對局總覽", href: "/admin/games" },
-            { label: "Torrents", href: "/admin/torrents" },
-            { label: "Logs", href: "/admin/logs" },
-            { label: "Audit Logs", href: "/admin/audit_logs" },
-            { label: "Roles", href: "/admin/roles" },
-            { label: "Users", href: "/admin/users" },
-            { label: "修改密碼", href: "/admin/change-password" },
-            { label: "Settings", href: "/admin/settings" },
-        ],
-    },
-    {
         label: "股票",
         icon: TrendingUp,
         items: [
@@ -53,17 +40,47 @@ const groups = [
         ],
     },
     {
-        label: "會員",
+        label: "會員與權限",
         icon: Users,
         items: [
-            { label: "列表", href: "/admin/members" },
+            { label: "會員列表", href: "/admin/members" },
+            { label: "Users", href: "/admin/users" },
+            { label: "Roles", href: "/admin/roles" },
+        ],
+    },
+    {
+        label: "工具",
+        icon: Wrench,
+        items: [
+            { label: "WS", href: "/admin/ws" },
+            { label: "對局總覽", href: "/admin/games" },
+            { label: "Torrents", href: "/admin/torrents" },
+        ],
+    },
+    {
+        label: "觀測",
+        icon: ScrollText,
+        items: [
+            { label: "Logs", href: "/admin/logs" },
+            { label: "Audit Logs", href: "/admin/audit_logs" },
+        ],
+    },
+    {
+        label: "設定",
+        icon: Settings,
+        items: [
+            { label: "Settings", href: "/admin/settings" },
+            { label: "修改密碼", href: "/admin/change-password" },
         ],
     },
 ];
 
 function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
     const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
-        Object.fromEntries(groups.map(g => [g.label, true]))
+        Object.fromEntries(groups.map(g => [
+            g.label,
+            g.items.some(item => pathname.startsWith(item.href)),
+        ]))
     );
 
     const toggle = (label: string) =>
