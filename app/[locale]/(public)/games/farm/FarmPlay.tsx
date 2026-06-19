@@ -106,11 +106,14 @@ function ActionBoard({ state, myTurn, onAction }: { state: FarmState; myTurn: bo
                     const amt = amountOf(a);
                     return (
                         <button key={a} onClick={() => click(a)} disabled={!myTurn}
-                            className={`flex items-center gap-1 rounded-lg border px-3 py-1.5 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${compound === a ? 'border-primary-500 bg-primary-600 text-white' : 'border-neutral-300 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800'}`}>
-                            {t(`action_${a}`)}
-                            {ACCUMULATION_ACTIONS.has(a) && amt !== undefined && (
-                                <span className="rounded-full bg-amber-100 px-1.5 text-xs text-amber-700 dark:bg-amber-900 dark:text-amber-200">{amt}</span>
-                            )}
+                            className={`flex flex-col items-start gap-0.5 rounded-lg border px-3 py-1.5 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${compound === a ? 'border-primary-500 bg-primary-600 text-white' : 'border-neutral-300 hover:bg-neutral-100 dark:border-neutral-600 dark:hover:bg-neutral-800'}`}>
+                            <span className="flex items-center gap-1 text-sm">
+                                {t(`action_${a}`)}
+                                {ACCUMULATION_ACTIONS.has(a) && amt !== undefined && (
+                                    <span className="rounded-full bg-amber-100 px-1.5 text-xs text-amber-700 dark:bg-amber-900 dark:text-amber-200">{amt}</span>
+                                )}
+                            </span>
+                            <span className="text-[11px] leading-tight opacity-70">{t(`hint_${a}`)}</span>
                         </button>
                     );
                 })}
