@@ -44,10 +44,6 @@ export function useFarmRoom(): UseFarmRoom {
     const [state, setState] = useState<FarmState | null>(null);
     const [gameOver, setGameOver] = useState<GameOverData | null>(null);
     const [notice, setNotice] = useState<string | null>(null);
-    const [iAmHost, setIAmHost] = useState(false);
-    const [mySeat, setMySeat] = useState<number | null>(null);
-
-    const myNickRef = useRef<string>(''); // join 時送的暱稱，供 seat 比對
 
     useEffect(() => {
         const handlers: Record<string, (data: unknown) => void> = {
@@ -58,21 +54,12 @@ export function useFarmRoom(): UseFarmRoom {
             lobby_update: d => setRooms((d as RoomListData).rooms),
             room_created: () => { /* room_update 隨後到 */ },
             room_update: d => {
-                const ru = d as RoomUpdateData;
-                setRoom(ru);
+                setRoom(d as RoomUpdateData);
                 setUiPhase(p => (p === 'playing' ? p : 'room'));
-                // 推定自己的 seat（後端未給 your_seat）
-                setMySeat(prev => {
-                    if (prev !== null) return prev;
-                    const nick = myNickRef.current;
-                    const byNick = nick ? ru.players.find(p => p.name === nick) : undefined;
-                    if (byNick) return byNick.seat;
-                    return ru.players.reduce((mx, p) => Math.max(mx, p.seat), 0); // 最新加入≈最大 seat
-                });
             },
             room_closed: d => {
                 setNotice(`closed_${(d as RoomClosedData).reason}`);
-                setRoom(null); setState(null); setGameOver(null); setIAmHost(false); setMySeat(null);
+                setRoom(null); setState(null); setGameOver(null);
                 send('join_lobby', undefined, GAME);
                 setUiPhase('connecting');
             },
@@ -108,14 +95,14 @@ export function useFarmRoom(): UseFarmRoom {
 
     const actions = {
         createRoom: useCallback((roomName: string, nickname: string) => {
-            setNotice(null); setIAmHost(true); setMySeat(0); myNickRef.current = nickname;
+            setNotice(null);
             const data: Record<string, unknown> = {};
             if (roomName) data.room_name = roomName;
             if (nickname) data.nickname = nickname;
             send('create_room', data, GAME);
         }, [send]),
         joinRoom: useCallback((roomId: number, nickname: string) => {
-            setNotice(null); setIAmHost(false); setMySeat(null); myNickRef.current = nickname;
+            setNotice(null);
             send('join_room', nickname ? { room_id: roomId, nickname } : { room_id: roomId }, GAME);
         }, [send]),
         startGame: useCallback(() => send('start_game', undefined, GAME), [send]),
@@ -124,12 +111,16 @@ export function useFarmRoom(): UseFarmRoom {
             send('action', input ? { action, input } : { action }, GAME);
         }, [send]),
         backToLobby: useCallback(() => {
-            setNotice(null); setRoom(null); setState(null); setGameOver(null); setIAmHost(false); setMySeat(null);
+            setNotice(null); setRoom(null); setState(null); setGameOver(null);
             send('leave_room', undefined, GAME);
             send('join_lobby', undefined, GAME);
             setUiPhase('connecting');
         }, [send]),
     };
+
+    // your_seat 由後端逐人注入（state 優先，房內用 room_update）
+    const mySeat = state?.your_seat ?? room?.your_seat ?? null;
+    const iAmHost = room ? room.your_seat === room.host_seat : false;
 
     return { uiPhase, rooms, room, state, gameOver, notice, iAmHost, mySeat, actions };
 }

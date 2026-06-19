@@ -21,6 +21,7 @@ export interface PlayerState {
 }
 
 export interface FarmState {
+    your_seat: number;  // 逐人注入：收訊者自己的 seat
     round: number;
     phase: 'placing' | 'game_over';
     current_player: number | null;
@@ -48,6 +49,6 @@ export interface RoomSummary { id: number; name: string; players: number; max: n
 export interface PlayerInfo { seat: number; name: string; }
 export interface RoomListData { rooms: RoomSummary[]; }
 export interface RoomCreatedData { room_id: number; }
-export interface RoomUpdateData { room_id: number; name: string; host_seat: number; players: PlayerInfo[]; can_start: boolean; }
+export interface RoomUpdateData { room_id: number; name: string; host_seat: number; players: PlayerInfo[]; can_start: boolean; your_seat: number; }
 export interface RoomClosedData { reason: string; }
 export interface ErrorData { reason: string; }
