@@ -10,6 +10,7 @@ const EVENT_TYPES: WsEventType[] = [
     'blog_created',
     'user_joined',
     'user_left',
+    'admin_message',
 ];
 
 interface FeedEntry {

@@ -20,6 +20,7 @@ export function useWsNotification() {
     useWsSubscribe('blog_created', addNotification('blog_created'));
     useWsSubscribe('user_joined', addNotification('user_joined'));
     useWsSubscribe('user_left', addNotification('user_left'));
+    useWsSubscribe('admin_message', addNotification('admin_message'));
 
     const dismiss = (id: number) =>
         setNotifications(prev => prev.filter(n => n.id !== id));

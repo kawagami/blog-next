@@ -20,6 +20,11 @@ interface BlogData {
     title?: string;
 }
 
+interface AdminMessageData {
+    content?: string;
+    from?: string;
+}
+
 function ToastShell({ bg, children, onDismiss }: { bg: string; children: React.ReactNode; onDismiss: () => void }) {
     return (
         <div className={`flex items-start gap-3 px-4 py-3 rounded-lg shadow-lg text-white min-w-[260px] max-w-sm ${bg}`}>
@@ -64,12 +69,24 @@ function StockFailedToast({ data, onDismiss }: ToastItemProps) {
     );
 }
 
+function AdminMessageToast({ data, onDismiss }: ToastItemProps) {
+    const m = data as AdminMessageData;
+    return (
+        <ToastShell bg="bg-neutral-800 dark:bg-neutral-700" onDismiss={onDismiss}>
+            <p className="font-semibold">管理員訊息</p>
+            <p>{m.content}</p>
+            {m.from && <p className="text-xs opacity-75">— {m.from}</p>}
+        </ToastShell>
+    );
+}
+
 const TOAST_MAP: Record<WsEventType, ToastComponent> = {
     user_joined: UserJoinedToast,
     user_left: UserLeftToast,
     blog_created: BlogCreatedToast,
     stock_completed: StockCompletedToast,
     stock_failed: StockFailedToast,
+    admin_message: AdminMessageToast,
 };
 
 export default function WsToast() {

@@ -170,7 +170,7 @@ export interface MemberDetail {
 }
 
 // WS Notification
-export type WsEventType = 'stock_completed' | 'stock_failed' | 'blog_created' | 'user_joined' | 'user_left';
+export type WsEventType = 'stock_completed' | 'stock_failed' | 'blog_created' | 'user_joined' | 'user_left' | 'admin_message';
 
 export interface WsNotification {
   id: number;
