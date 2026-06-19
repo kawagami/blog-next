@@ -24,6 +24,7 @@
 | `/{locale}/games/gomoku` | 線上五子棋，即時連線對戰（共用大廳框架） |
 | `/{locale}/games/go` | 線上圍棋（19 路，貼目 7.5，雙虛手終局），共用大廳框架 |
 | `/{locale}/games/banqi` | 線上暗棋（翻棋），即時連線對戰（共用大廳框架） |
+| `/{locale}/games/avalon` | 線上阿瓦隆，5–10 人社交推理（私有角色／投票／任務／刺殺／房內聊天） |
 | `/{locale}/games/metal-slug` | 越南大戰，Bevy wasm 動作遊戲 |
 | `/{locale}/ws` | WebSocket 即時訊息 |
 | `/{locale}/dashboard` | 個人儀表板（需登入） |
