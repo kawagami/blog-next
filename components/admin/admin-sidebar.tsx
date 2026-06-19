@@ -31,6 +31,7 @@ const groups = [
         icon: Shield,
         items: [
             { label: "WS", href: "/admin/ws" },
+            { label: "對局總覽", href: "/admin/games" },
             { label: "Torrents", href: "/admin/torrents" },
             { label: "Logs", href: "/admin/logs" },
             { label: "Audit Logs", href: "/admin/audit_logs" },

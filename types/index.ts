@@ -286,6 +286,16 @@ export interface AuditLog {
   created_at: string;
 }
 
+// Games overview（admin 即時對局總覽）
+export interface GameOverview {
+  game: string;
+  waiting: number;
+  playing: number;
+  players_in_game: number;
+  queued: number;
+  lobby: number;
+}
+
 // Log
 export type LogLevel = 'INFO' | 'WARN' | 'ERROR';
 
