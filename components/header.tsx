@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { Link } from '@/i18n/navigation';
+import { useState, useEffect, useRef } from 'react';
+import { Link, usePathname } from '@/i18n/navigation';
 import ThemeButton from "@/components/theme-button";
 import KawaLogo from "@/components/kawa-logo";
 import { logout } from '@/actions/auth';
@@ -47,13 +47,18 @@ const MEMBER_LINKS: ReadonlyArray<{ href: string; labelKey: string; icon: Lucide
 ];
 
 const navLinkClass = "block px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400 whitespace-nowrap";
+const navTriggerClass = navLinkClass.replace('block', 'inline-flex items-center gap-1');
+const activeNavClass = "text-primary-600 dark:text-primary-300 font-medium";
 const dropdownItemClass = "flex items-center gap-2 px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-400";
 const mobileItemClass = "px-4 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-primary-400";
 
 function DesktopDropdown({ isOpen, align = 'left', children }: { isOpen: boolean; align?: 'left' | 'right'; children: React.ReactNode }) {
-    if (!isOpen) return null;
     return (
-        <div className={`absolute ${align === 'left' ? 'left-0' : 'right-0'} bg-white dark:bg-neutral-800 shadow-lg rounded-md overflow-hidden z-10 min-w-[120px]`}>
+        <div
+            className={`absolute ${align === 'left' ? 'left-0' : 'right-0'} mt-1 bg-white dark:bg-neutral-800 shadow-lg rounded-md overflow-hidden z-10 min-w-[120px]
+                origin-top transition-all duration-150 ease-out motion-reduce:transition-none
+                ${isOpen ? "opacity-100 translate-y-0 visible" : "opacity-0 -translate-y-1 invisible"}`}
+        >
             {children}
         </div>
     );
@@ -65,6 +70,13 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
     const [isGamesOpen, setIsGamesOpen] = useState(false);
     const [isMemberOpen, setIsMemberOpen] = useState(false);
     const t = useTranslations('Header');
+    const pathname = usePathname();
+    const navRef = useRef<HTMLElement>(null);
+
+    const isNotesActive = pathname.startsWith('/hackmd-notes');
+    const isAboutActive = pathname.startsWith('/about');
+    const isToolsActive = TOOLS.some(({ href }) => pathname.startsWith(href));
+    const isGamesActive = GAMES.some(({ href }) => pathname.startsWith(href));
 
     const closeAll = () => {
         setIsOpen(false);
@@ -73,12 +85,28 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
         setIsMemberOpen(false);
     };
 
-    // Escape 關閉所有選單
+    const closeDesktopDropdowns = () => {
+        setIsResourcesOpen(false);
+        setIsGamesOpen(false);
+        setIsMemberOpen(false);
+    };
+
+    // Escape 關閉所有選單；點桌面 nav 外部關閉下拉（行動選單有自己的 backdrop）
     useEffect(() => {
         if (!isOpen && !isResourcesOpen && !isGamesOpen && !isMemberOpen) return;
         const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeAll(); };
+        const onPointerDown = (e: PointerEvent) => {
+            if (isOpen) return; // 行動選單開啟時交給 backdrop 處理
+            if (navRef.current && !navRef.current.contains(e.target as Node)) {
+                closeDesktopDropdowns();
+            }
+        };
         window.addEventListener('keydown', onKey);
-        return () => window.removeEventListener('keydown', onKey);
+        document.addEventListener('pointerdown', onPointerDown);
+        return () => {
+            window.removeEventListener('keydown', onKey);
+            document.removeEventListener('pointerdown', onPointerDown);
+        };
     }, [isOpen, isResourcesOpen, isGamesOpen, isMemberOpen]);
 
     return (
@@ -91,18 +119,21 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                 </div>
 
                 {/* Desktop nav */}
-                <nav className="hidden md:flex items-center gap-2">
-                    <Link href="/hackmd-notes" aria-label={t('notes')} className={navLinkClass}>{t('notes')}</Link>
+                <nav ref={navRef} className="hidden md:flex items-center gap-2">
+                    <Link href="/hackmd-notes" aria-label={t('notes')} className={`${navLinkClass} ${isNotesActive ? activeNavClass : ''}`}>{t('notes')}</Link>
                     <div className="relative">
                         <button
-                            className={navLinkClass}
+                            className={`${navTriggerClass} ${isToolsActive ? activeNavClass : ''}`}
                             aria-label={t('openToolsMenu')}
                             aria-expanded={isResourcesOpen}
                             onClick={() => setIsResourcesOpen(o => !o)}
-                        >{t('tools')}</button>
+                        >
+                            {t('tools')}
+                            <ChevronDown size={14} className={`transition-transform duration-200 motion-reduce:transition-none ${isResourcesOpen ? 'rotate-180' : ''}`} />
+                        </button>
                         <DesktopDropdown isOpen={isResourcesOpen}>
                             {TOOLS.map(({ href, labelKey }) => (
-                                <Link key={href} href={href} className={dropdownItemClass} onClick={() => setIsResourcesOpen(false)}>
+                                <Link key={href} href={href} tabIndex={isResourcesOpen ? 0 : -1} className={dropdownItemClass} onClick={() => setIsResourcesOpen(false)}>
                                     {t(labelKey)}
                                 </Link>
                             ))}
@@ -110,20 +141,23 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                     </div>
                     <div className="relative">
                         <button
-                            className={navLinkClass}
+                            className={`${navTriggerClass} ${isGamesActive ? activeNavClass : ''}`}
                             aria-label={t('openGamesMenu')}
                             aria-expanded={isGamesOpen}
                             onClick={() => setIsGamesOpen(o => !o)}
-                        >{t('games')}</button>
+                        >
+                            {t('games')}
+                            <ChevronDown size={14} className={`transition-transform duration-200 motion-reduce:transition-none ${isGamesOpen ? 'rotate-180' : ''}`} />
+                        </button>
                         <DesktopDropdown isOpen={isGamesOpen}>
                             {GAMES.map(({ href, labelKey }) => (
-                                <Link key={href} href={href} className={dropdownItemClass} onClick={() => setIsGamesOpen(false)}>
+                                <Link key={href} href={href} tabIndex={isGamesOpen ? 0 : -1} className={dropdownItemClass} onClick={() => setIsGamesOpen(false)}>
                                     {t(labelKey)}
                                 </Link>
                             ))}
                         </DesktopDropdown>
                     </div>
-                    <Link href="/about" aria-label={t('about')} className={navLinkClass}>{t('about')}</Link>
+                    <Link href="/about" aria-label={t('about')} className={`${navLinkClass} ${isAboutActive ? activeNavClass : ''}`}>{t('about')}</Link>
                     <LocaleSwitcher />
                     <ThemeButton initialMode={colorMode} defaultIsDark={defaultIsDark} />
                     {member ? (
@@ -135,17 +169,17 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                                 onClick={() => setIsMemberOpen(o => !o)}
                             >
                                 <User size={16} />
-                                <ChevronDown size={14} />
+                                <ChevronDown size={14} className={`transition-transform duration-200 motion-reduce:transition-none ${isMemberOpen ? 'rotate-180' : ''}`} />
                             </button>
                             <DesktopDropdown isOpen={isMemberOpen} align="right">
                                 {MEMBER_LINKS.map(({ href, labelKey, icon: Icon }) => (
-                                    <Link key={href} href={href} className={`${dropdownItemClass} text-sm`} onClick={() => setIsMemberOpen(false)}>
+                                    <Link key={href} href={href} tabIndex={isMemberOpen ? 0 : -1} className={`${dropdownItemClass} text-sm`} onClick={() => setIsMemberOpen(false)}>
                                         <Icon size={14} />
                                         {t(labelKey)}
                                     </Link>
                                 ))}
                                 <form action={logout}>
-                                    <button type="submit" className={`w-full ${dropdownItemClass} text-sm text-red-500 dark:text-red-400`}>
+                                    <button type="submit" tabIndex={isMemberOpen ? 0 : -1} className={`w-full ${dropdownItemClass} text-sm text-red-500 dark:text-red-400`}>
                                         {t('logout')}
                                     </button>
                                 </form>
@@ -171,10 +205,10 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                 <>
                     <div className="md:hidden fixed inset-0 z-30 bg-black/40" onClick={closeAll} aria-hidden="true" />
                     <nav className="md:hidden fixed top-[50px] left-0 right-0 z-40 bg-white dark:bg-neutral-900 shadow-lg border-t border-neutral-200 dark:border-neutral-700 flex flex-col p-4 gap-1">
-                        <Link href="/hackmd-notes" className={mobileItemClass} onClick={closeAll}>{t('notes')}</Link>
+                        <Link href="/hackmd-notes" className={`${mobileItemClass} ${isNotesActive ? activeNavClass : ''}`} onClick={closeAll}>{t('notes')}</Link>
 
                         <button
-                            className={`${mobileItemClass} flex items-center justify-between w-full text-left`}
+                            className={`${mobileItemClass} flex items-center justify-between w-full text-left ${isToolsActive ? activeNavClass : ''}`}
                             aria-expanded={isResourcesOpen}
                             onClick={() => setIsResourcesOpen(o => !o)}
                         >
@@ -192,7 +226,7 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                         )}
 
                         <button
-                            className={`${mobileItemClass} flex items-center justify-between w-full text-left`}
+                            className={`${mobileItemClass} flex items-center justify-between w-full text-left ${isGamesActive ? activeNavClass : ''}`}
                             aria-expanded={isGamesOpen}
                             onClick={() => setIsGamesOpen(o => !o)}
                         >
@@ -209,7 +243,7 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                             </div>
                         )}
 
-                        <Link href="/about" className={mobileItemClass} onClick={closeAll}>{t('about')}</Link>
+                        <Link href="/about" className={`${mobileItemClass} ${isAboutActive ? activeNavClass : ''}`} onClick={closeAll}>{t('about')}</Link>
                         <div className="px-4 py-2">
                             <ThemeButton initialMode={colorMode} defaultIsDark={defaultIsDark} />
                         </div>
