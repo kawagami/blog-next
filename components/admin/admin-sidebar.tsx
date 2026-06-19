@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-    ChevronDown,
     ChevronRight,
     Menu,
     X,
@@ -112,32 +111,37 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
                                     <Icon size={16} />
                                     {group.label}
                                 </span>
-                                {isOpen
-                                    ? <ChevronDown size={14} />
-                                    : <ChevronRight size={14} />
-                                }
+                                <ChevronRight
+                                    size={14}
+                                    className={`transition-transform duration-200 ease-out motion-reduce:transition-none ${isOpen ? "rotate-90" : ""}`}
+                                />
                             </button>
-                            {isOpen && (
-                                <div className="mt-1 ml-4 space-y-1">
-                                    {group.items.map(item => {
-                                        const isActive = pathname.startsWith(item.href);
-                                        return (
-                                            <Link
-                                                key={item.href}
-                                                href={item.href}
-                                                onClick={onNavigate}
-                                                className={`block px-4 py-1.5 text-sm rounded-lg transition-colors
-                                                    ${isActive
-                                                        ? "text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-900/50 font-medium"
-                                                        : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                                                    }`}
-                                            >
-                                                {item.label}
-                                            </Link>
-                                        );
-                                    })}
+                            <div
+                                className={`grid transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                            >
+                                <div className="overflow-hidden">
+                                    <div className="mt-1 ml-4 space-y-1">
+                                        {group.items.map(item => {
+                                            const isActive = pathname.startsWith(item.href);
+                                            return (
+                                                <Link
+                                                    key={item.href}
+                                                    href={item.href}
+                                                    onClick={onNavigate}
+                                                    tabIndex={isOpen ? 0 : -1}
+                                                    className={`block px-4 py-1.5 text-sm rounded-lg transition-colors
+                                                        ${isActive
+                                                            ? "text-primary-600 dark:text-primary-400 bg-primary-100 dark:bg-primary-900/50 font-medium"
+                                                            : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                                                        }`}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                            )}
+                            </div>
                         </div>
                     );
                 })}
