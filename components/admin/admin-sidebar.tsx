@@ -84,7 +84,11 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
     );
 
     const toggle = (label: string) =>
-        setOpenGroups(prev => ({ ...prev, [label]: !prev[label] }));
+        setOpenGroups(prev =>
+            Object.fromEntries(
+                groups.map(g => [g.label, g.label === label ? !prev[label] : false])
+            )
+        );
 
     return (
         <div className="flex flex-col h-full">
