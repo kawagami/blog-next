@@ -40,6 +40,7 @@ export default function GoGame() {
         <GameFrame
             room={room}
             title={t('title')}
+            rules={t.raw('rules') as string[]}
             sides={SIDES}
             sideLabel={(s) => t(s)}
             sideDotClass={(s) => (s === 'black' ? 'bg-neutral-900 dark:bg-neutral-50' : 'bg-white border border-neutral-400')}

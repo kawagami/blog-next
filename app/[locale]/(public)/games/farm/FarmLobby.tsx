@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Loader2, Plus, LogIn, Users } from 'lucide-react';
+import { HowToPlayButton } from '../_shared/HowToPlay';
 import type { RoomSummary } from './farm-types';
 
 export function FarmLobby({
@@ -30,6 +31,7 @@ export function FarmLobby({
     return (
         <div className="mx-auto flex w-full max-w-lg flex-col gap-5 py-6">
             <h1 className="text-center text-2xl font-bold text-neutral-800 dark:text-neutral-100">{t('lobbyTitle')}</h1>
+            <HowToPlayButton title={t('title')} rules={t.raw('rules') as string[]} />
 
             {notice && (
                 <p className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-center text-sm text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400">

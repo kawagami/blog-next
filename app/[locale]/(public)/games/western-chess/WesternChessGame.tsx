@@ -40,6 +40,7 @@ export default function WesternChessGame() {
         <GameFrame
             room={room}
             title={t('title')}
+            rules={t.raw('rules') as string[]}
             sides={SIDES}
             sideLabel={(s) => t(s)}
             sideDotClass={(s) => (s === 'white' ? 'bg-white border border-neutral-400' : 'bg-neutral-900 dark:bg-neutral-50')}

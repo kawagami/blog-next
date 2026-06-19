@@ -35,6 +35,7 @@ export default function GomokuGame() {
         <GameFrame
             room={room}
             title={t('title')}
+            rules={t.raw('rules') as string[]}
             sides={SIDES}
             sideLabel={(s) => t(s)}
             sideDotClass={(s) => (s === 'black'

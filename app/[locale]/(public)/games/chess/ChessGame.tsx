@@ -49,6 +49,7 @@ export default function ChessGame() {
         <GameFrame
             room={room}
             title={t('title')}
+            rules={t.raw('rules') as string[]}
             sides={SIDES}
             sideLabel={(s) => t(s)}
             sideDotClass={(s) => (s === 'red' ? 'bg-red-600' : 'bg-neutral-900 dark:bg-neutral-100')}

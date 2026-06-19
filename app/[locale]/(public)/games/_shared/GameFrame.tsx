@@ -11,10 +11,11 @@ import type { UseGameRoom } from './useGameRoom';
 // 對局外框（時鐘 + 盤位 + 控制 + 結束遮罩），大廳系列委派 Lobby。
 // 文案走 GameLobby namespace；各遊戲提供 title / 側標籤 / dot 配色 / reason 文字 / 盤面節點。
 export function GameFrame({
-    room, title, sides, sideLabel, sideDotClass, reasonLabel, board, extraStatus, extraControls,
+    room, title, rules, sides, sideLabel, sideDotClass, reasonLabel, board, extraStatus, extraControls,
 }: {
     room: UseGameRoom;
     title: string;
+    rules: string[];
     sides: readonly [string, string];
     sideLabel: (side: string) => string;
     sideDotClass: (side: string) => string;
@@ -32,6 +33,7 @@ export function GameFrame({
             <Lobby
                 phase={phase}
                 title={title}
+                rules={rules}
                 tables={room.tables}
                 queuePos={room.queuePos}
                 hostedTableId={room.hostedTableId}

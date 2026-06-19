@@ -3,16 +3,18 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Loader2, Swords, Plus, LogIn, X } from 'lucide-react';
+import { HowToPlayButton } from './HowToPlay';
 import type { WireTable } from './wire';
 import type { RoomPhase } from './useGameRoom';
 
 // 大廳系列畫面（connecting / lobby / queued / hosting）；三遊戲共用，文案走 GameLobby namespace。
 export function Lobby({
-    phase, title, tables, queuePos, hostedTableId, notice,
+    phase, title, rules, tables, queuePos, hostedTableId, notice,
     onQuickMatch, onCreateTable, onJoinTable, onLeaveQueue, onCancelHost,
 }: {
     phase: Extract<RoomPhase, 'connecting' | 'lobby' | 'queued' | 'hosting'>;
     title: string;
+    rules: string[];
     tables: WireTable[];
     queuePos: number;
     hostedTableId: number | null;
@@ -66,6 +68,7 @@ export function Lobby({
     return (
         <div className="mx-auto flex w-full max-w-lg flex-col gap-5 py-6">
             <h1 className="text-center text-2xl font-bold text-neutral-800 dark:text-neutral-100">{title}</h1>
+            <HowToPlayButton title={title} rules={rules} />
 
             {notice && (
                 <p className="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-center text-sm text-red-600 dark:border-red-800 dark:bg-red-950 dark:text-red-400">

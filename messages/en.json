@@ -146,6 +146,8 @@
     "hint": "Keyboard controls — click the canvas first to focus"
   },
   "GameLobby": {
+    "howToPlay": "How to play",
+    "close": "Close",
     "connecting": "Connecting…",
     "quickMatch": "Quick match",
     "createTable": "Create table",
@@ -181,6 +183,13 @@
   "Chess": {
     "title": "Online Xiangqi",
     "description": "Real-time Chinese chess — lobby tables or quick match",
+    "rules": [
+      "Goal: checkmate the enemy general so it has no legal move left.",
+      "Moves: chariot slides straight; horse moves in an L (blocked by an adjacent piece); cannon captures by jumping one piece; elephant moves 2 diagonally and can't cross the river; advisor/general stay in the palace; soldier may move sideways after crossing the river.",
+      "Flying general: the two generals may not face each other on an open file.",
+      "Tap your piece to select, then tap a target square; the server judges legality.",
+      "Clock: 5 minutes each, +30s per move; running out loses."
+    ],
     "red": "Red",
     "black": "Black",
     "check": "Check!",
@@ -194,6 +203,12 @@
   "Gomoku": {
     "title": "Online Gomoku",
     "description": "Real-time Gomoku (five-in-a-row) against another player",
+    "rules": [
+      "Goal: be first to line up five (or more) stones horizontally, vertically or diagonally.",
+      "Black moves first; players alternate placing a stone on an empty intersection.",
+      "If the board fills with no five-in-a-row, it's a draw.",
+      "Clock: 5 minutes each, +30s per move."
+    ],
     "black": "Black",
     "white": "White",
     "reason_five_in_row": "Five in a row",
@@ -205,6 +220,13 @@
   "Banqi": {
     "title": "Online Banqi",
     "description": "Real-time Banqi (dark chess) — flip and capture",
+    "rules": [
+      "All 32 pieces start face-down; the first move must flip a piece — the first colour you flip becomes your side.",
+      "Goal: capture all enemy pieces, or leave the opponent with no move.",
+      "Rank: general > guard > elephant > chariot > horse > cannon > soldier; capture equal or lower rank. Exceptions: soldier takes general, general can't take soldier.",
+      "Cannon captures an enemy on its line by jumping exactly one piece.",
+      "On your turn flip a tile, or move/capture one step with a revealed piece of yours. Clock 5 min, +30s per move."
+    ],
     "first": "First",
     "second": "Second",
     "reason_elimination": "All pieces captured",
@@ -217,6 +239,12 @@
   "WesternChess": {
     "title": "Online Chess",
     "description": "Real-time chess with castling, en passant and promotion",
+    "rules": [
+      "Goal: checkmate the opponent's king.",
+      "Moves: queen any direction, rook straight, bishop diagonal, knight in an L, pawn forward (captures diagonally).",
+      "Special: castling, en passant, and pawn promotion at the back rank (choose Q/R/B/N).",
+      "Tap a piece then a target square; clock 5 min each, +30s per move."
+    ],
     "white": "White",
     "black": "Black",
     "check": "Check!",
@@ -230,6 +258,13 @@
   "Go": {
     "title": "Online Go",
     "description": "Real-time Go (19×19, komi 7.5) — two passes ends the game",
+    "rules": [
+      "Goal: surround more territory than your opponent (komi 7.5 included).",
+      "Black first; place stones on intersections. Fully surround an enemy group with no liberties to capture it.",
+      "Forbidden: ko (no immediate recapture repeating the position) and suicide.",
+      "Press Pass if you don't want to play; two passes in a row ends the game and scores it.",
+      "Clock: 5 minutes each, +30s per move."
+    ],
     "black": "Black",
     "white": "White",
     "pass": "Pass",
@@ -241,6 +276,13 @@
   "Avalon": {
     "title": "Online Avalon",
     "description": "5–10 player social deduction, Good versus Evil",
+    "rules": [
+      "5–10 players split into Good and Evil; everyone gets a secret role only they can see.",
+      "Good wins by completing 3 quests; Evil wins by failing 3 quests, or if the Assassin names Merlin at the end.",
+      "Each round: the leader proposes a team → everyone votes openly → a majority sends them on the quest.",
+      "Quest members secretly play Success/Fail: Good must play Success, Evil may play Fail.",
+      "Five rejected teams in a round → Evil wins. Use the room chat to reason and bluff."
+    ],
     "connecting": "Connecting…",
     "lobbyTitle": "Avalon Lobby",
     "nickname": "Nickname",
@@ -336,6 +378,13 @@
   "Farm": {
     "title": "Farm Manager",
     "description": "2–4 player worker-placement strategy — highest score after 14 rounds wins",
+    "rules": [
+      "2–4 players, 14 rounds; take turns placing a worker on an action space to perform it (gather resources, plow, sow, build, raise animals…).",
+      "Each action space holds one worker per round; accumulation spaces pile up resources you take all at once.",
+      "On harvest rounds you must feed each family member 2 food; shortfalls become begging (−3 each).",
+      "Growing your family adds workers per round but needs enough rooms.",
+      "Goal: highest combined score (fields, pastures, animals, house, family…) after 14 rounds; empty farm tiles and begging lose points."
+    ],
     "connecting": "Connecting…",
     "lobbyTitle": "Farm Lobby",
     "nickname": "Nickname",

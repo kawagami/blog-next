@@ -62,6 +62,7 @@ export default function BanqiGame() {
         <GameFrame
             room={room}
             title={t('title')}
+            rules={t.raw('rules') as string[]}
             sides={SIDES}
             sideLabel={(s) => t(s)}
             sideDotClass={(s) => (s === 'first' ? 'bg-primary-600' : 'bg-neutral-500')}
