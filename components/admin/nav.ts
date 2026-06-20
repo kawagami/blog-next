@@ -45,8 +45,8 @@ export const adminNavGroups: AdminNavGroup[] = [
         icon: Users,
         items: [
             { label: "會員列表", href: "/admin/members" },
-            { label: "Users", href: "/admin/users" },
-            { label: "Roles", href: "/admin/roles" },
+            { label: "管理員", href: "/admin/users" },
+            { label: "角色", href: "/admin/roles" },
         ],
     },
     {

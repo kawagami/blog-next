@@ -4,8 +4,8 @@ import RolesManager from "@/components/roles/roles-manager";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Roles Management",
-    description: "Manage roles and permissions",
+    title: "角色",
+    description: "角色與權限管理",
 };
 
 export default async function RolesPage() {

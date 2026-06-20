@@ -6,8 +6,8 @@ import AdminTableContainer from "@/components/admin/admin-table-container";
 import { AdminTable, AdminHeadRow, AdminRow, AdminTh, AdminTd } from "@/components/admin/table";
 
 export const metadata: Metadata = {
-    title: "Users page",
-    description: "Users page",
+    title: "管理員",
+    description: "管理員",
 };
 
 export default async function Users() {
