@@ -3,76 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-    ChevronRight,
-    Menu,
-    X,
-    FileText,
-    Users,
-    TrendingUp,
-    Wrench,
-    ScrollText,
-    Settings,
-    LogOut,
-} from "lucide-react";
+import { ChevronRight, Menu, X, LogOut } from "lucide-react";
 import { clearSession } from "@/app/admin/login/actions";
 import { stopTokenRefresh } from "@/libs/token-refresh";
-
-const groups = [
-    {
-        label: "內容",
-        icon: FileText,
-        items: [
-            { label: "文章", href: "/admin/blogs" },
-            { label: "圖片", href: "/admin/images" },
-        ],
-    },
-    {
-        label: "股票",
-        icon: TrendingUp,
-        items: [
-            { label: "列表", href: "/admin/stocks/list" },
-            { label: "回購計畫", href: "/admin/stocks/get-buyback-plans" },
-            { label: "未完成回購", href: "/admin/stocks/get-unfinished-buyback-price-gap" },
-            { label: "收盤價查詢", href: "/admin/stocks/fetch-stock-closing-price-pair" },
-            { label: "當日全部", href: "/admin/stocks/stock-day-all" },
-        ],
-    },
-    {
-        label: "會員與權限",
-        icon: Users,
-        items: [
-            { label: "會員列表", href: "/admin/members" },
-            { label: "Users", href: "/admin/users" },
-            { label: "Roles", href: "/admin/roles" },
-        ],
-    },
-    {
-        label: "工具",
-        icon: Wrench,
-        items: [
-            { label: "WS", href: "/admin/ws" },
-            { label: "對局總覽", href: "/admin/games" },
-            { label: "Torrents", href: "/admin/torrents" },
-        ],
-    },
-    {
-        label: "觀測",
-        icon: ScrollText,
-        items: [
-            { label: "Logs", href: "/admin/logs" },
-            { label: "Audit Logs", href: "/admin/audit_logs" },
-        ],
-    },
-    {
-        label: "設定",
-        icon: Settings,
-        items: [
-            { label: "Settings", href: "/admin/settings" },
-            { label: "修改密碼", href: "/admin/change-password" },
-        ],
-    },
-];
+import { adminNavGroups as groups } from "@/components/admin/nav";
 
 function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
     const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(() =>
