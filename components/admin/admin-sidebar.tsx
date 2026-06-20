@@ -16,6 +16,18 @@ function SidebarContent({ pathname, onNavigate }: { pathname: string; onNavigate
         ]))
     );
 
+    // sidebar 不隨 client 導航重新 mount；pathname 變動時於 render 期同步展開當前路由所在分組（單開）
+    const [prevPathname, setPrevPathname] = useState(pathname);
+    if (pathname !== prevPathname) {
+        setPrevPathname(pathname);
+        setOpenGroups(
+            Object.fromEntries(groups.map(g => [
+                g.label,
+                g.items.some(item => pathname.startsWith(item.href)),
+            ]))
+        );
+    }
+
     const toggle = (label: string) =>
         setOpenGroups(prev =>
             Object.fromEntries(
