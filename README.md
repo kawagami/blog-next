@@ -43,7 +43,7 @@
 - **框架**：Next.js 16 (App Router, Turbopack)
 - **UI**：React 19 + Tailwind CSS + lucide-react；主題系統 runtime 切換（森林/海洋/天空，admin 設定全站生效，CSS variables）
 - **i18n**：next-intl v4，支援 zh-TW / zh-CN / en
-- **Markdown**：react-markdown
+- **Markdown**：react-markdown（rehype-highlight 程式碼高亮、rehype-slug 標題錨點 + 自動目錄 TOC）
 - **圖片**：next/image（自動 WebP 轉換、lazy loading、縮圖），本地儲存（`/uploads/*`）
 - **認證**：JWT（`jose`），middleware 保護 `/admin/*` 與 `/{locale}/dashboard|profile|portfolio`
 - **後端 API**：`https://axum.kawa.homes`（Rust Axum）

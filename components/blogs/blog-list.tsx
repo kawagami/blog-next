@@ -24,6 +24,11 @@ export default async function BlogList({ selectedTag = null, page = 1 }: Props) 
         <div className="w-full h-[calc(100svh-120px)] overflow-auto">
             <div className="max-w-4xl mx-auto flex gap-6 px-4">
                 <div className="flex-1 min-w-0">
+                    {tags.length > 0 && (
+                        <div className="sm:hidden px-4 pt-2">
+                            <TagFilterBar tags={tags} selectedTag={selectedTag} variant="bar" />
+                        </div>
+                    )}
                     {blogs.map((blog) => (
                         <BlogListCard
                             key={blog.id}

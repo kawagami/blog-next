@@ -5,7 +5,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
 import { Loader2, Bold, Italic, Code, Link2, Heading2, Quote, List } from 'lucide-react';
+import 'highlight.js/styles/github-dark.css';
 import { putBlog } from '@/api/blogs';
 import { uploadImages } from '@/api/images';
 import { useMarkdownTextarea } from '@/hooks/useMarkdownTextarea';
@@ -216,6 +218,7 @@ export default function BlogComponent({ id, blog, allTags }: Props) {
                     <div ref={previewRef} className="p-4 h-full min-h-[300px] overflow-auto border border-neutral-300 bg-white dark:bg-neutral-800 dark:text-white rounded prose max-w-none dark:prose-invert">
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
+                            rehypePlugins={[rehypeHighlight]}
                             urlTransform={(url) => url.startsWith('blob:') || url.startsWith('https://') || url.startsWith('http://') || url.startsWith('/') ? url : ''}
                             components={{
                                 img: ({ src, alt }) => (

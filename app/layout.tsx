@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://kawa.homes"),
     title: "Kawa's Blog",
     description: "kawa blog ongoing",
 };

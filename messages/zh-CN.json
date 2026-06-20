@@ -105,6 +105,9 @@
     "created": "创建",
     "updated": "更新"
   },
+  "BlogArticle": {
+    "toc": "目录"
+  },
   "About": {
     "intro": "简介",
     "cards": [

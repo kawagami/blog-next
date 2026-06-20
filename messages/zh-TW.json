@@ -105,6 +105,9 @@
     "created": "建立",
     "updated": "更新"
   },
+  "BlogArticle": {
+    "toc": "目錄"
+  },
   "About": {
     "intro": "簡介",
     "cards": [

@@ -105,6 +105,9 @@
     "created": "Created",
     "updated": "Updated"
   },
+  "BlogArticle": {
+    "toc": "Contents"
+  },
   "About": {
     "intro": "Intro",
     "cards": [
