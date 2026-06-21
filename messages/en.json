@@ -109,6 +109,18 @@
     "retry": "Retry",
     "home": "Back to home"
   },
+  "BlogList": {
+    "heading": "Blog Posts",
+    "empty": "No matching posts yet",
+    "all": "All",
+    "metaTitle": "Kawa's Blog",
+    "metaTaggedTitle": "Tag: {tag} | Kawa's Blog",
+    "metaDescription": "Kawa's personal blog — notes on programming, backend, frontend, and developer tools."
+  },
+  "Pagination": {
+    "prev": "Previous page",
+    "next": "Next page"
+  },
   "BlogListCard": {
     "created": "Created",
     "updated": "Updated"

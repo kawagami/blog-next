@@ -13,6 +13,9 @@ interface Props {
 export default function BlogListCard({ id, toc, tags, created_at, updated_at }: Props) {
     const t = useTranslations("BlogListCard");
 
+    // updated 只在有值且與 created 不同時顯示
+    const showUpdated = updated_at && updated_at !== created_at;
+
     return (
         <Link
             href={`/blogs/${id}`}
@@ -23,9 +26,9 @@ export default function BlogListCard({ id, toc, tags, created_at, updated_at }: 
                     {toc || `Blog Post #${id}`}
                 </h2>
                 <div className="flex flex-wrap justify-center gap-2 mb-3">
-                    {tags.map((tag, index) => (
+                    {tags.map((tag) => (
                         <span
-                            key={index}
+                            key={tag}
                             className="bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300 text-xs font-semibold px-2.5 py-0.5 rounded"
                         >
                             {tag}
@@ -33,14 +36,18 @@ export default function BlogListCard({ id, toc, tags, created_at, updated_at }: 
                     ))}
                 </div>
                 <div className="text-neutral-400 dark:text-neutral-500 text-xs text-right">
-                    <p>
-                        <strong>{t("created")}:</strong>{" "}
-                        <ShowClientTime datetimeString={created_at} />
-                    </p>
-                    <p>
-                        <strong>{t("updated")}:</strong>{" "}
-                        <ShowClientTime datetimeString={updated_at} />
-                    </p>
+                    {created_at && (
+                        <p>
+                            <strong>{t("created")}:</strong>{" "}
+                            <ShowClientTime datetimeString={created_at} />
+                        </p>
+                    )}
+                    {showUpdated && (
+                        <p>
+                            <strong>{t("updated")}:</strong>{" "}
+                            <ShowClientTime datetimeString={updated_at} />
+                        </p>
+                    )}
                 </div>
             </div>
         </Link>

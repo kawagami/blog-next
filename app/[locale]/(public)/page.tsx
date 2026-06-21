@@ -1,7 +1,29 @@
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import BlogList from '@/components/blogs/blog-list';
 
 interface Props {
+    params: Promise<{ locale: string }>
     searchParams: Promise<{ tag?: string; page?: string }>
+}
+
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+    const [{ locale }, { tag }] = await Promise.all([params, searchParams]);
+    const t = await getTranslations({ locale, namespace: 'BlogList' });
+
+    const title = tag ? t('metaTaggedTitle', { tag }) : t('metaTitle');
+
+    return {
+        title,
+        description: t('metaDescription'),
+        alternates: { canonical: `/${locale}` },
+        openGraph: {
+            type: 'website',
+            title,
+            description: t('metaDescription'),
+            url: `/${locale}`,
+        },
+    };
 }
 
 export default async function Home({ searchParams }: Props) {
