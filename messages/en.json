@@ -1,4 +1,12 @@
 {
+  "Hackmd": {
+    "count": "{count} notes total",
+    "showFilter": "Show categories",
+    "hideFilter": "Hide categories",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "empty": "No notes yet"
+  },
   "Header": {
     "notes": "Notes",
     "tools": "Tools",

@@ -1,4 +1,12 @@
 {
+  "Hackmd": {
+    "count": "總共 {count} 個筆記",
+    "showFilter": "顯示分類",
+    "hideFilter": "隱藏分類",
+    "selectAll": "全選",
+    "deselectAll": "全不選",
+    "empty": "目前沒有筆記"
+  },
   "Header": {
     "notes": "Notes",
     "tools": "工具",

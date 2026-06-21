@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { HackmdTag } from "@/types";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function HackmdNoteTagButtons({ tags, openArray, setOpenArray }: Props) {
+    const t = useTranslations("Hackmd");
     const [showFilter, setShowFilter] = useState(false);
 
     const checkExist = (name: string) => {
@@ -24,26 +26,33 @@ export default function HackmdNoteTagButtons({ tags, openArray, setOpenArray }: 
     return (
         <>
             <div className="gap-1 text-center p-2 mb-2">
-                <button type="button" className={commonStyle} onClick={() => setShowFilter(!showFilter)}>
-                    {showFilter ? "隱藏分類" : "顯示分類"}
+                <button
+                    type="button"
+                    className={commonStyle}
+                    aria-expanded={showFilter}
+                    onClick={() => setShowFilter(!showFilter)}
+                >
+                    {showFilter ? t("hideFilter") : t("showFilter")}
                 </button>
             </div>
             {showFilter && (
                 <div>
                     <div className="flex flex-wrap justify-center gap-2 p-2 mb-2">
-                        <button type="button" className={commonStyle} onClick={() => setOpenArray(tags.map(t => t.name))}>全選</button>
-                        <button type="button" className={commonStyle} onClick={() => setOpenArray([])}>全不選</button>
+                        <button type="button" className={commonStyle} onClick={() => setOpenArray(tags.map(tag => tag.name))}>{t("selectAll")}</button>
+                        <button type="button" className={commonStyle} onClick={() => setOpenArray([])}>{t("deselectAll")}</button>
                     </div>
                     <div className="flex flex-wrap justify-center gap-2">
                         {tags.map(tag => {
-                            const tailwindStyle = openArray.includes(tag.name)
-                                ? "invert bg-primary-500 hover:bg-primary-400"
-                                : "hover:bg-primary-100 dark:hover:bg-primary-900 bg-neutral-300 dark:bg-neutral-600";
+                            const active = openArray.includes(tag.name);
+                            const tailwindStyle = active
+                                ? "bg-primary-500 border-primary-500 text-white hover:bg-primary-400 hover:border-primary-400"
+                                : "bg-neutral-300 dark:bg-neutral-600 hover:bg-primary-100 dark:hover:bg-primary-900";
                             return (
                                 <button
                                     type="button"
                                     className={`${commonStyle} ${tailwindStyle}`}
                                     key={tag.id}
+                                    aria-pressed={active}
                                     onClick={() => checkExist(tag.name)}
                                 >
                                     {tag.name}

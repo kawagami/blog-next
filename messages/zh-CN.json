@@ -1,4 +1,12 @@
 {
+  "Hackmd": {
+    "count": "总共 {count} 个笔记",
+    "showFilter": "显示分类",
+    "hideFilter": "隐藏分类",
+    "selectAll": "全选",
+    "deselectAll": "全不选",
+    "empty": "目前没有笔记"
+  },
   "Header": {
     "notes": "Notes",
     "tools": "工具",
