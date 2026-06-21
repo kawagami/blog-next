@@ -5,7 +5,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 import ThemeButton from "@/components/theme-button";
 import KawaLogo from "@/components/kawa-logo";
 import { logout } from '@/actions/auth';
-import { LayoutDashboard, User, Bell, ChevronDown, X, Menu, TrendingUp, type LucideIcon } from 'lucide-react';
+import { LayoutDashboard, User, Bell, ChevronDown, X, Menu, TrendingUp, Wallet, type LucideIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import LocaleSwitcher from '@/components/locale-switcher';
 
@@ -44,6 +44,7 @@ const MEMBER_LINKS: ReadonlyArray<{ href: string; labelKey: string; icon: Lucide
     { href: "/profile", labelKey: "profile", icon: User },
     { href: "/dashboard/notifications", labelKey: "notifications", icon: Bell },
     { href: "/portfolio", labelKey: "portfolio", icon: TrendingUp },
+    { href: "/ledger", labelKey: "ledger", icon: Wallet },
 ];
 
 const navLinkClass = "block px-4 rounded hover:text-primary-600 dark:hover:text-primary-300 hover:underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-primary-400 whitespace-nowrap";

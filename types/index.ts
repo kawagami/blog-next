@@ -33,6 +33,59 @@ export interface PortfolioSummaryEntry extends PortfolioEntry {
   pnl_pct: number | null;
 }
 
+// Ledger（記帳）
+export type LedgerKind = 'income' | 'expense';
+
+export interface LedgerEntry {
+  id: string;
+  member_id: number;
+  kind: LedgerKind;
+  amount: string; // 十進位字串，避免浮點誤差
+  category: string;
+  note: string | null;
+  occurred_at: string; // YYYY-MM-DD
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LedgerInput {
+  kind: LedgerKind;
+  amount: string;
+  category: string;
+  note?: string | null;
+  occurred_at: string;
+}
+
+export interface LedgerCategoryOption {
+  value: string;
+  label: string;
+}
+
+export interface LedgerCategories {
+  income: LedgerCategoryOption[];
+  expense: LedgerCategoryOption[];
+}
+
+export interface LedgerCategoryTotal {
+  kind: LedgerKind;
+  category: string;
+  total: string;
+}
+
+export interface LedgerMonthly {
+  month: string; // YYYY-MM
+  income: string;
+  expense: string;
+}
+
+export interface LedgerSummary {
+  total_income: string;
+  total_expense: string;
+  balance: string;
+  by_category: LedgerCategoryTotal[];
+  monthly: LedgerMonthly[];
+}
+
 // Blog
 export interface Toc {
   id: string;

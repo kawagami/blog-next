@@ -31,6 +31,7 @@
 | `/{locale}/dashboard` | 個人儀表板（需登入） |
 | `/{locale}/dashboard/notifications` | 通知列表（需登入） |
 | `/{locale}/portfolio` | 投資組合追蹤，記錄持股並查看每日漲跌盈虧（需登入） |
+| `/{locale}/ledger` | 記帳，收支記錄＋分類/日期篩選＋統計總覽（收支結餘、分類圓餅、每月趨勢）（需登入） |
 | `/{locale}/profile` | 個人資料（需登入） |
 | `/{locale}/about` | 關於頁面 |
 | `/{locale}/login` | OAuth 登入（Google；GitHub / LINE 規劃中） |
@@ -45,7 +46,7 @@
 - **i18n**：next-intl v4，支援 zh-TW / zh-CN / en
 - **Markdown**：react-markdown（rehype-highlight 程式碼高亮、rehype-slug 標題錨點 + 自動目錄 TOC）
 - **圖片**：next/image（自動 WebP 轉換、lazy loading、縮圖），本地儲存（`/uploads/*`）
-- **認證**：JWT（`jose`），middleware 保護 `/admin/*` 與 `/{locale}/dashboard|profile|portfolio`
+- **認證**：JWT（`jose`），middleware 保護 `/admin/*` 與 `/{locale}/dashboard|profile|portfolio|ledger`
 - **後端 API**：`https://axum.kawa.homes`（Rust Axum）
 - **WebSocket**：`wss://axum.kawa.homes`
 - **部署**：Docker multi-stage build，standalone output
