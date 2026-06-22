@@ -115,7 +115,19 @@
     "noEntries": "No entries yet. Click Add to get started.",
     "loadMore": "Load More",
     "errorSave": "Failed to save",
-    "errorAmount": "Amount must be greater than 0"
+    "errorAmount": "Amount must be greater than 0",
+    "scanInvoice": "Scan Invoice",
+    "scanTitle": "Scan e-Invoice",
+    "scanHint": "Aim at the left QR code on the invoice",
+    "cameraError": "Cannot open camera, please check permissions",
+    "parseError": "Could not read this QR. Aim at the left barcode and try again.",
+    "importTitle": "Confirm Import",
+    "invoiceNumber": "Invoice No.",
+    "sellerTaxId": "Seller Tax ID",
+    "alreadyImported": "This invoice has already been imported",
+    "import": "Import",
+    "rescan": "Rescan",
+    "fromInvoice": "Imported from invoice"
   },
   "Profile": {
     "title": "Profile",

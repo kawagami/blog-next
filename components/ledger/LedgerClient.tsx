@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useTranslations } from "next-intl";
-import { Plus, Pencil, Trash2, Loader2, X } from "lucide-react";
+import { Plus, Pencil, Trash2, Loader2, X, ScanLine, Receipt } from "lucide-react";
 import { getLedger, getLedgerSummary, postLedger, putLedger, deleteLedger } from "@/api/ledger";
 import LedgerForm from "@/components/ledger/LedgerForm";
+import InvoiceImportModal from "@/components/ledger/InvoiceImportModal";
 import { CategoryPie, MonthlyBars } from "@/components/ledger/ledger-charts";
 import type { LedgerEntry, LedgerInput, LedgerSummary, LedgerCategories, LedgerKind } from "@/types";
 
@@ -26,7 +27,8 @@ interface Filters {
 type Mode =
     | { type: 'list' }
     | { type: 'add' }
-    | { type: 'edit'; entry: LedgerEntry };
+    | { type: 'edit'; entry: LedgerEntry }
+    | { type: 'scan' };
 
 function fmt(s: string) {
     return Number(s).toLocaleString(undefined, { maximumFractionDigits: 2 });
@@ -105,6 +107,16 @@ export default function LedgerClient({ categories, initialEntries, initialSummar
     async function handleSave(input: LedgerInput, id?: string) {
         if (id) await putLedger(id, input);
         else await postLedger(input);
+        setMode({ type: 'list' });
+        setLoading(true);
+        try {
+            await reload();
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    async function handleImported() {
         setMode({ type: 'list' });
         setLoading(true);
         try {
@@ -211,7 +223,14 @@ export default function LedgerClient({ categories, initialEntries, initialSummar
 
             {/* 新增按鈕 / 表單 */}
             {mode.type === 'list' && (
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-2">
+                    <button
+                        onClick={() => setMode({ type: 'scan' })}
+                        className="flex items-center gap-2 px-4 py-2 rounded border border-primary-500 text-primary-600 dark:text-primary-400 hover:bg-primary-50 dark:hover:bg-primary-950 text-sm"
+                    >
+                        <ScanLine size={16} />
+                        {t('scanInvoice')}
+                    </button>
                     <button
                         onClick={() => setMode({ type: 'add' })}
                         className="flex items-center gap-2 px-4 py-2 rounded bg-primary-500 text-white hover:bg-primary-600 text-sm"
@@ -254,6 +273,9 @@ export default function LedgerClient({ categories, initialEntries, initialSummar
                                 <div className="flex flex-col gap-0.5 min-w-0 flex-1">
                                     <div className="flex items-baseline gap-2">
                                         <span className="font-medium">{labelOf(entry.kind, entry.category)}</span>
+                                        {entry.source === 'invoice_qr' && (
+                                            <Receipt size={13} className="text-primary-500 shrink-0 self-center" aria-label={t('fromInvoice')} />
+                                        )}
                                         {entry.note && <span className="text-sm text-neutral-500 dark:text-neutral-400 truncate">{entry.note}</span>}
                                     </div>
                                     <span className="text-xs text-neutral-500 dark:text-neutral-400">{entry.occurred_at}</span>
@@ -293,6 +315,15 @@ export default function LedgerClient({ categories, initialEntries, initialSummar
                         </button>
                     )}
                 </div>
+            )}
+
+            {/* 掃發票匯入 */}
+            {mode.type === 'scan' && (
+                <InvoiceImportModal
+                    categories={categories}
+                    onClose={() => setMode({ type: 'list' })}
+                    onImported={handleImported}
+                />
             )}
         </div>
     );

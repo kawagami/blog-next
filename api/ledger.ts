@@ -1,7 +1,7 @@
 "use server";
 
 import memberRequest from "@/libs/memberRequest";
-import type { LedgerEntry, LedgerInput, LedgerCategories, LedgerSummary } from "@/types";
+import type { LedgerEntry, LedgerInput, LedgerInvoiceInput, LedgerCategories, LedgerSummary } from "@/types";
 
 export interface LedgerListParams {
     kind?: string;
@@ -55,6 +55,15 @@ export async function putLedger(id: string, input: LedgerInput): Promise<LedgerE
     return memberRequest<LedgerEntry>({
         url: `${process.env.API_URL}/member/ledger/${id}`,
         method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+    });
+}
+
+export async function postLedgerInvoice(input: LedgerInvoiceInput): Promise<LedgerEntry> {
+    return memberRequest<LedgerEntry>({
+        url: `${process.env.API_URL}/member/ledger/invoice`,
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(input),
     });

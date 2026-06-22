@@ -115,7 +115,19 @@
     "noEntries": "暂无记账记录，点击新增",
     "loadMore": "加载更多",
     "errorSave": "保存失败",
-    "errorAmount": "金额必须大于 0"
+    "errorAmount": "金额必须大于 0",
+    "scanInvoice": "扫发票",
+    "scanTitle": "扫描电子发票",
+    "scanHint": "对准发票左方 QR Code",
+    "cameraError": "无法开启相机，请确认权限",
+    "parseError": "无法解析此 QR，请对准发票左方条码再试一次",
+    "importTitle": "确认导入",
+    "invoiceNumber": "发票号码",
+    "sellerTaxId": "卖方统编",
+    "alreadyImported": "这张发票已记过了",
+    "import": "导入",
+    "rescan": "重新扫描",
+    "fromInvoice": "由发票导入"
   },
   "Profile": {
     "title": "个人资料",

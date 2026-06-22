@@ -115,7 +115,19 @@
     "noEntries": "尚無記帳記錄，點擊新增",
     "loadMore": "載入更多",
     "errorSave": "儲存失敗",
-    "errorAmount": "金額必須大於 0"
+    "errorAmount": "金額必須大於 0",
+    "scanInvoice": "掃發票",
+    "scanTitle": "掃描電子發票",
+    "scanHint": "對準發票左方 QR Code",
+    "cameraError": "無法開啟相機，請確認權限",
+    "parseError": "無法解析此 QR，請對準發票左方條碼再試一次",
+    "importTitle": "確認匯入",
+    "invoiceNumber": "發票號碼",
+    "sellerTaxId": "賣方統編",
+    "alreadyImported": "這張發票已記過了",
+    "import": "匯入",
+    "rescan": "重新掃描",
+    "fromInvoice": "由發票匯入"
   },
   "Profile": {
     "title": "個人資料",
