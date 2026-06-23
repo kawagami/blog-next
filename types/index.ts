@@ -54,16 +54,6 @@ export interface LedgerEntry {
   updated_at: string;
 }
 
-// 掃電子發票 QR 匯入一筆支出（POST /member/ledger/invoice）
-export interface LedgerInvoiceInput {
-  invoice_number: string;
-  amount: string;
-  occurred_at: string;
-  seller_tax_id?: string | null;
-  category?: string;
-  note?: string | null;
-}
-
 export interface LedgerInput {
   kind: LedgerKind;
   amount: string;
@@ -100,6 +90,57 @@ export interface LedgerSummary {
   balance: string;
   by_category: LedgerCategoryTotal[];
   monthly: LedgerMonthly[];
+}
+
+// 統一發票登錄 + 對獎（解耦於記帳，走 POST /member/invoices）
+export type InvoiceSource = 'qr' | 'barcode' | 'manual';
+
+// 中獎獎別：special 特別獎、grand 特獎、first 頭獎、second~sixth 二~六獎、additional_sixth 增開六獎
+export type PrizeTier =
+  | 'special'
+  | 'grand'
+  | 'first'
+  | 'second'
+  | 'third'
+  | 'fourth'
+  | 'fifth'
+  | 'sixth'
+  | 'additional_sixth';
+
+export interface Invoice {
+  id: string;
+  member_id: number;
+  invoice_number: string;
+  invoice_date: string; // 西元 YYYY-MM-DD
+  period: string; // 對獎期別 key（期末偶數月 YYYYMM），後端算好
+  amount: string | null; // 十進位字串，可為 null
+  seller_tax_id: string | null;
+  source: InvoiceSource;
+  ledger_entry_id: string | null; // record_as_expense 時連結的記帳 id
+  lottery_checked: boolean; // 該期是否已開獎並對過
+  prize_tier: PrizeTier | null; // checked=true 且為 null = 確定未中
+  notified_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// 登錄發票（POST /member/invoices）
+export interface InvoiceInput {
+  invoice_number: string;
+  invoice_date: string;
+  amount?: string | null;
+  seller_tax_id?: string | null;
+  source: InvoiceSource;
+  record_as_expense?: boolean; // true 時同時建一筆 ledger 支出並連結
+  category?: string; // record_as_expense=true 時用，省略 → other
+  note?: string | null;
+}
+
+export interface InvoiceListParams {
+  period?: string; // YYYYMM
+  won?: boolean; // true=只看中獎、false=只看未中、省略=全部
+  page?: number;
+  per_page?: number;
 }
 
 // Blog
@@ -236,6 +277,7 @@ export interface MemberDetail {
   avatar_url: string | null;
   created_at: string;
   providers: string[];
+  lottery_notify_enabled: boolean; // 發票中獎 email 通知開關（預設關閉）
 }
 
 // WS Notification

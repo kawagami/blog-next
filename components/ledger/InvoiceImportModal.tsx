@@ -3,15 +3,15 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { X, Loader2 } from "lucide-react";
-import { postLedgerInvoice } from "@/api/ledger";
+import { postInvoice } from "@/api/invoices";
 import { parseInvoiceQr, type ParsedInvoice } from "@/libs/invoice-qr";
 import InvoiceScanner from "@/components/ledger/InvoiceScanner";
-import type { LedgerCategories, LedgerEntry, LedgerInvoiceInput } from "@/types";
+import type { LedgerCategories, InvoiceInput } from "@/types";
 
 interface Props {
     categories: LedgerCategories;
     onClose: () => void;
-    onImported: (entry: LedgerEntry) => void;
+    onImported: () => void;
 }
 
 const inputClass = "border rounded px-3 py-2 text-sm dark:bg-neutral-700 dark:border-neutral-600 focus:outline-none focus:ring-2 focus:ring-primary-400";
@@ -59,16 +59,19 @@ export default function InvoiceImportModal({ categories, onClose, onImported }: 
         setSaving(true);
         setError('');
         try {
-            const input: LedgerInvoiceInput = {
+            // 掃發票記支出 = 登錄發票並帶 record_as_expense（對獎與記帳已解耦走同一前門）
+            const input: InvoiceInput = {
                 invoice_number: parsed.invoiceNumber,
+                invoice_date: occurredAt,
                 amount: amount.trim(),
-                occurred_at: occurredAt,
                 seller_tax_id: parsed.sellerTaxId,
+                source: 'qr',
+                record_as_expense: true,
                 category,
                 note: note.trim() || null,
             };
-            const entry = await postLedgerInvoice(input);
-            onImported(entry);
+            await postInvoice(input);
+            onImported();
         } catch (err) {
             const e2 = err as Error & { status?: number; errorData?: { message?: string } };
             if (e2.status === 409) setError(t('alreadyImported'));
