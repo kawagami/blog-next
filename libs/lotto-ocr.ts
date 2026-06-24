@@ -38,7 +38,7 @@ export function parseLottoOcr(text: string, game: LottoGame): OcrParseResult {
         if (dateRe.test(line)) continue; // 跳過開獎/銷售日期行
         const cleaned = line.replace(/\$\s*\d+/g, ' ').replace(/NT/gi, ' ');
         // 只取「恰 2 位數」的整段數字（票面選號補零成 01..49）；序號/WID 是長段數字，自然被排除
-        const runs = cleaned.match(/\d+/g) ?? [];
+        const runs: string[] = cleaned.match(/\d+/g) ?? [];
         const nums = runs.filter(r => r.length === 2).map(Number).filter(n => n >= 1 && n <= spec.mainMax);
         const uniq = [...new Set(nums)];
         if (uniq.length === spec.mainCount) {
