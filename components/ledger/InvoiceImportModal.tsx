@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { X, Loader2 } from "lucide-react";
 import { postInvoice } from "@/api/invoices";
 import { parseInvoiceQr, type ParsedInvoice } from "@/libs/invoice-qr";
-import InvoiceScanner from "@/components/ledger/InvoiceScanner";
+import InvoiceScanner from "@/components/invoices/InvoiceScanner";
 import type { LedgerCategories, InvoiceInput } from "@/types";
 
 interface Props {
@@ -23,7 +23,6 @@ export default function InvoiceImportModal({ categories, onClose, onImported }: 
 
     const [scanKey, setScanKey] = useState(0);
     const [parsed, setParsed] = useState<ParsedInvoice | null>(null);
-    const [parseError, setParseError] = useState('');
 
     // 預覽表單欄位
     const [amount, setAmount] = useState('');
@@ -33,18 +32,15 @@ export default function InvoiceImportModal({ categories, onClose, onImported }: 
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
 
-    function handleDecoded(text: string) {
+    // 回傳 true = 解析成功並接受；false = 非左段 QR，scanner 會靜默續掃
+    function handleDecoded(text: string): boolean {
         const result = parseInvoiceQr(text);
-        if (!result) {
-            setParseError(t('parseError'));
-            setScanKey(k => k + 1); // 重新掛載 scanner 繼續掃
-            return;
-        }
-        setParseError('');
+        if (!result) return false;
         setParsed(result);
         setAmount(result.amount);
         setOccurredAt(result.occurredAt);
         setNote(result.note ?? '');
+        return true;
     }
 
     function rescan() {
@@ -97,8 +93,7 @@ export default function InvoiceImportModal({ categories, onClose, onImported }: 
                 <div className="p-5">
                     {!parsed ? (
                         <div className="flex flex-col gap-3">
-                            {parseError && <p className="text-red-500 text-sm text-center">{parseError}</p>}
-                            <InvoiceScanner key={scanKey} onDecoded={handleDecoded} />
+                            <InvoiceScanner key={scanKey} mode="qr" onDecoded={handleDecoded} />
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="flex flex-col gap-4">

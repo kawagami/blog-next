@@ -26,7 +26,6 @@ export default function InvoiceRegisterClient({ categories }: Props) {
 
     const [tab, setTab] = useState<Tab>('qr');
     const [scanKey, setScanKey] = useState(0);
-    const [parseError, setParseError] = useState('');
     // 是否已有資料可填表（掃描成功 / 手動）
     const [ready, setReady] = useState(false);
 
@@ -52,7 +51,6 @@ export default function InvoiceRegisterClient({ categories }: Props) {
         setCategory(defaultCategory);
         setNote('');
         setError('');
-        setParseError('');
         setReady(false);
     }
 
@@ -64,14 +62,11 @@ export default function InvoiceRegisterClient({ categories }: Props) {
         else setScanKey(k => k + 1);
     }
 
-    function handleDecoded(text: string) {
+    // 回傳 true = 解析成功並接受；false = 非左段/非發票碼，scanner 會靜默續掃
+    function handleDecoded(text: string): boolean {
         if (tab === 'qr') {
             const r = parseInvoiceQr(text);
-            if (!r) {
-                setParseError(t('parseErrorQr'));
-                setScanKey(k => k + 1);
-                return;
-            }
+            if (!r) return false;
             setInvoiceNumber(r.invoiceNumber);
             setInvoiceDate(r.occurredAt);
             setAmount(r.amount);
@@ -79,16 +74,12 @@ export default function InvoiceRegisterClient({ categories }: Props) {
             setNote(r.note ?? '');
         } else {
             const r = parseInvoiceBarcode(text);
-            if (!r) {
-                setParseError(t('parseErrorBarcode'));
-                setScanKey(k => k + 1);
-                return;
-            }
+            if (!r) return false;
             setInvoiceNumber(r.invoiceNumber);
             setInvoiceDate(r.occurredAt);
         }
-        setParseError('');
         setReady(true);
+        return true;
     }
 
     function rescan() {
@@ -186,7 +177,6 @@ export default function InvoiceRegisterClient({ categories }: Props) {
             <div className="bg-white dark:bg-neutral-800 rounded-xl p-5 shadow border dark:border-neutral-700">
                 {!ready ? (
                     <div className="flex flex-col gap-3">
-                        {parseError && <p className="text-red-500 text-sm text-center">{parseError}</p>}
                         <InvoiceScanner key={`${tab}-${scanKey}`} mode={tab === 'barcode' ? 'barcode' : 'qr'} onDecoded={handleDecoded} />
                     </div>
                 ) : (
