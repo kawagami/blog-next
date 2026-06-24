@@ -25,6 +25,7 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "sharp": "^0.34.3",
+    "tesseract.js": "^7.0.0",
     "uuid": "^14.0.0"
   },
   "devDependencies": {

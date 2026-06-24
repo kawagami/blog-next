@@ -33,6 +33,7 @@
 | `/{locale}/portfolio` | 投資組合追蹤，記錄持股並查看每日漲跌盈虧（需登入） |
 | `/{locale}/ledger` | 記帳，收支記錄＋分類/日期篩選＋統計總覽（收支結餘、分類圓餅、每月趨勢）；可掃電子發票 QR 順便記一筆支出（需登入） |
 | `/{locale}/invoices` | 統一發票登錄＋自動對獎，掃 QR／掃條碼／手動登錄、我的發票／中獎、中獎 email 通知設定（需登入） |
+| `/{locale}/lotto` | 大樂透／威力彩選號登錄＋自動對獎，手動選號或拍照 OCR 辨識（即時相機／拍照）、我的彩券／中獎、開獎結果、中獎 email 通知設定（需登入） |
 | `/{locale}/profile` | 個人資料（需登入） |
 | `/{locale}/about` | 關於頁面 |
 | `/{locale}/login` | OAuth 登入（Google；GitHub / LINE 規劃中） |
@@ -47,7 +48,8 @@
 - **i18n**：next-intl v4，支援 zh-TW / zh-CN / en
 - **Markdown**：react-markdown（rehype-highlight 程式碼高亮、rehype-slug 標題錨點 + 自動目錄 TOC）
 - **圖片**：next/image（自動 WebP 轉換、lazy loading、縮圖），本地儲存（`/uploads/*`）
-- **認證**：JWT（`jose`），middleware 保護 `/admin/*` 與 `/{locale}/dashboard|profile|settings|portfolio|ledger|invoices`
+- **認證**：JWT（`jose`），middleware 保護 `/admin/*` 與 `/{locale}/dashboard|profile|settings|portfolio|ledger|invoices|lotto`
+- **OCR**：`tesseract.js`（動態載入、數字白名單），彩券選號拍照／即時相機辨識輔助
 - **後端 API**：`https://axum.kawa.homes`（Rust Axum）
 - **WebSocket**：`wss://axum.kawa.homes`
 - **部署**：Docker multi-stage build，standalone output

@@ -2,7 +2,7 @@ import { getCurrentMember } from "@/api/members";
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
-import { Bell, User, BookOpen, FileText, Wrench, ReceiptText } from "lucide-react";
+import { Bell, User, BookOpen, FileText, Wrench, ReceiptText, Ticket } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
     const t = await getTranslations("Dashboard");
@@ -11,6 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const QUICK_LINKS = [
     { href: "/invoices/scan", labelKey: "invoices", descKey: "invoicesDesc", icon: ReceiptText },
+    { href: "/lotto/register", labelKey: "lotto", descKey: "lottoDesc", icon: Ticket },
     { href: "/dashboard/notifications", labelKey: "notifications", descKey: "notificationsDesc", icon: Bell },
     { href: "/profile", labelKey: "profile", descKey: "profileDesc", icon: User },
     { href: "/", labelKey: "blogs", descKey: "blogsDesc", icon: BookOpen },
