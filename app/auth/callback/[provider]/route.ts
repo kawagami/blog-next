@@ -43,5 +43,9 @@ export async function GET(
         maxAge: 60 * 60 * 24 * 30,
     })
 
-    redirect('/')
+    // Return to the page the member originally tried to reach, if any.
+    const dest = cookieStore.get('post_login_redirect')?.value
+    cookieStore.delete('post_login_redirect')
+
+    redirect(dest && dest.startsWith('/') && !dest.startsWith('//') ? dest : '/')
 }

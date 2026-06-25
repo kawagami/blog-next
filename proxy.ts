@@ -41,7 +41,9 @@ export default async function proxy(req: NextRequest) {
         const accessToken = req.cookies.get('access_token')?.value;
         if (!accessToken) {
             const locale = routing.locales.find(l => path.startsWith(`/${l}/`) || path === `/${l}`) ?? routing.defaultLocale;
-            return NextResponse.redirect(new URL(`/${locale}/login`, req.url));
+            const loginUrl = new URL(`/${locale}/login`, req.url);
+            loginUrl.searchParams.set('redirect', path + req.nextUrl.search);
+            return NextResponse.redirect(loginUrl);
         }
     }
 
