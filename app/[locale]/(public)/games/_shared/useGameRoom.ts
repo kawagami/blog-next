@@ -48,7 +48,7 @@ export interface UseGameRoom {
 
 // game：遊戲 id；sides：[先手, 後手] 標籤（決定初始 turn 與 clock 鍵）
 export function useGameRoom(game: GameId, sides: readonly [string, string], cb: GameRoomCallbacks): UseGameRoom {
-    const { subscribe, unsubscribe, send } = useWsContext();
+    const { subscribe, unsubscribe, send, onReconnect } = useWsContext();
 
     const [phase, setPhase] = useState<RoomPhase>('connecting');
     const [tables, setTables] = useState<WireTable[]>([]);
@@ -148,6 +148,13 @@ export function useGameRoom(game: GameId, sides: readonly [string, string], cb: 
         else if (p === 'hosting') send('leave_table', undefined, game);
         else if (p === 'playing') send('resign', undefined, game);
     }, [send, game]);
+
+    // 重連後 server 已遺失大廳訂閱與對局狀態：重送 join_lobby 取回大廳。
+    // 佇列/桌位/對局在 server 重啟後已不存在，故非大廳一律回 connecting，等 table_list 重建畫面。
+    useEffect(() => onReconnect(() => {
+        send('join_lobby', undefined, game);
+        setPhase(p => (p === 'lobby' ? p : 'connecting'));
+    }), [onReconnect, send, game]);
 
     const actions = {
         quickMatch: useCallback(() => { setNotice(null); send('join_queue', undefined, game); }, [send, game]),

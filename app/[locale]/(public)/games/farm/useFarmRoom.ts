@@ -36,7 +36,7 @@ export interface UseFarmRoom {
 }
 
 export function useFarmRoom(): UseFarmRoom {
-    const { subscribe, unsubscribe, send } = useWsContext();
+    const { subscribe, unsubscribe, send, onReconnect } = useWsContext();
 
     const [uiPhase, setUiPhase] = useState<UiPhase>('connecting');
     const [rooms, setRooms] = useState<RoomSummary[]>([]);
@@ -92,6 +92,14 @@ export function useFarmRoom(): UseFarmRoom {
     const inRoomRef = useRef(false);
     useEffect(() => { inRoomRef.current = uiPhase === 'room' || uiPhase === 'playing'; }, [uiPhase]);
     useEffect(() => () => { if (inRoomRef.current) send('leave_room', undefined, GAME); }, [send]);
+
+    // 重連後 server 已遺失大廳訂閱與房間/對局狀態：重送 join_lobby 取回大廳。
+    // 房間/對局在 server 重啟後已不存在，故清掉房內狀態並回 connecting，等 room_list 重建畫面。
+    useEffect(() => onReconnect(() => {
+        send('join_lobby', undefined, GAME);
+        setRoom(null); setState(null); setGameOver(null);
+        setUiPhase('connecting');
+    }), [onReconnect, send]);
 
     const actions = {
         createRoom: useCallback((roomName: string, nickname: string) => {
