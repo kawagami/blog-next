@@ -10,7 +10,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
     const data = await getStockDayAll({ trade_date, stock_code, page, perPage });
 
     return (
-        <div className="w-full p-6 bg-neutral-100 dark:bg-neutral-800">
+        <div className="w-full p-3 sm:p-6 bg-neutral-100 dark:bg-neutral-800">
             <h1 className="text-xl font-bold mb-4 dark:text-white">全市場行情</h1>
             <form method="get" className="flex gap-2 mb-4 items-end flex-wrap">
                 <div className="flex flex-col gap-1">

@@ -88,6 +88,7 @@ export default function GamesOverview({ initial }: { initial: GameOverview[] }) 
             </div>
 
             <div className="bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden">
+                <div className="overflow-x-auto">
                 <AdminTable>
                     <thead>
                         <AdminHeadRow>
@@ -133,6 +134,7 @@ export default function GamesOverview({ initial }: { initial: GameOverview[] }) 
                         )}
                     </tbody>
                 </AdminTable>
+                </div>
             </div>
 
             <p className="text-xs text-neutral-400 dark:text-neutral-500">

@@ -32,7 +32,9 @@ async function StockContent({ status, page }: { status: string | undefined; page
                 <h1 className="text-xl font-bold dark:text-white">有資料 {totalCount} 筆</h1>
                 <h1 className="text-xl font-bold dark:text-white">平均 {totalCount > 0 ? (totalChange / totalCount).toFixed(2) : '—'} %</h1>
             </div>
-            <StockTable data={data} />
+            <div className="overflow-x-auto">
+                <StockTable data={data} />
+            </div>
             <div className="flex items-center justify-between mt-4">
                 <span className="text-sm text-neutral-500 dark:text-neutral-400">
                     {offset + 1}–{Math.min(offset + PER_PAGE, total)} / {total}
@@ -81,8 +83,8 @@ export default async function List({ searchParams }: { searchParams: Promise<{ s
     const page = Math.max(1, Number(pageStr ?? 1) || 1);
 
     return (
-        <div className="w-full p-6 bg-neutral-100 dark:bg-neutral-800">
-            <div className="flex gap-2 mb-4">
+        <div className="w-full p-3 sm:p-6 bg-neutral-100 dark:bg-neutral-800">
+            <div className="flex gap-2 mb-4 overflow-x-auto">
                 {["", "completed", "failed", "pending"].map((s) => (
                     <StatusLink key={s || 'all'} status={s} currentStatus={status ?? ''}>
                         {s || 'All'}

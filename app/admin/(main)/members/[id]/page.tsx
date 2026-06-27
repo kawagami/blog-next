@@ -12,8 +12,8 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
     const member = await getMember(id);
 
     return (
-        <div className="w-full h-[calc(100svh-180px)] overflow-auto p-6">
-            <div className="max-w-2xl mx-auto bg-white dark:bg-neutral-900 shadow-lg rounded-lg p-6 space-y-4">
+        <div className="w-full h-[calc(100svh-180px)] overflow-auto p-3 sm:p-6">
+            <div className="max-w-2xl mx-auto bg-white dark:bg-neutral-900 shadow-lg rounded-lg p-4 sm:p-6 space-y-4">
                 <div className="flex items-center gap-4">
                     {member.avatar_url ? (
                         <Image
@@ -38,7 +38,7 @@ export default async function MemberDetailPage({ params }: { params: Promise<{ i
                     <tbody>
                         <tr>
                             <th className="border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 w-1/3">Email</th>
-                            <td className="border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-neutral-900 dark:text-neutral-100">{member.email ?? '—'}</td>
+                            <td className="border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-neutral-900 dark:text-neutral-100 break-all">{member.email ?? '—'}</td>
                         </tr>
                         <tr>
                             <th className="border border-neutral-300 dark:border-neutral-700 px-4 py-2 text-left text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800">Created At</th>

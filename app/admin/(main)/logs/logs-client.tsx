@@ -61,6 +61,7 @@ export default function LogsClient() {
                 <ErrorBanner message={error} />
 
                 <div className={`bg-white dark:bg-neutral-900 shadow-lg rounded-lg overflow-hidden transition-opacity ${isPending ? 'opacity-60' : ''}`}>
+                    <div className="overflow-x-auto">
                     <table className="w-full border-collapse text-sm">
                         <thead>
                             <tr className="bg-neutral-100 dark:bg-neutral-800">
@@ -104,6 +105,7 @@ export default function LogsClient() {
                             )}
                         </tbody>
                     </table>
+                    </div>
                 </div>
 
                 {hasMore && (

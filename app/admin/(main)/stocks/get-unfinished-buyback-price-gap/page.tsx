@@ -21,7 +21,7 @@ export default async function Page() {
     const avgDiffPercent = info.length > 0 ? totalDiffPercent / info.length : 0;
 
     return (
-        <div className="w-full p-6 bg-neutral-100 dark:bg-neutral-800">
+        <div className="w-full p-3 sm:p-6 bg-neutral-100 dark:bg-neutral-800">
             <h1 className="text-xl font-bold mb-4 dark:text-white">執行中的庫藏股</h1>
             <div className="mb-4 text-right text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
                 <div>資料數量：{info.length}</div>

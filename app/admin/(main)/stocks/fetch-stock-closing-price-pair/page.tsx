@@ -90,7 +90,7 @@ export default function Search() {
     };
 
     return (
-        <div className="w-full p-6 bg-neutral-100 dark:bg-neutral-800">
+        <div className="w-full p-3 sm:p-6 bg-neutral-100 dark:bg-neutral-800">
             <form action={formAction} className="space-y-4 bg-white dark:bg-neutral-900 p-4 rounded shadow">
                 <div className="flex flex-col space-y-2">
                     <label htmlFor="stockNo" className="font-medium dark:text-neutral-200">股票代號</label>
@@ -114,6 +114,7 @@ export default function Search() {
                 <div className="bg-white dark:bg-neutral-900 p-4 rounded shadow">
                     <h2 className="text-lg font-semibold mb-3 dark:text-white">查詢結果</h2>
                     {renderStats(state.stockData)}
+                    <div className="overflow-x-auto">
                     <table className="w-full table-auto border-collapse">
                         <thead>
                             <tr>
@@ -132,6 +133,7 @@ export default function Search() {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             )}
         </div>
