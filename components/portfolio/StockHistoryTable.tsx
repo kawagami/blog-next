@@ -81,7 +81,7 @@ export default function StockHistoryTable({ entry, onClose }: Props) {
                 )}
 
                 {/* Table */}
-                <div className="overflow-y-auto flex-1">
+                <div className="overflow-auto flex-1">
                     {loading ? (
                         <p className="text-center py-8 text-neutral-500">{t('loading')}</p>
                     ) : error ? (
@@ -89,7 +89,7 @@ export default function StockHistoryTable({ entry, onClose }: Props) {
                     ) : records.length === 0 ? (
                         <p className="text-center py-8 text-neutral-500">{t('noHistory')}</p>
                     ) : (
-                        <table className="w-full text-sm">
+                        <table className="w-full min-w-[480px] text-sm">
                             <thead className="sticky top-0 bg-white dark:bg-neutral-800 border-b dark:border-neutral-700">
                                 <tr>
                                     <th className="text-left px-4 py-2 font-medium text-neutral-500 dark:text-neutral-400">{t('date')}</th>

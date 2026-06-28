@@ -159,12 +159,12 @@ export default function InvoiceRegisterClient({ categories }: Props) {
     return (
         <div className="flex flex-col gap-4">
             {/* 三入口 tab */}
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                 {tabs.map(({ key, labelKey, icon: Icon }) => (
                     <button
                         key={key}
                         onClick={() => switchTab(key)}
-                        className={`flex flex-col items-center gap-1 py-3 rounded-xl border text-sm transition-colors ${tab === key
+                        className={`flex flex-col items-center gap-1 py-3 rounded-xl border text-xs sm:text-sm transition-colors ${tab === key
                             ? 'border-primary-500 bg-primary-50 dark:bg-primary-950 text-primary-600 dark:text-primary-300'
                             : 'border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800'}`}
                     >

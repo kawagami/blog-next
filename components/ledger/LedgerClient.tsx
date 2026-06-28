@@ -153,7 +153,7 @@ export default function LedgerClient({ categories, initialEntries, initialSummar
     return (
         <div className="flex flex-col gap-4">
             {/* 統計總覽 */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <SummaryCard label={t('totalIncome')} value={fmt(summary.total_income)} tone="income" />
                 <SummaryCard label={t('totalExpense')} value={fmt(summary.total_expense)} tone="expense" />
                 <SummaryCard label={t('balance')} value={fmt(summary.balance)} tone="balance" />
