@@ -475,6 +475,18 @@ export interface GameOverview {
   lobby: number;
 }
 
+// 到訪統計（admin）：HLL 不重複到訪，今日來自 Redis、昨日以前來自 DB，後端已合好
+export interface VisitorDayCount {
+  date: string;
+  unique_visitors: number;
+}
+
+export interface VisitorStats {
+  today: VisitorDayCount;
+  last_n_days_unique: number; // 跨日去重總數，≤ history 每日相加
+  history: VisitorDayCount[];
+}
+
 // Log
 export type LogLevel = 'INFO' | 'WARN' | 'ERROR';
 

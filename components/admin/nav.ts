@@ -62,6 +62,7 @@ export const adminNavGroups: AdminNavGroup[] = [
         label: "觀測",
         icon: ScrollText,
         items: [
+            { label: "到訪統計", href: "/admin/stats" },
             { label: "Logs", href: "/admin/logs" },
             { label: "Audit Logs", href: "/admin/audit_logs" },
         ],
