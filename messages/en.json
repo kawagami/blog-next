@@ -40,7 +40,8 @@
     "gameBanqi": "Online Banqi",
     "gameAvalon": "Online Avalon",
     "gameFarm": "Farm Manager",
-    "gameMetalSlug": "Metal Slug"
+    "gameMetalSlug": "Metal Slug",
+    "blog": "Blog"
   },
   "Login": {
     "title": "Login",
@@ -734,5 +735,50 @@
     "notifyNeedsEmail": "This account has no email, so notifications can't be enabled",
     "notifyNoEmail": "This account has no email (common with LINE login), so winning notifications are unavailable; you can still check results under My Winnings",
     "disclaimer": "Lottery results are for reference only; the official Taiwan Lottery announcement and redemption deadlines prevail"
+  },
+  "Home": {
+    "metaTitle": "Kawa's Homes — Personal blog & tools platform",
+    "metaDescription": "A personal blog combined with a suite of tools: ledger, portfolio, invoice & lottery prize-checking, and multiplayer games.",
+    "title": "Kawa's Homes",
+    "tagline": "A personal platform blending a blog with a suite of handy tools.",
+    "techStack": "Frontend built with Next.js (React); backend API powered by Rust Axum.",
+    "features": {
+      "blog": {
+        "title": "Blog",
+        "desc": "Notes on development, frontend/backend and tooling, with Markdown and tag filtering."
+      },
+      "notes": {
+        "title": "Notes",
+        "desc": "HackMD notes integrated for quick reading and sharing."
+      },
+      "games": {
+        "title": "Games",
+        "desc": "Real-time multiplayer chess, gomoku, go, Avalon and more."
+      },
+      "ledger": {
+        "title": "Ledger",
+        "desc": "Income/expense records with category charts to track monthly flow."
+      },
+      "portfolio": {
+        "title": "Portfolio",
+        "desc": "Live holdings P&L with dividend-adjusted cost basis."
+      },
+      "invoices": {
+        "title": "Invoice prizes",
+        "desc": "Scan & register uniform invoices; automatic prize checking and alerts."
+      },
+      "lotto": {
+        "title": "Lottery",
+        "desc": "Register Lotto 649 / Super Lotto 638 picks with automatic prize checking."
+      },
+      "tools": {
+        "title": "Tools",
+        "desc": "Countdown, roster, password generator and other handy utilities."
+      },
+      "about": {
+        "title": "About",
+        "desc": "Learn about this project's architecture and tech choices."
+      }
+    }
   }
 }

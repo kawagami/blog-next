@@ -40,7 +40,8 @@
     "gameBanqi": "線上暗棋",
     "gameAvalon": "線上阿瓦隆",
     "gameFarm": "農場經營",
-    "gameMetalSlug": "越南大戰"
+    "gameMetalSlug": "越南大戰",
+    "blog": "文章"
   },
   "Login": {
     "title": "登入",
@@ -734,5 +735,50 @@
     "notifyNeedsEmail": "此帳號未綁定 email，無法開啟通知",
     "notifyNoEmail": "此帳號未綁定 email（常見於 LINE 登入），無法使用中獎通知；你仍可在「我的中獎」查看結果",
     "disclaimer": "對獎結果僅供參考，實際以台灣彩券公告與兌獎期限為準"
+  },
+  "Home": {
+    "metaTitle": "Kawa's Homes — 個人部落格與工具整合平台",
+    "metaDescription": "個人部落格,結合記帳、投資組合、發票與樂透對獎、對戰遊戲等多種實用工具的整合平台。",
+    "title": "Kawa's Homes",
+    "tagline": "一個結合部落格與多種實用工具的個人整合平台。",
+    "techStack": "前端以 Next.js（React）打造,後端由 Rust Axum 提供 API。",
+    "features": {
+      "blog": {
+        "title": "文章",
+        "desc": "程式開發、前後端與工具筆記,支援 Markdown 與標籤篩選。"
+      },
+      "notes": {
+        "title": "技術筆記",
+        "desc": "整合 HackMD 筆記,隨時查閱與分享。"
+      },
+      "games": {
+        "title": "對戰遊戲",
+        "desc": "象棋、五子棋、圍棋、阿瓦隆等即時多人對戰。"
+      },
+      "ledger": {
+        "title": "記帳本",
+        "desc": "收支記錄與分類統計圖表,掌握每月流水。"
+      },
+      "portfolio": {
+        "title": "投資組合",
+        "desc": "持股即時損益,含除權息還原成本。"
+      },
+      "invoices": {
+        "title": "發票對獎",
+        "desc": "掃描登錄統一發票,後端自動對獎與中獎通知。"
+      },
+      "lotto": {
+        "title": "樂透對獎",
+        "desc": "大樂透與威力彩選號登錄,自動對獎。"
+      },
+      "tools": {
+        "title": "實用工具",
+        "desc": "倒數計時、排班、密碼產生器等小工具。"
+      },
+      "about": {
+        "title": "關於本站",
+        "desc": "認識這個專案的架構與技術選型。"
+      }
+    }
   }
 }

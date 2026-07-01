@@ -76,6 +76,7 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
     const pathname = usePathname();
     const navRef = useRef<HTMLElement>(null);
 
+    const isBlogActive = pathname.startsWith('/blogs');
     const isNotesActive = pathname.startsWith('/hackmd-notes');
     const isAboutActive = pathname.startsWith('/about');
     const isToolsActive = TOOLS.some(({ href }) => pathname.startsWith(href));
@@ -123,6 +124,7 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
 
                 {/* Desktop nav */}
                 <nav ref={navRef} className="hidden md:flex items-center gap-2">
+                    <Link href="/blogs" aria-label={t('blog')} className={`${navLinkClass} ${isBlogActive ? activeNavClass : ''}`}>{t('blog')}</Link>
                     <Link href="/hackmd-notes" aria-label={t('notes')} className={`${navLinkClass} ${isNotesActive ? activeNavClass : ''}`}>{t('notes')}</Link>
                     <div className="relative">
                         <button
@@ -208,6 +210,7 @@ export default function Header({ member, colorMode, defaultIsDark }: HeaderProps
                 <>
                     <div className="md:hidden fixed inset-0 z-30 bg-black/40" onClick={closeAll} aria-hidden="true" />
                     <nav className="md:hidden fixed top-[50px] left-0 right-0 z-40 bg-white dark:bg-neutral-900 shadow-lg border-t border-neutral-200 dark:border-neutral-700 flex flex-col p-4 gap-1">
+                        <Link href="/blogs" className={`${mobileItemClass} ${isBlogActive ? activeNavClass : ''}`} onClick={closeAll}>{t('blog')}</Link>
                         <Link href="/hackmd-notes" className={`${mobileItemClass} ${isNotesActive ? activeNavClass : ''}`} onClick={closeAll}>{t('notes')}</Link>
 
                         <button
