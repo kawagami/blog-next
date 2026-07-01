@@ -102,10 +102,4 @@ push `master` 即自動部署：GitHub Actions build + push image（`kawagami77/
 
 - image 不含任何 env/secrets，設定由 VPS mount `.env.production` 於 runtime 注入
 - multi-stage build（deps → builder → Node Alpine runner，non-root、standalone output）
-- 本機驗證 image：`docker build -t blog-next . && docker-compose up -d`（需同目錄 `.env`）
-
-```bash
-# 本地開發容器工具
-bash app.sh <cmd>   # 在 node 容器內跑指令（如 bash app.sh corepack enable && pnpm i）
-bash up.sh          # 開 VS Code + 容器內 dev server
-```
+- 本機驗證 image：`docker build -t blog-next . && docker run --env-file .env -p 3000:3000 blog-next`
